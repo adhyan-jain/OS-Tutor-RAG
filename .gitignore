@@ -23,6 +23,9 @@ data/raw/*
 *.faiss
 *.index
 
+# Local tech-debt / delayed-task notes (not shared)
+DELAYED_TASKS.md
+
 # OS / editor
 .DS_Store
 .vscode/
