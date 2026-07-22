@@ -17,11 +17,26 @@ class PathConfig:
 
 @dataclass
 class ChunkingConfig:
-    """Parameters controlling chunking strategies."""
+    """Parameters controlling chunking strategies.
 
-    strategy: str = "structure_aware"
+    ``strategy_by_source_type`` selects which strategy runs for a given
+    ``Document.metadata["source_type"]`` (e.g. "pptx", "docx", "text"),
+    falling back to ``default_strategy`` when the source type is absent or
+    unmapped. Valid strategy names are "structure_aware" and "semantic".
+    """
+
+    default_strategy: str = "structure_aware"
+    strategy_by_source_type: dict[str, str] = field(
+        default_factory=lambda: {
+            "pptx": "structure_aware",
+            "docx": "structure_aware",
+            "text": "semantic",
+        }
+    )
     chunk_size: int = 512
     chunk_overlap: int = 64
+    semantic_similarity_threshold: float = 0.6
+    semantic_embedding_model_name: str = "BAAI/bge-small-en-v1.5"
 
 
 @dataclass

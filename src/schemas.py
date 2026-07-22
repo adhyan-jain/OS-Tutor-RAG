@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import TYPE_CHECKING, Any, Callable, Optional
+
+if TYPE_CHECKING:
+    from src.config import ChunkingConfig
 
 
 @dataclass
@@ -36,3 +39,8 @@ class ScoredChunk:
     score: float
     source: str
     rank: Optional[int] = None
+
+
+# Interface every chunking strategy module must implement: a `chunk` function
+# taking a Document and ChunkingConfig and returning its list of Chunks.
+ChunkerFn = Callable[["Document", "ChunkingConfig"], list[Chunk]]
