@@ -1,0 +1,25 @@
+# GPU (CUDA 12.1) build — targets local machine with NVIDIA RTX 4060 (8GB VRAM)
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.4.0+cu121
+
+# Generation backend
+vllm==0.5.4
+
+# Retrieval / embeddings
+sentence-transformers==3.0.1
+rank-bm25==0.2.2
+faiss-cpu==1.8.0
+
+# Reranking
+transformers==4.44.0
+
+# Ingestion
+python-pptx==1.0.2
+python-docx==1.1.2
+
+# Evaluation
+ragas==0.1.14
+
+# Core utilities
+numpy==1.26.4
+pydantic==2.8.2
