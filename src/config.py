@@ -43,9 +43,10 @@ class ChunkingConfig:
 class RetrievalConfig:
     """Parameters controlling retrieval techniques."""
 
-    dense_model_name: str = "BAAI/bge-small-en-v1.5"
+    dense_model_name: str = "BAAI/bge-large-en-v1.5"
     top_k: int = 10
     rrf_k: int = 60
+    index_dir: Path = Path("data/index")
 
 
 @dataclass

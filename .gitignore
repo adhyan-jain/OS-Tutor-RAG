@@ -22,6 +22,7 @@ data/raw/*
 # Vector index / large binary artifacts
 *.faiss
 *.index
+data/index/
 
 # Local tech-debt / delayed-task notes (not shared)
 DELAYED_TASKS.md
