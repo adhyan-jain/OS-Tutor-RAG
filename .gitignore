@@ -26,6 +26,7 @@ data/index/
 
 # Local tech-debt / delayed-task notes (not shared)
 DELAYED_TASKS.md
+current_status.md
 
 # OS / editor
 .DS_Store
