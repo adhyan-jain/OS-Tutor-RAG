@@ -74,6 +74,8 @@ class GenerationConfig:
     max_tokens: int = 512
     temperature: float = 0.2
     gpu_memory_utilization: float = 0.85
+    # Used when backend == "ollama" (local dev/testing against an Ollama server).
+    ollama_base_url: str = "http://localhost:11434"
 
 
 @dataclass
