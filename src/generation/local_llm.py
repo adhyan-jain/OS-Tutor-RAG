@@ -8,8 +8,17 @@ since the full model may not fit in this machine's GPU memory.
 
 from __future__ import annotations
 
+import re
+
 from src.config import GenerationConfig
 from src.schemas import ScoredChunk
+
+_RELEVANCE_PROMPT_TEMPLATE = (
+    "On a scale of 0 to 10, how relevant is the following passage to "
+    "answering the question? Respond with only the integer score, nothing else.\n\n"
+    "Question: {query}\n\nPassage: {passage}\n\nRelevance score (0-10):"
+)
+_SCORE_RE = re.compile(r"-?\d+(\.\d+)?")
 
 _HYDE_PROMPT_TEMPLATE = (
     "Write a short, factual passage (2-4 sentences) that directly answers "
@@ -99,3 +108,18 @@ class LocalLLM:
         """
         prompt = _HYDE_PROMPT_TEMPLATE.format(query=query)
         return self._complete(prompt)
+
+    def score_relevance(self, query: str, passage: str) -> float:
+        """Prompt the LLM to score a passage's relevance to a query, 0-10.
+
+        Args:
+            query: Natural language query text.
+            passage: Candidate passage text to judge.
+
+        Returns:
+            The parsed relevance score (0.0 if the response can't be parsed).
+        """
+        prompt = _RELEVANCE_PROMPT_TEMPLATE.format(query=query, passage=passage)
+        response = self._complete(prompt)
+        match = _SCORE_RE.search(response)
+        return float(match.group()) if match else 0.0

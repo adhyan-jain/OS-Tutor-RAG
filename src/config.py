@@ -41,8 +41,13 @@ class ChunkingConfig:
 
 @dataclass
 class RetrievalConfig:
-    """Parameters controlling retrieval techniques."""
+    """Parameters controlling retrieval techniques.
 
+    ``technique`` selects which retriever the pipeline builds: "dense",
+    "bm25", "hybrid_rrf", or "hyde".
+    """
+
+    technique: str = "hybrid_rrf"
     dense_model_name: str = "BAAI/bge-large-en-v1.5"
     top_k: int = 10
     rrf_k: int = 60
@@ -51,9 +56,14 @@ class RetrievalConfig:
 
 @dataclass
 class RerankingConfig:
-    """Parameters controlling reranking techniques."""
+    """Parameters controlling reranking techniques.
 
-    cross_encoder_model_name: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    ``method`` selects which reranker the pipeline applies: "cross_encoder",
+    "llm_rerank", or "none" to skip reranking entirely.
+    """
+
+    method: str = "cross_encoder"
+    cross_encoder_model_name: str = "BAAI/bge-reranker-large"
     top_n: int = 5
 
 
@@ -61,16 +71,25 @@ class RerankingConfig:
 class DiversificationConfig:
     """Parameters controlling result diversification (e.g. MMR)."""
 
+    enabled: bool = True
     lambda_param: float = 0.5
     top_k: int = 5
+    embedding_model_name: str = "BAAI/bge-small-en-v1.5"
 
 
 @dataclass
 class GenerationConfig:
-    """Parameters controlling the local LLM generation backend."""
+    """Parameters controlling the local LLM generation backend.
 
-    model_name: str = "meta-llama/Llama-3.1-8B-Instruct"
-    backend: str = "vllm"
+    Defaults to the "ollama" backend against a locally running llama3:latest
+    model, since the real Llama-3.1-8B-Instruct/vLLM deploy target doesn't
+    fit this dev machine's 8GB VRAM without quantization (see DELAYED_TASKS.md).
+    Swap ``model_name`` to "gemma2:9b" once pulled, or ``backend`` to "vllm"
+    for the real deploy target.
+    """
+
+    model_name: str = "llama3:latest"
+    backend: str = "ollama"
     max_tokens: int = 512
     temperature: float = 0.2
     gpu_memory_utilization: float = 0.85
