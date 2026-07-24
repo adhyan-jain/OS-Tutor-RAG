@@ -74,6 +74,17 @@ class RAGPipeline:
         ]
         self.retriever.build_index(chunks)
 
+    def _retrieve_candidates(self, query: str):
+        candidates = self.retriever.retrieve(query, top_k=self.config.retrieval.top_k)
+
+        if self.reranker is not None:
+            candidates = self.reranker.rerank(query, candidates)
+
+        if self.config.diversification.enabled:
+            candidates = mmr_select(candidates, self.config.diversification)
+
+        return candidates
+
     def answer(self, query: str) -> str:
         """Answer a query by running it through the full pipeline.
 
@@ -83,12 +94,47 @@ class RAGPipeline:
         Returns:
             The generated answer text.
         """
-        candidates = self.retriever.retrieve(query, top_k=self.config.retrieval.top_k)
-
-        if self.reranker is not None:
-            candidates = self.reranker.rerank(query, candidates)
-
-        if self.config.diversification.enabled:
-            candidates = mmr_select(candidates, self.config.diversification)
-
+        candidates = self._retrieve_candidates(query)
         return self.llm.generate(query, candidates)
+
+    def answer_with_contexts(self, query: str) -> tuple[str, list[str]]:
+        """Answer a query, also returning the context chunk texts used.
+
+        Used by eval/ragas_eval.py, which needs the actual retrieved/reranked/
+        diversified contexts (not just the final answer) to score
+        context_precision, context_recall, faithfulness, and answer_relevancy.
+
+        Args:
+            query: The user's natural language question.
+
+        Returns:
+            A tuple of (generated answer, list of context chunk texts).
+        """
+        candidates = self._retrieve_candidates(query)
+        answer = self.llm.generate(query, candidates)
+        contexts = [sc.chunk.text for sc in candidates]
+        return answer, contexts
+
+    def evaluate(self, run_name: str | None = None) -> dict[str, float]:
+        """Score this (already-ingested) pipeline against config.eval's eval
+        set with RAGAS, appending results to config.eval.output_workbook_path.
+
+        Args:
+            run_name: Short identifier for this run, used as the new sheet
+                name in the output workbook. Defaults to
+                "{retrieval.technique}+{reranking.method}".
+
+        Returns:
+            The mean RAGAS metric scores for this run (also written to the
+            workbook's "Final Analysis" sheet).
+        """
+        from src.evaluation import append_run_to_workbook, load_eval_set, score_pipeline
+
+        eval_set = load_eval_set(self.config.eval.eval_set_path, self.config.eval.num_questions)
+        mean_scores, detail_rows = score_pipeline(self, eval_set)
+
+        run_name = run_name or f"{self.config.retrieval.technique}+{self.config.reranking.method}"
+        append_run_to_workbook(
+            self.config.eval.output_workbook_path, run_name, self.config, mean_scores, detail_rows
+        )
+        return mean_scores

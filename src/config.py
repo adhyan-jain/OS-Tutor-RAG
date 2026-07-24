@@ -101,6 +101,23 @@ class GenerationConfig:
 
 
 @dataclass
+class EvalConfig:
+    """Parameters controlling the pipeline's automatic per-run RAGAS evaluation.
+
+    After ``RAGPipeline.ingest()``, ``RAGPipeline.evaluate()`` scores the
+    pipeline against the first ``num_questions`` examples in
+    ``eval_set_path``, appending the results as a new sheet in
+    ``output_workbook_path`` (plus updating its "Final Analysis" sheet).
+    Set ``num_questions`` to change how many questions to analyze without
+    touching any code.
+    """
+
+    eval_set_path: Path = Path("eval/eval_set.json")
+    num_questions: int = 10
+    output_workbook_path: Path = Path("eval/pipeline_runs.xlsx")
+
+
+@dataclass
 class PipelineConfig:
     """Top-level configuration aggregating all pipeline stages."""
 
@@ -110,3 +127,4 @@ class PipelineConfig:
     reranking: RerankingConfig = field(default_factory=RerankingConfig)
     diversification: DiversificationConfig = field(default_factory=DiversificationConfig)
     generation: GenerationConfig = field(default_factory=GenerationConfig)
+    eval: EvalConfig = field(default_factory=EvalConfig)

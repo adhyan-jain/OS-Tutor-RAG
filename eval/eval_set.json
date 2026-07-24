@@ -1,4 +1,66 @@
 {
-  "description": "Placeholder evaluation set for OS-Tutor-RAG retrieval technique comparison.",
-  "examples": []
+  "description": "Evaluation set for OS-Tutor-RAG retrieval technique comparison. Ground truth is sourced directly from the professor's uploaded course materials in data/raw/ (Introduction to OS, Process abstractions, Process API, Process execution mechanism, Shell programming). Topics reflect what these materials actually cover; classic OS topics not yet uploaded (deadlocks, memory management/paging, synchronization primitives) are intentionally absent and should be added once corresponding slides are provided — see DELAYED_TASKS.md. Trimmed to 10 questions (2 per topic) for fast iteration; RAGPipeline.evaluate()'s num_questions config controls how many of these are used per run.",
+  "schema": ["question", "ground_truth_answer", "source_chunk_ids", "topic"],
+  "examples": [
+    {
+      "question": "What hardware does an operating system manage?",
+      "ground_truth_answer": "The OS manages hardware including the CPU, main memory, and I/O devices such as disk, network card, mouse, and keyboard.",
+      "source_chunk_ids": ["Introduction to OS__chunk3"],
+      "topic": "os_basics"
+    },
+    {
+      "question": "What is a process, and how does the OS give it the illusion of owning the whole CPU?",
+      "ground_truth_answer": "A process is a running program. The OS provides the process abstraction, creating and managing processes so that each process has the illusion of having the complete CPU -- i.e., the OS virtualizes the CPU by timesharing it between processes.",
+      "source_chunk_ids": ["Introduction to OS__chunk26", "Introduction to OS__chunk27", "Introduction to OS__chunk29", "Introduction to OS__chunk30"],
+      "topic": "os_basics"
+    },
+    {
+      "question": "In the OS's CPU scheduler, what is the difference between policy and mechanism?",
+      "ground_truth_answer": "Policy is which process to run; mechanism is how to context switch between processes.",
+      "source_chunk_ids": ["Process abstractions__chunk5", "Process abstractions__chunk6"],
+      "topic": "process_abstraction"
+    },
+    {
+      "question": "What are the five states a process can be in?",
+      "ground_truth_answer": "New (being created, yet to run), Ready (waiting to be scheduled), Running (currently executing on CPU), Blocked (suspended, not ready to run, e.g. waiting on a disk read), and Dead (terminated).",
+      "source_chunk_ids": ["Process abstractions__chunk27", "Process abstractions__chunk28", "Process abstractions__chunk29", "Process abstractions__chunk32", "Process abstractions__chunk33"],
+      "topic": "process_abstraction"
+    },
+    {
+      "question": "What does the fork() system call do?",
+      "ground_truth_answer": "fork() creates a new child process by making a copy of the parent's memory image. The new process is added to the OS process list and scheduled, and the parent and child both start executing just after the fork, but with different return values.",
+      "source_chunk_ids": ["Process API__chunk18", "Process API__chunk26", "Process API__chunk27", "Process API__chunk28"],
+      "topic": "process_api"
+    },
+    {
+      "question": "What is the difference between fork() and exec()?",
+      "ground_truth_answer": "fork() creates a new child process by copying the parent's memory image, so parent and child initially run the same code. exec() instead loads a different executable into a process's memory image, so after forking, a child can call exec() to run a different program than its parent.",
+      "source_chunk_ids": ["Process API__chunk18", "Process API__chunk21", "Process API__chunk42", "Process API__chunk43"],
+      "topic": "process_api"
+    },
+    {
+      "question": "What happens when a trap instruction is executed for a system call?",
+      "ground_truth_answer": "The trap instruction moves the CPU to a higher privilege level, switches to the kernel stack, saves context (old PC and registers) on the kernel stack, then looks up the address in the Interrupt Descriptor Table (IDT) and jumps to the trap handler function in OS code.",
+      "source_chunk_ids": ["Process execution mechanism__chunk30", "Process execution mechanism__chunk31", "Process execution mechanism__chunk32", "Process execution mechanism__chunk33", "Process execution mechanism__chunk34"],
+      "topic": "process_execution_mechanism"
+    },
+    {
+      "question": "What happens during a context switch from process A to process B?",
+      "ground_truth_answer": "The OS saves the context (PC, registers, kernel stack pointer) of process A on A's kernel stack, switches the stack pointer to B's kernel stack, and restores context from B's kernel stack; a return-from-trap then switches the CPU to user mode of B.",
+      "source_chunk_ids": ["Process execution mechanism__chunk70", "Process execution mechanism__chunk71", "Process execution mechanism__chunk72", "Process execution mechanism__chunk75"],
+      "topic": "process_execution_mechanism"
+    },
+    {
+      "question": "What is a shell, and what are some widely used Linux shells?",
+      "ground_truth_answer": "A shell is a command-line interpreter. Bash (Bourne Again Shell), Csh (C Shell), and Ksh (Korn Shell) are widely used Linux shells.",
+      "source_chunk_ids": ["Shell programming__chunk3", "Shell programming__chunk4"],
+      "topic": "shell_programming"
+    },
+    {
+      "question": "How do you make a shell script executable and then run it?",
+      "ground_truth_answer": "Make the script executable with \"chmod +x filename.sh\", then run it with \"./filename.sh\" or \"sh filename.sh\".",
+      "source_chunk_ids": ["Shell programming__chunk36", "Shell programming__chunk37", "Shell programming__chunk38"],
+      "topic": "shell_programming"
+    }
+  ]
 }
