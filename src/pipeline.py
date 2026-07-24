@@ -18,6 +18,7 @@ from src.reranking.llm_rerank import LLMReranker
 from src.retrieval.dense import DenseRetriever
 from src.retrieval.hybrid_rrf import HybridRRFRetriever
 from src.retrieval.hyde import HyDERetriever
+from src.retrieval.multi_query import MultiQueryRetriever
 from src.retrieval.sparse_bm25 import BM25Retriever
 from src.schemas import Document
 
@@ -46,6 +47,8 @@ class RAGPipeline:
             return HybridRRFRetriever(self.config.retrieval)
         if technique == "hyde":
             return HyDERetriever(self.config.retrieval, self.config.generation)
+        if technique == "multi_query":
+            return MultiQueryRetriever(self.config.retrieval, self.config.generation)
         raise ValueError(f"Unknown retrieval technique: {technique!r}")
 
     def _build_reranker(self):

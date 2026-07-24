@@ -33,6 +33,13 @@ _RAG_PROMPT_TEMPLATE = (
     "Context:\n{context}\n\nQuestion: {query}\n\nAnswer:"
 )
 
+_MULTI_QUERY_PROMPT_TEMPLATE = (
+    "Generate {n} different ways to phrase the following question, so that "
+    "searching with each version could surface different relevant documents. "
+    "Respond with exactly {n} lines, one reformulation per line, no numbering "
+    "or extra commentary.\n\nQuestion: {query}\n\nReformulations:"
+)
+
 
 class LocalLLM:
     """Wraps a local LLM, either served via vLLM or a running Ollama instance."""
@@ -108,6 +115,22 @@ class LocalLLM:
         """
         prompt = _HYDE_PROMPT_TEMPLATE.format(query=query)
         return self._complete(prompt)
+
+    def generate_query_variants(self, query: str, n: int) -> list[str]:
+        """Generate n reformulated versions of a query (for Multi Query retrieval).
+
+        Args:
+            query: The user's natural language question.
+            n: Number of reformulations to request.
+
+        Returns:
+            A list of up to n reformulated query strings (fewer if the LLM's
+            response doesn't contain that many non-empty lines).
+        """
+        prompt = _MULTI_QUERY_PROMPT_TEMPLATE.format(n=n, query=query)
+        response = self._complete(prompt)
+        lines = [line.strip("-*0123456789. \t") for line in response.splitlines()]
+        return [line for line in lines if line][:n]
 
     def score_relevance(self, query: str, passage: str) -> float:
         """Prompt the LLM to score a passage's relevance to a query, 0-10.

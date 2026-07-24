@@ -45,7 +45,7 @@ class RetrievalConfig:
     """Parameters controlling retrieval techniques.
 
     ``technique`` selects which retriever the pipeline builds: "dense",
-    "bm25", "hybrid_rrf", or "hyde".
+    "bm25", "hybrid_rrf", "hyde", or "multi_query".
     """
 
     technique: str = "hybrid_rrf"
@@ -53,6 +53,8 @@ class RetrievalConfig:
     top_k: int = 10
     rrf_k: int = 60
     index_dir: Path = Path("data/index")
+    # Used when technique == "multi_query".
+    num_query_variants: int = 3
 
 
 @dataclass
