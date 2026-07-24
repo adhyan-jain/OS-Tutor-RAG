@@ -30,6 +30,7 @@ class ChunkingConfig:
         default_factory=lambda: {
             "pptx": "structure_aware",
             "docx": "structure_aware",
+            "pdf": "semantic",
             "text": "semantic",
         }
     )
