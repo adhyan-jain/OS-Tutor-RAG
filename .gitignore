@@ -23,6 +23,12 @@ data/raw/*
 *.faiss
 *.index
 data/index/
+data/processed/
+
+# Generated evaluation run artifacts (regenerable, not source)
+eval/comparison_results.md
+eval/ragas_details.xlsx
+eval/pipeline_runs.xlsx
 
 # Local tech-debt / delayed-task notes (not shared)
 DELAYED_TASKS.md
