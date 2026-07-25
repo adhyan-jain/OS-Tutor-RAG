@@ -1,0 +1,79 @@
+"""Process-wide cache of loaded SentenceTransformer models, keyed by model name.
+
+SentenceTransformer(name) reloads the model weights on every construction
+(~5s for bge-large-en-v1.5) -- it does no caching of its own. Stages that
+embed inside a per-call function rather than holding a model on an instance
+(semantic chunking, called per document; MMR, called per query) would
+otherwise pay that cost on every call, which dominates their runtime.
+Retrievers that already load a model once in __init__ (e.g. DenseRetriever)
+don't need this, though using it lets them share one instance when configured
+with the same model name.
+"""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from sentence_transformers import CrossEncoder, SentenceTransformer
+
+_MODEL_CACHE: dict[str, "SentenceTransformer"] = {}
+_CROSS_ENCODER_CACHE: dict[str, "CrossEncoder"] = {}
+
+
+def get_embedding_model(model_name: str) -> "SentenceTransformer":
+    """Return a cached SentenceTransformer for `model_name`, loading it once.
+
+    Args:
+        model_name: HuggingFace model id (e.g. "BAAI/bge-large-en-v1.5").
+
+    Returns:
+        The shared SentenceTransformer instance for that model name.
+    """
+    if model_name not in _MODEL_CACHE:
+        from sentence_transformers import SentenceTransformer
+
+        _MODEL_CACHE[model_name] = SentenceTransformer(model_name)
+    return _MODEL_CACHE[model_name]
+
+
+def release_gpu_memory() -> None:
+    """Move every cached model to CPU and free the VRAM they held.
+
+    This machine shares one 8GB GPU between torch (embeddings, cross-encoder)
+    and Ollama (generation and judge models, up to ~8GB on their own). Holding
+    torch models resident while Ollama loads a judge model overflows the card,
+    so the eval flow releases them between its generation and judging passes.
+    Cached models stay usable afterwards -- sentence-transformers moves them
+    back to the GPU on next use if one is available.
+    """
+    import torch
+
+    if not torch.cuda.is_available():
+        return
+
+    for model in _MODEL_CACHE.values():
+        model.to("cpu")
+    for cross_encoder in _CROSS_ENCODER_CACHE.values():
+        cross_encoder.model.to("cpu")
+    torch.cuda.empty_cache()
+
+
+def get_cross_encoder(model_name: str) -> "CrossEncoder":
+    """Return a cached CrossEncoder for `model_name`, loading it once.
+
+    Same rationale as get_embedding_model: a mass eval sweep constructs one
+    reranker per config variant, and reloading the cross-encoder each time
+    dominates that stage's cost.
+
+    Args:
+        model_name: HuggingFace model id (e.g. "BAAI/bge-reranker-large").
+
+    Returns:
+        The shared CrossEncoder instance for that model name.
+    """
+    if model_name not in _CROSS_ENCODER_CACHE:
+        from sentence_transformers import CrossEncoder
+
+        _CROSS_ENCODER_CACHE[model_name] = CrossEncoder(model_name)
+    return _CROSS_ENCODER_CACHE[model_name]

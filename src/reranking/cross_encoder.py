@@ -17,10 +17,10 @@ class CrossEncoderReranker:
         Args:
             config: Reranking parameters (model name, top_n).
         """
-        from sentence_transformers import CrossEncoder
+        from src.embedding_cache import get_cross_encoder
 
         self.config = config
-        self.model = CrossEncoder(config.cross_encoder_model_name)
+        self.model = get_cross_encoder(config.cross_encoder_model_name)
 
     def rerank(self, query: str, candidates: list[ScoredChunk]) -> list[ScoredChunk]:
         """Rerank candidate chunks for a query.

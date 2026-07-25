@@ -12,6 +12,7 @@ from __future__ import annotations
 import re
 
 from src.config import ChunkingConfig
+from src.embedding_cache import get_embedding_model
 from src.schemas import Chunk, Document
 
 _SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?])\s+")
@@ -77,9 +78,7 @@ def semantic_chunk(document: Document, config: ChunkingConfig) -> list[Chunk]:
             )
         ]
 
-    from sentence_transformers import SentenceTransformer
-
-    model = SentenceTransformer(config.semantic_embedding_model_name)
+    model = get_embedding_model(config.semantic_embedding_model_name)
     embeddings = model.encode(sentences)
 
     groups = _group_by_similarity_shift(

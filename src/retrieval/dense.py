@@ -14,6 +14,21 @@ from src.schemas import Chunk, ScoredChunk
 _INDEX_FILENAME = "dense.faiss"
 _CHUNKS_FILENAME = "dense_chunks.pkl"
 
+# Embedding a corpus is the dominant cost of build_index (minutes on CPU for
+# bge-large). A mass eval sweep rebuilds the index once per config variant,
+# but the embeddings depend only on the chunk texts and the model -- not on
+# retrieval technique, reranking, or diversification -- so the same corpus
+# gets re-embedded dozens of times identically. Memoized on exactly those two
+# inputs.
+_CORPUS_EMBEDDING_CACHE: dict[tuple[str, str], "np.ndarray"] = {}
+
+
+def _corpus_cache_key(model_name: str, texts: list[str]) -> tuple[str, str]:
+    import hashlib
+
+    digest = hashlib.sha256("\x00".join(texts).encode("utf-8")).hexdigest()
+    return (model_name, digest)
+
 
 class DenseRetriever:
     """Retrieves chunks by cosine similarity of dense embeddings (FAISS)."""
@@ -24,10 +39,10 @@ class DenseRetriever:
         Args:
             config: Retrieval parameters (model name, top_k, index_dir).
         """
-        from sentence_transformers import SentenceTransformer
+        from src.embedding_cache import get_embedding_model
 
         self.config = config
-        self.model = SentenceTransformer(config.dense_model_name)
+        self.model = get_embedding_model(config.dense_model_name)
         self.index: faiss.Index | None = None
         self.chunks: list[Chunk] = []
 
@@ -42,7 +57,13 @@ class DenseRetriever:
             chunks: Chunks to embed and index.
         """
         self.chunks = list(chunks)
-        embeddings = self._embed([c.text for c in self.chunks])
+        texts = [c.text for c in self.chunks]
+
+        key = _corpus_cache_key(self.config.dense_model_name, texts)
+        if key not in _CORPUS_EMBEDDING_CACHE:
+            _CORPUS_EMBEDDING_CACHE[key] = self._embed(texts)
+        embeddings = _CORPUS_EMBEDDING_CACHE[key]
+
         dimension = embeddings.shape[1]
         self.index = faiss.IndexFlatIP(dimension)
         self.index.add(embeddings)

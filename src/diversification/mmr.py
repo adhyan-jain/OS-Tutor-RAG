@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from src.config import DiversificationConfig
+from src.embedding_cache import get_embedding_model
 from src.schemas import ScoredChunk
 
 
@@ -37,9 +38,8 @@ def mmr_select(
         return []
 
     import numpy as np
-    from sentence_transformers import SentenceTransformer
 
-    model = SentenceTransformer(config.embedding_model_name)
+    model = get_embedding_model(config.embedding_model_name)
     embeddings = model.encode(
         [sc.chunk.text for sc in candidates], convert_to_numpy=True, normalize_embeddings=True
     )
