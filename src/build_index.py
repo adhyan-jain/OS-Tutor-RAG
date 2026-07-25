@@ -21,7 +21,13 @@ from src.config import ChunkingConfig, PathConfig, RetrievalConfig
 from src.ingestion.extract_docx import extract_docx
 from src.ingestion.extract_pdf import extract_pdf
 from src.ingestion.extract_ppt import extract_ppt
-from src.ingestion.manifest import file_hash, load_manifest, record_file, save_manifest
+from src.ingestion.manifest import (
+    chunking_signature,
+    file_hash,
+    load_manifest,
+    record_file,
+    save_manifest,
+)
 from src.retrieval.hybrid_rrf import HybridRRFRetriever
 from src.schemas import Chunk
 
@@ -44,6 +50,7 @@ def main() -> None:
 
     paths.data_processed_dir.mkdir(parents=True, exist_ok=True)
     manifest = load_manifest(retrieval_config.index_dir)
+    current_chunking_signature = chunking_signature(chunking_config)
 
     raw_files = sorted(
         p for p in paths.data_raw_dir.iterdir() if p.suffix.lower() in _EXTRACTORS
@@ -62,7 +69,11 @@ def main() -> None:
         entry = manifest["files"].get(path.name)
         cache_path = _processed_path(paths.data_processed_dir, path.name)
 
-        if entry and entry["hash"] == current_hash and cache_path.exists():
+        # Reuse cached chunks only if both the file's contents and the chunking
+        # settings that produced them are unchanged -- otherwise editing
+        # ChunkingConfig would silently keep serving chunks built the old way.
+        chunking_unchanged = entry is not None and entry.get("chunking_signature") == current_chunking_signature
+        if entry and entry["hash"] == current_hash and chunking_unchanged and cache_path.exists():
             with open(cache_path, "rb") as f:
                 chunks = pickle.load(f)
             reused += 1
@@ -75,7 +86,7 @@ def main() -> None:
             ]
             with open(cache_path, "wb") as f:
                 pickle.dump(chunks, f)
-            record_file(manifest, path.name, current_hash, len(chunks))
+            record_file(manifest, path.name, current_hash, len(chunks), current_chunking_signature)
             new_or_changed += 1
 
         all_chunks.extend(chunks)

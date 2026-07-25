@@ -8,7 +8,10 @@ import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from src.config import ChunkingConfig
 
 _MANIFEST_FILENAME = "manifest.json"
 
@@ -57,7 +60,41 @@ def save_manifest(index_dir: Path, manifest: dict[str, Any]) -> None:
         json.dump(manifest, f, indent=2)
 
 
-def record_file(manifest: dict[str, Any], filename: str, hash_: str, num_chunks: int) -> None:
+def chunking_signature(config: "ChunkingConfig") -> str:
+    """Stable fingerprint of the chunking settings that affect chunk output.
+
+    Cached chunks are only reusable if they were produced by the same chunking
+    settings, not merely from the same raw file -- otherwise changing a
+    strategy or chunk size silently reuses chunks built under the old settings,
+    since the raw file's content hash hasn't changed.
+
+    Args:
+        config: The ChunkingConfig a file's chunks were produced under.
+
+    Returns:
+        A short hex digest of the output-affecting chunking settings.
+    """
+    payload = json.dumps(
+        {
+            "default_strategy": config.default_strategy,
+            "strategy_by_source_type": config.strategy_by_source_type,
+            "chunk_size": config.chunk_size,
+            "chunk_overlap": config.chunk_overlap,
+            "semantic_similarity_threshold": config.semantic_similarity_threshold,
+            "semantic_embedding_model_name": config.semantic_embedding_model_name,
+        },
+        sort_keys=True,
+    )
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+
+
+def record_file(
+    manifest: dict[str, Any],
+    filename: str,
+    hash_: str,
+    num_chunks: int,
+    chunking_signature_: str,
+) -> None:
     """Record/update a file's entry in the manifest (mutates in place).
 
     Args:
@@ -65,9 +102,13 @@ def record_file(manifest: dict[str, Any], filename: str, hash_: str, num_chunks:
         filename: The raw file's name (relative to data/raw/).
         hash_: The file's current content hash.
         num_chunks: Number of chunks produced from this file.
+        chunking_signature_: Fingerprint of the ChunkingConfig used, so a
+            later run with different chunking settings re-chunks rather than
+            reusing this entry's cached chunks.
     """
     manifest["files"][filename] = {
         "hash": hash_,
         "num_chunks": num_chunks,
+        "chunking_signature": chunking_signature_,
         "ingested_at": datetime.now(timezone.utc).isoformat(),
     }
