@@ -12,6 +12,7 @@ import re
 
 from src.config import GenerationConfig
 from src.schemas import ScoredChunk
+from src.token_tracking import LLMCallTracker
 
 _RELEVANCE_PROMPT_TEMPLATE = (
     "On a scale of 0 to 10, how relevant is the following passage to "
@@ -44,14 +45,17 @@ _MULTI_QUERY_PROMPT_TEMPLATE = (
 class LocalLLM:
     """Wraps a local LLM, either served via vLLM or a running Ollama instance."""
 
-    def __init__(self, config: GenerationConfig) -> None:
+    def __init__(self, config: GenerationConfig, tracker: LLMCallTracker | None = None) -> None:
         """Load the model (vllm backend) or record connection info (ollama backend).
 
         Args:
             config: Generation parameters (model name, backend, max_tokens,
                 temperature, gpu_memory_utilization, ollama_base_url).
+            tracker: Optional LLMCallTracker to log every call's token usage
+                to, for later cost reporting. No tracking if omitted.
         """
         self.config = config
+        self.tracker = tracker
 
         if config.backend == "vllm":
             from vllm import LLM
@@ -62,7 +66,7 @@ class LocalLLM:
         else:
             raise ValueError(f"Unsupported generation backend: {config.backend!r}")
 
-    def _complete(self, prompt: str) -> str:
+    def _complete(self, prompt: str, purpose: str = "unspecified") -> str:
         if self.config.backend == "vllm":
             from vllm import SamplingParams
 
@@ -70,25 +74,29 @@ class LocalLLM:
                 max_tokens=self.config.max_tokens, temperature=self.config.temperature
             )
             outputs = self._llm.generate([prompt], sampling_params)
-            return outputs[0].outputs[0].text.strip()
+            text = outputs[0].outputs[0].text.strip()
+        else:
+            import requests
 
-        import requests
-
-        response = requests.post(
-            f"{self.config.ollama_base_url}/api/generate",
-            json={
-                "model": self.config.model_name,
-                "prompt": prompt,
-                "stream": False,
-                "options": {
-                    "temperature": self.config.temperature,
-                    "num_predict": self.config.max_tokens,
+            response = requests.post(
+                f"{self.config.ollama_base_url}/api/generate",
+                json={
+                    "model": self.config.model_name,
+                    "prompt": prompt,
+                    "stream": False,
+                    "options": {
+                        "temperature": self.config.temperature,
+                        "num_predict": self.config.max_tokens,
+                    },
                 },
-            },
-            timeout=120,
-        )
-        response.raise_for_status()
-        return response.json()["response"].strip()
+                timeout=120,
+            )
+            response.raise_for_status()
+            text = response.json()["response"].strip()
+
+        if self.tracker is not None:
+            self.tracker.record(purpose, prompt, text)
+        return text
 
     def generate(self, query: str, context: list[ScoredChunk]) -> str:
         """Generate an answer to the query grounded in the given context chunks.
@@ -102,7 +110,7 @@ class LocalLLM:
         """
         context_text = "\n\n".join(sc.chunk.text for sc in context)
         prompt = _RAG_PROMPT_TEMPLATE.format(context=context_text, query=query)
-        return self._complete(prompt)
+        return self._complete(prompt, purpose="generate_answer")
 
     def generate_hypothetical_document(self, query: str) -> str:
         """Generate a hypothetical answer passage for a query (for HyDE retrieval).
@@ -114,7 +122,7 @@ class LocalLLM:
             A short, unretrieved passage that plausibly answers the query.
         """
         prompt = _HYDE_PROMPT_TEMPLATE.format(query=query)
-        return self._complete(prompt)
+        return self._complete(prompt, purpose="hyde_hypothetical")
 
     def generate_query_variants(self, query: str, n: int) -> list[str]:
         """Generate n reformulated versions of a query (for Multi Query retrieval).
@@ -128,7 +136,7 @@ class LocalLLM:
             response doesn't contain that many non-empty lines).
         """
         prompt = _MULTI_QUERY_PROMPT_TEMPLATE.format(n=n, query=query)
-        response = self._complete(prompt)
+        response = self._complete(prompt, purpose="multi_query_variants")
         lines = [line.strip("-*0123456789. \t") for line in response.splitlines()]
         return [line for line in lines if line][:n]
 
@@ -143,6 +151,6 @@ class LocalLLM:
             The parsed relevance score (0.0 if the response can't be parsed).
         """
         prompt = _RELEVANCE_PROMPT_TEMPLATE.format(query=query, passage=passage)
-        response = self._complete(prompt)
+        response = self._complete(prompt, purpose="llm_rerank_score")
         match = _SCORE_RE.search(response)
         return float(match.group()) if match else 0.0

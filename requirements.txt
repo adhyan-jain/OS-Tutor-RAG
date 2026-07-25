@@ -23,6 +23,7 @@ ragas==0.1.14
 langchain-community==0.2.6
 datasets==5.0.0
 openpyxl==3.1.5
+tiktoken==0.13.0
 
 # Core utilities
 numpy==1.26.4
