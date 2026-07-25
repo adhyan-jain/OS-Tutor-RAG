@@ -37,15 +37,22 @@ class ChunkingConfig:
     chunk_size: int = 512
     chunk_overlap: int = 64
     semantic_similarity_threshold: float = 0.6
-    semantic_embedding_model_name: str = "BAAI/bge-small-en-v1.5"
+    semantic_embedding_model_name: str = "BAAI/bge-large-en-v1.5"
 
 
 @dataclass
 class RetrievalConfig:
     """Parameters controlling retrieval techniques.
 
-    ``technique`` selects which retriever the pipeline builds: "dense",
-    "bm25", "hybrid_rrf", "hyde", or "multi_query".
+    ``technique`` selects which base retriever the pipeline builds: "dense",
+    "bm25", "hybrid_rrf", or "hyde".
+
+    ``use_multi_query`` is orthogonal to ``technique``: when True, the chosen
+    base retriever is wrapped so the query is fanned out into several
+    LLM-reformulated variants, each retrieved independently and fused via RRF
+    (reusing the same fusion as "hybrid_rrf") -- regardless of which technique
+    it wraps. Not combinable with technique == "hyde", since HyDE already
+    performs its own single-shot query transformation.
     """
 
     technique: str = "hybrid_rrf"
@@ -53,7 +60,8 @@ class RetrievalConfig:
     top_k: int = 10
     rrf_k: int = 60
     index_dir: Path = Path("data/index")
-    # Used when technique == "multi_query".
+    use_multi_query: bool = False
+    # Used when use_multi_query is True.
     num_query_variants: int = 3
 
 
@@ -77,7 +85,7 @@ class DiversificationConfig:
     enabled: bool = True
     lambda_param: float = 0.5
     top_k: int = 5
-    embedding_model_name: str = "BAAI/bge-small-en-v1.5"
+    embedding_model_name: str = "BAAI/bge-large-en-v1.5"
 
 
 @dataclass
@@ -115,6 +123,11 @@ class EvalConfig:
     eval_set_path: Path = Path("eval/eval_set.json")
     num_questions: int = 10
     output_workbook_path: Path = Path("eval/pipeline_runs.xlsx")
+    # Deliberately a different model than GenerationConfig.model_name: using
+    # the same model to both answer and grade its own answers is a known
+    # self-preference bias in LLM-as-judge setups. Assumed reachable at the
+    # same ollama_base_url as generation.
+    judge_model_name: str = "gemma2:9b"
 
 
 @dataclass
