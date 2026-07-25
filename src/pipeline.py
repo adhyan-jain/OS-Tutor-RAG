@@ -21,6 +21,7 @@ from src.retrieval.hyde import HyDERetriever
 from src.retrieval.multi_query import MultiQueryRetriever
 from src.retrieval.sparse_bm25 import BM25Retriever
 from src.schemas import Document
+from src.token_tracking import LLMCallTracker
 
 
 class RAGPipeline:
@@ -33,30 +34,42 @@ class RAGPipeline:
             config: Aggregated configuration for every pipeline stage.
         """
         self.config = config
-        self.llm = LocalLLM(config.generation)
+        # Shared across self.llm and any retriever/reranker that makes its own
+        # LLM calls (hyde, multi_query, llm_rerank), so one run's full LLM
+        # usage/cost can be reported together (see evaluation.py).
+        self.tracker = LLMCallTracker()
+        self.llm = LocalLLM(config.generation, tracker=self.tracker)
         self.retriever = self._build_retriever()
         self.reranker = self._build_reranker()
 
     def _build_retriever(self):
         technique = self.config.retrieval.technique
-        if technique == "dense":
-            return DenseRetriever(self.config.retrieval)
-        if technique == "bm25":
-            return BM25Retriever(self.config.retrieval)
-        if technique == "hybrid_rrf":
-            return HybridRRFRetriever(self.config.retrieval)
+        use_multi_query = self.config.retrieval.use_multi_query
+
         if technique == "hyde":
-            return HyDERetriever(self.config.retrieval, self.config.generation)
-        if technique == "multi_query":
-            return MultiQueryRetriever(self.config.retrieval, self.config.generation)
-        raise ValueError(f"Unknown retrieval technique: {technique!r}")
+            if use_multi_query:
+                raise ValueError("use_multi_query cannot be combined with technique='hyde'")
+            return HyDERetriever(self.config.retrieval, self.config.generation, tracker=self.tracker)
+
+        if technique == "dense":
+            base = DenseRetriever(self.config.retrieval)
+        elif technique == "bm25":
+            base = BM25Retriever(self.config.retrieval)
+        elif technique == "hybrid_rrf":
+            base = HybridRRFRetriever(self.config.retrieval)
+        else:
+            raise ValueError(f"Unknown retrieval technique: {technique!r}")
+
+        if use_multi_query:
+            return MultiQueryRetriever(base, self.config.retrieval, self.config.generation, tracker=self.tracker)
+        return base
 
     def _build_reranker(self):
         method = self.config.reranking.method
         if method == "cross_encoder":
             return CrossEncoderReranker(self.config.reranking)
         if method == "llm_rerank":
-            return LLMReranker(self.config.reranking, self.config.generation)
+            return LLMReranker(self.config.reranking, self.config.generation, tracker=self.tracker)
         if method == "none":
             return None
         raise ValueError(f"Unknown reranking method: {method!r}")
@@ -101,8 +114,8 @@ class RAGPipeline:
         """Answer a query, also returning the context chunk texts used.
 
         Used by eval/ragas_eval.py, which needs the actual retrieved/reranked/
-        diversified contexts (not just the final answer) to score
-        context_precision, context_recall, faithfulness, and answer_relevancy.
+        diversified contexts (not just the final answer) to score every
+        RAGAS metric in src.evaluation.METRIC_NAMES.
 
         Args:
             query: The user's natural language question.
@@ -131,10 +144,19 @@ class RAGPipeline:
         from src.evaluation import append_run_to_workbook, load_eval_set, score_pipeline
 
         eval_set = load_eval_set(self.config.eval.eval_set_path, self.config.eval.num_questions)
-        mean_scores, detail_rows = score_pipeline(self, eval_set)
+        mean_scores, detail_rows, eval_tracker = score_pipeline(self, eval_set)
 
-        run_name = run_name or f"{self.config.retrieval.technique}+{self.config.reranking.method}"
+        retrieval_label = self.config.retrieval.technique
+        if self.config.retrieval.use_multi_query:
+            retrieval_label += "+multi_query"
+        run_name = run_name or f"{retrieval_label}+{self.config.reranking.method}"
         append_run_to_workbook(
-            self.config.eval.output_workbook_path, run_name, self.config, mean_scores, detail_rows
+            self.config.eval.output_workbook_path,
+            run_name,
+            self.config,
+            mean_scores,
+            detail_rows,
+            self.tracker,
+            eval_tracker,
         )
         return mean_scores

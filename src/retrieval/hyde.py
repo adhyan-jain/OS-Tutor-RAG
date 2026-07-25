@@ -10,12 +10,18 @@ from src.config import GenerationConfig, RetrievalConfig
 from src.generation.local_llm import LocalLLM
 from src.retrieval.dense import DenseRetriever
 from src.schemas import Chunk, ScoredChunk
+from src.token_tracking import LLMCallTracker
 
 
 class HyDERetriever:
     """Retrieves chunks using embeddings of an LLM-generated hypothetical answer."""
 
-    def __init__(self, config: RetrievalConfig, generation_config: GenerationConfig | None = None) -> None:
+    def __init__(
+        self,
+        config: RetrievalConfig,
+        generation_config: GenerationConfig | None = None,
+        tracker: LLMCallTracker | None = None,
+    ) -> None:
         """Initialize the retriever with a generation backend and dense index.
 
         Args:
@@ -23,10 +29,11 @@ class HyDERetriever:
                 shared with DenseRetriever so HyDE can reuse the same FAISS index.
             generation_config: Parameters for the LLM used to generate the
                 hypothetical answer. Defaults to GenerationConfig().
+            tracker: Optional LLMCallTracker to log this retriever's LLM calls to.
         """
         self.config = config
         self.dense = DenseRetriever(config)
-        self.llm = LocalLLM(generation_config or GenerationConfig())
+        self.llm = LocalLLM(generation_config or GenerationConfig(), tracker=tracker)
 
     def build_index(self, chunks: list[Chunk]) -> None:
         """Build the underlying dense index from a list of Chunks.

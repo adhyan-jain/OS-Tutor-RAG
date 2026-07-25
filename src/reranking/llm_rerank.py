@@ -7,21 +7,28 @@ from dataclasses import replace
 from src.config import GenerationConfig, RerankingConfig
 from src.generation.local_llm import LocalLLM
 from src.schemas import ScoredChunk
+from src.token_tracking import LLMCallTracker
 
 
 class LLMReranker:
     """Reranks ScoredChunks by prompting an LLM to judge relevance."""
 
-    def __init__(self, config: RerankingConfig, generation_config: GenerationConfig | None = None) -> None:
+    def __init__(
+        self,
+        config: RerankingConfig,
+        generation_config: GenerationConfig | None = None,
+        tracker: LLMCallTracker | None = None,
+    ) -> None:
         """Initialize the reranker with a generation backend.
 
         Args:
             config: Reranking parameters (top_n).
             generation_config: Parameters for the LLM used to score relevance.
                 Defaults to GenerationConfig().
+            tracker: Optional LLMCallTracker to log this reranker's LLM calls to.
         """
         self.config = config
-        self.llm = LocalLLM(generation_config or GenerationConfig())
+        self.llm = LocalLLM(generation_config or GenerationConfig(), tracker=tracker)
 
     def rerank(self, query: str, candidates: list[ScoredChunk]) -> list[ScoredChunk]:
         """Rerank candidate chunks for a query using LLM relevance judgments.
