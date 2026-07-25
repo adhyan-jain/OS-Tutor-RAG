@@ -1,10 +1,10 @@
 """Evaluate pipeline configurations against eval_set.json using RAGAS metrics.
 
 Runs RAGPipeline across a set of technique combinations (config variants),
-scores each with RAGAS (context_precision, context_recall, faithfulness,
-answer_relevancy, answer_correctness) using a local judge (Ollama LLM + a
-local sentence-transformer for embeddings, not OpenAI), and writes a
-comparison table ranking configs by correctness + completeness.
+scores each with RAGAS (see src.evaluation.METRIC_NAMES for the full metric
+list) using a local judge (Ollama LLM + a local sentence-transformer for
+embeddings, not OpenAI), and writes a comparison table ranking configs by
+correctness + completeness.
 
 This is the *mass* evaluator (every technique combination, one full run).
 For evaluating a single pipeline config as you iterate, use
@@ -16,11 +16,18 @@ from __future__ import annotations
 
 import copy
 import json
+import math
 from dataclasses import dataclass
 from pathlib import Path
 
-from src.config import GenerationConfig, PathConfig, PipelineConfig
-from src.evaluation import METRIC_NAMES, load_eval_set, safe_mean, score_pipeline
+from src.config import ChunkingConfig, GenerationConfig, PathConfig, PipelineConfig
+from src.evaluation import (
+    METRIC_NAMES,
+    append_run_to_workbook,
+    composite_scores,
+    load_eval_set,
+    score_pipeline,
+)
 from src.ingestion.extract_docx import extract_docx
 from src.ingestion.extract_pdf import extract_pdf
 from src.ingestion.extract_ppt import extract_ppt
@@ -58,29 +65,72 @@ class ConfigVariant:
     config: PipelineConfig
 
 
-def default_config_variants(generation_config: GenerationConfig | None = None) -> list[ConfigVariant]:
-    """Build the default set of config variants to compare.
+def _chunking_config_variants() -> dict[str, ChunkingConfig]:
+    """Named ChunkingConfig variants for comparing chunking strategies.
 
-    Varies retrieval technique and reranking method; chunking, diversification,
-    and generation are held fixed across variants for a controlled comparison.
+    "mixed" is the tuned per-source-type default (pptx/docx -> structure_aware,
+    pdf/text -> semantic). "structure_aware" and "semantic" force that single
+    strategy across every source type instead, isolating the strategy's own
+    effect from the type-based routing.
+    """
+    source_types = ("pptx", "docx", "pdf", "text")
+    return {
+        "mixed": ChunkingConfig(),
+        "structure_aware": ChunkingConfig(
+            default_strategy="structure_aware",
+            strategy_by_source_type={t: "structure_aware" for t in source_types},
+        ),
+        "semantic": ChunkingConfig(
+            default_strategy="semantic",
+            strategy_by_source_type={t: "semantic" for t in source_types},
+        ),
+    }
+
+
+def default_config_variants(generation_config: GenerationConfig | None = None) -> list[ConfigVariant]:
+    """Build the full grid of config variants to compare: chunking strategy x
+    retrieval technique x use_multi_query (where valid) x reranking method x
+    MMR diversification on/off.
+
+    use_multi_query is excluded for technique == "hyde" (see
+    RetrievalConfig.use_multi_query's docstring -- the two aren't combinable).
+
+    "llm_rerank" is deliberately excluded from this sweep despite being a
+    supported RerankingConfig.method: it prompts the LLM once per retrieved
+    candidate (~top_k calls/question), which roughly triples the sweep's total
+    LLM calls and wall-clock time for a stage that cross_encoder already
+    covers. Evaluate it separately against the sweep's winning config instead
+    (set reranking.method = "llm_rerank" and call RAGPipeline.evaluate()).
 
     Args:
         generation_config: Generation settings shared by all variants.
             Defaults to GenerationConfig() (currently backend="ollama",
-            model_name="llama3:latest" — see config.py).
+            model_name="llama3:latest" -- see config.py).
 
     Returns:
-        A list of named ConfigVariants.
+        A list of named ConfigVariants (84 by default: 3 chunking x 7
+        retrieval configs x 2 reranking methods x 2 MMR settings).
     """
-    base = PipelineConfig(generation=generation_config or GenerationConfig())
+    generation_config = generation_config or GenerationConfig()
+    chunking_variants = _chunking_config_variants()
 
     variants = []
-    for technique in ("dense", "bm25", "hybrid_rrf", "hyde", "multi_query"):
-        for method in ("cross_encoder", "none"):
-            config = copy.deepcopy(base)
-            config.retrieval.technique = technique
-            config.reranking.method = method
-            variants.append(ConfigVariant(name=f"{technique}+{method}", config=config))
+    for chunking_name, chunking_config in chunking_variants.items():
+        for technique in ("dense", "bm25", "hybrid_rrf", "hyde"):
+            multi_query_options = (False,) if technique == "hyde" else (False, True)
+            for use_multi_query in multi_query_options:
+                for method in ("cross_encoder", "none"):
+                    for mmr_enabled in (True, False):
+                        config = PipelineConfig(generation=generation_config)
+                        config.chunking = copy.deepcopy(chunking_config)
+                        config.retrieval.technique = technique
+                        config.retrieval.use_multi_query = use_multi_query
+                        config.reranking.method = method
+                        config.diversification.enabled = mmr_enabled
+
+                        retrieval_label = f"{technique}+multi_query" if use_multi_query else technique
+                        name = f"{chunking_name}+{retrieval_label}+{method}+mmr_{mmr_enabled}"
+                        variants.append(ConfigVariant(name=name, config=config))
     return variants
 
 
@@ -111,47 +161,95 @@ def run_comparison(
     all_detail_rows: list[dict] = []
     details_output_path = details_output_path or output_path.parent / "ragas_details.xlsx"
 
-    for variant in variants:
-        print(f"Evaluating variant: {variant.name}")
-        pipeline = RAGPipeline(variant.config)
-        pipeline.ingest(documents)
-        scores, detail_rows = score_pipeline(pipeline, eval_set)
+    failures: list[tuple[str, str]] = []
+
+    for variant_index, variant in enumerate(variants, start=1):
+        print(f"[{variant_index}/{len(variants)}] Evaluating variant: {variant.name}")
+
+        # One variant failing (a flaky Ollama call, an OOM, a metric blowing
+        # up on odd output) must not discard the hours of completed variants
+        # before it -- log it, keep the partial results already written, and
+        # continue with the next variant.
+        try:
+            pipeline = RAGPipeline(variant.config)
+            pipeline.ingest(documents)
+            scores, detail_rows, eval_tracker = score_pipeline(pipeline, eval_set)
+        except Exception as error:  # noqa: BLE001 - deliberate: keep sweep alive
+            print(f"  FAILED ({type(error).__name__}): {error}")
+            failures.append((variant.name, f"{type(error).__name__}: {error}"))
+            continue
+
         rows.append({"config": variant.name, **scores})
         for question_index, detail_row in enumerate(detail_rows):
             all_detail_rows.append({"config": variant.name, "question_index": question_index, **detail_row})
         print(f"  {scores}")
+
+        # Also record into the shared per-run workbook (same LLM usage/cost
+        # reporting as RAGPipeline.evaluate()), so mass sweeps and single
+        # ad-hoc runs both accumulate into one comparable history.
+        append_run_to_workbook(
+            variant.config.eval.output_workbook_path,
+            variant.name,
+            variant.config,
+            scores,
+            detail_rows,
+            pipeline.tracker,
+            eval_tracker,
+        )
 
         # Write after every variant (not just at the end) so a crash midway
         # through this multi-hour run doesn't lose already-computed results.
         _write_details_workbook(all_detail_rows, details_output_path)
         _write_table(_ranked(rows), output_path)
 
+    if failures:
+        print(f"\n{len(failures)} variant(s) failed and were skipped:")
+        for name, error in failures:
+            print(f"  {name}: {error}")
+
     print(f"Comparison table written to {output_path}")
     print(f"Per-question details written to {details_output_path}")
 
 
 def _ranked(rows: list[dict]) -> list[dict]:
-    """Rank configs by correctness + completeness, not a flat 5-metric average.
+    """Rank configs by correctness + completeness, not a flat metric average.
 
-    - correctness = mean(faithfulness, answer_correctness) -- is the answer
-      factually grounded in the retrieved context, and does it match the
-      ground truth.
-    - completeness = context_recall -- did retrieval surface everything
-      needed to fully answer the question.
-    NaN-safe: a metric that failed to parse for a config doesn't drop out of
-    the whole row, it's just excluded from whichever composite uses it.
+    Composites come from src.evaluation.composite_scores so this comparison
+    table and the per-run workbook rank runs by identical definitions -- they
+    previously diverged (completeness was context_recall alone here, but
+    mean(context_recall, context_entity_recall) in the workbook).
+
+    Sorting is NaN-safe: a config whose composite failed to compute sorts last
+    rather than comparing unpredictably against real scores.
     """
     ranked_rows = []
     for row in rows:
         ranked_row = dict(row)
-        ranked_row["correctness"] = safe_mean([row["faithfulness"], row["answer_correctness"]])
-        ranked_row["completeness"] = row["context_recall"]
-        ranked_row["correctness_completeness"] = safe_mean(
-            [ranked_row["correctness"], ranked_row["completeness"]]
-        )
+        ranked_row.update(composite_scores(row))
         ranked_rows.append(ranked_row)
-    ranked_rows.sort(key=lambda r: r["correctness_completeness"], reverse=True)
+    ranked_rows.sort(
+        key=lambda r: (
+            -1.0 if math.isnan(r["correctness_completeness"]) else r["correctness_completeness"]
+        ),
+        reverse=True,
+    )
     return ranked_rows
+
+
+def _variant_sheet_names(variant_names: list[str]) -> dict[str, str]:
+    """Map each variant name to a unique, Excel-legal (<=31 char) sheet name.
+
+    Variant names are far longer than Excel's 31-character sheet-name limit
+    (e.g. "structure_aware+dense+cross_encoder+mmr_True"), and truncating them
+    collides -- variants differing only in a trailing field would map to the
+    same sheet. A numeric prefix keeps every sheet distinct regardless of how
+    much of the name survives truncation; the untruncated name stays available
+    in each sheet's "config" column and in the summary table.
+    """
+    return {
+        name: f"{index:02d}_{name.replace('+', '_')}"[:31]
+        for index, name in enumerate(variant_names, start=1)
+    }
 
 
 def _write_details_workbook(all_detail_rows: list[dict], output_path: Path) -> None:
@@ -167,12 +265,14 @@ def _write_details_workbook(all_detail_rows: list[dict], output_path: Path) -> N
     df = pd.DataFrame(all_detail_rows)
     by_question = df.sort_values(["question_index", "config"]).drop(columns=["question_index"])
 
+    variant_names = list(df["config"].unique())
+    sheet_names = _variant_sheet_names(variant_names)
+
     with pd.ExcelWriter(output_path, engine="openpyxl") as writer:
         by_question.to_excel(writer, sheet_name="All Results (by question)", index=False)
-        for variant_name in df["config"].unique():
-            sheet_name = variant_name.replace("+", "_")[:31]
-            variant_df = df[df["config"] == variant_name].drop(columns=["question_index", "config"])
-            variant_df.to_excel(writer, sheet_name=sheet_name, index=False)
+        for variant_name in variant_names:
+            variant_df = df[df["config"] == variant_name].drop(columns=["question_index"])
+            variant_df.to_excel(writer, sheet_name=sheet_names[variant_name], index=False)
 
 
 def _write_table(rows: list[dict], output_path: Path) -> None:
