@@ -134,12 +134,43 @@ def default_config_variants(generation_config: GenerationConfig | None = None) -
     return variants
 
 
+def completed_run_names(workbook_path: Path) -> set[str]:
+    """Names of variants already recorded in the per-run workbook.
+
+    Used to resume a sweep that died partway: a full-grid run takes many hours,
+    and re-running variants that already produced results wastes most of that.
+    Reads the "Final Analysis" sheet, whose first column is the run name.
+
+    Args:
+        workbook_path: Path to the per-run workbook (may not exist yet).
+
+    Returns:
+        The set of run names present, empty if the workbook has no results.
+    """
+    if not workbook_path.exists():
+        return set()
+
+    import openpyxl
+
+    workbook = openpyxl.load_workbook(workbook_path, read_only=True)
+    if "Final Analysis" not in workbook.sheetnames:
+        return set()
+
+    sheet = workbook["Final Analysis"]
+    names = {
+        str(row[0]) for row in sheet.iter_rows(min_row=2, max_col=1, values_only=True) if row[0]
+    }
+    workbook.close()
+    return names
+
+
 def run_comparison(
     variants: list[ConfigVariant],
     documents,
     eval_set_path: Path,
     output_path: Path,
     details_output_path: Path | None = None,
+    resume: bool = False,
 ) -> None:
     """Run RAGAS eval across config variants and write a ranked comparison table.
 
@@ -155,11 +186,19 @@ def run_comparison(
         output_path: Where to write the comparison table (.md or .csv, by extension).
         details_output_path: Where to write the per-question Excel workbook.
             Defaults to output_path's directory / "ragas_details.xlsx".
+        resume: Skip variants already recorded in the per-run workbook, for
+            restarting a sweep that died partway through.
     """
     eval_set = load_eval_set(eval_set_path)
     rows = []
     all_detail_rows: list[dict] = []
     details_output_path = details_output_path or output_path.parent / "ragas_details.xlsx"
+
+    if resume:
+        already_done = completed_run_names(variants[0].config.eval.output_workbook_path)
+        skipped = [v.name for v in variants if v.name in already_done]
+        variants = [v for v in variants if v.name not in already_done]
+        print(f"Resuming: skipping {len(skipped)} already-completed variant(s), {len(variants)} remaining\n")
 
     failures: list[tuple[str, str]] = []
 
@@ -312,6 +351,17 @@ def main() -> None:
         default="eval/comparison_results.md",
         help="Output path for the comparison table (.md or .csv).",
     )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Skip variants already recorded in the per-run workbook (restart a died sweep).",
+    )
+    parser.add_argument(
+        "--num-questions",
+        type=int,
+        default=None,
+        help="Evaluate only the first N eval questions (default: the whole eval set).",
+    )
     args = parser.parse_args()
 
     documents = load_raw_documents(PathConfig().data_raw_dir)
@@ -326,8 +376,14 @@ def main() -> None:
         quick_eval_set_path = Path("eval/_quick_eval_set.json")
         quick_eval_set_path.write_text(json.dumps({"examples": eval_set}))
         eval_set_path = quick_eval_set_path
+    elif args.num_questions is not None:
+        eval_set = load_eval_set(eval_set_path)[: args.num_questions]
+        subset_path = Path("eval/_subset_eval_set.json")
+        subset_path.write_text(json.dumps({"examples": eval_set}))
+        eval_set_path = subset_path
 
-    run_comparison(variants, documents, eval_set_path, Path(args.output))
+    print(f"Running {len(variants)} config variants")
+    run_comparison(variants, documents, eval_set_path, Path(args.output), resume=args.resume)
 
 
 if __name__ == "__main__":
