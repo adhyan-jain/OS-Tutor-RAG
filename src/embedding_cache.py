@@ -8,11 +8,22 @@ otherwise pay that cost on every call, which dominates their runtime.
 Retrievers that already load a model once in __init__ (e.g. DenseRetriever)
 don't need this, though using it lets them share one instance when configured
 with the same model name.
+
+Models default to CPU (override with OS_RAG_EMBEDDING_DEVICE). The GPU here is
+shared with Ollama, whose generation and judge models want most of an 8GB
+card on their own. Measured on this machine: torch holding ~1.5GB of VRAM
+pushed Ollama into CPU offload and made generation 5-13x slower (llama3 went
+from 2.0s to 25.8s per call), and eventually OOMed outright. Since LLM calls
+dominate a sweep's runtime while embedding is amortized by the caches above,
+conceding the GPU to Ollama is the cheaper trade.
 """
 
 from __future__ import annotations
 
+import os
 from typing import TYPE_CHECKING
+
+_DEVICE = os.environ.get("OS_RAG_EMBEDDING_DEVICE", "cpu")
 
 if TYPE_CHECKING:
     from sentence_transformers import CrossEncoder, SentenceTransformer
@@ -33,19 +44,16 @@ def get_embedding_model(model_name: str) -> "SentenceTransformer":
     if model_name not in _MODEL_CACHE:
         from sentence_transformers import SentenceTransformer
 
-        _MODEL_CACHE[model_name] = SentenceTransformer(model_name)
+        _MODEL_CACHE[model_name] = SentenceTransformer(model_name, device=_DEVICE)
     return _MODEL_CACHE[model_name]
 
 
 def release_gpu_memory() -> None:
-    """Move every cached model to CPU and free the VRAM they held.
+    """Move every cached model to CPU and free whatever VRAM they held.
 
-    This machine shares one 8GB GPU between torch (embeddings, cross-encoder)
-    and Ollama (generation and judge models, up to ~8GB on their own). Holding
-    torch models resident while Ollama loads a judge model overflows the card,
-    so the eval flow releases them between its generation and judging passes.
-    Cached models stay usable afterwards -- sentence-transformers moves them
-    back to the GPU on next use if one is available.
+    A no-op under the default CPU device, but kept for runs that opt into
+    OS_RAG_EMBEDDING_DEVICE=cuda: it hands the card back before Ollama loads a
+    model that needs most of it.
     """
     import torch
 
@@ -75,5 +83,5 @@ def get_cross_encoder(model_name: str) -> "CrossEncoder":
     if model_name not in _CROSS_ENCODER_CACHE:
         from sentence_transformers import CrossEncoder
 
-        _CROSS_ENCODER_CACHE[model_name] = CrossEncoder(model_name)
+        _CROSS_ENCODER_CACHE[model_name] = CrossEncoder(model_name, device=_DEVICE)
     return _CROSS_ENCODER_CACHE[model_name]

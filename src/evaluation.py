@@ -59,16 +59,26 @@ def _make_tracking_chat_ollama(model_name: str, base_url: str, tracker: LLMCallT
 
     Ragas's metrics call the judge LLM internally (we don't control those call
     sites directly), so tracking happens by wrapping the LangChain chat model
-    itself: every metric ultimately routes through ChatOllama._generate().
+    itself. Both the sync and async entry points are wrapped: ragas reaches the
+    model through LangchainLLMWrapper.agenerate_text(), so overriding only
+    _generate() records nothing.
     """
     from langchain_community.chat_models import ChatOllama
+
+    def _record(messages, result) -> None:
+        prompt_text = "\n".join(str(m.content) for m in messages)
+        response_text = result.generations[0].message.content if result.generations else ""
+        tracker.record("ragas_judge", prompt_text, response_text)
 
     class _TrackingChatOllama(ChatOllama):
         def _generate(self, messages, stop=None, run_manager=None, **kwargs):
             result = super()._generate(messages, stop=stop, run_manager=run_manager, **kwargs)
-            prompt_text = "\n".join(str(m.content) for m in messages)
-            response_text = result.generations[0].message.content if result.generations else ""
-            tracker.record("ragas_judge", prompt_text, response_text)
+            _record(messages, result)
+            return result
+
+        async def _agenerate(self, messages, stop=None, run_manager=None, **kwargs):
+            result = await super()._agenerate(messages, stop=stop, run_manager=run_manager, **kwargs)
+            _record(messages, result)
             return result
 
     return _TrackingChatOllama(model=model_name, base_url=base_url)
