@@ -665,6 +665,49 @@ answer_correctness on the biased benchmark; on the corrected one it measures
 are easier to ground against but carry fewer entities -- rather than the loss
 A7 described. Pending the hyde+cross_encoder pair as an independent read.
 
+### A15 — `context_entity_recall` is unreliable for this content
+
+The metric extracts entities from the ground truth and, separately, from the
+retrieved context, then intersects the two **string sets**. Asking an LLM to
+enumerate entities from ~900 tokens of multi-passage context returns a
+different, non-exhaustive subset than it returns from a two-sentence reference,
+so the intersection fails even when the information is fully present.
+
+Measured directly on two questions:
+
+```
+Q: What are the states of a process, and what makes a process blocked?
+  GT entities : ['CPU','I/O request','blocked','disk','event','process','ready']
+  matched     : []                        score = 0/7 = 0.000
+  every one of the seven is literally present in the retrieved context text
+```
+
+```
+Q: What are the design goals of an operating system?
+  MISSED: ['hardware resources','memory','multiple processes','user programs']
+  three of those four are literally present in the context
+```
+
+So the 0.479 average is substantially **extraction disagreement, not missing
+information**. Consequences, including for claims made earlier in this document:
+
+- **"entity recall is the real gap" was wrong.** It is the weakest number but
+  not a real weakness.
+- **A2's correlation is suspect.** Correctness correlating with entity recall
+  at r=+0.24 has noise on one side; the `context_recall` correlation (+0.41)
+  is unaffected and remains the sounder signal.
+- **The `completeness` composite is polluted**, since half of it is this
+  metric. Not changed mid-sweep, because that would make the eight variants
+  incomparable, but it should be revisited.
+- **Improvements measured on this metric are weakly evidenced.** Multi-query
+  raising it 0.491 → 0.533 may partly reflect more context text yielding more
+  extracted entities. Its `answer_correctness` gain (+0.033) does not depend on
+  this extraction step and is firmer.
+
+The metric was designed for entity-centric domains (its documentation cites a
+tourism chatbot). Conceptual material, where the "entities" are ordinary
+technical nouns and contexts are long, is outside what it measures well.
+
 ## Open items
 
 - **Raise `context_entity_recall`** (currently 0.440) -- the metric most
