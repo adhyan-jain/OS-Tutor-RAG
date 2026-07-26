@@ -616,6 +616,55 @@ top chunk worst** -- a prediction the RAGAS sweep can test.
 therefore the one worth optimising. `bm25` and `hybrid_rrf` are dominated on
 every metric and are not worth further RAGAS time except to document it.
 
+### A13 — Refuted: HyDE's retrieval breadth does not reach the answer
+
+A12 predicted that HyDE, leading full@5 at 0.692 against dense's 0.577, would
+convert that breadth into higher `context_entity_recall` and therefore higher
+`answer_correctness`, since incomplete context was what produced partial
+answers. **Measured on the corrected benchmark, it does not:**
+
+| variant | corr | compl | composite | faith | ans_corr | ctx_recall | ctx_entity | LLM calls |
+|---|---|---|---|---|---|---|---|---|
+| hyde + none | 0.780 | 0.723 | **0.752** | 0.929 | 0.631 | **0.958** | 0.488 | 510 |
+| dense + cross_encoder | **0.795** | 0.693 | 0.744 | **0.949** | **0.642** | 0.926 | 0.460 | 448 |
+| dense + none | 0.764 | 0.717 | 0.740 | 0.899 | 0.629 | 0.942 | **0.491** | 451 |
+
+`answer_correctness` moves +0.002, and `context_entity_recall` moves in the
+*wrong* direction (0.488 against 0.491). HyDE does lead `context_recall` and
+the composite, but by margins well inside noise, and it costs 510 LLM calls
+against 451.
+
+So the breadth advantage was real at the retrieval layer and did not survive to
+the answer. Either the additional sources HyDE surfaces are not the ones
+holding the missing entities, or generation does not exploit extra context as
+readily as assumed. The prediction was specific and falsifiable, and it failed.
+
+### A14 — Technique choice barely matters once the defects are fixed
+
+The three variants measured so far span 0.740 to 0.752 on the composite. At 26
+questions judged by a 7B model, that range is not resolvable. Set against the
+effect sizes of the defect fixes:
+
+| change | measured effect |
+|---|---|
+| chunking + parent expansion | refusals 11.7% → ~0% |
+| dropping MMR | hit@8 0.962 → 1.000 |
+| correcting the eval set | BM25 recall@5 0.500 → 0.885 |
+| **choosing among dense / hyde / reranking** | **~0.01 composite** |
+
+The gains came from repairing defects and from fixing how quality was measured,
+not from selecting between techniques. This inverts the premise the project
+started with -- that the point was to find which retrieval technique wins -- and
+is the more useful result: on a corpus this size, a correct pipeline matters an
+order of magnitude more than a clever one.
+
+**Also a provisional correction to A7.** Reranking measured ~0.05 *worse* on
+answer_correctness on the biased benchmark; on the corrected one it measures
++0.013 better on that metric and +0.050 on faithfulness, at the cost of
+`context_entity_recall` (-0.031). That is a coherent trade -- narrower contexts
+are easier to ground against but carry fewer entities -- rather than the loss
+A7 described. Pending the hyde+cross_encoder pair as an independent read.
+
 ## Open items
 
 - **Raise `context_entity_recall`** (currently 0.440) -- the metric most
