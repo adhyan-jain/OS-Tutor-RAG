@@ -127,7 +127,12 @@ class EvalConfig:
     # the same model to both answer and grade its own answers is a known
     # self-preference bias in LLM-as-judge setups. Assumed reachable at the
     # same ollama_base_url as generation.
-    judge_model_name: str = "gemma2:9b"
+    #
+    # qwen2.5 (not gemma2:9b) because judging dominates a sweep's runtime --
+    # ~18 of the ~19 LLM calls per question are judge calls. A 7B model that
+    # fits entirely in this machine's 8GB VRAM measured ~2x faster per call
+    # than a 9B one that partially offloads to CPU.
+    judge_model_name: str = "qwen2.5:7b"
 
 
 @dataclass

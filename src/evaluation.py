@@ -174,6 +174,11 @@ def score_pipeline(
     # + gemma2:9b 5.4GB), so Ollama evicts one to load the other. Generating
     # every answer first, then scoring every answer, costs 2 model loads per
     # run instead of 2 per question.
+    # Release before generation too, not just before judging: under
+    # OS_RAG_EMBEDDING_DEVICE=cuda the embedding models are still resident from
+    # ingest at this point, and Ollama needs the card from here on.
+    release_gpu_memory()
+
     generated: list[tuple[dict, str, list[str]]] = []
     for i, example in enumerate(eval_set):
         print(f"  generating {i + 1}/{len(eval_set)}: {example['question']!r}")
