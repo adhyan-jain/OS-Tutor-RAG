@@ -493,6 +493,50 @@ with no diversification stage. The binding constraint on hit rate is A8b and
 A8c -- vocabulary the corpus does not contain, and ground truth that names one
 source where the corpus provides two -- neither of which diversity can address.
 
+### A10 — MMR costs recall; every refinement stage measures worse than omitting it
+
+Prompted by an observation that settles A8a/A9 from the other direction: if
+sibling crowding were the binding constraint, MMR exists precisely to fix it
+and should therefore win clearly. It does not, which is itself evidence that
+crowding is not what is limiting retrieval.
+
+Measuring MMR directly against no diversification, dense retrieval, no
+reranking:
+
+| config | hit | full | contexts |
+|---|---|---|---|
+| mmr off, k=5 | 0.885 | 0.692 | 3.4 |
+| mmr on, k=5 | 0.885 | 0.692 | 3.5 |
+| mmr off, k=8 | **1.000** | **0.808** | 5.5 |
+| mmr on, k=8 | 0.962 | 0.769 | 5.7 |
+| mmr off, k=10 | **1.000** | **0.846** | 6.8 |
+| mmr on, k=10 | 1.000 | 0.808 | 7.3 |
+
+MMR is not neutral, it is negative: it drops a correct slide at k=8 and costs
+breadth at k=10, trading relevance for a diversity this corpus does not need.
+
+Two corrections follow. **k=8 without MMR already reaches hit 1.000**, so the
+earlier conclusion that k=10 was required was an artifact of measuring with MMR
+enabled. And **A7's reading of MMR as "mildly helpful" was wrong**: the +0.004
+on answer_correctness was noise, and the retrieval-level measurement is
+sensitive enough to show the true sign. Downstream answer metrics at n=26
+cannot resolve differences this small; retrieval metrics can.
+
+Taken together, every post-retrieval refinement stage measures worse than
+leaving it out:
+
+| stage | measured effect |
+|---|---|
+| cross-encoder reranking | -0.05 answer_correctness (A7) |
+| MMR diversification | -0.038 hit@8 (A10) |
+| per-parent capping | no effect (A9) |
+| BM25 fusion in hybrid_rrf | -0.077 recall@5 vs dense (A5) |
+
+The pipeline that wins is the simplest one: dense retrieval, parent expansion,
+nothing in between. This is worth stating plainly in the write-up -- the
+components were added on the reasonable assumption that they help, and
+measurement says otherwise for this corpus.
+
 ## Open items
 
 - **Raise `context_entity_recall`** (currently 0.440) -- the metric most
