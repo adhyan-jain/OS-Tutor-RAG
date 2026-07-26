@@ -62,8 +62,9 @@ class RetrievalConfig:
     base retriever is wrapped so the query is fanned out into several
     LLM-reformulated variants, each retrieved independently and fused via RRF
     (reusing the same fusion as "hybrid_rrf") -- regardless of which technique
-    it wraps. Not combinable with technique == "hyde", since HyDE already
-    performs its own single-shot query transformation.
+    it wraps, including "hyde". Pairing it with HyDE drafts a hypothetical
+    answer per variant, which is nearer the originally published HyDE (it
+    samples several hypothetical documents) than the single-shot version here.
     """
 
     # Defaults follow what measured best rather than what is conventional:

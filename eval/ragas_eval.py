@@ -112,6 +112,48 @@ def default_config_variants(generation_config: GenerationConfig | None = None) -
     return variants
 
 
+def focused_config_variants(generation_config: GenerationConfig | None = None) -> list[ConfigVariant]:
+    """The configurations still worth spending RAGAS time on.
+
+    Retrieval was characterised first, without any LLM in the loop
+    (eval/retrieval_eval.py), which narrowed six techniques to three: dense
+    leads MRR and recall@5, HyDE leads full@5, and multi-query leads recall@1,
+    each for a mechanistic reason (FINDINGS.md A12). bm25 and hybrid_rrf are
+    dominated on every retrieval metric, so their answer quality is not in
+    question and full-sweep time spent on them buys documentation, not
+    findings.
+
+    HyDE and multi-query are paired as well: their advantages are complementary
+    (breadth against precision), and the published HyDE samples several
+    hypothetical documents rather than one, so the combination is closer to the
+    canonical method than the single-shot version.
+
+    Reranking stays as an axis despite measuring harmful (A7), because the
+    negative result is worth having on the corrected benchmark rather than only
+    on the one A11 showed was biased. Diversification does not: A10 measured it
+    dropping correct slides outright.
+    """
+    generation_config = generation_config or GenerationConfig()
+
+    retrieval_options = [
+        ("dense", "dense", False),
+        ("hyde", "hyde", False),
+        ("dense+multi_query", "dense", True),
+        ("hyde+multi_query", "hyde", True),
+    ]
+
+    variants = []
+    for label, technique, use_multi_query in retrieval_options:
+        for method in ("none", "cross_encoder"):
+            config = PipelineConfig(generation=generation_config)
+            config.retrieval.technique = technique
+            config.retrieval.use_multi_query = use_multi_query
+            config.reranking.method = method
+            config.diversification.enabled = False
+            variants.append(ConfigVariant(name=f"{label}+{method}", config=config))
+    return variants
+
+
 def completed_run_names(workbook_path: Path) -> set[str]:
     """Names of variants already recorded in the per-run workbook.
 
@@ -340,12 +382,17 @@ def main() -> None:
         default=None,
         help="Evaluate only the first N eval questions (default: the whole eval set).",
     )
+    parser.add_argument(
+        "--focused",
+        action="store_true",
+        help="Only the configs retrieval measurement left undominated (see focused_config_variants).",
+    )
     args = parser.parse_args()
 
     documents = load_raw_documents(PathConfig().data_raw_dir)
     print(f"Loaded {len(documents)} documents from data/raw/")
 
-    variants = default_config_variants()
+    variants = focused_config_variants() if args.focused else default_config_variants()
     eval_set_path = Path("eval/eval_set.json")
 
     if args.quick:

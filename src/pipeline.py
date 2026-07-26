@@ -48,9 +48,19 @@ class RAGPipeline:
         use_multi_query = self.config.retrieval.use_multi_query
 
         if technique == "hyde":
+            base = HyDERetriever(self.config.retrieval, self.config.generation, tracker=self.tracker)
             if use_multi_query:
-                raise ValueError("use_multi_query cannot be combined with technique='hyde'")
-            return HyDERetriever(self.config.retrieval, self.config.generation, tracker=self.tracker)
+                # Drafts a hypothetical answer per query variant and fuses the
+                # results. Not a redundant pairing despite both transforming the
+                # query: HyDE as originally published samples several
+                # hypothetical documents rather than one, so this is nearer the
+                # canonical method than the single-shot HyDE here. The two also
+                # measured complementary -- HyDE leads full@5 and multi_query
+                # leads R@1 (A12). Costs roughly two LLM calls per variant.
+                return MultiQueryRetriever(
+                    base, self.config.retrieval, self.config.generation, tracker=self.tracker
+                )
+            return base
 
         if technique == "dense":
             base = DenseRetriever(self.config.retrieval)
