@@ -78,13 +78,18 @@ class RetrievalConfig:
     # generation and the RAGAS metrics only ever see the final selection.
     candidate_pool_multiplier: int = 3
     # Most chunks any single slide or page may contribute to the candidate
-    # pool. Children of one parent are near-duplicates and score alike, so
-    # without a cap they arrive consecutively and crowd out every other source:
-    # measured, only 68% of the top-5 slots held distinct parents, and one
-    # slide once took 9 of the top 10. Since parent expansion later collapses
-    # siblings into a single context anyway, those slots buy nothing -- capping
-    # converts them into genuinely different sources. 0 disables the cap.
-    max_chunks_per_parent: int = 2
+    # pool; 0 disables the cap, which is the default because it measured no
+    # benefit here.
+    #
+    # Sibling crowding is real -- only 68% of top-5 slots held distinct
+    # parents, and one slide once took 9 of the top 10 -- and capping does fix
+    # it, raising distinct contexts from 3.5 to 5.0. But hit rate was unchanged
+    # to three decimals at every cap, because MMR already selects for
+    # dissimilarity and was discarding most siblings anyway. Simply raising the
+    # final context count beat capping on both axes (k=10 uncapped: hit 1.000
+    # at 922 tokens; k=8 capped at 1: hit 0.962 at 1006 tokens). Retained
+    # because it may pay off on a corpus with no diversification stage.
+    max_chunks_per_parent: int = 0
     rrf_k: int = 60
     index_dir: Path = Path("data/index")
     use_multi_query: bool = False

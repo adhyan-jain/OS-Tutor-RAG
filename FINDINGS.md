@@ -457,6 +457,42 @@ cites only the slide, so a correct retrieval is scored as a miss. The corpus
 covers the same material in both slides and PDF chapters; ground truth that
 names only one source systematically understates retrieval quality.
 
+### A9 — Refuted: capping siblings per parent does not improve retrieval
+
+A8a established that sibling chunks monopolise the ranking, and capping how
+many chunks one parent may contribute was implemented to recover those slots.
+It works mechanically and changes nothing that matters:
+
+| config | hit | full | contexts | tokens |
+|---|---|---|---|---|
+| no cap, k=5 | 0.885 | 0.692 | 3.5 | 379 |
+| cap=1, k=5 | 0.885 | 0.692 | **5.0** | 579 |
+| cap=2, k=5 | 0.885 | 0.692 | 4.1 | 436 |
+| cap=3, k=5 | 0.885 | 0.692 | 3.7 | 393 |
+| no cap, k=8 | 0.962 | 0.769 | 5.7 | 702 |
+| cap=1, k=8 | 0.962 | **0.808** | 8.0 | 1006 |
+
+Distinct contexts rise from 3.5 to 5.0 exactly as intended, and hit rate is
+unchanged to three decimals at every cap.
+
+**Why the diagnosis did not imply the fix:** MMR already selects for
+dissimilarity, so it was discarding most siblings before they reached the final
+contexts. The wasted slots were real in the *raw* retrieval but had largely
+been absorbed by the time it mattered. Diagnosing a genuine inefficiency is not
+the same as identifying the binding constraint.
+
+Raising the final context count beats capping on both axes:
+
+```
+no cap, k=10 : hit 1.000, full 0.808,  922 tokens
+cap=1,  k=8  : hit 0.962, full 0.808, 1006 tokens
+```
+
+The cap is retained but disabled by default; it may still pay off on a corpus
+with no diversification stage. The binding constraint on hit rate is A8b and
+A8c -- vocabulary the corpus does not contain, and ground truth that names one
+source where the corpus provides two -- neither of which diversity can address.
+
 ## Open items
 
 - **Raise `context_entity_recall`** (currently 0.440) -- the metric most
