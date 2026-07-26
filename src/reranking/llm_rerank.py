@@ -30,19 +30,27 @@ class LLMReranker:
         self.config = config
         self.llm = LocalLLM(generation_config or GenerationConfig(), tracker=tracker)
 
-    def rerank(self, query: str, candidates: list[ScoredChunk]) -> list[ScoredChunk]:
+    def rerank(
+        self, query: str, candidates: list[ScoredChunk], top_n: int | None = None
+    ) -> list[ScoredChunk]:
         """Rerank candidate chunks for a query using LLM relevance judgments.
 
         Prompts the LLM once per candidate for a 0-10 relevance score
-        (pointwise scoring), then sorts descending.
+        (pointwise scoring), then sorts descending. Note this is the one stage
+        whose cost scales with the candidate pool rather than the final
+        selection, so a wide RetrievalConfig.candidate_pool_multiplier is
+        considerably more expensive here than for a cross-encoder.
 
         Args:
             query: Natural language query text.
             candidates: ScoredChunks to rerank.
+            top_n: Optional override for how many to keep. The pipeline widens
+                this when diversification runs next, so MMR has more candidates
+                than it will select.
 
         Returns:
-            The top ``config.top_n`` ScoredChunks re-ordered by descending
-            LLM-judged relevance score.
+            The top ``top_n`` (default ``config.top_n``) ScoredChunks re-ordered
+            by descending LLM-judged relevance score.
         """
         if not candidates:
             return []
@@ -50,7 +58,7 @@ class LLMReranker:
         scored = [
             (sc, self.llm.score_relevance(query, sc.chunk.text)) for sc in candidates
         ]
-        reranked = sorted(scored, key=lambda pair: pair[1], reverse=True)[: self.config.top_n]
+        reranked = sorted(scored, key=lambda pair: pair[1], reverse=True)[: top_n or self.config.top_n]
 
         return [
             replace(sc, score=score, source="llm_rerank", rank=rank)

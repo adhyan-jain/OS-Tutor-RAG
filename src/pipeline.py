@@ -87,11 +87,40 @@ class RAGPipeline:
         ]
         self.retriever.build_index(chunks)
 
+    def _stage_sizes(self) -> tuple[int, int]:
+        """How many candidates to retrieve, and how many the reranker keeps.
+
+        Each filtering stage needs to be handed more candidates than it keeps,
+        or it cannot filter. With the plain configured sizes, retrieving 10,
+        reranking to 5 and asking MMR for 5 leaves MMR selecting 5 out of 5 --
+        it can only reorder, never diversify. So the pool is widened whenever a
+        downstream stage will narrow it, and reranking passes through extra
+        candidates when diversification runs after it.
+
+        Returns:
+            A tuple of (candidate pool size to retrieve, reranker top_n).
+        """
+        retrieval = self.config.retrieval
+        rerank_enabled = self.reranker is not None
+        mmr_enabled = self.config.diversification.enabled
+
+        if not rerank_enabled and not mmr_enabled:
+            return retrieval.top_k, self.config.reranking.top_n
+
+        rerank_n = self.config.reranking.top_n
+        if rerank_enabled and mmr_enabled:
+            rerank_n = max(rerank_n, self.config.diversification.top_k * 2)
+
+        narrowest = rerank_n if rerank_enabled else self.config.diversification.top_k
+        pool_k = max(retrieval.top_k, narrowest * retrieval.candidate_pool_multiplier)
+        return pool_k, rerank_n
+
     def _retrieve_candidates(self, query: str):
-        candidates = self.retriever.retrieve(query, top_k=self.config.retrieval.top_k)
+        pool_k, rerank_n = self._stage_sizes()
+        candidates = self.retriever.retrieve(query, top_k=pool_k)
 
         if self.reranker is not None:
-            candidates = self.reranker.rerank(query, candidates)
+            candidates = self.reranker.rerank(query, candidates, top_n=rerank_n)
 
         if self.config.diversification.enabled:
             candidates = mmr_select(candidates, self.config.diversification)

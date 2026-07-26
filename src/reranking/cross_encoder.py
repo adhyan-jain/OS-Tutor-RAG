@@ -22,16 +22,21 @@ class CrossEncoderReranker:
         self.config = config
         self.model = get_cross_encoder(config.cross_encoder_model_name)
 
-    def rerank(self, query: str, candidates: list[ScoredChunk]) -> list[ScoredChunk]:
+    def rerank(
+        self, query: str, candidates: list[ScoredChunk], top_n: int | None = None
+    ) -> list[ScoredChunk]:
         """Rerank candidate chunks for a query.
 
         Args:
             query: Natural language query text.
             candidates: ScoredChunks to rerank.
+            top_n: Optional override for how many to keep. The pipeline widens
+                this when diversification runs next, so MMR has more candidates
+                than it will select.
 
         Returns:
-            The top ``config.top_n`` ScoredChunks re-ordered by descending
-            cross-encoder relevance score.
+            The top ``top_n`` (default ``config.top_n``) ScoredChunks re-ordered
+            by descending cross-encoder relevance score.
         """
         if not candidates:
             return []
@@ -41,7 +46,7 @@ class CrossEncoderReranker:
 
         reranked = sorted(
             zip(candidates, scores), key=lambda pair: pair[1], reverse=True
-        )[: self.config.top_n]
+        )[: top_n or self.config.top_n]
 
         return [
             replace(sc, score=float(score), source="cross_encoder", rank=rank)

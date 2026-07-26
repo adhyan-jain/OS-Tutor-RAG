@@ -58,6 +58,14 @@ class RetrievalConfig:
     technique: str = "hybrid_rrf"
     dense_model_name: str = "BAAI/bge-large-en-v1.5"
     top_k: int = 10
+    # How much wider than the narrowest downstream stage to retrieve when
+    # reranking and/or diversification will filter the results. A selection
+    # stage can only select if it is handed more candidates than it keeps:
+    # retrieving top_k=10, reranking to 5 and then asking MMR for 5 leaves MMR
+    # choosing 5 from 5, i.e. reordering rather than diversifying. Widening the
+    # pool costs retrieval and reranking compute but no extra LLM calls, since
+    # generation and the RAGAS metrics only ever see the final selection.
+    candidate_pool_multiplier: int = 3
     rrf_k: int = 60
     index_dir: Path = Path("data/index")
     use_multi_query: bool = False
