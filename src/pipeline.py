@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from src.chunking import chunk_document
 from src.config import PipelineConfig
-from src.context_expansion import expand_to_parents
+from src.context_expansion import cap_chunks_per_parent, expand_to_parents
 from src.diversification.mmr import mmr_select
 from src.generation.local_llm import LocalLLM
 from src.reranking.cross_encoder import CrossEncoderReranker
@@ -118,7 +118,15 @@ class RAGPipeline:
 
     def _retrieve_candidates(self, query: str):
         pool_k, rerank_n = self._stage_sizes()
-        candidates = self.retriever.retrieve(query, top_k=pool_k)
+        max_per_parent = self.config.retrieval.max_chunks_per_parent
+
+        if max_per_parent > 0:
+            # Over-retrieve, then cap per parent, so capping yields a pool of
+            # distinct sources rather than simply a smaller one.
+            raw = self.retriever.retrieve(query, top_k=pool_k * 2)
+            candidates = cap_chunks_per_parent(raw, max_per_parent)[:pool_k]
+        else:
+            candidates = self.retriever.retrieve(query, top_k=pool_k)
 
         if self.reranker is not None:
             candidates = self.reranker.rerank(query, candidates, top_n=rerank_n)

@@ -77,6 +77,14 @@ class RetrievalConfig:
     # pool costs retrieval and reranking compute but no extra LLM calls, since
     # generation and the RAGAS metrics only ever see the final selection.
     candidate_pool_multiplier: int = 3
+    # Most chunks any single slide or page may contribute to the candidate
+    # pool. Children of one parent are near-duplicates and score alike, so
+    # without a cap they arrive consecutively and crowd out every other source:
+    # measured, only 68% of the top-5 slots held distinct parents, and one
+    # slide once took 9 of the top 10. Since parent expansion later collapses
+    # siblings into a single context anyway, those slots buy nothing -- capping
+    # converts them into genuinely different sources. 0 disables the cap.
+    max_chunks_per_parent: int = 2
     rrf_k: int = 60
     index_dir: Path = Path("data/index")
     use_multi_query: bool = False

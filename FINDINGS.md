@@ -400,6 +400,63 @@ candidates from five.
 **Status: n=4 configurations. Suggestive, not settled** -- the remaining 24
 variants of sweep v3 will confirm or refute it.
 
+### A8 — Why wrong chunks outrank right ones (three causes, one defect)
+
+recall@1 is 0.731 while recall@5 is 0.923, so for a quarter of questions
+something the question is *not* answerable from scores above something it is.
+`eval/rank_diagnosis.py` dumps the competing chunks rather than inferring from
+aggregates. Over 26 questions searching the top 20:
+
+```
+first correct chunk at rank 1 : 19
+rank 2-5                      : 4
+rank 6-20                     : 3
+never found in top 20         : 0
+median rank of first correct  : 1
+distractors by source type    : pptx 19, pdf 9
+median distractor tokens      : 20  (corpus median 19)
+```
+
+**Two plausible hypotheses were refuted by this.** PDF prose was *not* drowning
+the slides (most distractors are pptx), and distractors were *not*
+systematically longer than the corpus (20 tokens against a median of 19).
+Retrieval is in fact good: median rank 1, and the answer is always inside the
+top 20.
+
+The failures decompose into three causes, only the first of which is a defect:
+
+**A8a — sibling chunks monopolise the top-k.** For "show the syntax for
+creating a shell variable", the top four results were all children of
+`Shell programming__slide35`:
+
+```
+#1 [slide35] echo "Process ID of shell = $$"
+#2 [slide35] $ ./special.sh arg1 arg2 arg3
+#3 [slide35] echo "Complete list of arguments = $*"
+#4 [slide35] # special.sh
+```
+
+One slide consumed every slot. Parent expansion later collapses them to a
+single context, which is why five requested contexts yielded only 3.5 distinct
+ones. Retrieval slots are being spent on near-duplicates, so genuinely
+different sources never get considered. This is the actionable defect:
+deduplication needs to happen at *selection* time, not only after.
+
+**A8b — questions use vocabulary absent from the corpus.** "Where is
+per-process *bookkeeping* kept?" -- the word never appears; the slide says
+"process control block". The retriever matched "kernel" against "kernel stack"
+instead. A deliberate paraphrase (the eval set is written to avoid echoing
+slide titles), so this is question difficulty rather than a bug, but it caps
+what retrieval can achieve.
+
+**A8c — the ground truth under-credits correct retrievals.** For "trace the
+sequence of calls a command-line interpreter makes", rank 1 was
+`process API__page6`: *"It shows you a prompt and then waits for you to type
+something into it..."* -- which genuinely answers the question. The eval set
+cites only the slide, so a correct retrieval is scored as a miss. The corpus
+covers the same material in both slides and PDF chapters; ground truth that
+names only one source systematically understates retrieval quality.
+
 ## Open items
 
 - **Raise `context_entity_recall`** (currently 0.440) -- the metric most

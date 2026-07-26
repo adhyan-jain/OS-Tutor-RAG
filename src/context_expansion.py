@@ -20,6 +20,40 @@ from src.schemas import ScoredChunk
 from src.token_tracking import count_tokens
 
 
+def cap_chunks_per_parent(candidates: list[ScoredChunk], max_per_parent: int) -> list[ScoredChunk]:
+    """Drop candidates beyond `max_per_parent` from any one slide or section.
+
+    Children of a parent are near-duplicates and score almost identically, so
+    they arrive as a consecutive block and monopolise the ranking: measured on
+    this corpus, only 68% of top-5 slots held distinct parents and a single
+    slide once occupied 9 of the top 10. Those extra slots are wasted twice
+    over -- they displace other sources during selection, and parent expansion
+    collapses them into one context afterwards regardless.
+
+    Rank order is preserved, so the highest-scoring child of each parent is the
+    one kept.
+
+    Args:
+        candidates: Retrieved ScoredChunks in rank order.
+        max_per_parent: Cap per parent; 0 or less disables capping.
+
+    Returns:
+        The filtered list, still in rank order.
+    """
+    if max_per_parent <= 0:
+        return candidates
+
+    seen: dict[str, int] = {}
+    kept: list[ScoredChunk] = []
+    for scored_chunk in candidates:
+        parent_id = scored_chunk.chunk.metadata.get("parent_id") or scored_chunk.chunk.chunk_id
+        if seen.get(parent_id, 0) >= max_per_parent:
+            continue
+        seen[parent_id] = seen.get(parent_id, 0) + 1
+        kept.append(scored_chunk)
+    return kept
+
+
 def _window_around_child(parent_text: str, child_text: str, max_tokens: int) -> str:
     """Return at most `max_tokens` of `parent_text` centred on `child_text`.
 
