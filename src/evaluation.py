@@ -237,13 +237,15 @@ def phase_summary(config: PipelineConfig) -> dict[str, object]:
     Returns:
         An ordered mapping of phase name to the technique/setting used.
     """
-    strategies_in_use = set(config.chunking.strategy_by_source_type.values())
-    chunking_label = strategies_in_use.pop() if len(strategies_in_use) == 1 else "mixed"
+    by_type = config.chunking.strategy_by_source_type
+    chunking_label = ", ".join(f"{source}={strategy}" for source, strategy in sorted(by_type.items()))
     return {
         "chunking": chunking_label,
         "retrieval": config.retrieval.technique,
+        "multi_query": config.retrieval.use_multi_query,
         "reranking": config.reranking.method,
         "mmr": config.diversification.enabled,
+        "context_expansion": config.context_expansion.enabled,
         "generation_backend": config.generation.backend,
         "generation_model": config.generation.model_name,
         "judge_model": config.eval.judge_model_name,

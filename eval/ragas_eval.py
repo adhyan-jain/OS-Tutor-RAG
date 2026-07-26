@@ -14,13 +14,12 @@ per-run workbook via src/evaluation.py -- both share the same scoring logic.
 
 from __future__ import annotations
 
-import copy
 import json
 import math
 from dataclasses import dataclass
 from pathlib import Path
 
-from src.config import ChunkingConfig, GenerationConfig, PathConfig, PipelineConfig
+from src.config import GenerationConfig, PathConfig, PipelineConfig
 from src.evaluation import (
     METRIC_NAMES,
     append_run_to_workbook,
@@ -65,42 +64,24 @@ class ConfigVariant:
     config: PipelineConfig
 
 
-def _chunking_config_variants() -> dict[str, ChunkingConfig]:
-    """Named ChunkingConfig variants for comparing chunking strategies.
-
-    "mixed" is the tuned per-source-type default (pptx/docx -> structure_aware,
-    pdf/text -> semantic). "structure_aware" and "semantic" force that single
-    strategy across every source type instead, isolating the strategy's own
-    effect from the type-based routing.
-    """
-    source_types = ("pptx", "docx", "pdf", "text")
-    return {
-        "mixed": ChunkingConfig(),
-        "structure_aware": ChunkingConfig(
-            default_strategy="structure_aware",
-            strategy_by_source_type={t: "structure_aware" for t in source_types},
-        ),
-        "semantic": ChunkingConfig(
-            default_strategy="semantic",
-            strategy_by_source_type={t: "semantic" for t in source_types},
-        ),
-    }
-
-
 def default_config_variants(generation_config: GenerationConfig | None = None) -> list[ConfigVariant]:
-    """Build the full grid of config variants to compare: chunking strategy x
-    retrieval technique x use_multi_query (where valid) x reranking method x
-    MMR diversification on/off.
+    """Build the grid of config variants to compare: retrieval technique x
+    use_multi_query (where valid) x reranking method x MMR on/off.
+
+    Chunking is deliberately not an axis. Each source type is matched to the
+    strategy that suits how that format is written (see ChunkingConfig), so
+    forcing one strategy across every type compares formats rather than
+    strategies -- semantic chunking a slide deck, for instance, collapses it
+    into a handful of oversized chunks because slide bullets carry no sentence
+    punctuation to split on.
 
     use_multi_query is excluded for technique == "hyde" (see
     RetrievalConfig.use_multi_query's docstring -- the two aren't combinable).
 
-    "llm_rerank" is deliberately excluded from this sweep despite being a
-    supported RerankingConfig.method: it prompts the LLM once per retrieved
-    candidate (~top_k calls/question), which roughly triples the sweep's total
-    LLM calls and wall-clock time for a stage that cross_encoder already
-    covers. Evaluate it separately against the sweep's winning config instead
-    (set reranking.method = "llm_rerank" and call RAGPipeline.evaluate()).
+    "llm_rerank" is deliberately excluded despite being a supported
+    RerankingConfig.method: it prompts the LLM once per retrieved candidate,
+    which roughly triples the sweep for a stage cross_encoder already covers.
+    Evaluate it separately against whichever config wins.
 
     Args:
         generation_config: Generation settings shared by all variants.
@@ -108,29 +89,26 @@ def default_config_variants(generation_config: GenerationConfig | None = None) -
             model_name="llama3:latest" -- see config.py).
 
     Returns:
-        A list of named ConfigVariants (84 by default: 3 chunking x 7
-        retrieval configs x 2 reranking methods x 2 MMR settings).
+        A list of named ConfigVariants (28 by default: 7 retrieval configs x
+        2 reranking methods x 2 MMR settings).
     """
     generation_config = generation_config or GenerationConfig()
-    chunking_variants = _chunking_config_variants()
 
     variants = []
-    for chunking_name, chunking_config in chunking_variants.items():
-        for technique in ("dense", "bm25", "hybrid_rrf", "hyde"):
-            multi_query_options = (False,) if technique == "hyde" else (False, True)
-            for use_multi_query in multi_query_options:
-                for method in ("cross_encoder", "none"):
-                    for mmr_enabled in (True, False):
-                        config = PipelineConfig(generation=generation_config)
-                        config.chunking = copy.deepcopy(chunking_config)
-                        config.retrieval.technique = technique
-                        config.retrieval.use_multi_query = use_multi_query
-                        config.reranking.method = method
-                        config.diversification.enabled = mmr_enabled
+    for technique in ("dense", "bm25", "hybrid_rrf", "hyde"):
+        multi_query_options = (False,) if technique == "hyde" else (False, True)
+        for use_multi_query in multi_query_options:
+            for method in ("cross_encoder", "none"):
+                for mmr_enabled in (True, False):
+                    config = PipelineConfig(generation=generation_config)
+                    config.retrieval.technique = technique
+                    config.retrieval.use_multi_query = use_multi_query
+                    config.reranking.method = method
+                    config.diversification.enabled = mmr_enabled
 
-                        retrieval_label = f"{technique}+multi_query" if use_multi_query else technique
-                        name = f"{chunking_name}+{retrieval_label}+{method}+mmr_{mmr_enabled}"
-                        variants.append(ConfigVariant(name=name, config=config))
+                    retrieval_label = f"{technique}+multi_query" if use_multi_query else technique
+                    name = f"{retrieval_label}+{method}+mmr_{mmr_enabled}"
+                    variants.append(ConfigVariant(name=name, config=config))
     return variants
 
 

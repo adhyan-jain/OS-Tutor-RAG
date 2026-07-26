@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from src.chunking.page_aware import page_aware_chunk
 from src.chunking.semantic import semantic_chunk
 from src.chunking.structure_aware import structure_aware_chunk
 from src.config import ChunkingConfig
@@ -9,6 +10,7 @@ from src.schemas import Chunk, Document
 
 _STRATEGIES = {
     "structure_aware": structure_aware_chunk,
+    "page_aware": page_aware_chunk,
     "semantic": semantic_chunk,
 }
 

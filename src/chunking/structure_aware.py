@@ -36,21 +36,46 @@ def _make_chunk(
 
 
 def _chunk_pptx(document: Document, config: ChunkingConfig) -> list[Chunk]:
+    """Chunk a slide deck into one title-qualified child per bullet.
+
+    Two properties of lecture decks drive this shape:
+
+    Titles are never indexed on their own. Many slide titles are phrased as
+    questions ("What is an operating system?"), and as standalone chunks they
+    are near-perfect lexical matches for a user's question while containing no
+    answer -- BM25 ranks them top and the model then reports that its context
+    holds no answer. Titles survive only as context on their bullets.
+
+    Every child is prefixed with its slide title, so a bullet like "Middleware
+    between user programs and system hardware" carries the topic it belongs to
+    instead of being embedded as a context-free fragment.
+
+    Title-only slides (section dividers) carry their heading forward onto the
+    next slide with content rather than becoming empty chunks of their own.
+    """
     chunks: list[Chunk] = []
     cursor = 0
+    pending_heading: str | None = None
 
     for slide in document.metadata.get("slides", []):
         slide_number = slide["slide_number"]
-        parent_id = f"{document.doc_id}__slide{slide_number}"
-        parent_parts = [p for p in (slide.get("title"), *slide.get("bullets", [])) if p]
-        parent_text = "\n".join(parent_parts)
+        title = (slide.get("title") or "").strip() or None
+        bullets = [b.strip() for b in slide.get("bullets", []) if b and b.strip()]
 
-        if not parent_text:
+        if not bullets:
+            # Divider slide: keep its heading for whichever slide has content next.
+            if title:
+                pending_heading = f"{pending_heading} / {title}" if pending_heading else title
             continue
 
-        # One child chunk per bullet (plus the title, if present) — small
-        # units for embedding that each point back at the full slide.
-        for child_text in parent_parts:
+        heading = " / ".join(p for p in (pending_heading, title) if p) or None
+        pending_heading = None
+
+        parent_text = "\n".join(([heading] if heading else []) + bullets)
+        parent_id = f"{document.doc_id}__slide{slide_number}"
+
+        for bullet in bullets:
+            child_text = f"{heading}: {bullet}" if heading else bullet
             chunks.append(
                 _make_chunk(
                     document,
@@ -59,7 +84,7 @@ def _chunk_pptx(document: Document, config: ChunkingConfig) -> list[Chunk]:
                     cursor,
                     parent_id,
                     parent_text,
-                    {"source_type": "pptx", "slide_number": slide_number},
+                    {"source_type": "pptx", "slide_number": slide_number, "slide_title": heading},
                 )
             )
             cursor += len(child_text) + 1
