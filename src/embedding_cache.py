@@ -26,10 +26,13 @@ from typing import TYPE_CHECKING
 _DEVICE = os.environ.get("OS_RAG_EMBEDDING_DEVICE", "cpu")
 
 if TYPE_CHECKING:
+    import numpy as np
     from sentence_transformers import CrossEncoder, SentenceTransformer
 
 _MODEL_CACHE: dict[str, "SentenceTransformer"] = {}
 _CROSS_ENCODER_CACHE: dict[str, "CrossEncoder"] = {}
+# model name -> {text: embedding}; see encode_cached.
+_TEXT_EMBEDDING_CACHE: dict[str, dict[str, "np.ndarray"]] = {}
 
 
 def get_embedding_model(model_name: str) -> "SentenceTransformer":
@@ -46,6 +49,39 @@ def get_embedding_model(model_name: str) -> "SentenceTransformer":
 
         _MODEL_CACHE[model_name] = SentenceTransformer(model_name, device=_DEVICE)
     return _MODEL_CACHE[model_name]
+
+
+def encode_cached(model_name: str, texts: list[str]):
+    """Embed `texts`, reusing any embedding already computed for the same text.
+
+    Stages that embed per query -- MMR most of all -- keep re-encoding chunks
+    drawn from a fixed corpus, so the same few hundred chunk texts are embedded
+    once per question for the whole run. Measured at ~32s to embed ten
+    candidates, repeated for every question of every configuration, that
+    dominated the cost of any MMR-enabled evaluation.
+
+    Embeddings are deterministic given (model, text), so they are memoized on
+    exactly that. Only cache misses reach the model.
+
+    Args:
+        model_name: HuggingFace model id to embed with.
+        texts: Texts to embed, in order.
+
+    Returns:
+        A float32 array of normalized embeddings, one row per input text.
+    """
+    import numpy as np
+
+    cache = _TEXT_EMBEDDING_CACHE.setdefault(model_name, {})
+    missing = [t for t in dict.fromkeys(texts) if t not in cache]
+
+    if missing:
+        model = get_embedding_model(model_name)
+        fresh = model.encode(missing, convert_to_numpy=True, normalize_embeddings=True)
+        for text, embedding in zip(missing, fresh):
+            cache[text] = embedding.astype("float32")
+
+    return np.stack([cache[t] for t in texts])
 
 
 def release_gpu_memory() -> None:

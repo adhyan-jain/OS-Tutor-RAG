@@ -294,6 +294,23 @@ A larger embedding model cannot recover meaning that is absent from the text,
 and a smaller one (bge-small) would be strictly worse -- bge-large is the
 better model in that series on every published benchmark.
 
+### F14 — MMR re-embedded its candidates on every query
+
+- **Symptom:** any MMR-enabled evaluation was disproportionately slow; a
+  17-configuration tuning grid failed to complete a single configuration in 25
+  minutes.
+- **Cause:** `mmr_select` called `model.encode()` on its candidates per query.
+  The candidates come from a fixed corpus, so the same few hundred chunk texts
+  were re-embedded once per question, for every configuration.
+- **Measured:** ~32s to embed ten candidates, repeated for all 26 questions of
+  every configuration.
+- **Fix:** `encode_cached()` memoizes embeddings on (model, text), which is
+  sound because embeddings are deterministic given those two.
+- **Measured after:** 33.04s → 0.0001s for a repeated batch, with identical
+  vectors; a batch of 5 cached plus 3 new costs only the 3 new.
+- **Noted but deferred earlier** in favour of not restarting a running sweep;
+  revisited when it became the bottleneck for a different experiment.
+
 ### A4 — Refusals have distinct causes needing distinct fixes
 
 Examining the surviving refusals individually showed three different
@@ -356,6 +373,33 @@ slightly, consistent with the new ground truth naming more specific entities.
 
 ---
 
+### A7 — Reranking measures *worse* than omitting it
+
+Across the four dense configurations completed in sweep v3, the cross-encoder
+costs about 0.05 of `answer_correctness`, consistently and in both MMR
+settings:
+
+| configuration | faithfulness | answer_correctness |
+|---|---|---|
+| dense + none + mmr | 0.883 | **0.685** |
+| dense + none, no mmr | 0.901 | **0.681** |
+| dense + cross_encoder + mmr | 0.906 | 0.634 |
+| dense + cross_encoder, no mmr | 0.967 | 0.626 |
+
+There is a mechanism for this rather than only a correlation: dense retrieval
+already reaches recall@5 of 0.923 (A5), so the reranker is reordering an
+already-good ranking, and `bge-reranker-large` is a general-purpose model with
+no advantage on this domain over bge-large's own similarity. Reordering a good
+ranking can only help if the reranker is the better judge.
+
+Also visible: MMR flipped sign after the pool fix (F13), from mildly harmful to
+mildly helpful (+0.008, +0.004) -- small enough to be noise, but consistent
+with the earlier negative result having been an artifact of MMR selecting five
+candidates from five.
+
+**Status: n=4 configurations. Suggestive, not settled** -- the remaining 24
+variants of sweep v3 will confirm or refute it.
+
 ## Open items
 
 - **Raise `context_entity_recall`** (currently 0.440) -- the metric most
@@ -364,11 +408,14 @@ slightly, consistent with the new ground truth naming more specific entities.
   sweep's winning configuration rather than by restarting the sweep.
 - **Prompt for partial answers** instead of a binary refuse, so partial
   retrieval yields partial credit (addresses A4 case 2).
-- **MMR re-embeds candidates every query** rather than reusing embeddings the
-  dense index already computed. Worth roughly 85 min across a full sweep;
-  deferred as it does not justify another restart mid-run.
 - **`llm_rerank`** is implemented but excluded from sweeps (one LLM call per
-  candidate). Evaluate against the winning config alone.
+  candidate). Given A7 finds the cross-encoder actively harmful, a slower
+  reranker is unlikely to help, and this may be worth dropping entirely.
+- **Weight or drop the sparse arm of `hybrid_rrf`** (A5): fusing dense with a
+  retriever that fails half the time measurably underperforms dense alone.
+- **Stage tuning grid** (`eval/stage_tuning_eval.py`) is measuring final
+  context count, reranking on/off, candidate pool width, and HyDE, scored by
+  whether the cited slide survives into the generator's context.
 - **Scale-up:** ingest 100-200 documents and redo trend analysis. Pool size and
   reranking cost are corpus-independent, so they will not worsen with scale.
 

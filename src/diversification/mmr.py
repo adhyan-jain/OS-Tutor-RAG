@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from src.config import DiversificationConfig
-from src.embedding_cache import get_embedding_model
+from src.embedding_cache import encode_cached
 from src.schemas import ScoredChunk
 
 
@@ -39,9 +39,10 @@ def mmr_select(
 
     import numpy as np
 
-    model = get_embedding_model(config.embedding_model_name)
-    embeddings = model.encode(
-        [sc.chunk.text for sc in candidates], convert_to_numpy=True, normalize_embeddings=True
+    # Cached: MMR runs per query over chunks from a fixed corpus, so the same
+    # texts would otherwise be re-embedded once per question for a whole run.
+    embeddings = encode_cached(
+        config.embedding_model_name, [sc.chunk.text for sc in candidates]
     )
     relevance = _normalize_scores(candidates)
 
