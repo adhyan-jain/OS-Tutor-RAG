@@ -62,8 +62,15 @@ def release_gpu_memory() -> None:
 
     for model in _MODEL_CACHE.values():
         model.to("cpu")
+
     for cross_encoder in _CROSS_ENCODER_CACHE.values():
+        # CrossEncoder.predict() re-issues `self.model.to(self._target_device)`
+        # on every call, so moving the module alone is undone at the next
+        # rerank -- the reranker would pull itself back onto the GPU while
+        # Ollama holds it, which is exactly the contention this releases.
+        cross_encoder._target_device = torch.device("cpu")
         cross_encoder.model.to("cpu")
+
     torch.cuda.empty_cache()
 
 
