@@ -66,7 +66,11 @@ class RetrievalConfig:
     performs its own single-shot query transformation.
     """
 
-    technique: str = "hybrid_rrf"
+    # Defaults follow what measured best rather than what is conventional:
+    # dense alone beat hybrid_rrf on recall@5 (0.923 against 0.846), because
+    # reciprocal rank fusion gives BM25's rankings equal weight and BM25 fails
+    # to surface the right slide half the time on this corpus.
+    technique: str = "dense"
     dense_model_name: str = "BAAI/bge-large-en-v1.5"
     top_k: int = 10
     # How much wider than the narrowest downstream stage to retrieve when
@@ -76,6 +80,14 @@ class RetrievalConfig:
     # choosing 5 from 5, i.e. reordering rather than diversifying. Widening the
     # pool costs retrieval and reranking compute but no extra LLM calls, since
     # generation and the RAGAS metrics only ever see the final selection.
+    #
+    # Widening cannot rescue a stage that is harmful in kind rather than in
+    # degree. MMR measured -0.038 on hit@8 because its objective trades
+    # relevance for diversity this corpus does not need, and a larger pool
+    # offers it more ways to make that trade, not fewer. Both stages are
+    # therefore off by default (see RerankingConfig.method and
+    # DiversificationConfig.enabled); the multiplier governs their behaviour
+    # only when a sweep deliberately turns them back on.
     candidate_pool_multiplier: int = 3
     # Most chunks any single slide or page may contribute to the candidate
     # pool; 0 disables the cap, which is the default because it measured no
@@ -105,9 +117,14 @@ class RerankingConfig:
     "llm_rerank", or "none" to skip reranking entirely.
     """
 
-    method: str = "cross_encoder"
+    # Off by default: the cross-encoder measured ~0.05 *worse* on
+    # answer_correctness than omitting it, consistently and in both MMR
+    # settings. Dense retrieval already reaches recall@5 of 0.923, so the
+    # reranker reorders an already-good ranking, and bge-reranker-large is
+    # general-purpose with no advantage on this material.
+    method: str = "none"
     cross_encoder_model_name: str = "BAAI/bge-reranker-large"
-    top_n: int = 5
+    top_n: int = 8
 
 
 @dataclass
@@ -140,9 +157,13 @@ class ContextExpansionConfig:
 class DiversificationConfig:
     """Parameters controlling result diversification (e.g. MMR)."""
 
-    enabled: bool = True
+    # Off by default: MMR measured -0.038 on hit@8 and -0.038 on full_hit@10,
+    # dropping correct slides in exchange for diversity this corpus does not
+    # need. top_k is the number of contexts generation receives; 8 without MMR
+    # reaches a hit rate of 1.000, where 5 reached only 0.885.
+    enabled: bool = False
     lambda_param: float = 0.5
-    top_k: int = 5
+    top_k: int = 8
     embedding_model_name: str = "BAAI/bge-large-en-v1.5"
 
 
