@@ -107,9 +107,20 @@ class ContextExpansionConfig:
     parents is the point of that design -- without this step the LLM sees only
     the ~50-character child and frequently answers that its context contains no
     answer. No effect on chunks lacking a parent (semantic chunking).
+
+    ``max_parent_tokens`` bounds how much a single parent may contribute, and
+    matters because parents are not uniformly sized. Measured on this corpus:
+    a slide parent is ~72 tokens (5x its child) while a PDF page parent is
+    ~534 tokens and can reach 913 (11x its child). Expanding slides is
+    therefore nearly free, but expanding pages inflated context from 149 to
+    1137 tokens per question -- paid for repeatedly, since the context is
+    re-sent in the generation prompt and in most judge calls. Oversized
+    parents are windowed around the matched child instead of being dropped, so
+    the passage keeps its immediate surroundings without carrying a whole page.
     """
 
     enabled: bool = True
+    max_parent_tokens: int = 250
 
 
 @dataclass

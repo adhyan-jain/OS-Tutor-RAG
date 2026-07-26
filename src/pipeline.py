@@ -129,7 +129,9 @@ class RAGPipeline:
         # Last step, after every selection stage: matching stays on precise
         # child chunks, but generation reads the slide/section they came from.
         if self.config.context_expansion.enabled:
-            candidates = expand_to_parents(candidates)
+            candidates = expand_to_parents(
+                candidates, max_parent_tokens=self.config.context_expansion.max_parent_tokens
+            )
 
         return candidates
 

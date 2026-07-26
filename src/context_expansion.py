@@ -17,9 +17,45 @@ from __future__ import annotations
 from dataclasses import replace
 
 from src.schemas import ScoredChunk
+from src.token_tracking import count_tokens
 
 
-def expand_to_parents(candidates: list[ScoredChunk]) -> list[ScoredChunk]:
+def _window_around_child(parent_text: str, child_text: str, max_tokens: int) -> str:
+    """Return at most `max_tokens` of `parent_text` centred on `child_text`.
+
+    Parents are not uniformly sized: a slide fits comfortably under any sane
+    budget, while a PDF page can run to ~900 tokens. Truncating from the start
+    of an oversized parent would often cut the matched passage off entirely, so
+    the window grows outward from the child instead, keeping the surrounding
+    sentences that give it context. Falls back to a head slice when the child's
+    text can't be located verbatim in the parent.
+    """
+    start = parent_text.find(child_text)
+    if start == -1:
+        words = parent_text.split()
+        head = " ".join(words)
+        while words and count_tokens(head) > max_tokens:
+            words = words[: int(len(words) * 0.8) or len(words) - 1]
+            head = " ".join(words)
+        return head
+
+    end = start + len(child_text)
+    # Grow symmetrically in characters, then trim to the token budget. ~4 chars
+    # per token is a rough but adequate guide for choosing the span to test.
+    budget_chars = max_tokens * 4
+    pad = max(0, (budget_chars - len(child_text)) // 2)
+    window_start = max(0, start - pad)
+    window_end = min(len(parent_text), end + pad)
+
+    window = parent_text[window_start:window_end]
+    while count_tokens(window) > max_tokens and len(window) > len(child_text):
+        trim = max(1, (len(window) - len(child_text)) // 4)
+        window = window[trim:] if window_start > 0 else window[:-trim]
+
+    return window.strip()
+
+
+def expand_to_parents(candidates: list[ScoredChunk], max_parent_tokens: int = 250) -> list[ScoredChunk]:
     """Replace each chunk's text with its parent's, dropping duplicate parents.
 
     Several selected children commonly come from the same slide or section;
@@ -33,6 +69,10 @@ def expand_to_parents(candidates: list[ScoredChunk]) -> list[ScoredChunk]:
 
     Args:
         candidates: Final selected ScoredChunks, in rank order.
+        max_parent_tokens: Cap on what one parent may contribute. Parents
+            within the cap are substituted whole; larger ones are windowed
+            around the matched child (see ContextExpansionConfig for why the
+            cap exists and what it measured).
 
     Returns:
         ScoredChunks with parent text substituted where available, re-ranked
@@ -52,8 +92,10 @@ def expand_to_parents(candidates: list[ScoredChunk]) -> list[ScoredChunk]:
             continue
         seen_parents.add(parent_id)
 
-        expanded.append(
-            replace(scored_chunk, chunk=replace(scored_chunk.chunk, text=parent_text))
-        )
+        text = parent_text
+        if count_tokens(parent_text) > max_parent_tokens:
+            text = _window_around_child(parent_text, scored_chunk.chunk.text, max_parent_tokens)
+
+        expanded.append(replace(scored_chunk, chunk=replace(scored_chunk.chunk, text=text)))
 
     return [replace(sc, rank=rank) for rank, sc in enumerate(expanded, start=1)]
