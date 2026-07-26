@@ -29,6 +29,16 @@ data/processed/
 eval/comparison_results.md
 eval/ragas_details.xlsx
 eval/pipeline_runs.xlsx
+eval/logs/
+# Archived outputs of superseded runs, and eval-set snapshots. Kept on disk as
+# before/after evidence for the write-up; not source, and not comparable across
+# the chunking and eval-set changes that separate them.
+eval/_baseline_prefix_run/
+eval/_previous_run_backup/
+eval/_v3_partial/
+eval/_eval_set_v*_backup.json
+eval/_subset_eval_set.json
+eval/_quick_eval_set.json
 
 # Local tech-debt / delayed-task notes (not shared)
 DELAYED_TASKS.md

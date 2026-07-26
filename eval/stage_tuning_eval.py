@@ -55,23 +55,30 @@ def _score(pipeline: RAGPipeline, examples: list[dict]) -> dict[str, float]:
     }
 
 
-def _configs() -> list[tuple[str, PipelineConfig]]:
+def _configs(include_hyde: bool = True) -> list[tuple[str, PipelineConfig]]:
     """The configurations under test.
 
-    Three questions, each isolated so the answer is attributable:
+    Four questions, each isolated so the answer is attributable:
 
     - how many contexts to forward (final_k), since recall@10 is perfect but
       only five are forwarded;
     - whether the cross-encoder earns its place, given reranking measured ~0.05
       *worse* on answer_correctness than omitting it;
     - whether widening the candidate pool improves what survives, or merely
-      costs cross-encoder time.
+      costs cross-encoder time;
+    - whether HyDE retrieves better than plain dense. HyDE costs one LLM call
+      per question to draft a hypothetical answer and embed that instead of the
+      question, so it is the only technique here that is not free to measure;
+      it earns its place in the grid because it led both faithfulness and
+      answer_correctness in the earlier sweep.
     """
     configs: list[tuple[str, PipelineConfig]] = []
 
-    def build(rerank: str, mmr: bool, final_k: int, multiplier: int) -> PipelineConfig:
+    def build(
+        rerank: str, mmr: bool, final_k: int, multiplier: int, technique: str = "dense"
+    ) -> PipelineConfig:
         config = PipelineConfig(generation=GenerationConfig())
-        config.retrieval.technique = "dense"
+        config.retrieval.technique = technique
         config.retrieval.candidate_pool_multiplier = multiplier
         config.reranking.method = rerank
         config.reranking.top_n = max(config.reranking.top_n, final_k * 2)
@@ -89,12 +96,29 @@ def _configs() -> list[tuple[str, PipelineConfig]]:
         configs.append((f"mmr_only            k=8 pool={multiplier}", build("none", True, 8, multiplier)))
     configs.append(("no_rerank_no_mmr    k=10", build("none", False, 10, 3)))
 
+    if include_hyde:
+        for final_k in (5, 8):
+            configs.append(
+                (f"hyde+mmr_only       k={final_k} pool=3", build("none", True, final_k, 3, "hyde"))
+            )
+        configs.append(
+            ("hyde+rerank+mmr     k=8 pool=3", build("cross_encoder", True, 8, 3, "hyde"))
+        )
+        configs.append(
+            ("hyde+mmr_only       k=8 pool=6", build("none", True, 8, 6, "hyde"))
+        )
+
     return configs
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--eval-set", default="eval/eval_set.json")
+    parser.add_argument(
+        "--no-hyde",
+        action="store_true",
+        help="Skip HyDE configs, which need a running Ollama and one LLM call per question.",
+    )
     args = parser.parse_args()
 
     examples = json.load(open(args.eval_set))["examples"]
@@ -106,7 +130,7 @@ def main() -> None:
     print(header)
     print("-" * len(header))
 
-    for label, config in _configs():
+    for label, config in _configs(include_hyde=not args.no_hyde):
         started = time.time()
         pipeline = RAGPipeline(config)
         pipeline.ingest(documents)
