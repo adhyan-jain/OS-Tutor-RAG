@@ -20,17 +20,28 @@ class ChunkingConfig:
     """Parameters controlling chunking strategies.
 
     ``strategy_by_source_type`` selects which strategy runs for a given
-    ``Document.metadata["source_type"]`` (e.g. "pptx", "docx", "text"),
-    falling back to ``default_strategy`` when the source type is absent or
-    unmapped. Valid strategy names are "structure_aware" and "semantic".
+    ``Document.metadata["source_type"]``, falling back to ``default_strategy``
+    when the source type is absent or unmapped. Valid strategy names are
+    "structure_aware", "page_aware" and "semantic".
+
+    Each source type is matched to the strategy that fits how that format is
+    actually written, rather than being treated as a tunable axis:
+
+    - pptx: "structure_aware" -- decks carry their meaning in slide structure,
+      so children are title-qualified bullets and the slide is the parent.
+    - pdf: "page_aware" -- textbook pages are continuous prose, so children are
+      semantic passages bounded by the page, and the page is the parent.
+    - docx: "structure_aware" -- headed sections chunk into overlapping windows
+      with the section as parent.
+    - text: "semantic" -- no structure to exploit, so fall back to topic shifts.
     """
 
-    default_strategy: str = "structure_aware"
+    default_strategy: str = "semantic"
     strategy_by_source_type: dict[str, str] = field(
         default_factory=lambda: {
             "pptx": "structure_aware",
             "docx": "structure_aware",
-            "pdf": "semantic",
+            "pdf": "page_aware",
             "text": "semantic",
         }
     )
@@ -84,6 +95,21 @@ class RerankingConfig:
     method: str = "cross_encoder"
     cross_encoder_model_name: str = "BAAI/bge-reranker-large"
     top_n: int = 5
+
+
+@dataclass
+class ContextExpansionConfig:
+    """Whether generation reads retrieved child chunks or their parent units.
+
+    structure_aware chunking emits deliberately tiny children (one slide bullet
+    or title) and records the containing slide/section on each as
+    ``parent_text``. Retrieving precise children but generating from their
+    parents is the point of that design -- without this step the LLM sees only
+    the ~50-character child and frequently answers that its context contains no
+    answer. No effect on chunks lacking a parent (semantic chunking).
+    """
+
+    enabled: bool = True
 
 
 @dataclass
@@ -152,5 +178,6 @@ class PipelineConfig:
     retrieval: RetrievalConfig = field(default_factory=RetrievalConfig)
     reranking: RerankingConfig = field(default_factory=RerankingConfig)
     diversification: DiversificationConfig = field(default_factory=DiversificationConfig)
+    context_expansion: ContextExpansionConfig = field(default_factory=ContextExpansionConfig)
     generation: GenerationConfig = field(default_factory=GenerationConfig)
     eval: EvalConfig = field(default_factory=EvalConfig)

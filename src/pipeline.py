@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from src.chunking import chunk_document
 from src.config import PipelineConfig
+from src.context_expansion import expand_to_parents
 from src.diversification.mmr import mmr_select
 from src.generation.local_llm import LocalLLM
 from src.reranking.cross_encoder import CrossEncoderReranker
@@ -124,6 +125,11 @@ class RAGPipeline:
 
         if self.config.diversification.enabled:
             candidates = mmr_select(candidates, self.config.diversification)
+
+        # Last step, after every selection stage: matching stays on precise
+        # child chunks, but generation reads the slide/section they came from.
+        if self.config.context_expansion.enabled:
+            candidates = expand_to_parents(candidates)
 
         return candidates
 
