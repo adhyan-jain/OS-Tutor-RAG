@@ -578,6 +578,44 @@ pipeline improved. Only measurements against a fixed benchmark count: refusals
 11.7% → ~0% (chunking + parent expansion) and hit 0.885 → 1.000 (dropping MMR,
 raising k) were both measured that way and stand.
 
+### A12 — No retrieval technique dominates; they win different metrics
+
+All six techniques against the corrected golden set (26 questions, 22 documents):
+
+| technique | R@1 | R@3 | R@5 | R@10 | full@5 | MRR |
+|---|---|---|---|---|---|---|
+| dense | 0.769 | **0.962** | **1.000** | **1.000** | 0.577 | **0.875** |
+| hyde | 0.654 | 0.923 | **1.000** | **1.000** | **0.692** | 0.804 |
+| dense + multi_query | **0.808** | 0.923 | 0.962 | **1.000** | 0.577 | 0.873 |
+| hybrid_rrf + multi_query | 0.769 | 0.885 | 0.962 | 0.962 | 0.654 | 0.848 |
+| hybrid_rrf | 0.769 | 0.808 | 0.923 | **1.000** | 0.538 | 0.826 |
+| bm25 | 0.654 | 0.731 | 0.885 | 0.923 | 0.462 | 0.736 |
+
+Each of the top three wins a different metric, and the split is mechanistic
+rather than noise:
+
+**HyDE buys breadth at the cost of precision** (full@5 0.692, best; R@1 0.654,
+worst). It embeds a hypothetical *answer*, which mentions several facets of a
+topic, so it matches more of the sources that teach it -- while matching the
+single closest passage less sharply than embedding the question does.
+
+**Multi-query buys precision** (R@1 0.808, best). Several reformulations raise
+the chance that one phrasing matches the best chunk sharply, but fusing them
+slightly dilutes recall@5 (0.962 against dense's 1.000).
+
+**Dense is the best all-rounder** and the only technique needing no LLM call.
+
+This refines A11's conclusion. The vocabulary gap was real, but it was costing
+*completeness*, not findability: dense already saturates recall@5 at 1.000, and
+what query rewriting improves is retrieving *all* the sources for a multi-part
+question. Since incomplete context is what produced partial answers, HyDE is
+the most promising candidate for end-to-end correctness **despite ranking the
+top chunk worst** -- a prediction the RAGAS sweep can test.
+
+`full@5` is the only unsaturated retrieval metric (0.462-0.692) and is
+therefore the one worth optimising. `bm25` and `hybrid_rrf` are dominated on
+every metric and are not worth further RAGAS time except to document it.
+
 ## Open items
 
 - **Raise `context_entity_recall`** (currently 0.440) -- the metric most

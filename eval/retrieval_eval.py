@@ -105,25 +105,35 @@ def main() -> None:
     documents = load_raw_documents(PathConfig().data_raw_dir)
     print(f"{len(documents)} documents, {len(examples)} questions\n")
 
-    techniques = ["dense", "bm25", "hybrid_rrf"]
+    # (label, technique, use_multi_query)
+    techniques: list[tuple[str, str, bool]] = [
+        ("dense", "dense", False),
+        ("bm25", "bm25", False),
+        ("hybrid_rrf", "hybrid_rrf", False),
+    ]
     if args.include_llm_techniques:
-        techniques += ["hyde"]
+        # Both rewrite the query before retrieving, which is the only lever that
+        # addresses a question whose vocabulary the corpus does not contain.
+        techniques += [
+            ("hyde", "hyde", False),
+            ("dense+multi_query", "dense", True),
+            ("hybrid_rrf+multi_query", "hybrid_rrf", True),
+        ]
 
     header = f"{'config':34s} {'R@1':>6s} {'R@3':>6s} {'R@5':>6s} {'R@10':>6s} {'full@5':>7s} {'MRR':>6s}"
     print(header)
     print("-" * len(header))
 
-    for technique in techniques:
+    for label, technique, use_multi_query in techniques:
         config = PipelineConfig(generation=GenerationConfig())
         config.chunking = ChunkingConfig()
         config.retrieval.technique = technique
+        config.retrieval.use_multi_query = use_multi_query
 
         started = time.time()
         pipeline = RAGPipeline(config)
         pipeline.ingest(documents)
         scores = evaluate_retrieval(pipeline, examples)
-
-        label = technique
         print(
             f"{label:34s} {scores['recall@1']:6.3f} {scores['recall@3']:6.3f} "
             f"{scores['recall@5']:6.3f} {scores['recall@10']:6.3f} "
