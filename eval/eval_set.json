@@ -1,65 +1,162 @@
 {
-  "description": "Evaluation set for OS-Tutor-RAG retrieval technique comparison. Ground truth is sourced directly from the professor's uploaded course materials in data/raw/ (Introduction to OS, Process abstractions, Process API, Process execution mechanism, Shell programming). Topics reflect what these materials actually cover; classic OS topics not yet uploaded (deadlocks, memory management/paging, synchronization primitives) are intentionally absent and should be added once corresponding slides are provided — see DELAYED_TASKS.md. Trimmed to 10 questions (2 per topic) for fast iteration; RAGPipeline.evaluate()'s num_questions config controls how many of these are used per run.",
-  "schema": ["question", "ground_truth_answer", "source_chunk_ids", "topic"],
+  "description": "Golden QA set for the OS course corpus. Every question is answerable from a specific slide or section of the lecture material in data/raw/, and each ground_truth_answer is phrased from that source rather than from general OS knowledge -- so context_recall and context_entity_recall measure retrieval against wording that genuinely exists in the index. Questions are also phrased differently from their source slide's title, so a retriever cannot win by lexically matching the heading alone.",
+  "schema": ["question", "ground_truth_answer", "source_parent_ids", "topic"],
+  "notes": "source_parent_ids names the slide/section a correct retrieval should surface. Parent ids (e.g. 'Introduction to OS__slide2') are used rather than chunk ids because chunk numbering shifts whenever chunking settings change, while slide and section identity does not.",
   "examples": [
     {
-      "question": "What hardware does an operating system manage?",
-      "ground_truth_answer": "The OS manages hardware including the CPU, main memory, and I/O devices such as disk, network card, mouse, and keyboard.",
-      "source_chunk_ids": ["Introduction to OS__chunk3"],
+      "question": "What sits between user programs and system hardware, and which hardware does it look after?",
+      "ground_truth_answer": "The operating system is middleware between user programs and system hardware. It manages hardware including the CPU, main memory, and IO devices such as disk, network card, mouse and keyboard.",
+      "source_parent_ids": ["Introduction to OS__slide2"],
       "topic": "os_basics"
     },
     {
-      "question": "What is a process, and how does the OS give it the illusion of owning the whole CPU?",
-      "ground_truth_answer": "A process is a running program. The OS provides the process abstraction, creating and managing processes so that each process has the illusion of having the complete CPU -- i.e., the OS virtualizes the CPU by timesharing it between processes.",
-      "source_chunk_ids": ["Introduction to OS__chunk26", "Introduction to OS__chunk27", "Introduction to OS__chunk29", "Introduction to OS__chunk30"],
+      "question": "Which three goals is an operating system designed around?",
+      "ground_truth_answer": "Convenience, through abstraction of hardware resources for user programs; efficiency of usage of CPU, memory and other resources; and isolation between multiple processes.",
+      "source_parent_ids": ["Introduction to OS__slide9"],
       "topic": "os_basics"
     },
     {
-      "question": "In the OS's CPU scheduler, what is the difference between policy and mechanism?",
-      "ground_truth_answer": "Policy is which process to run; mechanism is how to context switch between processes.",
-      "source_chunk_ids": ["Process abstractions__chunk5", "Process abstractions__chunk6"],
+      "question": "How did operating systems change over time from their earliest form?",
+      "ground_truth_answer": "Operating systems started out as a library providing common functionality across programs. They later evolved from procedure calls to system calls, where running OS code makes the CPU execute at a higher privilege level, and from running a single program to running multiple processes concurrently.",
+      "source_parent_ids": ["Introduction to OS__slide10"],
+      "topic": "os_basics"
+    },
+    {
+      "question": "When source code is compiled, what is produced and what is inside it?",
+      "ground_truth_answer": "A compiler translates high level programs into an executable, for example turning a .c file into a.out. The executable contains instructions the CPU can understand, plus the data of the program.",
+      "source_parent_ids": ["Introduction to OS__slide3"],
+      "topic": "os_basics"
+    },
+    {
+      "question": "Describe the cycle the CPU repeats in order to execute an instruction.",
+      "ground_truth_answer": "The CPU fetches the instruction pointed at by the program counter from memory, loads the data required by the instruction into registers, and then decodes and executes the instruction.",
+      "source_parent_ids": ["Introduction to OS__slide4"],
+      "topic": "os_basics"
+    },
+    {
+      "question": "Define a running program from the OS's point of view, and explain what each one is fooled into believing.",
+      "ground_truth_answer": "A process is a running program. The OS creates and manages processes, and gives each process the illusion of having the complete CPU to itself, which is to say the OS virtualizes the CPU.",
+      "source_parent_ids": ["Introduction to OS__slide6", "Process abstractions__slide2"],
       "topic": "process_abstraction"
     },
     {
-      "question": "What are the five states a process can be in?",
-      "ground_truth_answer": "New (being created, yet to run), Ready (waiting to be scheduled), Running (currently executing on CPU), Blocked (suspended, not ready to run, e.g. waiting on a disk read), and Dead (terminated).",
-      "source_chunk_ids": ["Process abstractions__chunk27", "Process abstractions__chunk28", "Process abstractions__chunk29", "Process abstractions__chunk32", "Process abstractions__chunk33"],
+      "question": "Which pieces make up a process?",
+      "ground_truth_answer": "A process consists of a unique identifier (PID) and a memory image, which holds the static code and data as well as the dynamic stack and heap.",
+      "source_parent_ids": ["Process abstractions__slide3"],
       "topic": "process_abstraction"
     },
     {
-      "question": "What does the fork() system call do?",
-      "ground_truth_answer": "fork() creates a new child process by making a copy of the parent's memory image. The new process is added to the OS process list and scheduled, and the parent and child both start executing just after the fork, but with different return values.",
-      "source_chunk_ids": ["Process API__chunk18", "Process API__chunk26", "Process API__chunk27", "Process API__chunk28"],
+      "question": "List the states a process can occupy and say what pushes it into the suspended one.",
+      "ground_truth_answer": "A process can be running, meaning currently executing on the CPU; ready, meaning waiting to be scheduled; or blocked, meaning suspended and not ready to run. A process becomes blocked while waiting for some event, such as a read it issued from disk.",
+      "source_parent_ids": ["Process abstractions__slide5"],
+      "topic": "process_abstraction"
+    },
+    {
+      "question": "Walk through what the OS does when it brings a new process into existence.",
+      "ground_truth_answer": "The OS allocates memory and creates the memory image, loads the code and data from the executable on disk, creates the runtime stack and heap, and opens basic files.",
+      "source_parent_ids": ["Process abstractions__slide4"],
+      "topic": "process_abstraction"
+    },
+    {
+      "question": "Where is per-process bookkeeping kept inside the kernel?",
+      "ground_truth_answer": "The OS maintains a data structure, such as a list, of all active processes. Information about each individual process is stored in a process control block (PCB), which holds fields like the process identifier and the process state.",
+      "source_parent_ids": ["Process abstractions__slide8"],
+      "topic": "process_abstraction"
+    },
+    {
+      "question": "Scheduling is often split into two concerns -- what are they and how do they differ?",
+      "ground_truth_answer": "Policy is the decision of which process to run, while mechanism is how the OS switches to that process. The OS timeshares the CPU across processes, and the scheduler separates the choice of process from the machinery that performs the switch.",
+      "source_parent_ids": ["Process abstractions__slide2", "Process execution mechanism__slide10"],
+      "topic": "process_abstraction"
+    },
+    {
+      "question": "How do user programs ask the kernel for services, and what makes such programs portable across systems?",
+      "ground_truth_answer": "The API an OS provides to user programs is a set of system calls. POSIX is a standard set of system calls that an OS must implement, so programs written to the POSIX API can run on any POSIX compliant OS, and most modern operating systems are POSIX compliant.",
+      "source_parent_ids": ["Process API__slide2", "Process API__slide3"],
       "topic": "process_api"
     },
     {
-      "question": "What is the difference between fork() and exec()?",
-      "ground_truth_answer": "fork() creates a new child process by copying the parent's memory image, so parent and child initially run the same code. exec() instead loads a different executable into a process's memory image, so after forking, a child can call exec() to run a different program than its parent.",
-      "source_chunk_ids": ["Process API__chunk18", "Process API__chunk21", "Process API__chunk42", "Process API__chunk43"],
+      "question": "Which call brings a new child process into being, and how are all processes related as a result?",
+      "ground_truth_answer": "fork() creates a new child process. All processes are created by forking from a parent, and the init process is the ancestor of all processes.",
+      "source_parent_ids": ["Process API__slide5"],
       "topic": "process_api"
     },
     {
-      "question": "What happens when a trap instruction is executed for a system call?",
-      "ground_truth_answer": "The trap instruction moves the CPU to a higher privilege level, switches to the kernel stack, saves context (old PC and registers) on the kernel stack, then looks up the address in the Interrupt Descriptor Table (IDT) and jumps to the trap handler function in OS code.",
-      "source_chunk_ids": ["Process execution mechanism__chunk30", "Process execution mechanism__chunk31", "Process execution mechanism__chunk32", "Process execution mechanism__chunk33", "Process execution mechanism__chunk34"],
+      "question": "After a fork, what has happened to memory and where do the two processes resume?",
+      "ground_truth_answer": "A new process is created by making a copy of the parent's memory image. The new process is added to the OS process list and scheduled, and both parent and child start execution just after the fork, with different return values.",
+      "source_parent_ids": ["Process API__slide6"],
+      "topic": "process_api"
+    },
+    {
+      "question": "Forking alone leaves both processes running identical code -- what fixes that?",
+      "ground_truth_answer": "After a fork, the parent and child are running the same code, which is not too useful. A process can call exec() to load another executable into its memory image so it runs a different program.",
+      "source_parent_ids": ["Process API__slide10"],
+      "topic": "process_api"
+    },
+    {
+      "question": "Trace the sequence of calls a command-line interpreter makes to run something you type.",
+      "ground_truth_answer": "The init process spawns a shell such as bash. The shell reads a user command, forks a child, execs the command executable in that child, and waits for it to finish before reading the next command.",
+      "source_parent_ids": ["Process API__slide12"],
+      "topic": "process_api"
+    },
+    {
+      "question": "What execution modes does the hardware provide, and what runs in each?",
+      "ground_truth_answer": "CPU hardware has multiple privilege levels: user mode runs user code, and kernel mode runs OS code such as system calls.",
+      "source_parent_ids": ["Process execution mechanism__slide5"],
       "topic": "process_execution_mechanism"
     },
     {
-      "question": "What happens during a context switch from process A to process B?",
-      "ground_truth_answer": "The OS saves the context (PC, registers, kernel stack pointer) of process A on A's kernel stack, switches the stack pointer to B's kernel stack, and restores context from B's kernel stack; a return-from-trap then switches the CPU to user mode of B.",
-      "source_chunk_ids": ["Process execution mechanism__chunk70", "Process execution mechanism__chunk71", "Process execution mechanism__chunk72", "Process execution mechanism__chunk75"],
+      "question": "Which special instruction raises privilege, and on what occasions does the hardware run it?",
+      "ground_truth_answer": "The trap instruction is a special instruction run when a system call must be made, usually hidden from the user by a library, and executing it moves the CPU to a higher privilege level. It is executed on a system call when a program needs an OS service, and on a program fault when a program does something illegal such as accessing memory it does not have access to.",
+      "source_parent_ids": ["Process execution mechanism__slide6", "Process execution mechanism__slide7"],
       "topic": "process_execution_mechanism"
     },
     {
-      "question": "What is a shell, and what are some widely used Linux shells?",
-      "ground_truth_answer": "A shell is a command-line interpreter. Bash (Bourne Again Shell), Csh (C Shell), and Ksh (Korn Shell) are widely used Linux shells.",
-      "source_chunk_ids": ["Shell programming__chunk3", "Shell programming__chunk4"],
+      "question": "Once the kernel has finished servicing a request, how does control get back to the program?",
+      "ground_truth_answer": "When the OS is done handling a syscall or interrupt it calls the special return-from-trap instruction, which restores the context of the CPU registers from the kernel stack and changes the CPU privilege from kernel mode back to user mode.",
+      "source_parent_ids": ["Process execution mechanism__slide8"],
+      "topic": "process_execution_mechanism"
+    },
+    {
+      "question": "What state gets stored, and what gets swapped, when the kernel moves from one process to another?",
+      "ground_truth_answer": "The OS saves the context of the outgoing process, meaning its program counter, registers and kernel stack pointer, onto that process's kernel stack, then switches the stack pointer to the kernel stack of the incoming process.",
+      "source_parent_ids": ["Process execution mechanism__slide11"],
+      "topic": "process_execution_mechanism"
+    },
+    {
+      "question": "Give reasons the kernel might not hand control back to the process that entered it.",
+      "ground_truth_answer": "Sometimes when the OS is in kernel mode it cannot return to the process it left because that process has exited or must be terminated, for example after a segfault, or because the process has made a blocking system call.",
+      "source_parent_ids": ["Process execution mechanism__slide9"],
+      "topic": "process_execution_mechanism"
+    },
+    {
+      "question": "What kind of program reads and interprets typed commands, and name some common ones.",
+      "ground_truth_answer": "A shell is a command-line interpreter. Widely used shells include Bash (Bourne Again Shell), Csh (C shell) and Ksh (Korn Shell).",
+      "source_parent_ids": ["Shell programming__slide2"],
       "topic": "shell_programming"
     },
     {
-      "question": "How do you make a shell script executable and then run it?",
-      "ground_truth_answer": "Make the script executable with \"chmod +x filename.sh\", then run it with \"./filename.sh\" or \"sh filename.sh\".",
-      "source_chunk_ids": ["Shell programming__chunk36", "Shell programming__chunk37", "Shell programming__chunk38"],
+      "question": "How do you annotate a shell script so the line is not executed?",
+      "ground_truth_answer": "A good shell script will have comments, and comments are preceded by the # sign.",
+      "source_parent_ids": ["Shell programming__slide5"],
+      "topic": "shell_programming"
+    },
+    {
+      "question": "Which commands take keyboard input and print output in a script, and how is a stored value referred to?",
+      "ground_truth_answer": "The read command takes input from the keyboard and assigns it as the value of a variable, and echo prints constants and variables on STDOUT. To access the value stored in a variable you prefix its name with the dollar sign.",
+      "source_parent_ids": ["Shell programming__slide7"],
+      "topic": "shell_programming"
+    },
+    {
+      "question": "Show the syntax for creating a shell variable, and explain what removing one does.",
+      "ground_truth_answer": "A variable is defined with the syntax variable_name=variable_value, for example VAR1=\"VIT University\" or VAR2=100. Unsetting or deleting a variable directs the shell to remove that variable from the list of variables it tracks.",
+      "source_parent_ids": ["Shell programming__slide10", "Shell programming__slide11"],
+      "topic": "shell_programming"
+    },
+    {
+      "question": "What is a shell script, and which shells can run one?",
+      "ground_truth_answer": "A shell script is a computer program designed to be run by the Unix/Linux shell, which could be one of several shells including the Bourne Shell, the C Shell or the Korn Shell.",
+      "source_parent_ids": ["Shell programming__slide4"],
       "topic": "shell_programming"
     }
   ]
