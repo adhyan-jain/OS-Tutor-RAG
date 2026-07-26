@@ -28,11 +28,36 @@ _HYDE_PROMPT_TEMPLATE = (
     "Question: {query}\n\nPassage:"
 )
 
-_RAG_PROMPT_TEMPLATE = (
+# Two prompts, selected by GenerationConfig.prompt_style, so the difference can
+# be measured rather than assumed.
+#
+# "strict" is the original: answer, or state that the context does not cover it.
+# Its weakness is that it offers only those two options, so a question the
+# context answers halfway tends to produce a refusal or -- worse, observed in
+# practice -- a partial answer silently completed from the model's own
+# knowledge, which is unfaithful without being flagged.
+_RAG_PROMPT_STRICT = (
     "Answer the question using only the context below. If the context "
     "doesn't contain the answer, say so.\n\n"
     "Context:\n{context}\n\nQuestion: {query}\n\nAnswer:"
 )
+
+# "part_coverage" asks for the same grounding but makes partial answers the
+# expected outcome rather than an off-script one, which matters because most
+# questions in this eval set ask two things at once.
+_RAG_PROMPT_PART_COVERAGE = (
+    "Answer the question using only the context below.\n\n"
+    "If the question has several parts, answer each part the context supports, "
+    "and say plainly which parts it does not cover. Do not fill gaps with "
+    "knowledge that is absent from the context. If the context supports none of "
+    "the question, say so.\n\n"
+    "Context:\n{context}\n\nQuestion: {query}\n\nAnswer:"
+)
+
+_RAG_PROMPT_TEMPLATES = {
+    "strict": _RAG_PROMPT_STRICT,
+    "part_coverage": _RAG_PROMPT_PART_COVERAGE,
+}
 
 _MULTI_QUERY_PROMPT_TEMPLATE = (
     "Generate {n} different ways to phrase the following question, so that "
@@ -109,7 +134,8 @@ class LocalLLM:
             The generated answer text.
         """
         context_text = "\n\n".join(sc.chunk.text for sc in context)
-        prompt = _RAG_PROMPT_TEMPLATE.format(context=context_text, query=query)
+        template = _RAG_PROMPT_TEMPLATES[self.config.prompt_style]
+        prompt = template.format(context=context_text, query=query)
         return self._complete(prompt, purpose="generate_answer")
 
     def generate_hypothetical_document(self, query: str) -> str:

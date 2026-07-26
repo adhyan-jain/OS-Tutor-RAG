@@ -186,6 +186,12 @@ class GenerationConfig:
     gpu_memory_utilization: float = 0.85
     # Used when backend == "ollama" (local dev/testing against an Ollama server).
     ollama_base_url: str = "http://localhost:11434"
+    # Which answer prompt to use: "strict" or "part_coverage" (see
+    # local_llm._RAG_PROMPT_TEMPLATES). Most questions in the eval set ask two
+    # things at once, and the strict prompt offers only "answer" or "not in the
+    # context", so a half-covered question tends to yield a refusal or a
+    # partial answer quietly completed from the model's own knowledge.
+    prompt_style: str = "strict"
 
 
 @dataclass
