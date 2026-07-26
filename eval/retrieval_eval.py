@@ -87,27 +87,6 @@ def evaluate_retrieval(
     return scores
 
 
-def _chunking_variants() -> dict[str, ChunkingConfig]:
-    """Chunking configurations to compare on retrieval quality.
-
-    "slide_level" tests whether slide decks should be chunked whole rather than
-    per bullet: children currently average 13 tokens, which is little text for
-    an embedding model to work with, while a whole slide averages only 72 --
-    already a reasonable unit. See FINDINGS.md open items.
-    """
-    return {
-        "current": ChunkingConfig(),
-        "slide_level": ChunkingConfig(
-            strategy_by_source_type={
-                "pptx": "slide_level",
-                "docx": "structure_aware",
-                "pdf": "page_aware",
-                "text": "semantic",
-            }
-        ),
-    }
-
-
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--eval-set", default="eval/eval_set.json")
@@ -115,11 +94,6 @@ def main() -> None:
         "--include-llm-techniques",
         action="store_true",
         help="Also measure hyde and multi_query (needs a running Ollama, much slower).",
-    )
-    parser.add_argument(
-        "--chunking",
-        action="store_true",
-        help="Compare chunking strategies instead of retrieval techniques.",
     )
     args = parser.parse_args()
 
@@ -135,30 +109,27 @@ def main() -> None:
     if args.include_llm_techniques:
         techniques += ["hyde"]
 
-    chunking_variants = _chunking_variants() if args.chunking else {"current": ChunkingConfig()}
-
     header = f"{'config':34s} {'R@1':>6s} {'R@3':>6s} {'R@5':>6s} {'R@10':>6s} {'full@5':>7s} {'MRR':>6s}"
     print(header)
     print("-" * len(header))
 
-    for chunk_name, chunking_config in chunking_variants.items():
-        for technique in techniques:
-            config = PipelineConfig(generation=GenerationConfig())
-            config.chunking = chunking_config
-            config.retrieval.technique = technique
+    for technique in techniques:
+        config = PipelineConfig(generation=GenerationConfig())
+        config.chunking = ChunkingConfig()
+        config.retrieval.technique = technique
 
-            started = time.time()
-            pipeline = RAGPipeline(config)
-            pipeline.ingest(documents)
-            scores = evaluate_retrieval(pipeline, examples)
+        started = time.time()
+        pipeline = RAGPipeline(config)
+        pipeline.ingest(documents)
+        scores = evaluate_retrieval(pipeline, examples)
 
-            label = technique if len(chunking_variants) == 1 else f"{chunk_name}+{technique}"
-            print(
-                f"{label:34s} {scores['recall@1']:6.3f} {scores['recall@3']:6.3f} "
-                f"{scores['recall@5']:6.3f} {scores['recall@10']:6.3f} "
-                f"{scores['full_recall@5']:7.3f} {scores['mrr']:6.3f}"
-                f"   ({time.time() - started:.0f}s)"
-            )
+        label = technique
+        print(
+            f"{label:34s} {scores['recall@1']:6.3f} {scores['recall@3']:6.3f} "
+            f"{scores['recall@5']:6.3f} {scores['recall@10']:6.3f} "
+            f"{scores['full_recall@5']:7.3f} {scores['mrr']:6.3f}"
+            f"   ({time.time() - started:.0f}s)"
+        )
 
 
 if __name__ == "__main__":

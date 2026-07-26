@@ -241,6 +241,59 @@ caveats were being counted as spurious claims and lowering
 Longer answers score *higher*. Output style is not the problem; retrieval
 recall is (see A2).
 
+### A5 — Retrieval measured directly, without an LLM in the loop
+
+`eval/retrieval_eval.py` scores retrieval against the golden set's
+`source_parent_ids`: for each question, did the retriever surface the slide the
+question is answerable from? No generation, no judging, so a configuration is
+scored in seconds rather than the ~30 minutes a RAGAS variant costs. Results
+over 26 questions, 22 documents:
+
+| config | R@1 | R@3 | R@5 | R@10 | full@5 | MRR |
+|---|---|---|---|---|---|---|
+| current + dense | 0.731 | 0.846 | **0.923** | **1.000** | 0.731 | 0.816 |
+| current + hybrid_rrf | 0.462 | 0.692 | 0.846 | 0.885 | 0.692 | 0.613 |
+| current + bm25 | 0.385 | 0.462 | 0.500 | 0.577 | 0.423 | 0.435 |
+| slide_level + dense | 0.269 | 0.385 | 0.577 | 0.654 | 0.500 | 0.389 |
+| slide_level + bm25 | 0.308 | 0.385 | 0.423 | 0.462 | 0.385 | 0.356 |
+| slide_level + hybrid_rrf | 0.269 | 0.423 | 0.462 | 0.577 | 0.423 | 0.370 |
+
+Three consequences:
+
+**Dense retrieval already achieves perfect recall at 10** but the pipeline
+passes only 5 contexts to generation, and R@5 is 0.923. For roughly two
+questions the correct slide *is* retrieved and then discarded by reranking or
+MMR before the model ever sees it. Raising the final context count recovers
+information the system has already found.
+
+**BM25's weakness is real, not an artifact of the chunking defect.** It fails to
+surface the right slide half the time (R@5 0.500). The original conclusion
+survives the fix; what changed is that the cause is now measurable directly
+rather than inferred from downstream answer quality.
+
+**Fusing a strong retriever with a weak one hurts.** `hybrid_rrf` (0.846)
+underperforms plain `dense` (0.923) because reciprocal rank fusion gives BM25's
+poor rankings equal weight. Worth either weighting the fusion or dropping the
+sparse arm on this corpus.
+
+### A6 — Refuted: slide-level chunking does not improve retrieval
+
+Hypothesised that `structure_aware`'s ~13-token children were too short to
+embed well, and that indexing whole slides (~72 tokens) would retrieve better.
+**Tested and refuted:** dense R@5 fell from 0.923 to 0.577.
+
+A whole slide's embedding averages over five or six unrelated bullets and is
+therefore *less* discriminative than a single focused bullet. Fine-grained
+children match better precisely because they are narrow. This is direct
+evidence for the small-to-big design: match on small children, generate from
+their parents. `slide_level` was removed.
+
+Note also the framing error that produced the hypothesis: the problem with a
+short chunk is how little *information* it carries, not the encoder's capacity.
+A larger embedding model cannot recover meaning that is absent from the text,
+and a smaller one (bge-small) would be strictly worse -- bge-large is the
+better model in that series on every published benchmark.
+
 ### A4 — Refusals have distinct causes needing distinct fixes
 
 Examining the surviving refusals individually showed three different
