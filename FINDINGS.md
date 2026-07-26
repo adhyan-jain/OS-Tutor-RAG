@@ -537,6 +537,47 @@ nothing in between. This is worth stating plainly in the write-up -- the
 components were added on the reasonable assumption that they help, and
 measurement says otherwise for this corpus.
 
+### A11 — The benchmark was biased against lexical retrieval
+
+Rebuilding the golden set (A8b, A8c) changed the retrieval comparison far more
+than any pipeline change has:
+
+| technique | R@1 old → new | R@5 old → new | full@5 old → new |
+|---|---|---|---|
+| dense | 0.731 → 0.769 | 0.923 → **1.000** | 0.731 → 0.577 |
+| bm25 | 0.385 → **0.654** | 0.500 → **0.885** | 0.423 → 0.462 |
+| hybrid_rrf | 0.462 → 0.769 | 0.846 → 0.923 | 0.692 → 0.538 |
+
+**BM25's apparent collapse was mostly an artifact of the eval set.** Its
+recall@5 rose from 0.500 to 0.885 with no change to the retriever, the index or
+the chunking -- only to the questions asked of it.
+
+The mechanism is specific and worth stating, because it is a trap any RAG
+benchmark can fall into. Writing questions that deliberately avoid the
+source's wording penalises *lexical* retrieval far more heavily than *semantic*
+retrieval: dense embeddings absorb paraphrase, BM25 matches words. Asking where
+"per-process bookkeeping" is kept is merely hard for dense and close to
+unanswerable for BM25. The benchmark was therefore biased against one of the
+techniques it existed to compare, and the earlier conclusion that "BM25 fails
+half the time on this corpus" measured that bias.
+
+What survives: dense still leads (1.000 against 0.885) and hybrid_rrf still
+trails dense (0.923), so fusing with a weaker retriever still costs recall. The
+*ordering* held; the *magnitude* was inflated roughly threefold.
+
+Two further readings. `full@5` fell across the board because 17 of 26 questions
+now require several parents -- a stricter and more meaningful test of whether
+retrieval covers a topic across the sources that teach it. And dense now
+reaches recall@5 of 1.000, so the earlier "k must be 8-10" conclusion was
+itself partly an eval-set artifact; `full@5` of 0.577 still argues for 8, since
+multi-part questions need breadth rather than depth.
+
+**Method note.** Retrieval metrics measured before and after an eval-set change
+are not comparable, and improvements across that boundary are not evidence the
+pipeline improved. Only measurements against a fixed benchmark count: refusals
+11.7% → ~0% (chunking + parent expansion) and hit 0.885 → 1.000 (dropping MMR,
+raising k) were both measured that way and stand.
+
 ## Open items
 
 - **Raise `context_entity_recall`** (currently 0.440) -- the metric most
