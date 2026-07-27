@@ -11,16 +11,23 @@ variants. Status values: **open**, **testing**, **confirmed**, **refuted**.
 ## Tier 1 — targets the metrics that are actually weak
 
 ### H1. Multi-query's advantage grows with more variants
-**status: open**
+**status: CONFIRMED with a ceiling at 5 — adopted**
 
-Multi-query is the single largest gain measured (+0.032 composite, +0.033
-answer_correctness) and it works by covering more phrasings of the question.
-`num_query_variants` is 3. If the mechanism is coverage, 5 should beat 3, with
-diminishing returns after.
+| variants | R@1 | R@5 | full@5 | MRR |
+|---|---|---|---|---|
+| none | 0.769 | 1.000 | 0.500 | 0.875 |
+| 3 | 0.846 | 0.962 | 0.538 | 0.910 |
+| **5** | 0.846 | **1.000** | **0.577** | 0.902 |
+| 7 | 0.808 | 0.962 | 0.538 | 0.878 |
 
-*Test:* retrieval harness at 3 / 5 / 7 variants, then RAGAS on the best.
-*Falsified if:* recall and full_recall are flat or fall from 3 to 5, which
-would mean the gain comes from something other than coverage.
+An inverted U rather than the monotonic gain predicted. Three to five improves
+full_recall by 0.039 and restores recall@5 to 1.000; five to seven loses both
+again, consistent with later reformulations drifting far enough from the
+question to retrieve off-topic passages that RRF then weights equally.
+
+`num_query_variants` moved to 5. Note the full@5 here is computed
+dedup-then-top-5, unlike retrieval_eval.py's top-5-then-dedup, so these figures
+compare within this table only.
 
 ### H2. HyDE and multi-query stack
 **status: testing** (variants 7-8 of the focused sweep)

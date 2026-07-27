@@ -106,8 +106,12 @@ class RetrievalConfig:
     rrf_k: int = 60
     index_dir: Path = Path("data/index")
     use_multi_query: bool = False
-    # Used when use_multi_query is True.
-    num_query_variants: int = 3
+    # Used when use_multi_query is True. Five, not three: measured recall@5
+    # 1.000 and full_recall 0.577 at five against 0.962 and 0.538 at three,
+    # and seven is worse than five on both -- by the seventh reformulation the
+    # variants drift far enough from the question to retrieve off-topic
+    # passages, which RRF then weights equally.
+    num_query_variants: int = 5
 
 
 @dataclass
