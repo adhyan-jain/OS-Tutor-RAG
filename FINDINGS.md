@@ -178,6 +178,32 @@ lexical retrieval finds them."
 
 ---
 
+### F15 — PPTX tables were never indexed
+
+- **Cause:** `extract_ppt` collected text only from shapes with a text frame.
+  A PowerPoint table has no text frame -- its content lives in
+  `shape.table` -- so every table was skipped without error.
+- **Measured:** slide text 19,268 → 23,147 characters once tables are read, a
+  **20.1% increase**. Seven tables across the decks.
+- **What was missing:** the shell operator reference tables -- arithmetic,
+  relational and assignment operators with descriptions and worked examples
+  (`-eq | Checks if two operands are equal | [ $a -eq $b ] is not true`).
+  Precisely the material a beginner looks up.
+- **Fix:** each table row becomes one bullet with its cells joined, so a row's
+  fields stay together as one retrievable unit rather than scattering.
+- **Same class as F11** (the `.doc` skipped for its extension): content absent
+  from the index, failing silently, invisible to every downstream metric
+  because the questions asked happened not to need it.
+- **Effect on scores: not yet measured** -- an A/B against the winning config
+  is running.
+
+### F16 — Speaker notes: checked, none present
+
+Slide notes are captured into metadata by `extract_ppt` but never chunked, so
+they looked like a second instance of F15. Measured before recommending:
+**0 of 81 slides carry speaker notes**, so there is nothing to recover. Noted
+because the same gap would matter on a deck that does use them.
+
 ## Analytical findings (not defects)
 
 ### A1 — `faithfulness` rewards refusal
@@ -707,6 +733,46 @@ information**. Consequences, including for claims made earlier in this document:
 The metric was designed for entity-centric domains (its documentation cites a
 tourism chatbot). Conceptual material, where the "entities" are ordinary
 technical nouns and contexts are long, is outside what it measures well.
+
+### A16 — Complete focused sweep: the cheapest strong config wins
+
+Eight variants, 26 questions, corrected golden set, `num_query_variants=3`,
+diversification off:
+
+| variant | composite | corr | compl | faith | ans_corr | ctx_prec | ctx_recall | calls | cost |
+|---|---|---|---|---|---|---|---|---|---|
+| **dense + multi_query** | **0.772** | 0.810 | 0.734 | 0.958 | **0.662** | 0.862 | 0.936 | 480 | $0.160 |
+| hyde + cross_encoder | 0.764 | 0.801 | 0.727 | 0.958 | 0.644 | 0.850 | **0.978** | 491 | $0.195 |
+| hyde | 0.752 | 0.780 | 0.723 | 0.929 | 0.631 | 0.852 | 0.958 | 510 | $0.227 |
+| dense + cross_encoder | 0.744 | 0.795 | 0.693 | 0.949 | 0.642 | **0.882** | 0.926 | 448 | $0.153 |
+| hyde + multi_query + cross_encoder | 0.743 | 0.769 | 0.716 | 0.882 | 0.656 | 0.863 | 0.968 | 593 | $0.282 |
+| dense | 0.740 | 0.764 | 0.717 | 0.899 | 0.629 | 0.843 | 0.942 | 451 | $0.148 |
+| hyde + multi_query | 0.734 | 0.774 | 0.694 | 0.912 | 0.637 | 0.811 | 0.960 | 615 | $0.296 |
+| dense + multi_query + cross_encoder | 0.720 | 0.745 | 0.695 | 0.883 | 0.607 | 0.896 | 0.936 | 471 | $0.163 |
+
+**Cost and quality are anti-correlated here.** The winner is nearly the
+cheapest config in the sweep (480 calls, $0.160), while the two most expensive
+(615 and 593 calls) place seventh and fifth. Every LLM call added to retrieval
+buys another chance to drift from what was asked.
+
+**Reranking is not uniformly good or bad -- it depends what precedes it:**
+
+```
+dense           → +0.004 with cross_encoder
+hyde            → +0.012
+dense+multi_query → −0.052
+```
+
+It helps a single-query retriever and hurts multi-query, because it re-scores
+every candidate against the *original* question and so discards exactly the
+diversity multi-query was added to create. This supersedes A7's blanket
+"reranking hurts", which was measured on the biased benchmark, and refines
+A14's correction of it.
+
+The spread across all eight is 0.052 -- larger than the 0.012 A14 saw before
+the multi-query variants ran, so "technique choice barely matters" was stated
+on incomplete data. It remains true that the defect fixes were worth several
+times more than the best technique choice.
 
 ## Open items
 
