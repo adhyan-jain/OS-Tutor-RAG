@@ -54,9 +54,32 @@ _RAG_PROMPT_PART_COVERAGE = (
     "Context:\n{context}\n\nQuestion: {query}\n\nAnswer:"
 )
 
+# "few_shot" keeps the strict instruction and adds two worked examples, to
+# align the *shape* of the answer rather than its content. Measured motivation:
+# answers were losing points to formatting rather than substance -- one scored
+# 0.56 while being content-identical to its reference, penalised because it
+# split a single reference statement across two bullets, and the correctness
+# metric compares statement sets. The examples are drawn from the course
+# material's own phrasing and deliberately answer in continuous prose.
+_RAG_PROMPT_FEW_SHOT = (
+    "Answer the question using only the context below. If the context "
+    "doesn't contain the answer, say so.\n\n"
+    "Answer in continuous prose, stating each fact once. Do not add preamble "
+    "about the context.\n\n"
+    "Example question: What does the OS do when it creates a process?\n"
+    "Example answer: The OS allocates memory and creates the memory image, "
+    "loads the code and data from the executable on disk, creates the runtime "
+    "stack and heap, and opens basic files.\n\n"
+    "Example question: What are user mode and kernel mode?\n"
+    "Example answer: CPU hardware has multiple privilege levels: user mode "
+    "runs user code, and kernel mode runs OS code such as system calls.\n\n"
+    "Context:\n{context}\n\nQuestion: {query}\n\nAnswer:"
+)
+
 _RAG_PROMPT_TEMPLATES = {
     "strict": _RAG_PROMPT_STRICT,
     "part_coverage": _RAG_PROMPT_PART_COVERAGE,
+    "few_shot": _RAG_PROMPT_FEW_SHOT,
 }
 
 _MULTI_QUERY_PROMPT_TEMPLATE = (
