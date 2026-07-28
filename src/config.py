@@ -190,12 +190,19 @@ class GenerationConfig:
     gpu_memory_utilization: float = 0.85
     # Used when backend == "ollama" (local dev/testing against an Ollama server).
     ollama_base_url: str = "http://localhost:11434"
-    # Which answer prompt to use: "strict" or "part_coverage" (see
-    # local_llm._RAG_PROMPT_TEMPLATES). Most questions in the eval set ask two
-    # things at once, and the strict prompt offers only "answer" or "not in the
-    # context", so a half-covered question tends to yield a refusal or a
-    # partial answer quietly completed from the model's own knowledge.
-    prompt_style: str = "strict"
+    # Which answer prompt to use (see local_llm._RAG_PROMPT_TEMPLATES).
+    #
+    # "few_shot" by measurement: against "strict" on the same config it raised
+    # answer_correctness from 0.664 to 0.756 and faithfulness from 0.942 to
+    # 0.986. For scale, the whole eight-variant retrieval sweep spanned 0.052,
+    # so aligning the shape of the answer mattered more than any technique
+    # choice -- consistent with answers losing points to statement granularity
+    # rather than to content.
+    #
+    # "part_coverage" measured actively harmful (faithfulness 0.819) and is
+    # kept only as a recorded negative: inviting partial answers reads as
+    # licence to fill the gaps from the model's own knowledge.
+    prompt_style: str = "few_shot"
 
 
 @dataclass
