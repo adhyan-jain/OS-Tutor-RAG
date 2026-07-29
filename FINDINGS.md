@@ -774,6 +774,55 @@ the multi-query variants ran, so "technique choice barely matters" was stated
 on incomplete data. It remains true that the defect fixes were worth several
 times more than the best technique choice.
 
+### A17 — The answer prompt outweighed every retrieval technique
+
+Three prompts against the identical winning config (dense + multi_query, no
+reranking, no diversification, tables indexed, five query variants):
+
+| prompt | composite | ans_corr | faithfulness | ctx_recall |
+|---|---|---|---|---|
+| strict (previous default) | 0.763 | 0.664 | 0.942 | 0.946 |
+| **few_shot** | **0.784** | **0.756** | **0.986** | 0.928 |
+| part_coverage | 0.712 | 0.631 | 0.819 | 0.936 |
+
+**answer_correctness rose 0.664 → 0.756, a gain of 0.092.** The entire
+eight-variant retrieval sweep spanned 0.052 (A16), so two worked examples in
+the prompt were worth more than every chunking, retrieval, reranking and
+diversification choice put together.
+
+This is the predicted consequence of a diagnosis made earlier and not acted on
+for too long: answers were losing points to *statement granularity*, not to
+content -- one scored 0.56 while being content-identical to its reference,
+penalised for splitting a single reference statement into two bullets, because
+answer_correctness compares statement sets. Showing the expected shape fixes
+that without touching what the model knows. Faithfulness rising too (0.942 →
+0.986) suggests the examples also discourage the unsupported asides the strict
+prompt's preamble style invited.
+
+**part_coverage measured actively harmful**, as predicted when it was written:
+faithfulness fell to 0.819. Inviting the model to answer "each part the context
+supports" reads as licence to supply the parts it does not. Retained in the
+code as a recorded negative rather than deleted.
+
+**The composite understates all of this** (+0.012 against ans_corr's +0.092)
+because half of `completeness` is `context_entity_recall`, which A15 showed to
+be unreliable. Another argument for H7.
+
+### A18 — Recovered content need not move the benchmark
+
+Indexing PPTX tables (F15) added 20.1% more slide text and produced **no
+measurable score change** (0.772 → 0.763 on a confounded arm that also changed
+`num_query_variants`).
+
+The reason is not that the content is worthless: the recovered tables define
+shell operators, and **no question in the eval set asks about shell operators**.
+The benchmark cannot see the improvement.
+
+This is worth keeping in view when reading every other number here. A metric
+suite measures the questions it was given, and content that answers questions
+nobody asked is invisible to it while still being exactly what a student needs.
+The fix was kept for that reason rather than for its score.
+
 ## Open items
 
 - **Raise `context_entity_recall`** (currently 0.440) -- the metric most

@@ -30,7 +30,12 @@ dedup-then-top-5, unlike retrieval_eval.py's top-5-then-dedup, so these figures
 compare within this table only.
 
 ### H2. HyDE and multi-query stack
-**status: testing** (variants 7-8 of the focused sweep)
+**status: REFUTED — see FINDINGS A16**
+
+hyde+multi_query scored 0.734, below both hyde alone (0.752) and
+dense+multi_query (0.772), at the highest LLM cost in the sweep. Together with
+H1's ceiling at five variants, one principle covers both: query transformation
+has an optimum, and past it drift dominates.
 
 They contribute independently (+0.012 and +0.032) through different mechanisms
 -- breadth against precision -- so their gains may add.
@@ -50,7 +55,12 @@ against multi-query on the 17 multi-part questions specifically.
 *Falsified if:* full_recall does not improve on that subset.
 
 ### H4. Prompting for part-coverage converts partial retrieval into partial credit
-**status: open**
+**status: REFUTED — measured harmful, see FINDINGS A17**
+
+Faithfulness fell 0.942 -> 0.819 and answer_correctness 0.664 -> 0.631.
+Inviting the model to answer "each part the context supports" reads as licence
+to supply the parts it does not. The related but different change that *did*
+work was few-shot examples aligning answer shape (+0.092 answer_correctness).
 
 The prompt currently offers a binary: answer, or say the context does not
 contain the answer. A4 case 2 found the model going off-script -- answering the
