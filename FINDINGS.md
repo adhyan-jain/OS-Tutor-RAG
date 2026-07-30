@@ -823,6 +823,63 @@ suite measures the questions it was given, and content that answers questions
 nobody asked is invisible to it while still being exactly what a student needs.
 The fix was kept for that reason rather than for its score.
 
+### A19 — Chain-of-Thought lost what few-shot gained, by shortening the answer
+
+CoT was the highest-ranked next step after A17, on the reasoning that prompting
+was the strongest lever measured. It measured **worse**, on the best config
+(dense + multi_query + cross_encoder), full 26-question eval set:
+
+| prompt | ans_corr | faithfulness | ans_sim | ans_rel | ctx_entity_recall |
+|---|---|---|---|---|---|
+| **few_shot** | **0.7478** | **0.9808** | **0.9195** | 0.8529 | 0.4847 |
+| cot | 0.6887 | 0.9333 | 0.9052 | **0.8830** | 0.5086 |
+
+**answer_correctness fell 0.059**, faithfulness 0.048, and CoT lost on 14 of
+26 questions against 10 won. The `cot` prompt is few_shot's instruction plus a
+labelled `Reasoning:` section, stripped out before scoring
+(`local_llm._strip_reasoning`) so reasoning text never reaches the judge —
+without that, the reasoning's own statements would be scored as answer
+statements and the comparison would measure nothing but verbosity.
+
+**The mechanism is length.** CoT answers averaged **26.0 words against
+few_shot's 35.6**, a 27% drop, and the lost words are lost *statements*:
+
+- *"What happens to the memory image during a fork, and where do parent and
+  child resume?"* — few_shot answered both parts; CoT answered only the memory
+  image and dropped resumption entirely (0.402 lost).
+- *"What does return-from-trap do?"* — CoT kept the privilege change and the
+  jump, dropped the register restore (0.405 lost).
+
+Having enumerated the relevant material in the reasoning section, the model
+treats the answer as a *summary of reasoning already done* rather than the
+place the content goes. That is the exact opposite of what A17's diagnosis
+needs: answer_correctness compares statement sets, so a shorter answer is a
+smaller set and lost recall. The two prompts push on the same lever in
+opposite directions — A17 won by aligning answer *shape*, and CoT changes that
+shape again by prefixing it with somewhere else for the content to live.
+
+**A negative worth having, not a failure of CoT as a technique.** CoT is
+documented to help multi-step *derivation*; these questions are recall of
+course material, where there is nothing to derive. The reasoning step buys
+nothing and costs answer length. Its one gain, answer_relevancy 0.853 → 0.883,
+is consistent with this: tighter, more on-topic answers that say less.
+
+Two secondary observations from the same run:
+
+- **A more complete answer can still score lower.** On the PCB question CoT
+  enumerated the PCB's fields where few_shot paraphrased, and lost 0.323 —
+  correct content absent from the reference is penalised as precision. More
+  evidence for H5 (ground truth is less complete than the corpus).
+- **multi_query makes sweep arms non-identical in retrieval.** Only 13 of 26
+  questions retrieved the same contexts in both arms: variant generation is an
+  LLM call at temperature 0.2, so retrieval is stochastic whenever multi_query
+  is on. Every multi_query comparison in this document carries that noise, and
+  it cannot be attributed to the judge (rows with identical contexts scored
+  identical context metrics — the retrieval-side spread is entirely retrieval).
+
+`few_shot` stays the default. `cot` is retained in the code as a recorded
+negative, like `part_coverage`.
+
 ## Open items
 
 - **Raise `context_entity_recall`** (currently 0.440) -- the metric most

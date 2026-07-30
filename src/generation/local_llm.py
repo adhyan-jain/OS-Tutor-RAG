@@ -76,11 +76,59 @@ _RAG_PROMPT_FEW_SHOT = (
     "Context:\n{context}\n\nQuestion: {query}\n\nAnswer:"
 )
 
+# "cot" keeps the few-shot answer shape and puts a short reasoning step in
+# front of it. The reasoning is asked for in a separate, labelled section so it
+# can be stripped before scoring: RAGAS compares the *answer* against the
+# reference, and leaving reasoning in the answer text would inflate the
+# statement count and depress both answer_correctness and faithfulness for
+# reasons that have nothing to do with whether reasoning helped.
+#
+# The example is worked in the same two-part shape most of this eval set's
+# questions take, since that is where reasoning has something to do: decide
+# which parts the context covers, then answer in the aligned prose shape.
+_RAG_PROMPT_COT = (
+    "Answer the question using only the context below. If the context "
+    "doesn't contain the answer, say so.\n\n"
+    "First, under the heading 'Reasoning:', work out in one or two sentences "
+    "which parts of the context bear on the question. Then, under the heading "
+    "'Answer:', give the answer in continuous prose, stating each fact once, "
+    "with no preamble about the context and no reference to the reasoning.\n\n"
+    "Example question: What does the OS do when it creates a process, and what "
+    "privilege level does that code run at?\n"
+    "Reasoning: The context describes process creation as loading an "
+    "executable and setting up its memory, and separately describes the CPU's "
+    "privilege levels; both parts are covered.\n"
+    "Answer: The OS allocates memory and creates the memory image, loads the "
+    "code and data from the executable on disk, creates the runtime stack and "
+    "heap, and opens basic files. This is OS code, so it runs in kernel mode, "
+    "while user code runs in user mode.\n\n"
+    "Context:\n{context}\n\nQuestion: {query}\n\nReasoning:"
+)
+
 _RAG_PROMPT_TEMPLATES = {
     "strict": _RAG_PROMPT_STRICT,
     "part_coverage": _RAG_PROMPT_PART_COVERAGE,
     "few_shot": _RAG_PROMPT_FEW_SHOT,
+    "cot": _RAG_PROMPT_COT,
 }
+
+# Prompts whose output carries a reasoning section that must not reach the
+# scorer; see _strip_reasoning.
+_REASONING_PROMPT_STYLES = {"cot"}
+# Tolerates the markdown the model wraps headings in ("**Answer:**", "### Answer:").
+_ANSWER_HEADING_RE = re.compile(r"^[#*\s]*answer[*\s]*:[*\s]*", re.IGNORECASE | re.MULTILINE)
+
+
+def _strip_reasoning(text: str) -> str:
+    """Return the text after the final 'Answer:' heading, or all of it.
+
+    A local 8B model does not always emit the heading (and can be cut off by
+    max_tokens mid-reasoning). Falling back to the full text keeps such a row
+    scoreable rather than blank -- it scores badly, which is the honest result
+    for a prompt whose format the model failed to follow.
+    """
+    matches = list(_ANSWER_HEADING_RE.finditer(text))
+    return text[matches[-1].end():].strip() if matches else text.strip()
 
 _MULTI_QUERY_PROMPT_TEMPLATE = (
     "Generate {n} different ways to phrase the following question, so that "
@@ -159,7 +207,10 @@ class LocalLLM:
         context_text = "\n\n".join(sc.chunk.text for sc in context)
         template = _RAG_PROMPT_TEMPLATES[self.config.prompt_style]
         prompt = template.format(context=context_text, query=query)
-        return self._complete(prompt, purpose="generate_answer")
+        answer = self._complete(prompt, purpose="generate_answer")
+        if self.config.prompt_style in _REASONING_PROMPT_STYLES:
+            answer = _strip_reasoning(answer)
+        return answer
 
     def generate_hypothetical_document(self, query: str) -> str:
         """Generate a hypothetical answer passage for a query (for HyDE retrieval).

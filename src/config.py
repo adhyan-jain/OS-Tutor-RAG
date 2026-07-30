@@ -199,6 +199,11 @@ class GenerationConfig:
     # choice -- consistent with answers losing points to statement granularity
     # rather than to content.
     #
+    # "cot" also measured worse (answer_correctness 0.748 -> 0.689, faithfulness
+    # 0.981 -> 0.933; FINDINGS A19). Reasoning before the answer shortened the
+    # answer by 27%, and since answer_correctness compares statement sets, the
+    # dropped statements are lost recall. Kept as a recorded negative.
+    #
     # "part_coverage" measured actively harmful (faithfulness 0.819) and is
     # kept only as a recorded negative: inviting partial answers reads as
     # licence to fill the gaps from the model's own knowledge.

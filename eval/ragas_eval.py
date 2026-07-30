@@ -154,6 +154,35 @@ def focused_config_variants(generation_config: GenerationConfig | None = None) -
     return variants
 
 
+def prompt_config_variants(styles: list[str] | None = None) -> list[ConfigVariant]:
+    """The answer prompts, held against one fixed retrieval configuration.
+
+    A17 measured the prompt worth more than every retrieval technique put
+    together, so prompts get their own axis. Everything downstream of retrieval
+    is pinned to the current default winner (dense + multi_query with five
+    variants, cross-encoder reranking, no diversification) precisely so the
+    only difference between rows is the wording of the prompt.
+
+    "cot" gets a larger max_tokens: it spends output on a reasoning section
+    before the answer, and holding the budget at the default would confound
+    reasoning's effect with truncation of the answer that follows it.
+    """
+    styles = styles or ["few_shot", "cot"]
+
+    variants = []
+    for style in styles:
+        generation_config = GenerationConfig(prompt_style=style)
+        if style in ("cot",):
+            generation_config.max_tokens = 768
+        config = PipelineConfig(generation=generation_config)
+        config.retrieval.technique = "dense"
+        config.retrieval.use_multi_query = True
+        config.reranking.method = "cross_encoder"
+        config.diversification.enabled = False
+        variants.append(ConfigVariant(name=f"prompt_{style}", config=config))
+    return variants
+
+
 def completed_run_names(workbook_path: Path) -> set[str]:
     """Names of variants already recorded in the per-run workbook.
 
@@ -387,12 +416,24 @@ def main() -> None:
         action="store_true",
         help="Only the configs retrieval measurement left undominated (see focused_config_variants).",
     )
+    parser.add_argument(
+        "--prompts",
+        nargs="*",
+        metavar="STYLE",
+        help="Compare answer prompts on one fixed retrieval config "
+        "(default: few_shot cot). See prompt_config_variants.",
+    )
     args = parser.parse_args()
 
     documents = load_raw_documents(PathConfig().data_raw_dir)
     print(f"Loaded {len(documents)} documents from data/raw/")
 
-    variants = focused_config_variants() if args.focused else default_config_variants()
+    if args.prompts is not None:
+        variants = prompt_config_variants(args.prompts or None)
+    elif args.focused:
+        variants = focused_config_variants()
+    else:
+        variants = default_config_variants()
     eval_set_path = Path("eval/eval_set.json")
 
     if args.quick:
