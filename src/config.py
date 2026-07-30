@@ -186,7 +186,20 @@ class GenerationConfig:
     model_name: str = "llama3:latest"
     backend: str = "ollama"
     max_tokens: int = 512
-    temperature: float = 0.2
+    # Zero, not 0.2, primarily for reproducibility rather than for score: this
+    # temperature governs every LLM call in the pipeline, including the
+    # multi-query variant generation, and A19 found that at 0.2 only 13 of 26
+    # questions retrieved the same contexts across two arms that differed only
+    # in their answer prompt. A benchmark whose retrieval is stochastic cannot
+    # attribute a few-hundredths difference to the thing under test.
+    #
+    # It reduces that nondeterminism sharply without removing it: repeating one
+    # multi-query call four times gave 4 distinct variant sets at 0.2, but 1-2
+    # distinct sets at 0.0. The residue is not sampling (greedy decoding has
+    # nothing to sample) but nondeterministic numerics in the server, so no
+    # temperature setting can close it. See A20 for what the change cost in
+    # score.
+    temperature: float = 0.0
     gpu_memory_utilization: float = 0.85
     # Used when backend == "ollama" (local dev/testing against an Ollama server).
     ollama_base_url: str = "http://localhost:11434"

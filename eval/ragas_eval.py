@@ -183,6 +183,27 @@ def prompt_config_variants(styles: list[str] | None = None) -> list[ConfigVarian
     return variants
 
 
+def temperature_config_variants(temperatures: list[float] | None = None) -> list[ConfigVariant]:
+    """The generation temperatures, on the same fixed config as the prompt axis.
+
+    Temperature is not only a generation knob here: the same value drives the
+    multi-query variant generation, so it decides whether a sweep's retrieval
+    is reproducible at all (A19 measured half the questions retrieving
+    differently between two arms that differed only in their answer prompt).
+    """
+    variants = []
+    for temperature in temperatures or [0.0, 0.2]:
+        config = PipelineConfig(
+            generation=GenerationConfig(prompt_style="few_shot", temperature=temperature)
+        )
+        config.retrieval.technique = "dense"
+        config.retrieval.use_multi_query = True
+        config.reranking.method = "cross_encoder"
+        config.diversification.enabled = False
+        variants.append(ConfigVariant(name=f"temp_{temperature}", config=config))
+    return variants
+
+
 def completed_run_names(workbook_path: Path) -> set[str]:
     """Names of variants already recorded in the per-run workbook.
 
@@ -423,12 +444,21 @@ def main() -> None:
         help="Compare answer prompts on one fixed retrieval config "
         "(default: few_shot cot). See prompt_config_variants.",
     )
+    parser.add_argument(
+        "--temperatures",
+        nargs="*",
+        type=float,
+        metavar="T",
+        help="Compare generation temperatures on one fixed config (default: 0.0 0.2).",
+    )
     args = parser.parse_args()
 
     documents = load_raw_documents(PathConfig().data_raw_dir)
     print(f"Loaded {len(documents)} documents from data/raw/")
 
-    if args.prompts is not None:
+    if args.temperatures is not None:
+        variants = temperature_config_variants(args.temperatures or None)
+    elif args.prompts is not None:
         variants = prompt_config_variants(args.prompts or None)
     elif args.focused:
         variants = focused_config_variants()
