@@ -155,11 +155,14 @@ length fix on the answer, not a defence of reasoning, and H5 (incomplete ground
 truth) is the better use of the same time.
 
 ### H11. Generation temperature affects correctness
-**status: open**
+**status: REFUTED — see FINDINGS A20**
 
-Currently 0.2. Lower would make answers more deterministic and possibly closer
-to reference phrasing; the F1-style metric may reward that. Cheap to test,
-weak prior.
+0.2 → 0.0 moved answer_correctness by −0.013, inside the benchmark's ~0.027
+run-to-run noise floor. Adopted anyway, for reproducibility rather than score.
+
+The weak prior was right to be weak. The run's real yield was the noise floor
+itself, measured from two scorings of an identical configuration (0.7752 vs
+0.7478), which retroactively demotes H-work on any lever worth less than that.
 
 ---
 

@@ -880,6 +880,52 @@ Two secondary observations from the same run:
 `few_shot` stays the default. `cot` is retained in the code as a recorded
 negative, like `part_coverage`.
 
+### A20 — Temperature 0 costs nothing, and exposes the benchmark's noise floor
+
+Generation temperature dropped 0.2 → 0.0, same config as A19
+(dense + multi_query + cross_encoder, few_shot), full eval set:
+
+| temperature | ans_corr | faithfulness | ans_sim | ctx_entity_recall |
+|---|---|---|---|---|
+| 0.2 | 0.7478 | 0.9808 | 0.9195 | 0.4847 |
+| **0.0 (adopted)** | 0.7343 | 0.9657 | 0.9245 | 0.5124 |
+
+**−0.013 answer_correctness, which is not a result.** The change was made for
+reproducibility and it is free in score; H11's prior — that lower temperature
+would pull answers closer to reference phrasing and the F1-style metric would
+reward it — is not supported, but neither is the reverse.
+
+**The reason −0.013 is not a result is the more important finding.**
+`dense+multi_query+cross_encoder` with the few_shot prompt was scored twice on
+identical configuration and identical code: **0.7752** in the focused sweep
+(A16) and **0.7478** as A19's control. Nothing differed but the run.
+
+**The benchmark's run-to-run noise floor is therefore ~0.027 on
+answer_correctness**, and every number in this document must be read against
+it:
+
+| finding | Δ ans_corr | vs noise |
+|---|---|---|
+| Defect fixes (F-series) | +0.111 | 4x — established |
+| strict → few_shot (A17) | +0.092 | 3x — established |
+| few_shot → cot (A19) | −0.059 | 2x — established, and mechanism confirmed |
+| cross_encoder reranking (A16) | +0.029 | 1x — **not established** |
+| multi_query (A16) | +0.014 | below — **not established** |
+| temperature 0.2 → 0.0 | −0.013 | below — not established |
+
+So the retrieval-technique comparison that occupies most of this document
+lives largely inside its own error bars, while prompting and defect-fixing do
+not. Single-run-per-configuration was named as a caveat from the start; this
+is the first measurement of what it actually costs, and it is large enough to
+invert the ranking of the closely-spaced retrieval arms.
+
+Temperature 0 shrinks but does not remove the mechanism behind it. Repeating
+one multi-query variant-generation call four times gave four distinct outputs
+at 0.2, and one-to-two distinct outputs at 0.0. Greedy decoding has nothing
+left to sample, so the residue is nondeterministic numerics in the server —
+unfixable by configuration. Removing the remaining noise needs repeated runs
+per configuration, not a better setting.
+
 ## Open items
 
 - **Raise `context_entity_recall`** (currently 0.440) -- the metric most
@@ -908,6 +954,11 @@ negative, like `part_coverage`.
 - The judge (`qwen2.5:7b`) is a different model family from the generator
   (`llama3`) specifically to avoid LLM-as-judge self-preference bias. It is
   still a 7B local model, not a strong judge.
-- Single run per configuration; no variance estimate, no significance testing.
+- Single run per configuration; no significance testing. One variance estimate
+  exists and it is not small: the same configuration scored twice differed by
+  **0.027 answer_correctness** (A20). Differences below that are not results,
+  which includes the reranking and multi-query gains. Two sources feed it —
+  stochastic multi-query variant generation, and nondeterministic numerics in
+  the inference server that persist at temperature 0.
 - Costs quoted in USD are *hypothetical* -- token counts from local runs priced
   against published GPT-4.1 / GPT-4o-mini rates. No OpenAI API calls were made.
