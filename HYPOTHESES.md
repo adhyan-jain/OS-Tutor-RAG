@@ -134,6 +134,26 @@ would cover the pair from a single hit.
 *Falsified if:* full_recall does not improve, or the added tokens cost more
 than the coverage gains.
 
+### H12. Chain-of-Thought beats few-shot on multi-part questions
+**status: REFUTED — see FINDINGS A19**
+
+Reasoning before the answer cost 0.059 answer_correctness and 0.048
+faithfulness, losing 14 of 26 questions. It shortened answers by 27% (35.6 →
+26.0 words): once the model has enumerated the relevant material under
+`Reasoning:`, it writes the answer as a summary of that rather than as the
+place the content goes, and answer_correctness scores statement sets.
+
+The prior was wrong in a specific way worth keeping: prompting is the strongest
+lever (A17), but "strongest lever" is not "every push on it helps". A17 won by
+*aligning answer shape*; CoT perturbs the same shape. And CoT's documented
+domain is multi-step derivation, which recall questions over course slides are
+not.
+
+*Residual worth testing if it ever matters:* CoT with an explicit instruction
+that the answer must restate every fact the reasoning identified. This is a
+length fix on the answer, not a defence of reasoning, and H5 (incomplete ground
+truth) is the better use of the same time.
+
 ### H11. Generation temperature affects correctness
 **status: open**
 
