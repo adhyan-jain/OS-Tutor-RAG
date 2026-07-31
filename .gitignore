@@ -48,3 +48,6 @@ current_status.md
 .DS_Store
 .vscode/
 .idea/
+
+# Personal study notes, deliberately not published with the case study
+LEARNING_GUIDE.md
