@@ -168,8 +168,20 @@ export default function Chat() {
 
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
         {messages.length === 0 && (
-          <div className="text-center text-[var(--color-muted-foreground)] text-sm mt-16">
-            Ask a question about the operating systems course to get started.
+          <div className="max-w-xl mx-auto mt-10 text-center space-y-4">
+            <h2 className="text-base font-semibold tracking-tight">
+              A grounded tutor, not a search engine
+            </h2>
+            <p className="text-sm text-[var(--color-muted-foreground)] leading-relaxed">
+              Answers are drawn only from the actual course material — lecture
+              slides and reading sections — and every reply cites which ones
+              it used. Rather than dumping a finished answer, it teaches in
+              steps: a short explanation followed by a comprehension check, so
+              you work through the idea instead of just reading it.
+            </p>
+            <p className="text-sm text-[var(--color-muted-foreground)]">
+              Ask a question about the operating systems course to get started.
+            </p>
           </div>
         )}
         {messages.map((m) => (
