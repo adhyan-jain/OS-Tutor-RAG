@@ -20,20 +20,12 @@ from sse_starlette.sse import EventSourceResponse
 
 from api.pipeline_instance import pipeline
 from api.routes import session
-from src.generation.local_llm import _RAG_PROMPT_TEMPLATES
+from src.generation.misconception_check import check_misconception
+from src.generation.teaching_prompt import build_teaching_prompt
 
 logger = logging.getLogger("api.chat")
 
 router = APIRouter()
-
-_DETAIL_INSTRUCTIONS = {
-    "eli5": "Explain simply, as to a beginner, using everyday analogies.",
-    "undergrad": "",
-    "exam_prep": (
-        "Be precise and exam-focused; use precise terminology and highlight "
-        "key definitions."
-    ),
-}
 
 
 class ChatRequest(BaseModel):
@@ -44,18 +36,24 @@ class ChatRequest(BaseModel):
 
 
 def _build_prompt(request: ChatRequest, context_text: str) -> str:
-    template = _RAG_PROMPT_TEMPLATES[pipeline.config.generation.prompt_style]
-    prompt = template.format(context=context_text, query=request.question)
+    ollama_base_url = pipeline.config.generation.ollama_base_url
 
-    detail_instruction = _DETAIL_INSTRUCTIONS.get(request.detail_level, "")
-    if detail_instruction:
-        prompt = f"{detail_instruction}\n\n{prompt}"
+    misconception_note = check_misconception(
+        request.question,
+        ollama_base_url=ollama_base_url,
+        model_name=request.model_name,
+        temperature=pipeline.config.generation.temperature,
+    )
 
     history_text = session.format_history(request.session_id)
-    if history_text:
-        prompt = f"Previous conversation:\n{history_text}\n\n{prompt}"
 
-    return prompt
+    return build_teaching_prompt(
+        request.detail_level,
+        request.question,
+        context_text,
+        history_text,
+        misconception_note,
+    )
 
 
 def _sources_payload(candidates) -> list[dict]:
