@@ -68,6 +68,35 @@ class DenseRetriever:
         self.index = faiss.IndexFlatIP(dimension)
         self.index.add(embeddings)
 
+    def add_chunks(self, new_chunks: list[Chunk]) -> None:
+        """Embed only `new_chunks` and append them to the existing FAISS index.
+
+        Used by the incremental reindex path (scripts/reindex.py): unlike
+        build_index(), which re-embeds every chunk passed to it, this only
+        pays embedding cost for the chunks handed to it here. Call
+        load_index() first (or build_index() with no chunks yet) to seed
+        self.index/self.chunks if an index already exists on disk; if no
+        index has been built/loaded yet, this creates one from scratch.
+
+        IndexFlatIP supports cheap incremental .add() -- there's no need to
+        rebuild the whole FAISS structure the way BM25Retriever.build_index()
+        must be re-run in full (see HybridRRFRetriever.add_chunks).
+
+        Args:
+            new_chunks: Newly added/changed chunks to embed and append.
+        """
+        if not new_chunks:
+            return
+        texts = [c.text for c in new_chunks]
+        embeddings = self._embed(texts)
+
+        if self.index is None:
+            dimension = embeddings.shape[1]
+            self.index = faiss.IndexFlatIP(dimension)
+
+        self.index.add(embeddings)
+        self.chunks.extend(new_chunks)
+
     def save_index(self, index_dir: Path | None = None) -> None:
         """Persist the FAISS index and chunk list to disk.
 

@@ -1,9 +1,11 @@
 """FastAPI app wrapping the existing RAG pipeline (src/) as an HTTP API.
 
 Builds one shared RAGPipeline instance at import time (api.pipeline_instance)
-and loads the on-disk index into its retriever on startup, so every request
-reuses the same embedding model / retriever / reranker rather than rebuilding
-them per call.
+and loads its retriever's index on startup -- pulling the latest index from
+S3 first if S3_BUCKET is configured, falling back to a local index or a full
+local rebuild (see api.pipeline_instance.load_index for the exact order) --
+so every request reuses the same embedding model / retriever / reranker
+rather than rebuilding them per call.
 """
 
 from __future__ import annotations
