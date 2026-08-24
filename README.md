@@ -93,10 +93,15 @@ pip install -r requirements.txt
 # CUDA build of torch, if the GPU should be used for embedding
 pip install --index-url https://download.pytorch.org/whl/cu126 "torch==2.13.0+cu126"
 
-# generation and judge models
-ollama pull llama3:latest
-ollama pull qwen2.5:7b
+# generation and judge models used by the pipeline defaults and the eval suite
+ollama pull llama3:latest    # GenerationConfig.model_name default
+ollama pull qwen2.5:7b       # EvalConfig.judge_model_name default
+ollama pull gemma2:9b        # alternate generation model referenced in src/config.py / teaching-mode code
 ```
+
+Ollama must be running locally (`ollama serve`, or the desktop app) at
+`http://localhost:11434` before starting the backend or running any eval that
+calls a model.
 
 Drop course files into `data/raw/` (`.pptx`, `.pdf`, `.docx`), then build the
 index:
@@ -128,6 +133,50 @@ before generation so Ollama still gets the whole card.
 OS_RAG_EMBEDDING_DEVICE=cuda PYTHONPATH=. .venv/bin/python -m eval.ragas_eval --focused
 ```
 
+## Chat app (API + frontend)
+
+A FastAPI backend and Next.js frontend wrap the pipeline in a chat UI, in
+teaching mode: answers arrive as an incremental explanation plus a
+comprehension-check question rather than a complete answer, and every reply
+cites the slide/section chunks it drew from.
+
+### Backend
+
+Requires an index at `data/index/` (see Setup above) and Ollama running
+locally with at least the model(s) you intend to select in the UI pulled.
+
+```bash
+PYTHONPATH=. .venv/bin/uvicorn api.main:app --port 8000
+```
+
+No `.env` is required for local dev. `api/pipeline_instance.py` tries, in
+order: download the index from S3 (only if `S3_BUCKET` is set), then an
+existing local index at `data/index/`, then a full local rebuild from
+`data/raw/`. Without any S3 env vars set (see `.env.example` for the full
+list, all optional), it logs `S3_BUCKET not set -- S3 sync disabled` and just
+loads the local index — the app works the same for a reader with no S3
+access. If you do want S3 sync, copy `.env.example` to `.env`, fill in the
+values, and export them (e.g. `set -a; source .env; set +a`) before starting
+uvicorn.
+
+`GET /models` proxies Ollama's `/api/tags` for the model dropdown; `POST
+/chat` is a server-sent-events endpoint (`session_id`, `question`,
+`model_name`, `detail_level`) streaming `token` events, then one `sources`
+event, or an `error` event if retrieval or generation fails (e.g. Ollama
+unreachable, or the requested model isn't pulled).
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Opens at `http://localhost:3000` and talks to the backend at
+`http://localhost:8000` (override with `NEXT_PUBLIC_API_BASE`). The backend's
+CORS is configured for `http://localhost:3000` specifically.
+
 ## Layout
 
 ```
@@ -150,5 +199,15 @@ eval/
   stage_tuning_eval.py what survives the selection chain
   reranker_eval.py     reranker models and score blending
   ragas_eval.py        full sweep
+api/
+  main.py               FastAPI app, CORS, startup index loading
+  pipeline_instance.py  shared RAGPipeline instance, S3/local/rebuild index loading
+  routes/chat.py        POST /chat (SSE streaming), teaching-mode prompting
+  routes/models.py      GET /models (proxies Ollama's /api/tags)
+  routes/session.py     in-memory per-session chat history
+frontend/
+  app/                  Next.js App Router pages
+  components/           Chat, ModelSelect, DetailToggle, Composer, MessageBubble, SourcesPanel
+  lib/                  api client, hand-rolled SSE-over-fetch parser, types
 FINDINGS.md            defects, diagnoses, measured effects, refuted hypotheses
 ```
