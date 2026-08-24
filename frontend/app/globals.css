@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+:root {
+  /* Light theme: warm paper background, deep slate ink. */
+  --background: #faf8f4;
+  --foreground: #1e2128;
+  --muted-foreground: #6b6f78;
+  --surface: #ffffff;
+  --surface-2: #f0ede6;
+  --border: #e4e0d6;
+  --user-bubble: #eae6da;
+  --user-bubble-foreground: #1e2128;
+  --assistant-bubble: #ffffff;
+  --assistant-bubble-foreground: #1e2128;
+  --accent: #0f766e;
+  --accent-foreground: #ffffff;
+  --accent-soft: #e3efec;
+  --danger: #b3441f;
+  --danger-soft: #fbe9e2;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-user-bubble: var(--user-bubble);
+  --color-user-bubble-foreground: var(--user-bubble-foreground);
+  --color-assistant-bubble: var(--assistant-bubble);
+  --color-assistant-bubble-foreground: var(--assistant-bubble-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark theme: near-black slate background, light warm ink. */
+    --background: #14161a;
+    --foreground: #eae7e0;
+    --muted-foreground: #9a9da6;
+    --surface: #1b1e24;
+    --surface-2: #21252c;
+    --border: #2b2f38;
+    --user-bubble: #262a32;
+    --user-bubble-foreground: #eae7e0;
+    --assistant-bubble: #1b1e24;
+    --assistant-bubble-foreground: #eae7e0;
+    --accent: #2dd4bf;
+    --accent-foreground: #0a1a18;
+    --accent-soft: #17302c;
+    --danger: #f0836a;
+    --danger-soft: #362019;
+  }
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-plex-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Arial, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
