@@ -14,6 +14,7 @@ env/
 # Environment
 .env
 .env.*
+!.env.example
 
 # Raw data / uploaded documents
 data/raw/*

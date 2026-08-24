@@ -33,3 +33,8 @@ pydantic==2.8.2
 fastapi==0.115.6
 uvicorn==0.34.0
 sse-starlette==2.2.1
+
+# Indexing / S3
+boto3==1.43.78
+moto==5.2.3
+pytest==9.1.1  # runs tests/test_s3_sync.py (moto-mocked S3, no real AWS calls)

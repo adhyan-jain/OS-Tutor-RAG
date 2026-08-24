@@ -66,6 +66,26 @@ class HybridRRFRetriever:
         self.dense.build_index(chunks)
         self.bm25.build_index(chunks)
 
+    def add_chunks(self, new_chunks: list[Chunk], all_chunks: list[Chunk]) -> None:
+        """Incrementally update the dense index, fully rebuild BM25.
+
+        Dense: only `new_chunks` get embedded, then appended to whatever
+        FAISS index is already loaded on self.dense (cheap -- IndexFlatIP.add
+        is O(new vectors), not O(corpus)).
+
+        BM25: rank_bm25 has no incremental structure, so the pragmatic move
+        is to rebuild it from `all_chunks` (old + new) every time. This is
+        O(corpus) but cheap -- tokenizing and indexing a few thousand chunks
+        is milliseconds, unlike embedding, which is the expensive step this
+        method is designed to avoid paying in full.
+
+        Args:
+            new_chunks: Only the newly added/changed chunks (dense-embedded).
+            all_chunks: The full current corpus, old + new (BM25-rebuilt).
+        """
+        self.dense.add_chunks(new_chunks)
+        self.bm25.build_index(all_chunks)
+
     def save_index(self, index_dir: Path | None = None) -> None:
         """Persist both underlying indexes to disk.
 
