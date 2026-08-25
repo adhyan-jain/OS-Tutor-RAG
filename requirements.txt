@@ -33,6 +33,7 @@ pydantic==2.8.2
 fastapi==0.115.6
 uvicorn==0.34.0
 sse-starlette==2.2.1
+PyJWT==2.13.0  # gated Google OAuth (AUTH_ENABLED) -- decodes the frontend's signed session JWT
 
 # Indexing / S3
 boto3==1.43.78
