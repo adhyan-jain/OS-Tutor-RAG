@@ -1,0 +1,25 @@
+# Root .dockerignore -- applies to the build context used by api/Dockerfile
+# (context: . in docker-compose.yml). None of these are needed to build or
+# run the backend image; data/ is provided at runtime via a volume mount
+# instead (see docker-compose.yml, DEPLOYMENT.md).
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.git/
+.gitignore
+
+data/
+eval/
+tests/
+frontend/
+scripts/__pycache__/
+
+*.md
+!README.md
+
+.env
+.env.*
+!.env.example

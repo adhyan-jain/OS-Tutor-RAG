@@ -2,8 +2,22 @@
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass, field
 from pathlib import Path
+
+
+def _default_index_dir() -> Path:
+    """`data/index` by default, overridable via INDEX_DIR (e.g. so a deploy
+    can point it at a mounted persistent volume without a code change)."""
+    return Path(os.environ.get("INDEX_DIR", "data/index"))
+
+
+def _default_ollama_base_url() -> str:
+    """`http://localhost:11434` by default, overridable via OLLAMA_HOST so a
+    container can reach an Ollama server running on another host (e.g. the
+    Docker host itself) without a code change."""
+    return os.environ.get("OLLAMA_HOST", "http://localhost:11434")
 
 
 @dataclass
@@ -12,7 +26,7 @@ class PathConfig:
 
     data_raw_dir: Path = Path("data/raw")
     data_processed_dir: Path = Path("data/processed")
-    index_dir: Path = Path("data/index")
+    index_dir: Path = field(default_factory=_default_index_dir)
 
 
 @dataclass
@@ -104,7 +118,7 @@ class RetrievalConfig:
     # because it may pay off on a corpus with no diversification stage.
     max_chunks_per_parent: int = 0
     rrf_k: int = 60
-    index_dir: Path = Path("data/index")
+    index_dir: Path = field(default_factory=_default_index_dir)
     use_multi_query: bool = False
     # Used when use_multi_query is True. Five, not three: measured recall@5
     # 1.000 and full_recall 0.577 at five against 0.962 and 0.538 at three,
@@ -202,7 +216,7 @@ class GenerationConfig:
     temperature: float = 0.0
     gpu_memory_utilization: float = 0.85
     # Used when backend == "ollama" (local dev/testing against an Ollama server).
-    ollama_base_url: str = "http://localhost:11434"
+    ollama_base_url: str = field(default_factory=_default_ollama_base_url)
     # Which answer prompt to use (see local_llm._RAG_PROMPT_TEMPLATES).
     #
     # "few_shot" by measurement: against "strict" on the same config it raised

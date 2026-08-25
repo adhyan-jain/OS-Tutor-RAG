@@ -1,0 +1,97 @@
+# Local full-stack test harness for os-tutor-rag: backend + frontend
+# containers talking to each other over the compose network, and out to
+# Ollama running on the HOST machine (Ollama itself is never containerized
+# here -- see DEPLOYMENT.md).
+#
+# Usage:
+#   docker compose build
+#   docker compose up
+#   docker compose down
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      # Reaches the host's already-running Ollama (localhost:11434) from
+      # inside the container. `host.docker.internal` is resolved via the
+      # extra_hosts entry below -- on Docker Desktop (Mac/Windows) it works
+      # out of the box, on Linux it needs that extra_hosts mapping.
+      #
+      # THIS ALONE IS NOT ENOUGH ON LINUX: Ollama's default bind
+      # (127.0.0.1:11434, loopback only) is unreachable from ANY container,
+      # regardless of extra_hosts/OLLAMA_HOST, because traffic from
+      # host.docker.internal/host-gateway arrives on the docker bridge
+      # interface, not loopback. If /models or /chat time out reaching this
+      # URL, the fix is on the HOST side: restart Ollama with
+      # `OLLAMA_HOST=0.0.0.0 ollama serve` (or equivalent for however you run
+      # it) so it actually listens on an interface the container can reach.
+      # See DEPLOYMENT.md's "Ollama connectivity" section.
+      OLLAMA_HOST: http://host.docker.internal:11434
+      # INDEX_DIR/S3_* are read by src/config.py / api/pipeline_instance.py.
+      # S3 is optional -- unset (the default here) means the container just
+      # uses whatever is in the mounted data/index/ volume below.
+      INDEX_DIR: /app/data/index
+      # Caches the embedding model (BAAI/bge-large-en-v1.5, ~1.3GB) across
+      # container restarts -- see the hf_cache volume below. Without this,
+      # every fresh container re-downloads it, which is most of a ~4+ minute
+      # cold start (RAGPipeline(PipelineConfig()) loads it at module import
+      # time in api/pipeline_instance.py, before uvicorn logs anything).
+      HF_HOME: /app/.hf_cache
+      # S3_BUCKET: your-bucket-name
+      # S3_PREFIX: os-tutor-rag/index
+      # AWS_ACCESS_KEY_ID: ...
+      # AWS_SECRET_ACCESS_KEY: ...
+      # S3_ENDPOINT_URL: ...
+    extra_hosts:
+      # Linux Docker needs this explicit mapping for host.docker.internal to
+      # resolve; Docker Desktop on Mac/Windows provides it automatically but
+      # the entry is harmless there too.
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # Index persists across container restarts/rebuilds instead of being
+      # rebuilt from data/raw/ (or re-pulled from S3) every time.
+      - ./data/index:/app/data/index
+      # Only needed if you want the from-scratch rebuild path (see
+      # api/pipeline_instance.py's load_index()) available inside the
+      # container -- i.e. no index in data/index/ or S3 yet.
+      - ./data/raw:/app/data/raw
+      - ./data/processed:/app/data/processed
+      - hf_cache:/app/.hf_cache
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      # Generously long: a cold start (no hf_cache volume populated yet)
+      # loads sentence-transformers' bge-large-en-v1.5 from a fresh download,
+      # observed to take 4+ minutes end-to-end before /health responds at
+      # all -- a short start_period marks the container unhealthy while it's
+      # still legitimately starting. Repeat starts (hf_cache warm) are much
+      # faster; this only costs time on `docker compose ps` reporting during
+      # the first-ever run.
+      start_period: 6m
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Browser-visible: the frontend container serves a bundle to the
+        # user's browser, which then talks to the backend directly. Since
+        # the browser runs on the host (not inside the compose network), it
+        # must use the backend's host-published port, not the compose
+        # service name (http://backend:8000 only resolves container-to-
+        # container, e.g. for server-side requests, which this app doesn't
+        # make -- Chat.tsx is a client component).
+        NEXT_PUBLIC_API_BASE: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  hf_cache:
