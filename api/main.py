@@ -16,6 +16,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from api import pipeline_instance
 from api.pipeline_instance import load_index
 from api.routes import chat, models
 
@@ -41,3 +42,18 @@ app.add_middleware(
 
 app.include_router(chat.router)
 app.include_router(models.router)
+
+
+@app.get("/health")
+def health() -> dict:
+    """Liveness/readiness check for a deploy host.
+
+    Always 200 (the process being reachable at all is the liveness signal);
+    ``index_loaded`` reports whether the retriever actually has a usable
+    index, so a health check -- or a human -- can tell "process is up" apart
+    from "index failed to load and /chat will error on retrieval".
+    """
+    return {
+        "status": "ok",
+        "index_loaded": pipeline_instance.index_loaded,
+    }

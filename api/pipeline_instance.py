@@ -17,6 +17,12 @@ logger = logging.getLogger("api.pipeline_instance")
 
 pipeline = RAGPipeline(PipelineConfig())
 
+# Set True at the end of load_index() iff the retriever actually ended up
+# with a loaded/built index. Read by GET /health so a deploy host's health
+# check can distinguish "process is up" from "index failed to load and /chat
+# will error on retrieval".
+index_loaded = False
+
 
 def load_index() -> None:
     """Load the retrieval index into whichever retriever object actually
@@ -38,6 +44,7 @@ def load_index() -> None:
          loaded index (chat will fail on retrieval, but startup shouldn't
          crash over it).
     """
+    global index_loaded
     index_dir = pipeline.config.retrieval.index_dir
     s3_bucket = os.environ.get("S3_BUCKET")
 
@@ -94,4 +101,5 @@ def load_index() -> None:
             )
             return
 
+    index_loaded = True
     logger.info("Index loaded for retriever: %s", type(pipeline.retriever).__name__)
