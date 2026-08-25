@@ -16,7 +16,7 @@ function newId(): string {
   return crypto.randomUUID();
 }
 
-export default function Chat() {
+export default function Chat({ apiToken }: { apiToken?: string }) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [hydrated, setHydrated] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
@@ -71,13 +71,14 @@ export default function Chat() {
 
   // Load the model list once on mount.
   useEffect(() => {
-    fetchModels()
+    fetchModels(apiToken)
       .then((list) => {
         setModels(list);
         if (list.length > 0) setSelectedModel(list[0]);
       })
       .catch((err: Error) => setModelLoadError(err.message))
       .finally(() => setModelsLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Keep the view scrolled to the latest message as content streams in.
@@ -109,12 +110,15 @@ export default function Chat() {
     }
 
     try {
-      const response = await postChat({
-        session_id: sessionId,
-        question,
-        model_name: selectedModel,
-        detail_level: detailLevel,
-      });
+      const response = await postChat(
+        {
+          session_id: sessionId,
+          question,
+          model_name: selectedModel,
+          detail_level: detailLevel,
+        },
+        apiToken,
+      );
 
       let content = "";
       await streamSSE(response, (evt) => {

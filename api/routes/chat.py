@@ -14,10 +14,11 @@ import logging
 from typing import Literal
 
 import httpx
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sse_starlette.sse import EventSourceResponse
 
+from api.auth import AUTH_ENABLED, require_user_email
 from api.pipeline_instance import pipeline
 from api.routes import session
 from src.generation.misconception_check import check_misconception
@@ -35,7 +36,7 @@ class ChatRequest(BaseModel):
     detail_level: Literal["eli5", "undergrad", "exam_prep"] = "undergrad"
 
 
-def _build_prompt(request: ChatRequest, context_text: str) -> str:
+def _build_prompt(request: ChatRequest, context_text: str, session_key: str) -> str:
     ollama_base_url = pipeline.config.generation.ollama_base_url
 
     misconception_note = check_misconception(
@@ -45,7 +46,7 @@ def _build_prompt(request: ChatRequest, context_text: str) -> str:
         temperature=pipeline.config.generation.temperature,
     )
 
-    history_text = session.format_history(request.session_id)
+    history_text = session.format_history(session_key)
 
     return build_teaching_prompt(
         request.detail_level,
@@ -70,7 +71,7 @@ def _sources_payload(candidates) -> list[dict]:
     return sources
 
 
-async def _stream_chat(request: ChatRequest):
+async def _stream_chat(request: ChatRequest, session_key: str):
     ollama_base_url = pipeline.config.generation.ollama_base_url
 
     try:
@@ -81,7 +82,7 @@ async def _stream_chat(request: ChatRequest):
         return
 
     context_text = "\n\n".join(sc.chunk.text for sc in candidates)
-    prompt = _build_prompt(request, context_text)
+    prompt = _build_prompt(request, context_text, session_key)
 
     payload = {
         "model": request.model_name,
@@ -138,11 +139,24 @@ async def _stream_chat(request: ChatRequest):
         return
 
     full_answer = "".join(answer_parts)
-    session.append_turn(request.session_id, request.question, full_answer)
+    session.append_turn(session_key, request.question, full_answer)
 
     yield {"event": "sources", "data": json.dumps(_sources_payload(candidates))}
 
 
-@router.post("/chat")
-async def chat(request: ChatRequest):
-    return EventSourceResponse(_stream_chat(request))
+# The session store is keyed by the authenticated user's email when auth is
+# on (so one account's history follows them across browser sessions/devices),
+# and by the client-supplied session_id when it's off -- exactly today's
+# behavior. `request.session_id` is still accepted either way; when auth is
+# on it's just ignored for keying purposes.
+if AUTH_ENABLED:
+
+    @router.post("/chat")
+    async def chat(request: ChatRequest, user_email: str = Depends(require_user_email)):
+        return EventSourceResponse(_stream_chat(request, session_key=user_email))
+
+else:
+
+    @router.post("/chat")
+    async def chat(request: ChatRequest):
+        return EventSourceResponse(_stream_chat(request, session_key=request.session_id))
