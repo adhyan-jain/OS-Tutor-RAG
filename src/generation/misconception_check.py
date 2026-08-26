@@ -76,7 +76,12 @@ def check_misconception(
                 "model": model_name,
                 "prompt": prompt,
                 "stream": False,
-                "options": {"temperature": temperature},
+                # This only ever needs a short "label: one sentence" or the
+                # single word "none" -- without a cap, nothing stops a
+                # rambling response from running for far longer than this
+                # classification is worth, adding needless latency before
+                # the real (streamed) answer can even start.
+                "options": {"temperature": temperature, "num_predict": 80},
             },
             timeout=60,
         )

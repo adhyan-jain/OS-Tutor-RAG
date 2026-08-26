@@ -80,3 +80,102 @@ body {
   background: var(--border);
   border-radius: 8px;
 }
+
+/* Markdown rendering for assistant answers (MessageBubble.tsx) -- deliberately
+   hand-styled against the app's own tokens rather than pulling in a generic
+   Tailwind typography plugin, so tables/code match the rest of the UI. */
+.prose-chat {
+  white-space: normal;
+}
+
+.prose-chat > :first-child {
+  margin-top: 0;
+}
+
+.prose-chat > :last-child {
+  margin-bottom: 0;
+}
+
+.prose-chat p {
+  margin: 0 0 0.75em;
+  white-space: pre-wrap;
+}
+
+.prose-chat ul,
+.prose-chat ol {
+  margin: 0 0 0.75em;
+  padding-left: 1.4em;
+}
+
+.prose-chat li {
+  margin: 0.15em 0;
+}
+
+.prose-chat li > p {
+  margin: 0;
+}
+
+.prose-chat strong {
+  font-weight: 600;
+}
+
+.prose-chat code {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.9em;
+  background: var(--color-surface-2);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+.prose-chat pre {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.75em 1em;
+  overflow-x: auto;
+  margin: 0 0 0.75em;
+}
+
+.prose-chat pre code {
+  background: none;
+  padding: 0;
+}
+
+/* The actual "output in tabular format" requirement: a GFM pipe table from
+   the model renders as a real table, scrolling horizontally on its own axis
+   rather than overflowing the page or wrapping into unreadable text. */
+.prose-chat table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0 0 0.75em;
+  font-size: 0.92em;
+}
+
+.prose-chat .table-scroll {
+  overflow-x: auto;
+  margin: 0 0 0.75em;
+}
+
+.prose-chat .table-scroll table {
+  margin: 0;
+}
+
+.prose-chat th,
+.prose-chat td {
+  border: 1px solid var(--color-border);
+  padding: 0.4em 0.6em;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose-chat th {
+  background: var(--color-surface-2);
+  font-weight: 600;
+}
+
+.prose-chat blockquote {
+  border-left: 3px solid var(--color-border);
+  margin: 0 0 0.75em;
+  padding-left: 0.9em;
+  color: var(--color-muted-foreground);
+}

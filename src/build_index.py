@@ -20,7 +20,8 @@ from pathlib import Path
 from typing import Any
 
 from src.chunking import chunk_document
-from src.config import ChunkingConfig, PathConfig, RetrievalConfig
+from src.config import ChunkingConfig, GenerationConfig, PathConfig, RetrievalConfig
+from src.ingestion.caption_images import enrich_pptx_images
 from src.ingestion.extract_docx import extract_docx
 from src.ingestion.extract_pdf import extract_pdf
 from src.ingestion.extract_ppt import extract_ppt
@@ -67,7 +68,12 @@ class DiffResult:
     manifest: dict[str, Any] = field(default_factory=dict)
 
 
-def diff_and_chunk(paths: PathConfig, chunking_config: ChunkingConfig, retrieval_config: RetrievalConfig) -> DiffResult:
+def diff_and_chunk(
+    paths: PathConfig,
+    chunking_config: ChunkingConfig,
+    retrieval_config: RetrievalConfig,
+    generation_config: GenerationConfig | None = None,
+) -> DiffResult:
     """Diff data/raw/ against the manifest, (re)chunk what changed, and update the manifest in memory.
 
     Reads/reuses cached per-file chunk pickles from data/processed/ for files
@@ -81,11 +87,15 @@ def diff_and_chunk(paths: PathConfig, chunking_config: ChunkingConfig, retrieval
         paths: Filesystem locations (data/raw, data/processed, index_dir).
         chunking_config: Chunking settings -- part of the cache-reuse fingerprint.
         retrieval_config: Used only for its index_dir, to load the manifest.
+        generation_config: Supplies ollama_base_url/vision_model_name for
+            captioning pptx images (src/ingestion/caption_images.py) before
+            chunking. Defaults to GenerationConfig() if omitted.
 
     Returns:
         A DiffResult with the full chunk set, the new/changed subset, and
         bookkeeping for logging.
     """
+    generation_config = generation_config or GenerationConfig()
     paths.data_processed_dir.mkdir(parents=True, exist_ok=True)
     manifest = load_manifest(retrieval_config.index_dir)
     current_chunking_signature = chunking_signature(chunking_config)
@@ -115,6 +125,14 @@ def diff_and_chunk(paths: PathConfig, chunking_config: ChunkingConfig, retrieval
             result.reused_files.append(path.name)
         else:
             documents = _EXTRACTORS[path.suffix.lower()](path)
+            if path.suffix.lower() == ".pptx":
+                for document in documents:
+                    enrich_pptx_images(
+                        document,
+                        generation_config.ollama_base_url,
+                        generation_config.vision_model_name,
+                        paths.data_processed_dir,
+                    )
             chunks = [
                 chunk
                 for document in documents

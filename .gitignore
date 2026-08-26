@@ -52,3 +52,7 @@ current_status.md
 
 # Personal study notes, deliberately not published with the case study
 LEARNING_GUIDE.md
+logs/
+
+# graphify tool output (local knowledge-graph artifacts, not project code)
+graphify-out/
