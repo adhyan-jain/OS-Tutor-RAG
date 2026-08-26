@@ -169,7 +169,13 @@ class ContextExpansionConfig:
     """
 
     enabled: bool = True
-    max_parent_tokens: int = 250
+    # Raised from the measured-optimal 250 to 400 at the user's request, for
+    # more complete PDF-sourced context (PDF pages average ~534 tokens, so
+    # 250 only covered about half; 400 gets closer to a full page while
+    # still windowing rather than carrying the whole thing). This overrides
+    # a previously-tuned default without re-running the eval suite to
+    # re-confirm it -- worth re-measuring later if scored again.
+    max_parent_tokens: int = 400
 
 
 @dataclass
@@ -199,7 +205,12 @@ class GenerationConfig:
 
     model_name: str = "llama3:latest"
     backend: str = "ollama"
-    max_tokens: int = 512
+    # Raised from the measured-optimal 512 to 900 at the user's request, so a
+    # genuinely complete broad/overview answer (see teaching_prompt.py's
+    # flexible direct-answer path) doesn't truncate mid-thought. Overrides a
+    # previously-tuned default without re-running the eval suite to
+    # re-confirm it -- worth re-measuring later if scored again.
+    max_tokens: int = 900
     # Zero, not 0.2, primarily for reproducibility rather than for score: this
     # temperature governs every LLM call in the pipeline, including the
     # multi-query variant generation, and A19 found that at 0.2 only 13 of 26
@@ -235,6 +246,12 @@ class GenerationConfig:
     # kept only as a recorded negative: inviting partial answers reads as
     # licence to fill the gaps from the model's own knowledge.
     prompt_style: str = "few_shot"
+    # Vision-capable Ollama model used only at indexing time (src/ingestion/
+    # caption_images.py, invoked from src/build_index.py) to caption
+    # diagrams/screenshots embedded in slide decks -- never used in the live
+    # generation path. Must be pulled separately (`ollama pull llava:7b`);
+    # captioning fails soft (logs and skips that image) if it isn't.
+    vision_model_name: str = "llava:7b"
 
 
 @dataclass

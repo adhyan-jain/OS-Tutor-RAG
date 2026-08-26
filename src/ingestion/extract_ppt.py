@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from pptx import Presentation
+from pptx.enum.shapes import MSO_SHAPE_TYPE
 
 from src.schemas import Document
 
@@ -33,8 +34,19 @@ def extract_ppt(file_path: Path) -> Document:
         title = slide.shapes.title.text.strip() if slide.shapes.title and slide.shapes.title.text else None
 
         bullets: list[str] = []
+        image_blobs: list[bytes] = []
         for shape in slide.shapes:
             if shape == slide.shapes.title:
+                continue
+
+            # Diagrams/screenshots carry no text at all -- src/ingestion/
+            # caption_images.py (called from build_index.py, after
+            # extraction, before chunking) turns each into a caption bullet
+            # via a local vision model, so this only captures the raw bytes.
+            # Kept out of this module so extraction itself stays offline/pure
+            # -- no network or Ollama dependency here.
+            if shape.shape_type == MSO_SHAPE_TYPE.PICTURE:
+                image_blobs.append(shape.image.blob)
                 continue
 
             # Tables carry content but have no text frame, so reading only
@@ -66,6 +78,7 @@ def extract_ppt(file_path: Path) -> Document:
                 "title": title,
                 "bullets": bullets,
                 "notes": notes,
+                "image_blobs": image_blobs,
             }
         )
 

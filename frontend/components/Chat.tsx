@@ -86,21 +86,12 @@ export default function Chat({ apiToken }: { apiToken?: string }) {
     scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages]);
 
-  async function handleSend() {
-    const question = input.trim();
-    if (!question || !selectedModel || !sessionId || isStreaming) return;
+  // Shared by both a fresh send and a retry: `assistantId` lets a retry reuse
+  // the existing (errored) assistant bubble in place instead of appending a
+  // new pair of messages.
+  async function runQuestion(question: string, assistantId: string) {
+    if (!selectedModel || !sessionId) return;
 
-    const userMessage: ChatMessage = { id: newId(), role: "user", content: question };
-    const assistantId = newId();
-    const assistantMessage: ChatMessage = {
-      id: assistantId,
-      role: "assistant",
-      content: "",
-      streaming: true,
-    };
-
-    setMessages((prev) => [...prev, userMessage, assistantMessage]);
-    setInput("");
     setIsStreaming(true);
 
     function updateAssistant(patch: Partial<ChatMessage>) {
@@ -108,6 +99,9 @@ export default function Chat({ apiToken }: { apiToken?: string }) {
         prev.map((m) => (m.id === assistantId ? { ...m, ...patch } : m)),
       );
     }
+
+    // Clear any prior error/content so a retry starts the bubble fresh.
+    updateAssistant({ content: "", error: undefined, sources: undefined, streaming: true });
 
     try {
       const response = await postChat(
@@ -150,6 +144,37 @@ export default function Chat({ apiToken }: { apiToken?: string }) {
     }
   }
 
+  function handleSend() {
+    const question = input.trim();
+    if (!question || !selectedModel || !sessionId || isStreaming) return;
+
+    const userMessage: ChatMessage = { id: newId(), role: "user", content: question };
+    const assistantId = newId();
+    const assistantMessage: ChatMessage = {
+      id: assistantId,
+      role: "assistant",
+      content: "",
+      streaming: true,
+    };
+
+    setMessages((prev) => [...prev, userMessage, assistantMessage]);
+    setInput("");
+    void runQuestion(question, assistantId);
+  }
+
+  // Resend the question that produced an errored assistant message, reusing
+  // its bubble in place -- so a network error doesn't require retyping
+  // anything, and isn't misread as a new topic the way typing "continue"
+  // as a fresh message would be.
+  function handleRetry(assistantMessageId: string) {
+    if (isStreaming) return;
+    const index = messages.findIndex((m) => m.id === assistantMessageId);
+    if (index <= 0) return;
+    const userMessage = messages[index - 1];
+    if (userMessage.role !== "user") return;
+    void runQuestion(userMessage.content, assistantMessageId);
+  }
+
   const sendDisabled = isStreaming || !selectedModel || !sessionId;
 
   return (
@@ -179,9 +204,10 @@ export default function Chat({ apiToken }: { apiToken?: string }) {
             <p className="text-sm text-[var(--color-muted-foreground)] leading-relaxed">
               Answers are drawn only from the actual course material — lecture
               slides and reading sections — and every reply cites which ones
-              it used. Rather than dumping a finished answer, it teaches in
-              steps: a short explanation followed by a comprehension check, so
-              you work through the idea instead of just reading it.
+              it used. It's a flexible conversation, not a rigid script: ask
+              for an overview and you'll get one directly, but for a genuinely
+              deep or multi-step idea it'll teach incrementally with a
+              comprehension check, the way a good tutor would.
             </p>
             <p className="text-sm text-[var(--color-muted-foreground)]">
               Ask a question about the operating systems course to get started.
@@ -189,7 +215,13 @@ export default function Chat({ apiToken }: { apiToken?: string }) {
           </div>
         )}
         {messages.map((m) => (
-          <MessageBubble key={m.id} message={m} />
+          <MessageBubble
+            key={m.id}
+            message={m}
+            onRetry={
+              m.role === "assistant" && m.error ? () => handleRetry(m.id) : undefined
+            }
+          />
         ))}
         <div ref={scrollRef} />
       </div>

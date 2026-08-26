@@ -22,7 +22,7 @@ from api.auth import AUTH_ENABLED, require_user_email
 from api.pipeline_instance import pipeline
 from api.routes import session
 from src.generation.misconception_check import check_misconception
-from src.generation.teaching_prompt import build_teaching_prompt
+from src.generation.teaching_prompt import build_teaching_prompt, is_continuation_message
 
 logger = logging.getLogger("api.chat")
 
@@ -39,11 +39,17 @@ class ChatRequest(BaseModel):
 def _build_prompt(request: ChatRequest, context_text: str, session_key: str) -> str:
     ollama_base_url = pipeline.config.generation.ollama_base_url
 
-    misconception_note = check_misconception(
-        request.question,
-        ollama_base_url=ollama_base_url,
-        model_name=request.model_name,
-        temperature=pipeline.config.generation.temperature,
+    # A continuation nudge ("continue", "go on", ...) has no mental model of
+    # its own to classify -- skip the extra blocking LLM call entirely.
+    misconception_note = (
+        ""
+        if is_continuation_message(request.question)
+        else check_misconception(
+            request.question,
+            ollama_base_url=ollama_base_url,
+            model_name=request.model_name,
+            temperature=pipeline.config.generation.temperature,
+        )
     )
 
     history_text = session.format_history(session_key)
@@ -74,14 +80,37 @@ def _sources_payload(candidates) -> list[dict]:
 async def _stream_chat(request: ChatRequest, session_key: str):
     ollama_base_url = pipeline.config.generation.ollama_base_url
 
-    try:
-        candidates = pipeline._retrieve_candidates(request.question)
-    except Exception as exc:  # retrieval failure shouldn't crash the app
-        logger.exception("Retrieval failed")
-        yield {"event": "error", "data": json.dumps({"error": f"Retrieval failed: {exc}"})}
-        return
+    # A short continuation nudge ("continue", "go on", ...) isn't a new
+    # search query -- retrieving fresh content for it (even using the prior
+    # question's text) and telling the model to ground its answer in that
+    # NEW content silently derails the continuation onto whatever topic the
+    # retrieval happened to surface, rather than actually continuing what was
+    # already being explained. So a continuation reuses the exact context
+    # (and sources) the previous turn was grounded in instead of retrieving
+    # at all; only falls back to a fresh retrieval if there's no prior turn.
+    previous_sources_payload: list[dict] | None = None
+    if is_continuation_message(request.question):
+        history = session.get_history(session_key)
+        if history:
+            context_text = history[-1].context_text
+            previous_sources_payload = history[-1].sources_payload
+        else:
+            context_text = None
+    else:
+        context_text = None
 
-    context_text = "\n\n".join(sc.chunk.text for sc in candidates)
+    if context_text is None:
+        try:
+            candidates = pipeline._retrieve_candidates(request.question)
+        except Exception as exc:  # retrieval failure shouldn't crash the app
+            logger.exception("Retrieval failed")
+            yield {"event": "error", "data": json.dumps({"error": f"Retrieval failed: {exc}"})}
+            return
+        context_text = "\n\n".join(sc.chunk.text for sc in candidates)
+        sources_payload = _sources_payload(candidates)
+    else:
+        sources_payload = previous_sources_payload or []
+
     prompt = _build_prompt(request, context_text, session_key)
 
     payload = {
@@ -139,9 +168,9 @@ async def _stream_chat(request: ChatRequest, session_key: str):
         return
 
     full_answer = "".join(answer_parts)
-    session.append_turn(session_key, request.question, full_answer)
+    session.append_turn(session_key, request.question, full_answer, context_text, sources_payload)
 
-    yield {"event": "sources", "data": json.dumps(_sources_payload(candidates))}
+    yield {"event": "sources", "data": json.dumps(sources_payload)}
 
 
 # The session store is keyed by the authenticated user's email when auth is
