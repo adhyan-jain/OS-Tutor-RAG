@@ -1,6 +1,6 @@
 "use client";
 
-import { SessionProvider, useSession } from "next-auth/react";
+import { SessionProvider, signOut, useSession } from "next-auth/react";
 import Chat from "./Chat";
 import LoginScreen from "./LoginScreen";
 import { AUTH_ENABLED } from "@/lib/auth-config";
@@ -17,7 +17,7 @@ function Gated() {
   if (!session) {
     return <LoginScreen />;
   }
-  return <Chat apiToken={session.apiToken} />;
+  return <Chat apiToken={session.apiToken} onLogout={() => signOut()} />;
 }
 
 /** Top-of-tree gate for the whole app: when AUTH_ENABLED is off (the

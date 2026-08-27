@@ -173,16 +173,18 @@ async def _stream_chat(request: ChatRequest, session_key: str):
     yield {"event": "sources", "data": json.dumps(sources_payload)}
 
 
-# The session store is keyed by the authenticated user's email when auth is
-# on (so one account's history follows them across browser sessions/devices),
-# and by the client-supplied session_id when it's off -- exactly today's
-# behavior. `request.session_id` is still accepted either way; when auth is
-# on it's just ignored for keying purposes.
+# The session store is keyed by "{email}:{session_id}" when auth is on --
+# scoped to the authenticated account (so no one else can read/collide with
+# it) but still one distinct history per conversation thread, since the
+# frontend now supports multiple named sessions per user rather than a
+# single account-wide thread. Keyed by the client-supplied session_id alone
+# when auth is off -- exactly today's behavior.
 if AUTH_ENABLED:
 
     @router.post("/chat")
     async def chat(request: ChatRequest, user_email: str = Depends(require_user_email)):
-        return EventSourceResponse(_stream_chat(request, session_key=user_email))
+        session_key = f"{user_email}:{request.session_id}"
+        return EventSourceResponse(_stream_chat(request, session_key=session_key))
 
 else:
 

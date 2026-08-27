@@ -26,12 +26,20 @@ export interface ChatRequestBody {
   detail_level: DetailLevel;
 }
 
-/** POSTs to /chat and returns the raw streaming Response for the caller to parse as SSE. */
-export async function postChat(body: ChatRequestBody, apiToken?: string): Promise<Response> {
+/** POSTs to /chat and returns the raw streaming Response for the caller to
+ * parse as SSE. `signal` lets a caller abort an in-flight/streaming request
+ * (the "Stop" button) -- fetch rejects with an AbortError, which streamSSE's
+ * caller distinguishes from a real error. */
+export async function postChat(
+  body: ChatRequestBody,
+  apiToken?: string,
+  signal?: AbortSignal,
+): Promise<Response> {
   const res = await fetch(`${API_BASE}/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json", ...authHeaders(apiToken) },
     body: JSON.stringify(body),
+    signal,
   });
   if (!res.ok) {
     throw new Error(`POST /chat failed: ${res.status} ${res.statusText}`);
