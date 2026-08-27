@@ -24,3 +24,14 @@ export interface ChatMessage {
   sources?: Source[];
   error?: string;
 }
+
+/** One conversation thread. `id` is the session_id sent to the backend
+ * (also the key under which the backend keeps its own turn history for
+ * multi-turn context) -- title is derived client-side from the first
+ * question and is purely a UI label. */
+export interface ChatSession {
+  id: string;
+  title: string;
+  updatedAt: number;
+  messages: ChatMessage[];
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { ChatMessage } from "@/lib/types";
@@ -33,19 +34,48 @@ function AssistantMarkdown({ content }: { content: string }) {
   );
 }
 
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // clipboard unavailable (permissions/insecure context) -- non-fatal
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      className="text-xs text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors cursor-pointer"
+    >
+      {copied ? "Copied" : "Copy"}
+    </button>
+  );
+}
+
 export default function MessageBubble({
   message,
   onRetry,
+  onRegenerate,
 }: {
   message: ChatMessage;
   /** Present only on an errored assistant message that has a retryable
    * question behind it -- resends that same question in place. */
   onRetry?: () => void;
+  /** Present on a completed (non-error, non-streaming) assistant message --
+   * re-runs the same question for a different answer. */
+  onRegenerate?: () => void;
 }) {
   const isUser = message.role === "user";
+  const showFooterActions = !isUser && !message.error && !message.streaming && message.content;
 
   return (
-    <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
+    <div className={`flex flex-col ${isUser ? "items-end" : "items-start"}`}>
       <div
         className={`max-w-[80ch] rounded-2xl px-4 py-3 leading-relaxed break-words shadow-sm ${
           isUser
@@ -86,6 +116,20 @@ export default function MessageBubble({
           </>
         )}
       </div>
+      {showFooterActions && (
+        <div className="flex items-center gap-3 mt-1 px-1">
+          <CopyButton text={message.content} />
+          {onRegenerate && (
+            <button
+              type="button"
+              onClick={onRegenerate}
+              className="text-xs text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors cursor-pointer"
+            >
+              Regenerate
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
