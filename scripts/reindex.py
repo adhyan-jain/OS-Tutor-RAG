@@ -1,18 +1,15 @@
-"""Incrementally update the retrieval index and push it to S3.
+"""Incrementally update the local retrieval index.
 
 Unlike `src/build_index.py` (which always re-embeds the full corpus), this
 script only pays embedding cost for new/changed files: it loads whatever
 dense+BM25 index already exists on disk, appends embeddings for just the
 new/changed chunks to the FAISS index, rebuilds the (cheap) BM25 structure
-from the full current chunk set, saves the result, and uploads it to S3 via
-src/indexing/s3_sync.py.
+from the full current chunk set, and saves the result locally.
 
 Run manually whenever new course material is dropped into data/raw/:
     PYTHONPATH=. .venv/bin/python -m scripts.reindex
 or:
     PYTHONPATH=. .venv/bin/python scripts/reindex.py
-
-Requires S3_BUCKET (and friends) set in the environment -- see .env.example.
 """
 
 from __future__ import annotations
@@ -22,7 +19,6 @@ import time
 
 from src.build_index import diff_and_chunk
 from src.config import ChunkingConfig, PathConfig, RetrievalConfig
-from src.indexing.s3_sync import upload_index
 from src.ingestion.manifest import save_manifest
 from src.retrieval.hybrid_rrf import HybridRRFRetriever
 
@@ -76,10 +72,6 @@ def main() -> None:
     retriever.save_index()
     save_manifest(retrieval_config.index_dir, result.manifest)
     logger.info("Index and manifest saved to %s", retrieval_config.index_dir)
-
-    logger.info("Uploading index to S3...")
-    upload_index(retrieval_config.index_dir)
-    logger.info("S3 upload complete.")
 
 
 if __name__ == "__main__":
