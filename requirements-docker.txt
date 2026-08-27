@@ -8,8 +8,8 @@
 # process never imports (vllm -- backend defaults to "ollama", the vllm
 # import in src/generation/local_llm.py is lazy and only runs if
 # GenerationConfig.backend == "vllm"; and the eval-only packages ragas,
-# langchain-community, datasets, openpyxl, moto, pytest, which are all
-# imported lazily inside src/evaluation.py functions api/ never calls).
+# langchain-community, datasets, openpyxl, which are all imported lazily
+# inside src/evaluation.py functions api/ never calls).
 # tiktoken IS kept below -- unlike those, it's a hard top-level import.
 #
 # Do not edit requirements.txt to "fix" this -- that file is what the
@@ -28,7 +28,7 @@ faiss-cpu==1.8.0
 transformers==4.44.0
 
 # Ingestion (only exercised by pipeline_instance.load_index()'s from-scratch
-# rebuild path, when neither S3 nor a local data/index/ has a usable index)
+# rebuild path, when there's no local data/index/ with a usable index yet)
 python-pptx==1.0.2
 python-docx==1.1.2
 pypdf==6.14.2
@@ -45,6 +45,3 @@ fastapi==0.115.6
 uvicorn==0.34.0
 sse-starlette==2.2.1
 httpx==0.28.1
-
-# Indexing / S3 (optional at runtime -- skipped if S3_BUCKET is unset)
-boto3==1.43.78

@@ -31,9 +31,9 @@ services:
       # it) so it actually listens on an interface the container can reach.
       # See DEPLOYMENT.md's "Ollama connectivity" section.
       OLLAMA_HOST: http://host.docker.internal:11434
-      # INDEX_DIR/S3_* are read by src/config.py / api/pipeline_instance.py.
-      # S3 is optional -- unset (the default here) means the container just
-      # uses whatever is in the mounted data/index/ volume below.
+      # INDEX_DIR is read by src/config.py / api/pipeline_instance.py -- the
+      # container just uses whatever is in the mounted data/index/ volume
+      # below.
       INDEX_DIR: /app/data/index
       # Caches the embedding model (BAAI/bge-large-en-v1.5, ~1.3GB) across
       # container restarts -- see the hf_cache volume below. Without this,
@@ -41,11 +41,6 @@ services:
       # cold start (RAGPipeline(PipelineConfig()) loads it at module import
       # time in api/pipeline_instance.py, before uvicorn logs anything).
       HF_HOME: /app/.hf_cache
-      # S3_BUCKET: your-bucket-name
-      # S3_PREFIX: os-tutor-rag/index
-      # AWS_ACCESS_KEY_ID: ...
-      # AWS_SECRET_ACCESS_KEY: ...
-      # S3_ENDPOINT_URL: ...
     extra_hosts:
       # Linux Docker needs this explicit mapping for host.docker.internal to
       # resolve; Docker Desktop on Mac/Windows provides it automatically but
@@ -53,11 +48,11 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       # Index persists across container restarts/rebuilds instead of being
-      # rebuilt from data/raw/ (or re-pulled from S3) every time.
+      # rebuilt from data/raw/ every time.
       - ./data/index:/app/data/index
       # Only needed if you want the from-scratch rebuild path (see
       # api/pipeline_instance.py's load_index()) available inside the
-      # container -- i.e. no index in data/index/ or S3 yet.
+      # container -- i.e. no index in data/index/ yet.
       - ./data/raw:/app/data/raw
       - ./data/processed:/app/data/processed
       - hf_cache:/app/.hf_cache

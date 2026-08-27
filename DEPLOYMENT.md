@@ -25,22 +25,19 @@ host, and it does not stand up an autoscaled service -- see "Scale" below.
 
 `data/index/` (`dense.faiss`, `dense_chunks.pkl`, `bm25.pkl`, `manifest.json`)
 holds the built retrieval index. `api/pipeline_instance.py`'s `load_index()`
-runs on every process startup and, in order: pulls from S3 if configured,
-else uses whatever's already in `data/index/` on disk, else rebuilds from
-`data/raw/` (and pushes to S3 if configured), else starts up with no index
-loaded (retrieval and `/chat` then fail until one exists -- see `/health`).
+runs on every process startup and, in order: uses whatever's already in
+`data/index/` on disk, else rebuilds from `data/raw/`, else starts up with no
+index loaded (retrieval and `/chat` then fail until one exists -- see
+`/health`).
 
 Mount `data/index/` as a volume so a container restart reuses the index
 instead of rebuilding it (rebuilding re-embeds the whole corpus, which is
-slow) or re-downloading it from S3 (slower and an unnecessary S3 dependency
-for something that's already sitting on local disk). This holds whether or
-not S3 sync is configured -- S3 is a durability/multi-instance backstop, the
-local volume is the fast path.
+slow).
 
 `data/raw/` and `data/processed/` are also mountable (see
 `docker-compose.yml`) if you want the from-scratch rebuild path available
 inside the container; skip them if you always seed `data/index/` directly
-(e.g. by copying a built index onto the volume, or always pulling from S3).
+(e.g. by copying a built index onto the volume).
 
 The path itself is configurable via `INDEX_DIR` (new: `src/config.py`'s
 `PathConfig.index_dir` / `RetrievalConfig.index_dir` now read
@@ -54,15 +51,10 @@ mount the volume somewhere else.
 |---|---|---|---|
 | `OLLAMA_HOST` | no | `http://localhost:11434` | Base URL of the Ollama server the backend talks to for generation (`api/routes/chat.py`), the model list (`api/routes/models.py`), and every other LLM call in `src/` (HyDE, multi-query, misconception check, LLM rerank). **New**: `src/config.py`'s `GenerationConfig.ollama_base_url` now reads this via a `default_factory` -- previously it was a hardcoded dataclass default with no env override. In `docker-compose.yml` this is set to `http://host.docker.internal:11434` so the container reaches the *host* machine's Ollama (Ollama is never containerized -- see below). |
 | `INDEX_DIR` | no | `data/index` | Where the retrieval index lives on disk. Point this at your mounted volume. |
-| `S3_BUCKET` | no | unset | Enables S3-backed index sync (`src/indexing/s3_sync.py`). Unset = local-only, as in dev. |
-| `S3_PREFIX` | no | `` | Key prefix under the bucket. |
-| `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` | no | unset | S3/R2 credentials; omit to use boto3's default credential chain (env, shared config, instance role, etc). |
-| `S3_ENDPOINT_URL` | no | unset | Set only for an S3-compatible provider other than AWS (e.g. Cloudflare R2). |
 | `NEXT_PUBLIC_API_BASE` | no | `http://localhost:8000` | **Frontend, build-time.** The backend URL the *browser* calls. `frontend/lib/api.ts` already read this via `process.env.NEXT_PUBLIC_API_BASE` before this task -- no code change was needed there, only wiring it through `frontend/Dockerfile` as a build `ARG`. Because `Chat.tsx` is a client component, this must be a URL reachable from the end user's browser (e.g. the backend's host-published port), **not** the compose network name (`http://backend:8000` resolves only container-to-container and would silently break the browser's requests). Next.js also inlines `NEXT_PUBLIC_*` vars into the client bundle at build time, so this must be set as a Docker build arg, not just a runtime `environment:` entry. |
 
-All of the S3 vars are exactly what's already in `.env.example`; `OLLAMA_HOST`
-and `INDEX_DIR` were added there in this task alongside the `src/config.py`
-change that makes them actually take effect.
+`OLLAMA_HOST` and `INDEX_DIR` are exactly what's already in `.env.example`,
+alongside the `src/config.py` change that makes them actually take effect.
 
 ## The CUDA-torch problem
 
@@ -81,9 +73,9 @@ only by `api/Dockerfile`:
 - Drops `vllm` (backend defaults to `"ollama"`; the `vllm` import in
   `src/generation/local_llm.py` is inside the `backend == "vllm"` branch, so
   it's never imported when running against Ollama) and the eval-only
-  packages (`ragas`, `langchain-community`, `datasets`, `openpyxl`, `moto`,
-  `pytest`) that are only ever imported lazily inside `src/evaluation.py`
-  functions the API never calls. `tiktoken` is kept, unlike those -- it
+  packages (`ragas`, `langchain-community`, `datasets`, `openpyxl`) that are
+  only ever imported lazily inside `src/evaluation.py` functions the API
+  never calls. `tiktoken` is kept, unlike those -- it
   turned out to be a hard top-level import (`src/token_tracking.py`, pulled
   in by `src/pipeline.py` at module load for token accounting), caught only
   by actually starting the container (see "Testing" below) rather than by
@@ -175,6 +167,3 @@ you'll generically need, whenever you pick one:
   browsers) can reach -- a VPS, Render/Railway/Fly/etc, or your own machine.
 - A GPU host (or your own machine) for Ollama, reachable from the backend
   via `OLLAMA_HOST`.
-- Object storage credentials (`S3_BUCKET` etc, or leave it unset and rely on
-  the mounted volume) if you want the index to survive a full container
-  rebuild without a local disk.

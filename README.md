@@ -150,14 +150,11 @@ PYTHONPATH=. .venv/bin/uvicorn api.main:app --port 8000
 ```
 
 No `.env` is required for local dev. `api/pipeline_instance.py` tries, in
-order: download the index from S3 (only if `S3_BUCKET` is set), then an
-existing local index at `data/index/`, then a full local rebuild from
-`data/raw/`. Without any S3 env vars set (see `.env.example` for the full
-list, all optional), it logs `S3_BUCKET not set -- S3 sync disabled` and just
-loads the local index — the app works the same for a reader with no S3
-access. If you do want S3 sync, copy `.env.example` to `.env`, fill in the
-values, and export them (e.g. `set -a; source .env; set +a`) before starting
-uvicorn.
+order: an existing local index at `data/index/`, then a full local rebuild
+from `data/raw/`. If you do want to set `OLLAMA_HOST`/`INDEX_DIR`/auth vars
+(see `.env.example` for the full list, all optional), copy `.env.example` to
+`.env`, fill in the values, and export them (e.g. `set -a; source .env; set
++a`) before starting uvicorn.
 
 `GET /models` proxies Ollama's `/api/tags` for the model dropdown; `POST
 /chat` is a server-sent-events endpoint (`session_id`, `question`,
@@ -201,7 +198,7 @@ eval/
   ragas_eval.py        full sweep
 api/
   main.py               FastAPI app, CORS, startup index loading
-  pipeline_instance.py  shared RAGPipeline instance, S3/local/rebuild index loading
+  pipeline_instance.py  shared RAGPipeline instance, local/rebuild index loading
   routes/chat.py        POST /chat (SSE streaming), teaching-mode prompting
   routes/models.py      GET /models (proxies Ollama's /api/tags)
   routes/session.py     in-memory per-session chat history
