@@ -1,0 +1,45 @@
+{
+  "benchmark_size": 300,
+  "baseline_v1_accuracy": 70.0,
+  "mgev_accuracy": 90.0,
+  "mechanism_claim_verification_rate": 90.47619047619048,
+  "counterfactual_consistency_rate": 100.0,
+  "evaluation_time_seconds": 0.004662990570068359,
+  "category_breakdown": {
+    "factual": {
+      "total": 60,
+      "mgev_pass": 60,
+      "baseline_pass": 60
+    },
+    "procedural": {
+      "total": 60,
+      "mgev_pass": 60,
+      "baseline_pass": 60
+    },
+    "state_transition": {
+      "total": 60,
+      "mgev_pass": 60,
+      "baseline_pass": 60
+    },
+    "numerical": {
+      "total": 45,
+      "mgev_pass": 45,
+      "baseline_pass": 0
+    },
+    "code_trace": {
+      "total": 30,
+      "mgev_pass": 0,
+      "baseline_pass": 30
+    },
+    "counterfactual": {
+      "total": 30,
+      "mgev_pass": 30,
+      "baseline_pass": 0
+    },
+    "misconception": {
+      "total": 15,
+      "mgev_pass": 15,
+      "baseline_pass": 0
+    }
+  }
+}

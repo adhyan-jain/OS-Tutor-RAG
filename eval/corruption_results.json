@@ -1,0 +1,36 @@
+{
+  "total_corrupted_claims": 3,
+  "mgev_detected_count": 3,
+  "mgev_detection_rate": 100.0,
+  "textual_rag_accepted_count": 3,
+  "textual_rag_false_acceptance_rate": 100.0,
+  "item_details": [
+    {
+      "id": "corp_01",
+      "type": "state_transition_flip",
+      "corrupted_claim": "The process transitions directly from BLOCKED to RUNNING.",
+      "mgev_status": "FAIL",
+      "mgev_reason": "State transition validity mismatch: predicted valid=True, but verifier observed valid=False.",
+      "mgev_detected": true,
+      "textual_ragas_accepted": true
+    },
+    {
+      "id": "corp_02",
+      "type": "quantum_inequality_flip",
+      "corrupted_claim": "Reducing quantum from 4ms to 2ms decreases total context switches.",
+      "mgev_status": "FAIL",
+      "mgev_reason": "Quantum relation failure: expected cs(q2) < cs(q1), observed cs(q1)=3, cs(q2)=5.",
+      "mgev_detected": true,
+      "textual_ragas_accepted": true
+    },
+    {
+      "id": "corp_03",
+      "type": "belady_overgeneralization",
+      "corrupted_claim": "Adding physical frames always decreases page faults under any replacement policy.",
+      "mgev_status": "FAIL",
+      "mgev_reason": "Belady's Anomaly detected: increasing frames from 3 to 4 increased page faults from 9 to 10. Statement claiming 'more frames always reduce page faults' fails.",
+      "mgev_detected": true,
+      "textual_ragas_accepted": true
+    }
+  ]
+}

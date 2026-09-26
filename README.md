@@ -139,25 +139,46 @@ OS_RAG_EMBEDDING_DEVICE=cuda PYTHONPATH=. .venv/bin/python -m eval.ragas_eval --
 
 ## Chat app (API + frontend)
 
-A FastAPI backend and Next.js frontend wrap the pipeline in a chat UI, in
-teaching mode -- but flexibly, not a rigid script: a broad/overview question
-gets a direct, complete answer, while a narrow or multi-step concept (or a
-worked problem) gets taught incrementally, one piece at a time followed by a
-short comprehension-check question, the way a good tutor would judge it.
-Every reply cites the slide/section chunks it drew from. Short continuation
-messages ("continue", "go on", "more") are recognized and pick up exactly
-where the previous answer left off, reusing its grounding context rather
-than re-retrieving on the literal nudge text (`src/generation/
-teaching_prompt.py`).
+A FastAPI backend and Next.js frontend wrap the pipeline in a chat UI, run as
+a **Socratic tutor**: the default move is guiding questions and hints that
+make the student do the reasoning, not handing over the finished answer.
+Worked problems and multi-step concepts are taught one small step at a time,
+waiting for the student's attempt before confirming, correcting, or moving
+on. A direct, complete answer is reserved for narrow factual lookups, or
+whenever the student explicitly asks to just be told. Every reply cites the
+slide/section chunks it drew from. Short continuation messages ("continue",
+"go on", "more") are recognized and pick up exactly where the previous
+answer left off, reusing its grounding context rather than re-retrieving on
+the literal nudge text (`src/generation/teaching_prompt.py`).
 
 ### Backend
 
 Requires an index at `data/index/` (see Setup above) and Ollama running
 locally with at least the model(s) you intend to select in the UI pulled.
 
-```bash
-PYTHONPATH=. .venv/bin/uvicorn api.main:app --port 8000
-```
+1. Start Ollama (skip if it's already running as a service/desktop app):
+
+   ```bash
+   ollama serve
+   ```
+
+2. Start the API server, from the repo root, with your venv active:
+
+   ```bash
+   PYTHONPATH=. .venv/bin/uvicorn api.main:app --port 8000
+   ```
+
+3. Smoke-test it:
+
+   ```bash
+   curl -s http://localhost:8000/models        # model dropdown, proxies Ollama
+   curl -sN -X POST http://localhost:8000/chat \
+     -H "Content-Type: application/json" \
+     -d '{"session_id":"smoke-test","question":"What is a deadlock?","model_name":"qwen2.5:7b","detail_level":"undergrad"}'
+   ```
+
+   The `/chat` call streams `event: token` SSE chunks followed by an
+   `event: sources` payload; `/models` should list at least one pulled model.
 
 No `.env` is required for local dev. `api/pipeline_instance.py` tries, in
 order: an existing local index at `data/index/`, then a full local rebuild
@@ -242,7 +263,7 @@ src/
   token_tracking.py    call and token accounting, cost estimation
   evaluation.py        shared RAGAS scoring
   build_index.py       full index (re)build, shared diff/chunk logic
-  generation/          teaching_prompt.py (flexible/adaptive prompts, detail
+  generation/          teaching_prompt.py (Socratic tutoring prompts, detail
                         levels, continuation handling), misconception_check.py
   ingestion/           extract_pptx/pdf/docx, manifest fingerprinting,
                         caption_images.py (optional, off -- see above)
@@ -260,7 +281,7 @@ api/
   main.py               FastAPI app, CORS, startup index loading
   pipeline_instance.py  shared RAGPipeline instance, local/rebuild index loading
   auth.py               gated Google OAuth JWT validation (AUTH_ENABLED, off by default)
-  routes/chat.py        POST /chat (SSE streaming), teaching-mode prompting
+  routes/chat.py        POST /chat (SSE streaming), Socratic teaching-mode prompting
   routes/models.py      GET /models (proxies Ollama's /api/tags)
   routes/session.py     in-memory per-session chat history
 frontend/

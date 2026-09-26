@@ -1,0 +1,2942 @@
+[
+  {
+    "question_id": "q_fact_001",
+    "question": "What is the definition of operating system mechanism concept #1 in context of process and memory management?",
+    "ground_truth": "Concept #1 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_002",
+    "question": "What is the definition of operating system mechanism concept #2 in context of process and memory management?",
+    "ground_truth": "Concept #2 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_003",
+    "question": "What is the definition of operating system mechanism concept #3 in context of process and memory management?",
+    "ground_truth": "Concept #3 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_004",
+    "question": "What is the definition of operating system mechanism concept #4 in context of process and memory management?",
+    "ground_truth": "Concept #4 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_005",
+    "question": "What is the definition of operating system mechanism concept #5 in context of process and memory management?",
+    "ground_truth": "Concept #5 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_006",
+    "question": "What is the definition of operating system mechanism concept #6 in context of process and memory management?",
+    "ground_truth": "Concept #6 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_007",
+    "question": "What is the definition of operating system mechanism concept #7 in context of process and memory management?",
+    "ground_truth": "Concept #7 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_008",
+    "question": "What is the definition of operating system mechanism concept #8 in context of process and memory management?",
+    "ground_truth": "Concept #8 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_009",
+    "question": "What is the definition of operating system mechanism concept #9 in context of process and memory management?",
+    "ground_truth": "Concept #9 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_010",
+    "question": "What is the definition of operating system mechanism concept #10 in context of process and memory management?",
+    "ground_truth": "Concept #10 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_011",
+    "question": "What is the definition of operating system mechanism concept #11 in context of process and memory management?",
+    "ground_truth": "Concept #11 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_012",
+    "question": "What is the definition of operating system mechanism concept #12 in context of process and memory management?",
+    "ground_truth": "Concept #12 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_013",
+    "question": "What is the definition of operating system mechanism concept #13 in context of process and memory management?",
+    "ground_truth": "Concept #13 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_014",
+    "question": "What is the definition of operating system mechanism concept #14 in context of process and memory management?",
+    "ground_truth": "Concept #14 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_015",
+    "question": "What is the definition of operating system mechanism concept #15 in context of process and memory management?",
+    "ground_truth": "Concept #15 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_016",
+    "question": "What is the definition of operating system mechanism concept #16 in context of process and memory management?",
+    "ground_truth": "Concept #16 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_017",
+    "question": "What is the definition of operating system mechanism concept #17 in context of process and memory management?",
+    "ground_truth": "Concept #17 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_018",
+    "question": "What is the definition of operating system mechanism concept #18 in context of process and memory management?",
+    "ground_truth": "Concept #18 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_019",
+    "question": "What is the definition of operating system mechanism concept #19 in context of process and memory management?",
+    "ground_truth": "Concept #19 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_020",
+    "question": "What is the definition of operating system mechanism concept #20 in context of process and memory management?",
+    "ground_truth": "Concept #20 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_021",
+    "question": "What is the definition of operating system mechanism concept #21 in context of process and memory management?",
+    "ground_truth": "Concept #21 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_022",
+    "question": "What is the definition of operating system mechanism concept #22 in context of process and memory management?",
+    "ground_truth": "Concept #22 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_023",
+    "question": "What is the definition of operating system mechanism concept #23 in context of process and memory management?",
+    "ground_truth": "Concept #23 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_024",
+    "question": "What is the definition of operating system mechanism concept #24 in context of process and memory management?",
+    "ground_truth": "Concept #24 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_025",
+    "question": "What is the definition of operating system mechanism concept #25 in context of process and memory management?",
+    "ground_truth": "Concept #25 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_026",
+    "question": "What is the definition of operating system mechanism concept #26 in context of process and memory management?",
+    "ground_truth": "Concept #26 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_027",
+    "question": "What is the definition of operating system mechanism concept #27 in context of process and memory management?",
+    "ground_truth": "Concept #27 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_028",
+    "question": "What is the definition of operating system mechanism concept #28 in context of process and memory management?",
+    "ground_truth": "Concept #28 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_029",
+    "question": "What is the definition of operating system mechanism concept #29 in context of process and memory management?",
+    "ground_truth": "Concept #29 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_030",
+    "question": "What is the definition of operating system mechanism concept #30 in context of process and memory management?",
+    "ground_truth": "Concept #30 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_031",
+    "question": "What is the definition of operating system mechanism concept #31 in context of process and memory management?",
+    "ground_truth": "Concept #31 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_032",
+    "question": "What is the definition of operating system mechanism concept #32 in context of process and memory management?",
+    "ground_truth": "Concept #32 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_033",
+    "question": "What is the definition of operating system mechanism concept #33 in context of process and memory management?",
+    "ground_truth": "Concept #33 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_034",
+    "question": "What is the definition of operating system mechanism concept #34 in context of process and memory management?",
+    "ground_truth": "Concept #34 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_035",
+    "question": "What is the definition of operating system mechanism concept #35 in context of process and memory management?",
+    "ground_truth": "Concept #35 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_036",
+    "question": "What is the definition of operating system mechanism concept #36 in context of process and memory management?",
+    "ground_truth": "Concept #36 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_037",
+    "question": "What is the definition of operating system mechanism concept #37 in context of process and memory management?",
+    "ground_truth": "Concept #37 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_038",
+    "question": "What is the definition of operating system mechanism concept #38 in context of process and memory management?",
+    "ground_truth": "Concept #38 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_039",
+    "question": "What is the definition of operating system mechanism concept #39 in context of process and memory management?",
+    "ground_truth": "Concept #39 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_040",
+    "question": "What is the definition of operating system mechanism concept #40 in context of process and memory management?",
+    "ground_truth": "Concept #40 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_041",
+    "question": "What is the definition of operating system mechanism concept #41 in context of process and memory management?",
+    "ground_truth": "Concept #41 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_042",
+    "question": "What is the definition of operating system mechanism concept #42 in context of process and memory management?",
+    "ground_truth": "Concept #42 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_043",
+    "question": "What is the definition of operating system mechanism concept #43 in context of process and memory management?",
+    "ground_truth": "Concept #43 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_044",
+    "question": "What is the definition of operating system mechanism concept #44 in context of process and memory management?",
+    "ground_truth": "Concept #44 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_045",
+    "question": "What is the definition of operating system mechanism concept #45 in context of process and memory management?",
+    "ground_truth": "Concept #45 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_046",
+    "question": "What is the definition of operating system mechanism concept #46 in context of process and memory management?",
+    "ground_truth": "Concept #46 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_047",
+    "question": "What is the definition of operating system mechanism concept #47 in context of process and memory management?",
+    "ground_truth": "Concept #47 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_048",
+    "question": "What is the definition of operating system mechanism concept #48 in context of process and memory management?",
+    "ground_truth": "Concept #48 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_049",
+    "question": "What is the definition of operating system mechanism concept #49 in context of process and memory management?",
+    "ground_truth": "Concept #49 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_050",
+    "question": "What is the definition of operating system mechanism concept #50 in context of process and memory management?",
+    "ground_truth": "Concept #50 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_051",
+    "question": "What is the definition of operating system mechanism concept #51 in context of process and memory management?",
+    "ground_truth": "Concept #51 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_052",
+    "question": "What is the definition of operating system mechanism concept #52 in context of process and memory management?",
+    "ground_truth": "Concept #52 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_053",
+    "question": "What is the definition of operating system mechanism concept #53 in context of process and memory management?",
+    "ground_truth": "Concept #53 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_054",
+    "question": "What is the definition of operating system mechanism concept #54 in context of process and memory management?",
+    "ground_truth": "Concept #54 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_055",
+    "question": "What is the definition of operating system mechanism concept #55 in context of process and memory management?",
+    "ground_truth": "Concept #55 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_056",
+    "question": "What is the definition of operating system mechanism concept #56 in context of process and memory management?",
+    "ground_truth": "Concept #56 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_057",
+    "question": "What is the definition of operating system mechanism concept #57 in context of process and memory management?",
+    "ground_truth": "Concept #57 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_058",
+    "question": "What is the definition of operating system mechanism concept #58 in context of process and memory management?",
+    "ground_truth": "Concept #58 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_059",
+    "question": "What is the definition of operating system mechanism concept #59 in context of process and memory management?",
+    "ground_truth": "Concept #59 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_fact_060",
+    "question": "What is the definition of operating system mechanism concept #60 in context of process and memory management?",
+    "ground_truth": "Concept #60 defines core OS abstraction for virtualized memory or process isolation.",
+    "topic": "os_concepts",
+    "question_type": "factual",
+    "mechanism": null,
+    "requires_mgev": false
+  },
+  {
+    "question_id": "q_proc_001",
+    "question": "Describe the step-by-step procedure when algorithm #1 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #1 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_002",
+    "question": "Describe the step-by-step procedure when algorithm #2 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #2 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_003",
+    "question": "Describe the step-by-step procedure when algorithm #3 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #3 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_004",
+    "question": "Describe the step-by-step procedure when algorithm #4 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #4 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_005",
+    "question": "Describe the step-by-step procedure when algorithm #5 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #5 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_006",
+    "question": "Describe the step-by-step procedure when algorithm #6 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #6 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_007",
+    "question": "Describe the step-by-step procedure when algorithm #7 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #7 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_008",
+    "question": "Describe the step-by-step procedure when algorithm #8 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #8 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_009",
+    "question": "Describe the step-by-step procedure when algorithm #9 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #9 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_010",
+    "question": "Describe the step-by-step procedure when algorithm #10 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #10 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_011",
+    "question": "Describe the step-by-step procedure when algorithm #11 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #11 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_012",
+    "question": "Describe the step-by-step procedure when algorithm #12 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #12 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_013",
+    "question": "Describe the step-by-step procedure when algorithm #13 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #13 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_014",
+    "question": "Describe the step-by-step procedure when algorithm #14 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #14 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_015",
+    "question": "Describe the step-by-step procedure when algorithm #15 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #15 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_016",
+    "question": "Describe the step-by-step procedure when algorithm #16 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #16 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_017",
+    "question": "Describe the step-by-step procedure when algorithm #17 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #17 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_018",
+    "question": "Describe the step-by-step procedure when algorithm #18 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #18 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_019",
+    "question": "Describe the step-by-step procedure when algorithm #19 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #19 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_020",
+    "question": "Describe the step-by-step procedure when algorithm #20 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #20 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_021",
+    "question": "Describe the step-by-step procedure when algorithm #21 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #21 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_022",
+    "question": "Describe the step-by-step procedure when algorithm #22 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #22 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_023",
+    "question": "Describe the step-by-step procedure when algorithm #23 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #23 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_024",
+    "question": "Describe the step-by-step procedure when algorithm #24 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #24 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_025",
+    "question": "Describe the step-by-step procedure when algorithm #25 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #25 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_026",
+    "question": "Describe the step-by-step procedure when algorithm #26 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #26 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_027",
+    "question": "Describe the step-by-step procedure when algorithm #27 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #27 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_028",
+    "question": "Describe the step-by-step procedure when algorithm #28 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #28 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_029",
+    "question": "Describe the step-by-step procedure when algorithm #29 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #29 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_030",
+    "question": "Describe the step-by-step procedure when algorithm #30 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #30 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_031",
+    "question": "Describe the step-by-step procedure when algorithm #31 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #31 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_032",
+    "question": "Describe the step-by-step procedure when algorithm #32 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #32 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_033",
+    "question": "Describe the step-by-step procedure when algorithm #33 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #33 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_034",
+    "question": "Describe the step-by-step procedure when algorithm #34 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #34 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_035",
+    "question": "Describe the step-by-step procedure when algorithm #35 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #35 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_036",
+    "question": "Describe the step-by-step procedure when algorithm #36 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #36 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_037",
+    "question": "Describe the step-by-step procedure when algorithm #37 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #37 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_038",
+    "question": "Describe the step-by-step procedure when algorithm #38 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #38 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_039",
+    "question": "Describe the step-by-step procedure when algorithm #39 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #39 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_040",
+    "question": "Describe the step-by-step procedure when algorithm #40 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #40 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_041",
+    "question": "Describe the step-by-step procedure when algorithm #41 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #41 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_042",
+    "question": "Describe the step-by-step procedure when algorithm #42 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #42 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_043",
+    "question": "Describe the step-by-step procedure when algorithm #43 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #43 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_044",
+    "question": "Describe the step-by-step procedure when algorithm #44 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #44 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_045",
+    "question": "Describe the step-by-step procedure when algorithm #45 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #45 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_046",
+    "question": "Describe the step-by-step procedure when algorithm #46 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #46 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_047",
+    "question": "Describe the step-by-step procedure when algorithm #47 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #47 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_048",
+    "question": "Describe the step-by-step procedure when algorithm #48 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #48 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_049",
+    "question": "Describe the step-by-step procedure when algorithm #49 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #49 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_050",
+    "question": "Describe the step-by-step procedure when algorithm #50 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #50 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_051",
+    "question": "Describe the step-by-step procedure when algorithm #51 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #51 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_052",
+    "question": "Describe the step-by-step procedure when algorithm #52 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #52 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_053",
+    "question": "Describe the step-by-step procedure when algorithm #53 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #53 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_054",
+    "question": "Describe the step-by-step procedure when algorithm #54 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #54 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_055",
+    "question": "Describe the step-by-step procedure when algorithm #55 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #55 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_056",
+    "question": "Describe the step-by-step procedure when algorithm #56 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #56 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_057",
+    "question": "Describe the step-by-step procedure when algorithm #57 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #57 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_058",
+    "question": "Describe the step-by-step procedure when algorithm #58 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #58 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_proc_059",
+    "question": "Describe the step-by-step procedure when algorithm #59 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #59 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "paging_replacement",
+    "question_type": "procedural",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_proc_060",
+    "question": "Describe the step-by-step procedure when algorithm #60 executes in CPU scheduling or paging.",
+    "ground_truth": "Procedure #60 sequentially updates state queue and triggers context switch or page eviction.",
+    "topic": "cpu_scheduling",
+    "question_type": "procedural",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_state_001",
+    "question": "What process state transition occurs when event #1 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #1 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_002",
+    "question": "What process state transition occurs when event #2 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #2 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_003",
+    "question": "What process state transition occurs when event #3 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #3 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_004",
+    "question": "What process state transition occurs when event #4 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #4 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_005",
+    "question": "What process state transition occurs when event #5 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #5 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_006",
+    "question": "What process state transition occurs when event #6 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #6 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_007",
+    "question": "What process state transition occurs when event #7 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #7 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_008",
+    "question": "What process state transition occurs when event #8 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #8 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_009",
+    "question": "What process state transition occurs when event #9 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #9 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_010",
+    "question": "What process state transition occurs when event #10 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #10 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_011",
+    "question": "What process state transition occurs when event #11 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #11 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_012",
+    "question": "What process state transition occurs when event #12 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #12 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_013",
+    "question": "What process state transition occurs when event #13 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #13 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_014",
+    "question": "What process state transition occurs when event #14 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #14 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_015",
+    "question": "What process state transition occurs when event #15 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #15 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_016",
+    "question": "What process state transition occurs when event #16 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #16 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_017",
+    "question": "What process state transition occurs when event #17 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #17 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_018",
+    "question": "What process state transition occurs when event #18 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #18 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_019",
+    "question": "What process state transition occurs when event #19 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #19 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_020",
+    "question": "What process state transition occurs when event #20 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #20 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_021",
+    "question": "What process state transition occurs when event #21 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #21 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_022",
+    "question": "What process state transition occurs when event #22 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #22 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_023",
+    "question": "What process state transition occurs when event #23 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #23 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_024",
+    "question": "What process state transition occurs when event #24 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #24 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_025",
+    "question": "What process state transition occurs when event #25 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #25 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_026",
+    "question": "What process state transition occurs when event #26 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #26 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_027",
+    "question": "What process state transition occurs when event #27 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #27 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_028",
+    "question": "What process state transition occurs when event #28 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #28 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_029",
+    "question": "What process state transition occurs when event #29 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #29 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_030",
+    "question": "What process state transition occurs when event #30 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #30 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_031",
+    "question": "What process state transition occurs when event #31 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #31 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_032",
+    "question": "What process state transition occurs when event #32 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #32 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_033",
+    "question": "What process state transition occurs when event #33 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #33 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_034",
+    "question": "What process state transition occurs when event #34 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #34 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_035",
+    "question": "What process state transition occurs when event #35 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #35 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_036",
+    "question": "What process state transition occurs when event #36 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #36 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_037",
+    "question": "What process state transition occurs when event #37 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #37 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_038",
+    "question": "What process state transition occurs when event #38 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #38 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_039",
+    "question": "What process state transition occurs when event #39 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #39 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_040",
+    "question": "What process state transition occurs when event #40 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #40 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_041",
+    "question": "What process state transition occurs when event #41 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #41 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_042",
+    "question": "What process state transition occurs when event #42 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #42 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_043",
+    "question": "What process state transition occurs when event #43 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #43 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_044",
+    "question": "What process state transition occurs when event #44 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #44 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_045",
+    "question": "What process state transition occurs when event #45 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #45 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_046",
+    "question": "What process state transition occurs when event #46 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #46 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_047",
+    "question": "What process state transition occurs when event #47 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #47 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_048",
+    "question": "What process state transition occurs when event #48 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #48 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_049",
+    "question": "What process state transition occurs when event #49 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #49 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_050",
+    "question": "What process state transition occurs when event #50 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #50 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_051",
+    "question": "What process state transition occurs when event #51 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #51 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_052",
+    "question": "What process state transition occurs when event #52 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #52 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_053",
+    "question": "What process state transition occurs when event #53 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #53 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_054",
+    "question": "What process state transition occurs when event #54 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #54 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_055",
+    "question": "What process state transition occurs when event #55 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #55 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_056",
+    "question": "What process state transition occurs when event #56 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #56 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_057",
+    "question": "What process state transition occurs when event #57 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #57 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_058",
+    "question": "What process state transition occurs when event #58 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #58 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_059",
+    "question": "What process state transition occurs when event #59 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #59 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_state_060",
+    "question": "What process state transition occurs when event #60 (such as I/O completion or timer interrupt) fires?",
+    "ground_truth": "Event #60 causes state transition from BLOCKED or RUNNING to READY.",
+    "topic": "process_lifecycle",
+    "question_type": "state_transition",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_num_001",
+    "question": "Calculate the total number of context switches or page faults for workload #1.",
+    "ground_truth": "Workload #1 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_002",
+    "question": "Calculate the total number of context switches or page faults for workload #2.",
+    "ground_truth": "Workload #2 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_003",
+    "question": "Calculate the total number of context switches or page faults for workload #3.",
+    "ground_truth": "Workload #3 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_004",
+    "question": "Calculate the total number of context switches or page faults for workload #4.",
+    "ground_truth": "Workload #4 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_005",
+    "question": "Calculate the total number of context switches or page faults for workload #5.",
+    "ground_truth": "Workload #5 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_006",
+    "question": "Calculate the total number of context switches or page faults for workload #6.",
+    "ground_truth": "Workload #6 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_007",
+    "question": "Calculate the total number of context switches or page faults for workload #7.",
+    "ground_truth": "Workload #7 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_008",
+    "question": "Calculate the total number of context switches or page faults for workload #8.",
+    "ground_truth": "Workload #8 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_009",
+    "question": "Calculate the total number of context switches or page faults for workload #9.",
+    "ground_truth": "Workload #9 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_010",
+    "question": "Calculate the total number of context switches or page faults for workload #10.",
+    "ground_truth": "Workload #10 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_011",
+    "question": "Calculate the total number of context switches or page faults for workload #11.",
+    "ground_truth": "Workload #11 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_012",
+    "question": "Calculate the total number of context switches or page faults for workload #12.",
+    "ground_truth": "Workload #12 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_013",
+    "question": "Calculate the total number of context switches or page faults for workload #13.",
+    "ground_truth": "Workload #13 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_014",
+    "question": "Calculate the total number of context switches or page faults for workload #14.",
+    "ground_truth": "Workload #14 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_015",
+    "question": "Calculate the total number of context switches or page faults for workload #15.",
+    "ground_truth": "Workload #15 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_016",
+    "question": "Calculate the total number of context switches or page faults for workload #16.",
+    "ground_truth": "Workload #16 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_017",
+    "question": "Calculate the total number of context switches or page faults for workload #17.",
+    "ground_truth": "Workload #17 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_018",
+    "question": "Calculate the total number of context switches or page faults for workload #18.",
+    "ground_truth": "Workload #18 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_019",
+    "question": "Calculate the total number of context switches or page faults for workload #19.",
+    "ground_truth": "Workload #19 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_020",
+    "question": "Calculate the total number of context switches or page faults for workload #20.",
+    "ground_truth": "Workload #20 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_021",
+    "question": "Calculate the total number of context switches or page faults for workload #21.",
+    "ground_truth": "Workload #21 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_022",
+    "question": "Calculate the total number of context switches or page faults for workload #22.",
+    "ground_truth": "Workload #22 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_023",
+    "question": "Calculate the total number of context switches or page faults for workload #23.",
+    "ground_truth": "Workload #23 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_024",
+    "question": "Calculate the total number of context switches or page faults for workload #24.",
+    "ground_truth": "Workload #24 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_025",
+    "question": "Calculate the total number of context switches or page faults for workload #25.",
+    "ground_truth": "Workload #25 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_026",
+    "question": "Calculate the total number of context switches or page faults for workload #26.",
+    "ground_truth": "Workload #26 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_027",
+    "question": "Calculate the total number of context switches or page faults for workload #27.",
+    "ground_truth": "Workload #27 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_028",
+    "question": "Calculate the total number of context switches or page faults for workload #28.",
+    "ground_truth": "Workload #28 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_029",
+    "question": "Calculate the total number of context switches or page faults for workload #29.",
+    "ground_truth": "Workload #29 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_030",
+    "question": "Calculate the total number of context switches or page faults for workload #30.",
+    "ground_truth": "Workload #30 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_031",
+    "question": "Calculate the total number of context switches or page faults for workload #31.",
+    "ground_truth": "Workload #31 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_032",
+    "question": "Calculate the total number of context switches or page faults for workload #32.",
+    "ground_truth": "Workload #32 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_033",
+    "question": "Calculate the total number of context switches or page faults for workload #33.",
+    "ground_truth": "Workload #33 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_034",
+    "question": "Calculate the total number of context switches or page faults for workload #34.",
+    "ground_truth": "Workload #34 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_035",
+    "question": "Calculate the total number of context switches or page faults for workload #35.",
+    "ground_truth": "Workload #35 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_036",
+    "question": "Calculate the total number of context switches or page faults for workload #36.",
+    "ground_truth": "Workload #36 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_037",
+    "question": "Calculate the total number of context switches or page faults for workload #37.",
+    "ground_truth": "Workload #37 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_038",
+    "question": "Calculate the total number of context switches or page faults for workload #38.",
+    "ground_truth": "Workload #38 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_039",
+    "question": "Calculate the total number of context switches or page faults for workload #39.",
+    "ground_truth": "Workload #39 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_040",
+    "question": "Calculate the total number of context switches or page faults for workload #40.",
+    "ground_truth": "Workload #40 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_041",
+    "question": "Calculate the total number of context switches or page faults for workload #41.",
+    "ground_truth": "Workload #41 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_042",
+    "question": "Calculate the total number of context switches or page faults for workload #42.",
+    "ground_truth": "Workload #42 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_043",
+    "question": "Calculate the total number of context switches or page faults for workload #43.",
+    "ground_truth": "Workload #43 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_num_044",
+    "question": "Calculate the total number of context switches or page faults for workload #44.",
+    "ground_truth": "Workload #44 produces exact calculated count based on algorithm parameters.",
+    "topic": "cpu_scheduling",
+    "question_type": "numerical",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "scheduler"
+  },
+  {
+    "question_id": "q_num_045",
+    "question": "Calculate the total number of context switches or page faults for workload #45.",
+    "ground_truth": "Workload #45 produces exact calculated count based on algorithm parameters.",
+    "topic": "paging_replacement",
+    "question_type": "numerical",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "paging"
+  },
+  {
+    "question_id": "q_trace_001",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #1 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #1 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_002",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #2 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #2 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_003",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #3 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #3 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_004",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #4 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #4 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_005",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #5 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #5 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_006",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #6 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #6 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_007",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #7 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #7 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_008",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #8 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #8 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_009",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #9 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #9 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_010",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #10 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #10 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_011",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #11 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #11 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_012",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #12 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #12 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_013",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #13 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #13 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_014",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #14 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #14 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_015",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #15 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #15 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_016",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #16 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #16 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_017",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #17 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #17 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_018",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #18 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #18 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_019",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #19 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #19 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_020",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #20 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #20 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_021",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #21 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #21 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_022",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #22 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #22 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_023",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #23 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #23 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_024",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #24 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #24 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_025",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #25 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #25 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_026",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #26 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #26 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_027",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #27 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #27 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_028",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #28 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #28 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_029",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #29 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #29 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_trace_030",
+    "question": "Trace the fork() / exec() system call sequence in code snippet #30 and determine parent/child PIDs.",
+    "ground_truth": "Code snippet #30 creates child process returning 0 in child and child PID in parent.",
+    "topic": "process_lifecycle",
+    "question_type": "code_trace",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_cf_001",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #1?",
+    "ground_truth": "Scenario #1 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_002",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #2?",
+    "ground_truth": "Scenario #2 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_003",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #3?",
+    "ground_truth": "Scenario #3 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_004",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #4?",
+    "ground_truth": "Scenario #4 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_005",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #5?",
+    "ground_truth": "Scenario #5 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_006",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #6?",
+    "ground_truth": "Scenario #6 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_007",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #7?",
+    "ground_truth": "Scenario #7 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_008",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #8?",
+    "ground_truth": "Scenario #8 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_009",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #9?",
+    "ground_truth": "Scenario #9 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_010",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #10?",
+    "ground_truth": "Scenario #10 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_011",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #11?",
+    "ground_truth": "Scenario #11 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_012",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #12?",
+    "ground_truth": "Scenario #12 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_013",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #13?",
+    "ground_truth": "Scenario #13 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_014",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #14?",
+    "ground_truth": "Scenario #14 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_015",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #15?",
+    "ground_truth": "Scenario #15 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_016",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #16?",
+    "ground_truth": "Scenario #16 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_017",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #17?",
+    "ground_truth": "Scenario #17 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_018",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #18?",
+    "ground_truth": "Scenario #18 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_019",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #19?",
+    "ground_truth": "Scenario #19 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_020",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #20?",
+    "ground_truth": "Scenario #20 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_021",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #21?",
+    "ground_truth": "Scenario #21 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_022",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #22?",
+    "ground_truth": "Scenario #22 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_023",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #23?",
+    "ground_truth": "Scenario #23 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_024",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #24?",
+    "ground_truth": "Scenario #24 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_025",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #25?",
+    "ground_truth": "Scenario #25 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_026",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #26?",
+    "ground_truth": "Scenario #26 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_027",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #27?",
+    "ground_truth": "Scenario #27 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_028",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #28?",
+    "ground_truth": "Scenario #28 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_029",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #29?",
+    "ground_truth": "Scenario #29 yields workload-dependent counterfactual behavior.",
+    "topic": "paging_replacement",
+    "question_type": "counterfactual",
+    "mechanism": "paging_replacement",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_cf_030",
+    "question": "How does decreasing the scheduling quantum or increasing frame count affect system behavior in scenario #30?",
+    "ground_truth": "Scenario #30 yields workload-dependent counterfactual behavior.",
+    "topic": "cpu_scheduling",
+    "question_type": "counterfactual",
+    "mechanism": "cpu_scheduling",
+    "requires_mgev": true,
+    "verification_routine": "counterfactual"
+  },
+  {
+    "question_id": "q_misc_001",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #1?",
+    "ground_truth": "No, in case #1, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_002",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #2?",
+    "ground_truth": "No, in case #2, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_003",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #3?",
+    "ground_truth": "No, in case #3, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_004",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #4?",
+    "ground_truth": "No, in case #4, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_005",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #5?",
+    "ground_truth": "No, in case #5, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_006",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #6?",
+    "ground_truth": "No, in case #6, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_007",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #7?",
+    "ground_truth": "No, in case #7, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_008",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #8?",
+    "ground_truth": "No, in case #8, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_009",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #9?",
+    "ground_truth": "No, in case #9, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_010",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #10?",
+    "ground_truth": "No, in case #10, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_011",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #11?",
+    "ground_truth": "No, in case #11, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_012",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #12?",
+    "ground_truth": "No, in case #12, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_013",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #13?",
+    "ground_truth": "No, in case #13, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_014",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #14?",
+    "ground_truth": "No, in case #14, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  },
+  {
+    "question_id": "q_misc_015",
+    "question": "Can a blocked process be directly selected by the CPU scheduler without unblocking first in case #15?",
+    "ground_truth": "No, in case #15, blocked processes are strictly ineligible for CPU scheduling.",
+    "topic": "process_lifecycle",
+    "question_type": "misconception",
+    "mechanism": "process_lifecycle",
+    "requires_mgev": true,
+    "verification_routine": "process"
+  }
+]
