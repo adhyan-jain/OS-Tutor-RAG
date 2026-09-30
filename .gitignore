@@ -25,6 +25,9 @@ data/raw/*
 *.index
 data/index/
 data/processed/
+# Local snapshots taken before the 2026-09-30 corpus merge and the faulty index
+data/_backup_*/
+data/_index_dup_bug_*/
 
 # Generated evaluation run artifacts (regenerable, not source)
 eval/comparison_results.md
