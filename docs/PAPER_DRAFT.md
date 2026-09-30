@@ -1,3 +1,5 @@
+> **ARCHIVED 2026-09-30. Not evidence.** The numbers below come from hard-coded or synthetic evaluation. See `docs/archive/MGEV_ARCHIVED.md` and `docs/CURRENT_PROJECT_AUDIT.md`.
+
 # Mechanism-Grounded Evidence Verification for Course-Grounded LLM Tutoring in Operating Systems
 
 ## Abstract

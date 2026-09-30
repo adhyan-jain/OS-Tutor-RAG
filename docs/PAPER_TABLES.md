@@ -1,3 +1,5 @@
+> **ARCHIVED 2026-09-30. Not evidence.** These tables report hard-coded or synthetic results. See `docs/archive/MGEV_ARCHIVED.md` and `docs/CURRENT_PROJECT_AUDIT.md`.
+
 # Publication Tables - MGEV Evaluation
 
 ## TABLE 1: Prior-Art Comparison
