@@ -1,0 +1,24 @@
+id,title,rag_related,origin,research_gap_strength,scientific_importance,novel_methodological_content,prior_art_collision_risk,evaluation_clarity,reproducibility,data_availability,implementation_feasibility,cross_domain_significance,potential_impact,label
+C01,A validated operating-systems misconception inventory (item bank with psychometrics),False,LITERATURE-DERIVED,H,H,L,L,H,H,L,L,M,H,HIGH-RISK/HIGH-REWARD
+C02,"Correctness audit of LLM explanations of OS mechanisms, stratified by static vs state-dependent claims",False,LITERATURE-DERIVED,M,M,L,L,H,H,M,H,M,M,PROMISING
+C03,What do executable checks detect that LLM judges and NLI miss? Claim-level verification of OS explanations,False,LITERATURE-DERIVED,M,H,M,H,H,M,M,M,M,M,PROMISING
+C04,Claim-coverage audit: what fraction of real tutor-answer claims is executable-checkable?,False,LITERATURE-DERIVED,M,M,L,L,H,H,H,H,L,M,PROMISING
+C05,Does a correct OS trace imply a correct causal explanation? Forward simulation vs causal attribution on scheduler/paging traces,False,LITERATURE-DERIVED,M,M,M,M,H,M,M,M,M,M,PARTIALLY CROWDED
+C06,Validity of automated correctness scoring for OS tutor answers: teacher-labelled agreement of same- vs cross-family judges,False,LITERATURE-DERIVED,M,H,L,M,H,H,M,H,M,M,PROMISING
+C07,Faithfulness-abstention confound in RAG metrics on course corpora,True,PROJECT-ANCHORED,L,M,L,M,H,H,H,H,L,L,WEAK
+C08,Noise-floor and power audit of published RAG / LLM-tutor evaluations,False,LITERATURE-DERIVED,M,M,L,M,H,H,H,H,H,M,WEAK
+C09,Chunker x query-expansion x reranker x generator factorial at fixed context budget on a real OS corpus,True,LITERATURE-DERIVED,L,M,L,M,H,H,H,H,M,M,PROMISING
+C10,Cross-concept questions: vector vs GraphRAG vs hybrid at matched cost on OS material,True,LITERATURE-DERIVED,L,M,L,H,H,M,H,M,L,L,PARTIALLY CROWDED
+C11,Misconception-conditioned retrieval with validated OS misconceptions,True,LITERATURE-DERIVED,M,M,M,M,H,M,L,L,L,M,TOO HARD TO EVALUATE
+C12,Fidelity of LLM-simulated students on OS misconceptions vs real distractor distributions,False,LITERATURE-DERIVED,M,M,M,H,H,M,L,L,M,M,PARTIALLY CROWDED
+C13,Do tutor-quality benchmark scores predict learning gains?,False,LITERATURE-DERIVED,H,H,M,L,M,L,L,L,H,H,TOO HARD TO EVALUATE
+C14,Guardrail components and delayed retention for an OS-course LLM tutor (factorial RCT),False,LITERATURE-DERIVED,M,H,M,H,M,L,L,L,M,H,HIGH-RISK/HIGH-REWARD
+C15,Perceived helpfulness vs learning for an OS tutor,False,LITERATURE-DERIVED,L,M,L,H,M,L,L,L,L,L,TAKEN
+C16,Simulator-grounded generation vs post-hoc verification for OS explanations,True,LITERATURE-DERIVED,L,M,M,H,M,M,M,M,L,L,WEAK
+C17,Robustness of course-grounded tutors to plausible but wrong passages,True,LITERATURE-DERIVED,L,M,L,H,H,H,H,H,M,L,WEAK
+C18,Multi-version and multi-format lecture duplicates in tutor retrieval,True,PROJECT-ANCHORED,L,L,L,H,H,H,H,H,L,L,TAKEN
+C19,Abstention thresholds for course-grounded tutors using context sufficiency,True,LITERATURE-DERIVED,L,M,L,H,H,H,H,M,M,L,PARTIALLY CROWDED
+C20,IRT-based difficulty calibration of LLM-authored OS questions vs expert ratings,False,LITERATURE-DERIVED,L,L,L,H,M,M,M,M,L,L,WEAK
+C21,LLM-authored OS distractors vs observed student answer distributions,False,LITERATURE-DERIVED,M,M,L,H,H,M,L,L,L,L,PARTIALLY CROWDED
+C22,OS-state reasoning benchmark with executable ground truth and human-authored problems,False,LITERATURE-DERIVED,M,M,L,M,H,H,M,M,M,M,PROMISING
+C23,Length and position bias when LLM judges score tutor answers,False,LITERATURE-DERIVED,L,L,L,H,H,H,H,H,M,L,TAKEN
