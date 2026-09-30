@@ -962,3 +962,13 @@ per configuration, not a better setting.
   the inference server that persist at temperature 0.
 - Costs quoted in USD are *hypothetical* -- token counts from local runs priced
   against published GPT-4.1 / GPT-4o-mini rates. No OpenAI API calls were made.
+
+## Correction note — 2026-09-30
+
+- "22-document corpus" counts extracted `Document` objects: 9 files plus 13
+  sections of the converted exercise `.docx` (F11), from 10 source files. It
+  is not a count of 22 source files.
+- Every result in this log was measured on that July corpus (processes and
+  shell only). The corpus has since grown to 37 files (see
+  `docs/CORPUS_VERSIONS.md`). None of these numbers transfer to it without
+  re-measurement.
