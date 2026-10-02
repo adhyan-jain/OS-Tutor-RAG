@@ -1,0 +1,50 @@
+{
+  "Canonical_Exact_Matcher": {
+    "rsg_metrics": {
+      "mean_reference_score": 0.0,
+      "mean_semantic_score": 0.0,
+      "rsg": 0.0,
+      "rsg_ci_95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sensitivity_metrics": {
+      "reference_sensitivity_rate": 1.0,
+      "num_evaluated": 50,
+      "num_changed_judgments": 50
+    }
+  },
+  "Reference_Sensitive_Judge": {
+    "rsg_metrics": {
+      "mean_reference_score": 0.94,
+      "mean_semantic_score": 0.0,
+      "rsg": -0.94,
+      "rsg_ci_95": [
+        -1.0,
+        -0.86
+      ]
+    },
+    "sensitivity_metrics": {
+      "reference_sensitivity_rate": 0.06,
+      "num_evaluated": 50,
+      "num_changed_judgments": 3
+    }
+  },
+  "Symbolic_Validator_Oracle": {
+    "rsg_metrics": {
+      "mean_reference_score": 0.0,
+      "mean_semantic_score": 0.0,
+      "rsg": 0.0,
+      "rsg_ci_95": [
+        0.0,
+        0.0
+      ]
+    },
+    "sensitivity_metrics": {
+      "reference_sensitivity_rate": 0.0,
+      "num_evaluated": 50,
+      "num_changed_judgments": 0
+    }
+  }
+}
