@@ -1,0 +1,44 @@
+{
+  "E1_CANONICAL_EXACT": {
+    "evaluator_id": "E1_CANONICAL_EXACT",
+    "sensitivity": 0.5,
+    "specificity": 1.0,
+    "frr": 0.5,
+    "far": 0.0,
+    "accuracy": 0.6962025316455697,
+    "category_pass_rates": {
+      "canonical_valid": 1.0,
+      "noncanonical_valid": 0.0,
+      "lexical_similar_invalid": 0.0,
+      "same_final_state_invalid": 0.0
+    }
+  },
+  "E2_NORMALIZED_MATCH": {
+    "evaluator_id": "E2_NORMALIZED_MATCH",
+    "sensitivity": 0.5,
+    "specificity": 1.0,
+    "frr": 0.5,
+    "far": 0.0,
+    "accuracy": 0.6962025316455697,
+    "category_pass_rates": {
+      "canonical_valid": 1.0,
+      "noncanonical_valid": 0.0,
+      "lexical_similar_invalid": 0.0,
+      "same_final_state_invalid": 0.0
+    }
+  },
+  "E3_SEMANTIC_ORACLE": {
+    "evaluator_id": "E3_SEMANTIC_ORACLE",
+    "sensitivity": 1.0,
+    "specificity": 1.0,
+    "frr": 0.0,
+    "far": 0.0,
+    "accuracy": 1.0,
+    "category_pass_rates": {
+      "canonical_valid": 1.0,
+      "noncanonical_valid": 1.0,
+      "lexical_similar_invalid": 0.0,
+      "same_final_state_invalid": 0.0
+    }
+  }
+}

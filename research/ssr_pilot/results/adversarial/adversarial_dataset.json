@@ -1,0 +1,2795 @@
+[
+  {
+    "case_id": "sched_01_canonical_valid",
+    "world_id": "sched_01",
+    "category": "canonical_valid",
+    "text": "TRACE: P1 0-24, P2 24-27, P3 27-30",
+    "steps": [
+      [
+        "P1",
+        0,
+        24
+      ],
+      [
+        "P2",
+        24,
+        27
+      ],
+      [
+        "P3",
+        27,
+        30
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sched_01_noncanonical_valid",
+    "world_id": "sched_01",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P1 0-24, P3 24-27, P2 27-30",
+    "steps": [
+      [
+        "P1",
+        0,
+        24
+      ],
+      [
+        "P3",
+        24,
+        27
+      ],
+      [
+        "P2",
+        27,
+        30
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_01_lexical_similar_invalid",
+    "world_id": "sched_01",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P3 0-3, P2 3-6, P1 6-29",
+    "steps": [
+      [
+        "P3",
+        0,
+        3
+      ],
+      [
+        "P2",
+        3,
+        6
+      ],
+      [
+        "P1",
+        6,
+        29
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_02_canonical_valid",
+    "world_id": "sched_02",
+    "category": "canonical_valid",
+    "text": "TRACE: P1 0-1, P3 1-2, P4 2-6, P2 6-10",
+    "steps": [
+      [
+        "P1",
+        0,
+        1
+      ],
+      [
+        "P3",
+        1,
+        2
+      ],
+      [
+        "P4",
+        2,
+        6
+      ],
+      [
+        "P2",
+        6,
+        10
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sched_02_noncanonical_valid",
+    "world_id": "sched_02",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P3 0-1, P1 1-2, P4 2-6, P2 6-10",
+    "steps": [
+      [
+        "P3",
+        0,
+        1
+      ],
+      [
+        "P1",
+        1,
+        2
+      ],
+      [
+        "P4",
+        2,
+        6
+      ],
+      [
+        "P2",
+        6,
+        10
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_02_lexical_similar_invalid",
+    "world_id": "sched_02",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P4 0-4, P3 4-5, P1 5-6, P2 6-9",
+    "steps": [
+      [
+        "P4",
+        0,
+        4
+      ],
+      [
+        "P3",
+        4,
+        5
+      ],
+      [
+        "P1",
+        5,
+        6
+      ],
+      [
+        "P2",
+        6,
+        9
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_03_canonical_valid",
+    "world_id": "sched_03",
+    "category": "canonical_valid",
+    "text": "TRACE: P3 0-2, P2 2-3, P1 3-7, P4 7-11, P5 11-15",
+    "steps": [
+      [
+        "P3",
+        0,
+        2
+      ],
+      [
+        "P2",
+        2,
+        3
+      ],
+      [
+        "P1",
+        3,
+        7
+      ],
+      [
+        "P4",
+        7,
+        11
+      ],
+      [
+        "P5",
+        11,
+        15
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sched_03_noncanonical_valid",
+    "world_id": "sched_03",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P3 0-2, P2 2-3, P1 3-7, P5 7-11, P4 11-15",
+    "steps": [
+      [
+        "P3",
+        0,
+        2
+      ],
+      [
+        "P2",
+        2,
+        3
+      ],
+      [
+        "P1",
+        3,
+        7
+      ],
+      [
+        "P5",
+        7,
+        11
+      ],
+      [
+        "P4",
+        11,
+        15
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_03_lexical_similar_invalid",
+    "world_id": "sched_03",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P3 0-3, P2 3-4, P4 4-8, P1 8-12, P5 12-16",
+    "steps": [
+      [
+        "P3",
+        0,
+        3
+      ],
+      [
+        "P2",
+        3,
+        4
+      ],
+      [
+        "P4",
+        4,
+        8
+      ],
+      [
+        "P1",
+        8,
+        12
+      ],
+      [
+        "P5",
+        12,
+        16
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_04_canonical_valid",
+    "world_id": "sched_04",
+    "category": "canonical_valid",
+    "text": "TRACE: P5 0-4, P1 4-5, P4 5-8, P2 8-12, P3 12-16",
+    "steps": [
+      [
+        "P5",
+        0,
+        4
+      ],
+      [
+        "P1",
+        4,
+        5
+      ],
+      [
+        "P4",
+        5,
+        8
+      ],
+      [
+        "P2",
+        8,
+        12
+      ],
+      [
+        "P3",
+        12,
+        16
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sched_04_noncanonical_valid",
+    "world_id": "sched_04",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P5 0-4, P1 4-5, P4 5-8, P3 8-12, P2 12-16",
+    "steps": [
+      [
+        "P5",
+        0,
+        4
+      ],
+      [
+        "P1",
+        4,
+        5
+      ],
+      [
+        "P4",
+        5,
+        8
+      ],
+      [
+        "P3",
+        8,
+        12
+      ],
+      [
+        "P2",
+        12,
+        16
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_04_lexical_similar_invalid",
+    "world_id": "sched_04",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P5 0-5, P1 5-6, P4 6-9, P3 9-13, P2 13-17",
+    "steps": [
+      [
+        "P5",
+        0,
+        5
+      ],
+      [
+        "P1",
+        5,
+        6
+      ],
+      [
+        "P4",
+        6,
+        9
+      ],
+      [
+        "P3",
+        9,
+        13
+      ],
+      [
+        "P2",
+        13,
+        17
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_05_canonical_valid",
+    "world_id": "sched_05",
+    "category": "canonical_valid",
+    "text": "TRACE: P1 0-1, P4 1-3, P2 3-5, P3 5-6, P5 6-8",
+    "steps": [
+      [
+        "P1",
+        0,
+        1
+      ],
+      [
+        "P4",
+        1,
+        3
+      ],
+      [
+        "P2",
+        3,
+        5
+      ],
+      [
+        "P3",
+        5,
+        6
+      ],
+      [
+        "P5",
+        6,
+        8
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sched_05_noncanonical_valid",
+    "world_id": "sched_05",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P1 0-1, P4 1-3, P2 3-5, P5 5-7, P3 7-8",
+    "steps": [
+      [
+        "P1",
+        0,
+        1
+      ],
+      [
+        "P4",
+        1,
+        3
+      ],
+      [
+        "P2",
+        3,
+        5
+      ],
+      [
+        "P5",
+        5,
+        7
+      ],
+      [
+        "P3",
+        7,
+        8
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_05_lexical_similar_invalid",
+    "world_id": "sched_05",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P3 0-1, P4 1-3, P1 3-4, P5 4-6, P2 6-8",
+    "steps": [
+      [
+        "P3",
+        0,
+        1
+      ],
+      [
+        "P4",
+        1,
+        3
+      ],
+      [
+        "P1",
+        3,
+        4
+      ],
+      [
+        "P5",
+        4,
+        6
+      ],
+      [
+        "P2",
+        6,
+        8
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_06_canonical_valid",
+    "world_id": "sched_06",
+    "category": "canonical_valid",
+    "text": "TRACE: P2 0-2, P4 2-5, P1 5-7, P3 7-8",
+    "steps": [
+      [
+        "P2",
+        0,
+        2
+      ],
+      [
+        "P4",
+        2,
+        5
+      ],
+      [
+        "P1",
+        5,
+        7
+      ],
+      [
+        "P3",
+        7,
+        8
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sched_06_noncanonical_valid",
+    "world_id": "sched_06",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P2 0-2, P4 2-5, P3 5-6, P1 6-8",
+    "steps": [
+      [
+        "P2",
+        0,
+        2
+      ],
+      [
+        "P4",
+        2,
+        5
+      ],
+      [
+        "P3",
+        5,
+        6
+      ],
+      [
+        "P1",
+        6,
+        8
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_06_lexical_similar_invalid",
+    "world_id": "sched_06",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P2 0-2, P4 2-5, P3 5-6, P1 6-7",
+    "steps": [
+      [
+        "P2",
+        0,
+        2
+      ],
+      [
+        "P4",
+        2,
+        5
+      ],
+      [
+        "P3",
+        5,
+        6
+      ],
+      [
+        "P1",
+        6,
+        7
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_07_canonical_valid",
+    "world_id": "sched_07",
+    "category": "canonical_valid",
+    "text": "TRACE: P1 0-4, P2 4-7, P3 7-10, P1 10-30",
+    "steps": [
+      [
+        "P1",
+        0,
+        4
+      ],
+      [
+        "P2",
+        4,
+        7
+      ],
+      [
+        "P3",
+        7,
+        10
+      ],
+      [
+        "P1",
+        10,
+        30
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sched_07_noncanonical_valid",
+    "world_id": "sched_07",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P1 0-4, P3 4-7, P2 7-10, P1 10-30",
+    "steps": [
+      [
+        "P1",
+        0,
+        4
+      ],
+      [
+        "P3",
+        4,
+        7
+      ],
+      [
+        "P2",
+        7,
+        10
+      ],
+      [
+        "P1",
+        10,
+        30
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_07_lexical_similar_invalid",
+    "world_id": "sched_07",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P2 0-3, P1 3-11, P3 11-14, P1 14-30",
+    "steps": [
+      [
+        "P2",
+        0,
+        3
+      ],
+      [
+        "P1",
+        3,
+        11
+      ],
+      [
+        "P3",
+        11,
+        14
+      ],
+      [
+        "P1",
+        14,
+        30
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_08_canonical_valid",
+    "world_id": "sched_08",
+    "category": "canonical_valid",
+    "text": "TRACE: P3 0-1, P2 1-2, P4 2-3, P1 3-4, P3 4-5, P2 5-6, P1 6-7, P3 7-8, P1 8-9",
+    "steps": [
+      [
+        "P3",
+        0,
+        1
+      ],
+      [
+        "P2",
+        1,
+        2
+      ],
+      [
+        "P4",
+        2,
+        3
+      ],
+      [
+        "P1",
+        3,
+        4
+      ],
+      [
+        "P3",
+        4,
+        5
+      ],
+      [
+        "P2",
+        5,
+        6
+      ],
+      [
+        "P1",
+        6,
+        7
+      ],
+      [
+        "P3",
+        7,
+        8
+      ],
+      [
+        "P1",
+        8,
+        9
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sched_08_noncanonical_valid",
+    "world_id": "sched_08",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P3 0-2, P2 2-3, P4 3-4, P1 4-5, P3 5-6, P2 6-7, P1 7-9",
+    "steps": [
+      [
+        "P3",
+        0,
+        2
+      ],
+      [
+        "P2",
+        2,
+        3
+      ],
+      [
+        "P4",
+        3,
+        4
+      ],
+      [
+        "P1",
+        4,
+        5
+      ],
+      [
+        "P3",
+        5,
+        6
+      ],
+      [
+        "P2",
+        6,
+        7
+      ],
+      [
+        "P1",
+        7,
+        9
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_08_lexical_similar_invalid",
+    "world_id": "sched_08",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P3 0-1, P1 1-2, P4 2-3, P2 3-4, P1 4-5, P3 5-7, P2 7-8, P1 8-9",
+    "steps": [
+      [
+        "P3",
+        0,
+        1
+      ],
+      [
+        "P1",
+        1,
+        2
+      ],
+      [
+        "P4",
+        2,
+        3
+      ],
+      [
+        "P2",
+        3,
+        4
+      ],
+      [
+        "P1",
+        4,
+        5
+      ],
+      [
+        "P3",
+        5,
+        7
+      ],
+      [
+        "P2",
+        7,
+        8
+      ],
+      [
+        "P1",
+        8,
+        9
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sched_08_same_final_state_invalid",
+    "world_id": "sched_08",
+    "category": "same_final_state_invalid",
+    "text": "TRACE: P3 0-1, P1 1-2, P4 2-3, P2 3-4, P3 4-5, P1 5-6, P2 6-7, P3 7-8, P1 8-9",
+    "steps": [
+      [
+        "P3",
+        0,
+        1
+      ],
+      [
+        "P1",
+        1,
+        2
+      ],
+      [
+        "P4",
+        2,
+        3
+      ],
+      [
+        "P2",
+        3,
+        4
+      ],
+      [
+        "P3",
+        4,
+        5
+      ],
+      [
+        "P1",
+        5,
+        6
+      ],
+      [
+        "P2",
+        6,
+        7
+      ],
+      [
+        "P3",
+        7,
+        8
+      ],
+      [
+        "P1",
+        8,
+        9
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sync_01_canonical_valid",
+    "world_id": "sync_01",
+    "category": "canonical_valid",
+    "text": "TRACE: T1 lock(m); T1 write(x); T1 unlock(m); T2 lock(m); T2 write(x); T2 unlock(m); T3 lock(m); T3 write(x); T3 unlock(m)",
+    "steps": [
+      [
+        "T1",
+        "lock",
+        "m"
+      ],
+      [
+        "T1",
+        "write",
+        "x"
+      ],
+      [
+        "T1",
+        "unlock",
+        "m"
+      ],
+      [
+        "T2",
+        "lock",
+        "m"
+      ],
+      [
+        "T2",
+        "write",
+        "x"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m"
+      ],
+      [
+        "T3",
+        "lock",
+        "m"
+      ],
+      [
+        "T3",
+        "write",
+        "x"
+      ],
+      [
+        "T3",
+        "unlock",
+        "m"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_01_noncanonical_valid",
+    "world_id": "sync_01",
+    "category": "noncanonical_valid",
+    "text": "TRACE: T1 lock(m); T1 write(x); T1 unlock(m); T3 lock(m); T3 write(x); T3 unlock(m); T2 lock(m); T2 write(x); T2 unlock(m)",
+    "steps": [
+      [
+        "T1",
+        "lock",
+        "m"
+      ],
+      [
+        "T1",
+        "write",
+        "x"
+      ],
+      [
+        "T1",
+        "unlock",
+        "m"
+      ],
+      [
+        "T3",
+        "lock",
+        "m"
+      ],
+      [
+        "T3",
+        "write",
+        "x"
+      ],
+      [
+        "T3",
+        "unlock",
+        "m"
+      ],
+      [
+        "T2",
+        "lock",
+        "m"
+      ],
+      [
+        "T2",
+        "write",
+        "x"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sync_01_lexical_similar_invalid",
+    "world_id": "sync_01",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: T3 lock(m); T1 lock(m); T1 write(x); T1 unlock(m); T3 write(x); T2 lock(m); T3 unlock(m); T2 write(x); T2 unlock(m)",
+    "steps": [
+      [
+        "T3",
+        "lock",
+        "m"
+      ],
+      [
+        "T1",
+        "lock",
+        "m"
+      ],
+      [
+        "T1",
+        "write",
+        "x"
+      ],
+      [
+        "T1",
+        "unlock",
+        "m"
+      ],
+      [
+        "T3",
+        "write",
+        "x"
+      ],
+      [
+        "T2",
+        "lock",
+        "m"
+      ],
+      [
+        "T3",
+        "unlock",
+        "m"
+      ],
+      [
+        "T2",
+        "write",
+        "x"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m"
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sync_02_canonical_valid",
+    "world_id": "sync_02",
+    "category": "canonical_valid",
+    "text": "TRACE: T2 lock(m2); T2 write(y); T2 unlock(m2); T2 lock(m1); T2 write(y); T2 unlock(m1); T3 lock(m2); T1 write(y); T3 write(y); T3 unlock(m2)",
+    "steps": [
+      [
+        "T2",
+        "lock",
+        "m2"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T2",
+        "lock",
+        "m1"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m1"
+      ],
+      [
+        "T3",
+        "lock",
+        "m2"
+      ],
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T3",
+        "write",
+        "y"
+      ],
+      [
+        "T3",
+        "unlock",
+        "m2"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_02_noncanonical_valid",
+    "world_id": "sync_02",
+    "category": "noncanonical_valid",
+    "text": "TRACE: T2 lock(m2); T2 write(y); T2 unlock(m2); T2 lock(m1); T2 write(y); T2 unlock(m1); T3 lock(m2); T3 write(y); T1 write(y); T3 unlock(m2)",
+    "steps": [
+      [
+        "T2",
+        "lock",
+        "m2"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T2",
+        "lock",
+        "m1"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m1"
+      ],
+      [
+        "T3",
+        "lock",
+        "m2"
+      ],
+      [
+        "T3",
+        "write",
+        "y"
+      ],
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T3",
+        "unlock",
+        "m2"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sync_02_same_final_state_invalid",
+    "world_id": "sync_02",
+    "category": "same_final_state_invalid",
+    "text": "TRACE: T2 lock(m2); T2 write(y); T2 unlock(m2); T2 lock(m1); T2 write(y); T1 write(y); T3 lock(m2); T3 write(y); T3 unlock(m2); T2 unlock(m1)",
+    "steps": [
+      [
+        "T2",
+        "lock",
+        "m2"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T2",
+        "lock",
+        "m1"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T3",
+        "lock",
+        "m2"
+      ],
+      [
+        "T3",
+        "write",
+        "y"
+      ],
+      [
+        "T3",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m1"
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_03_canonical_valid",
+    "world_id": "sync_03",
+    "category": "canonical_valid",
+    "text": "TRACE: T1 lock(m2); T1 write(y); T1 unlock(m2); T2 lock(m2); T2 write(x); T2 unlock(m2); T3 lock(m1); T3 write(x); T3 unlock(m1)",
+    "steps": [
+      [
+        "T1",
+        "lock",
+        "m2"
+      ],
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T1",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T2",
+        "lock",
+        "m2"
+      ],
+      [
+        "T2",
+        "write",
+        "x"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T3",
+        "lock",
+        "m1"
+      ],
+      [
+        "T3",
+        "write",
+        "x"
+      ],
+      [
+        "T3",
+        "unlock",
+        "m1"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_03_noncanonical_valid",
+    "world_id": "sync_03",
+    "category": "noncanonical_valid",
+    "text": "TRACE: T1 lock(m2); T1 write(y); T1 unlock(m2); T2 lock(m2); T2 write(x); T3 lock(m1); T2 unlock(m2); T3 write(x); T3 unlock(m1)",
+    "steps": [
+      [
+        "T1",
+        "lock",
+        "m2"
+      ],
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T1",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T2",
+        "lock",
+        "m2"
+      ],
+      [
+        "T2",
+        "write",
+        "x"
+      ],
+      [
+        "T3",
+        "lock",
+        "m1"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T3",
+        "write",
+        "x"
+      ],
+      [
+        "T3",
+        "unlock",
+        "m1"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_03_lexical_similar_invalid",
+    "world_id": "sync_03",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: T3 lock(m1); T2 lock(m2); T1 lock(m2); T2 write(x); T2 unlock(m2); T1 write(y); T3 write(x); T3 unlock(m1); T1 unlock(m2)",
+    "steps": [
+      [
+        "T3",
+        "lock",
+        "m1"
+      ],
+      [
+        "T2",
+        "lock",
+        "m2"
+      ],
+      [
+        "T1",
+        "lock",
+        "m2"
+      ],
+      [
+        "T2",
+        "write",
+        "x"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T3",
+        "write",
+        "x"
+      ],
+      [
+        "T3",
+        "unlock",
+        "m1"
+      ],
+      [
+        "T1",
+        "unlock",
+        "m2"
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sync_04_canonical_valid",
+    "world_id": "sync_04",
+    "category": "canonical_valid",
+    "text": "TRACE: T1 lock(m2); T1 write(y); T1 unlock(m2); T2 lock(m2); T1 write(x); T2 write(y); T2 unlock(m2)",
+    "steps": [
+      [
+        "T1",
+        "lock",
+        "m2"
+      ],
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T1",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T2",
+        "lock",
+        "m2"
+      ],
+      [
+        "T1",
+        "write",
+        "x"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m2"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_04_noncanonical_valid",
+    "world_id": "sync_04",
+    "category": "noncanonical_valid",
+    "text": "TRACE: T1 lock(m2); T1 write(y); T1 unlock(m2); T2 lock(m2); T2 write(y); T1 write(x); T2 unlock(m2)",
+    "steps": [
+      [
+        "T1",
+        "lock",
+        "m2"
+      ],
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T1",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T2",
+        "lock",
+        "m2"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T1",
+        "write",
+        "x"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m2"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_04_lexical_similar_invalid",
+    "world_id": "sync_04",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: T2 lock(m2); T1 lock(m2); T2 write(y); T2 unlock(m2); T1 write(y); T1 unlock(m2); T1 write(x)",
+    "steps": [
+      [
+        "T2",
+        "lock",
+        "m2"
+      ],
+      [
+        "T1",
+        "lock",
+        "m2"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T1",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T1",
+        "write",
+        "x"
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sync_04_same_final_state_invalid",
+    "world_id": "sync_04",
+    "category": "same_final_state_invalid",
+    "text": "TRACE: T1 lock(m2); T1 write(y); T1 unlock(m2); T1 write(x); T2 lock(m2); T2 write(y); T2 unlock(m2)",
+    "steps": [
+      [
+        "T1",
+        "lock",
+        "m2"
+      ],
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T1",
+        "unlock",
+        "m2"
+      ],
+      [
+        "T1",
+        "write",
+        "x"
+      ],
+      [
+        "T2",
+        "lock",
+        "m2"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T2",
+        "unlock",
+        "m2"
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_05_canonical_valid",
+    "world_id": "sync_05",
+    "category": "canonical_valid",
+    "text": "TRACE: T1 write(y); T1 signal(s1); T2 write(y); T2 wait(s1); T2 write(x); T3 write(out)",
+    "steps": [
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T1",
+        "signal",
+        "s1"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T2",
+        "wait",
+        "s1"
+      ],
+      [
+        "T2",
+        "write",
+        "x"
+      ],
+      [
+        "T3",
+        "write",
+        "out"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_05_noncanonical_valid",
+    "world_id": "sync_05",
+    "category": "noncanonical_valid",
+    "text": "TRACE: T1 write(y); T1 signal(s1); T2 write(y); T2 wait(s1); T3 write(out); T2 write(x)",
+    "steps": [
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T1",
+        "signal",
+        "s1"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T2",
+        "wait",
+        "s1"
+      ],
+      [
+        "T3",
+        "write",
+        "out"
+      ],
+      [
+        "T2",
+        "write",
+        "x"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_05_lexical_similar_invalid",
+    "world_id": "sync_05",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: T3 write(out); T1 write(y); T2 write(y); T2 wait(s1); T1 signal(s1); T2 write(x)",
+    "steps": [
+      [
+        "T3",
+        "write",
+        "out"
+      ],
+      [
+        "T1",
+        "write",
+        "y"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T2",
+        "wait",
+        "s1"
+      ],
+      [
+        "T1",
+        "signal",
+        "s1"
+      ],
+      [
+        "T2",
+        "write",
+        "x"
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sync_06_canonical_valid",
+    "world_id": "sync_06",
+    "category": "canonical_valid",
+    "text": "TRACE: T1 wait(slots); T1 write(out); T1 signal(slots); T2 wait(slots); T2 write(buf); T2 signal(slots); T3 wait(slots); T3 write(x); T3 signal(slots)",
+    "steps": [
+      [
+        "T1",
+        "wait",
+        "slots"
+      ],
+      [
+        "T1",
+        "write",
+        "out"
+      ],
+      [
+        "T1",
+        "signal",
+        "slots"
+      ],
+      [
+        "T2",
+        "wait",
+        "slots"
+      ],
+      [
+        "T2",
+        "write",
+        "buf"
+      ],
+      [
+        "T2",
+        "signal",
+        "slots"
+      ],
+      [
+        "T3",
+        "wait",
+        "slots"
+      ],
+      [
+        "T3",
+        "write",
+        "x"
+      ],
+      [
+        "T3",
+        "signal",
+        "slots"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_06_noncanonical_valid",
+    "world_id": "sync_06",
+    "category": "noncanonical_valid",
+    "text": "TRACE: T1 wait(slots); T1 write(out); T1 signal(slots); T2 wait(slots); T2 write(buf); T3 wait(slots); T2 signal(slots); T3 write(x); T3 signal(slots)",
+    "steps": [
+      [
+        "T1",
+        "wait",
+        "slots"
+      ],
+      [
+        "T1",
+        "write",
+        "out"
+      ],
+      [
+        "T1",
+        "signal",
+        "slots"
+      ],
+      [
+        "T2",
+        "wait",
+        "slots"
+      ],
+      [
+        "T2",
+        "write",
+        "buf"
+      ],
+      [
+        "T3",
+        "wait",
+        "slots"
+      ],
+      [
+        "T2",
+        "signal",
+        "slots"
+      ],
+      [
+        "T3",
+        "write",
+        "x"
+      ],
+      [
+        "T3",
+        "signal",
+        "slots"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_06_lexical_similar_invalid",
+    "world_id": "sync_06",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: T1 wait(slots); T1 write(out); T2 wait(slots); T2 write(buf); T3 wait(slots); T1 signal(slots); T2 signal(slots); T3 write(x); T3 signal(slots)",
+    "steps": [
+      [
+        "T1",
+        "wait",
+        "slots"
+      ],
+      [
+        "T1",
+        "write",
+        "out"
+      ],
+      [
+        "T2",
+        "wait",
+        "slots"
+      ],
+      [
+        "T2",
+        "write",
+        "buf"
+      ],
+      [
+        "T3",
+        "wait",
+        "slots"
+      ],
+      [
+        "T1",
+        "signal",
+        "slots"
+      ],
+      [
+        "T2",
+        "signal",
+        "slots"
+      ],
+      [
+        "T3",
+        "write",
+        "x"
+      ],
+      [
+        "T3",
+        "signal",
+        "slots"
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sync_06_same_final_state_invalid",
+    "world_id": "sync_06",
+    "category": "same_final_state_invalid",
+    "text": "TRACE: T1 wait(slots); T1 write(out); T1 signal(slots); T3 wait(slots); T2 wait(slots); T3 write(x); T2 write(buf); T2 signal(slots); T3 signal(slots)",
+    "steps": [
+      [
+        "T1",
+        "wait",
+        "slots"
+      ],
+      [
+        "T1",
+        "write",
+        "out"
+      ],
+      [
+        "T1",
+        "signal",
+        "slots"
+      ],
+      [
+        "T3",
+        "wait",
+        "slots"
+      ],
+      [
+        "T2",
+        "wait",
+        "slots"
+      ],
+      [
+        "T3",
+        "write",
+        "x"
+      ],
+      [
+        "T2",
+        "write",
+        "buf"
+      ],
+      [
+        "T2",
+        "signal",
+        "slots"
+      ],
+      [
+        "T3",
+        "signal",
+        "slots"
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_07_canonical_valid",
+    "world_id": "sync_07",
+    "category": "canonical_valid",
+    "text": "TRACE: T1 write(buf); T1 signal(s1); T2 wait(s1); T2 write(y); T3 write(out)",
+    "steps": [
+      [
+        "T1",
+        "write",
+        "buf"
+      ],
+      [
+        "T1",
+        "signal",
+        "s1"
+      ],
+      [
+        "T2",
+        "wait",
+        "s1"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T3",
+        "write",
+        "out"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_07_noncanonical_valid",
+    "world_id": "sync_07",
+    "category": "noncanonical_valid",
+    "text": "TRACE: T1 write(buf); T1 signal(s1); T2 wait(s1); T3 write(out); T2 write(y)",
+    "steps": [
+      [
+        "T1",
+        "write",
+        "buf"
+      ],
+      [
+        "T1",
+        "signal",
+        "s1"
+      ],
+      [
+        "T2",
+        "wait",
+        "s1"
+      ],
+      [
+        "T3",
+        "write",
+        "out"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_07_lexical_similar_invalid",
+    "world_id": "sync_07",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: T3 write(out); T1 write(buf); T2 wait(s1); T2 write(y); T1 signal(s1)",
+    "steps": [
+      [
+        "T3",
+        "write",
+        "out"
+      ],
+      [
+        "T1",
+        "write",
+        "buf"
+      ],
+      [
+        "T2",
+        "wait",
+        "s1"
+      ],
+      [
+        "T2",
+        "write",
+        "y"
+      ],
+      [
+        "T1",
+        "signal",
+        "s1"
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sync_08_canonical_valid",
+    "world_id": "sync_08",
+    "category": "canonical_valid",
+    "text": "TRACE: T1 wait(slots); T1 write(buf); T1 signal(slots); T2 wait(slots); T2 write(buf); T2 signal(slots); T3 wait(slots); T3 write(out); T3 signal(slots)",
+    "steps": [
+      [
+        "T1",
+        "wait",
+        "slots"
+      ],
+      [
+        "T1",
+        "write",
+        "buf"
+      ],
+      [
+        "T1",
+        "signal",
+        "slots"
+      ],
+      [
+        "T2",
+        "wait",
+        "slots"
+      ],
+      [
+        "T2",
+        "write",
+        "buf"
+      ],
+      [
+        "T2",
+        "signal",
+        "slots"
+      ],
+      [
+        "T3",
+        "wait",
+        "slots"
+      ],
+      [
+        "T3",
+        "write",
+        "out"
+      ],
+      [
+        "T3",
+        "signal",
+        "slots"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_08_noncanonical_valid",
+    "world_id": "sync_08",
+    "category": "noncanonical_valid",
+    "text": "TRACE: T1 wait(slots); T1 write(buf); T1 signal(slots); T2 wait(slots); T2 write(buf); T3 wait(slots); T2 signal(slots); T3 write(out); T3 signal(slots)",
+    "steps": [
+      [
+        "T1",
+        "wait",
+        "slots"
+      ],
+      [
+        "T1",
+        "write",
+        "buf"
+      ],
+      [
+        "T1",
+        "signal",
+        "slots"
+      ],
+      [
+        "T2",
+        "wait",
+        "slots"
+      ],
+      [
+        "T2",
+        "write",
+        "buf"
+      ],
+      [
+        "T3",
+        "wait",
+        "slots"
+      ],
+      [
+        "T2",
+        "signal",
+        "slots"
+      ],
+      [
+        "T3",
+        "write",
+        "out"
+      ],
+      [
+        "T3",
+        "signal",
+        "slots"
+      ]
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "sync_08_lexical_similar_invalid",
+    "world_id": "sync_08",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: T3 wait(slots); T1 wait(slots); T1 write(buf); T2 wait(slots); T1 signal(slots); T2 write(buf); T2 signal(slots); T3 write(out); T3 signal(slots)",
+    "steps": [
+      [
+        "T3",
+        "wait",
+        "slots"
+      ],
+      [
+        "T1",
+        "wait",
+        "slots"
+      ],
+      [
+        "T1",
+        "write",
+        "buf"
+      ],
+      [
+        "T2",
+        "wait",
+        "slots"
+      ],
+      [
+        "T1",
+        "signal",
+        "slots"
+      ],
+      [
+        "T2",
+        "write",
+        "buf"
+      ],
+      [
+        "T2",
+        "signal",
+        "slots"
+      ],
+      [
+        "T3",
+        "write",
+        "out"
+      ],
+      [
+        "T3",
+        "signal",
+        "slots"
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "sync_08_same_final_state_invalid",
+    "world_id": "sync_08",
+    "category": "same_final_state_invalid",
+    "text": "TRACE: T3 wait(slots); T1 wait(slots); T3 write(out); T1 write(buf); T3 signal(slots); T1 signal(slots); T2 wait(slots); T2 write(buf); T2 signal(slots)",
+    "steps": [
+      [
+        "T3",
+        "wait",
+        "slots"
+      ],
+      [
+        "T1",
+        "wait",
+        "slots"
+      ],
+      [
+        "T3",
+        "write",
+        "out"
+      ],
+      [
+        "T1",
+        "write",
+        "buf"
+      ],
+      [
+        "T3",
+        "signal",
+        "slots"
+      ],
+      [
+        "T1",
+        "signal",
+        "slots"
+      ],
+      [
+        "T2",
+        "wait",
+        "slots"
+      ],
+      [
+        "T2",
+        "write",
+        "buf"
+      ],
+      [
+        "T2",
+        "signal",
+        "slots"
+      ]
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_01_canonical_valid",
+    "world_id": "bank_01",
+    "category": "canonical_valid",
+    "text": "TRACE: P1, P3, P0, P2, P4",
+    "steps": [
+      "P1",
+      "P3",
+      "P0",
+      "P2",
+      "P4"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_01_noncanonical_valid",
+    "world_id": "bank_01",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P1, P3, P0, P4, P2",
+    "steps": [
+      "P1",
+      "P3",
+      "P0",
+      "P4",
+      "P2"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_01_lexical_similar_invalid",
+    "world_id": "bank_01",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P1, P0, P4, P2, P3",
+    "steps": [
+      "P1",
+      "P0",
+      "P4",
+      "P2",
+      "P3"
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "bank_02_canonical_valid",
+    "world_id": "bank_02",
+    "category": "canonical_valid",
+    "text": "TRACE: P5, P4, P0, P1, P2, P3",
+    "steps": [
+      "P5",
+      "P4",
+      "P0",
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_02_noncanonical_valid",
+    "world_id": "bank_02",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P5, P4, P0, P1, P3, P2",
+    "steps": [
+      "P5",
+      "P4",
+      "P0",
+      "P1",
+      "P3",
+      "P2"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_02_lexical_similar_invalid",
+    "world_id": "bank_02",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P5, P0, P1, P2, P3, P4",
+    "steps": [
+      "P5",
+      "P0",
+      "P1",
+      "P2",
+      "P3",
+      "P4"
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "bank_02_same_final_state_invalid",
+    "world_id": "bank_02",
+    "category": "same_final_state_invalid",
+    "text": "TRACE: P5, P4, P0, P2, P3, P1",
+    "steps": [
+      "P5",
+      "P4",
+      "P0",
+      "P2",
+      "P3",
+      "P1"
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_03_canonical_valid",
+    "world_id": "bank_03",
+    "category": "canonical_valid",
+    "text": "TRACE: P1, P0, P2, P3, P4",
+    "steps": [
+      "P1",
+      "P0",
+      "P2",
+      "P3",
+      "P4"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_03_noncanonical_valid",
+    "world_id": "bank_03",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P1, P0, P2, P4, P3",
+    "steps": [
+      "P1",
+      "P0",
+      "P2",
+      "P4",
+      "P3"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_03_lexical_similar_invalid",
+    "world_id": "bank_03",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P4, P1, P0, P3, P2",
+    "steps": [
+      "P4",
+      "P1",
+      "P0",
+      "P3",
+      "P2"
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "bank_04_canonical_valid",
+    "world_id": "bank_04",
+    "category": "canonical_valid",
+    "text": "TRACE: P0, P2, P1, P3, P4",
+    "steps": [
+      "P0",
+      "P2",
+      "P1",
+      "P3",
+      "P4"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_04_noncanonical_valid",
+    "world_id": "bank_04",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P0, P2, P3, P1, P4",
+    "steps": [
+      "P0",
+      "P2",
+      "P3",
+      "P1",
+      "P4"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_04_lexical_similar_invalid",
+    "world_id": "bank_04",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P0, P3, P1, P2, P4",
+    "steps": [
+      "P0",
+      "P3",
+      "P1",
+      "P2",
+      "P4"
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "bank_04_same_final_state_invalid",
+    "world_id": "bank_04",
+    "category": "same_final_state_invalid",
+    "text": "TRACE: P0, P2, P4, P3, P1",
+    "steps": [
+      "P0",
+      "P2",
+      "P4",
+      "P3",
+      "P1"
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_05_canonical_valid",
+    "world_id": "bank_05",
+    "category": "canonical_valid",
+    "text": "TRACE: P0, P1, P2, P3, P4, P5",
+    "steps": [
+      "P0",
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_05_noncanonical_valid",
+    "world_id": "bank_05",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P0, P1, P2, P3, P5, P4",
+    "steps": [
+      "P0",
+      "P1",
+      "P2",
+      "P3",
+      "P5",
+      "P4"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_05_lexical_similar_invalid",
+    "world_id": "bank_05",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P1, P2, P0, P3, P4, P5",
+    "steps": [
+      "P1",
+      "P2",
+      "P0",
+      "P3",
+      "P4",
+      "P5"
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "bank_06_canonical_valid",
+    "world_id": "bank_06",
+    "category": "canonical_valid",
+    "text": "TRACE: P2, P0, P1, P3, P4",
+    "steps": [
+      "P2",
+      "P0",
+      "P1",
+      "P3",
+      "P4"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_06_noncanonical_valid",
+    "world_id": "bank_06",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P2, P0, P1, P4, P3",
+    "steps": [
+      "P2",
+      "P0",
+      "P1",
+      "P4",
+      "P3"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_06_lexical_similar_invalid",
+    "world_id": "bank_06",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P2, P0, P4, P3, P1",
+    "steps": [
+      "P2",
+      "P0",
+      "P4",
+      "P3",
+      "P1"
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "bank_07_canonical_valid",
+    "world_id": "bank_07",
+    "category": "canonical_valid",
+    "text": "TRACE: P5, P0, P1, P2, P3, P4",
+    "steps": [
+      "P5",
+      "P0",
+      "P1",
+      "P2",
+      "P3",
+      "P4"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_07_noncanonical_valid",
+    "world_id": "bank_07",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P5, P0, P1, P2, P4, P3",
+    "steps": [
+      "P5",
+      "P0",
+      "P1",
+      "P2",
+      "P4",
+      "P3"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_07_lexical_similar_invalid",
+    "world_id": "bank_07",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P4, P0, P5, P1, P2, P3",
+    "steps": [
+      "P4",
+      "P0",
+      "P5",
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "bank_08_canonical_valid",
+    "world_id": "bank_08",
+    "category": "canonical_valid",
+    "text": "TRACE: P4, P0, P2, P3, P1",
+    "steps": [
+      "P4",
+      "P0",
+      "P2",
+      "P3",
+      "P1"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": true,
+    "ref_match_norm": true,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_08_noncanonical_valid",
+    "world_id": "bank_08",
+    "category": "noncanonical_valid",
+    "text": "TRACE: P4, P0, P3, P1, P2",
+    "steps": [
+      "P4",
+      "P0",
+      "P3",
+      "P1",
+      "P2"
+    ],
+    "oracle_verdict": "TRUE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  },
+  {
+    "case_id": "bank_08_lexical_similar_invalid",
+    "world_id": "bank_08",
+    "category": "lexical_similar_invalid",
+    "text": "TRACE: P3, P4, P0, P2, P1",
+    "steps": [
+      "P3",
+      "P4",
+      "P0",
+      "P2",
+      "P1"
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": false
+  },
+  {
+    "case_id": "bank_08_same_final_state_invalid",
+    "world_id": "bank_08",
+    "category": "same_final_state_invalid",
+    "text": "TRACE: P4, P1, P2, P3, P0",
+    "steps": [
+      "P4",
+      "P1",
+      "P2",
+      "P3",
+      "P0"
+    ],
+    "oracle_verdict": "FALSE",
+    "ref_match_strict": false,
+    "ref_match_norm": false,
+    "obs_equiv": true
+  }
+]
