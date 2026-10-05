@@ -1,0 +1,38 @@
+{
+ "kind": "attackers",
+ "created": "2026-10-02T22:58:45",
+ "git_head": "f16448ca95d7c2b4e061dde153e0e62587bcbd10",
+ "models": {
+  "attacker:always_reference": null,
+  "attacker:random_valid": null,
+  "attacker:random_invalid": null,
+  "attacker:symbolic_alt": null
+ },
+ "settings": {
+  "temperature": 0.7,
+  "top_p": 0.95,
+  "num_ctx": 4096,
+  "num_predict": 600
+ },
+ "seeds": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "variants": [
+  "v0",
+  "v1",
+  "v2"
+ ],
+ "n_worlds": 24,
+ "n_calls_per_model": 288,
+ "sha256": {
+  "prereg": "8db9eeaefc54303cf712a2215a2d14233e2cb50b8aa174cc4eb532840b1a5859",
+  "worlds_index": "331d41eb5117a5a1085aacee1986e92a7687035c45d03b9f4b0d5b40478f53a5",
+  "render.py": "315e417516b71fd1d74d34c6ff1a268f2a4276f654b22f3c87920619250629ac",
+  "all_prompts": "b0f072b59a1f22e457a3f3c88db3798ea75a3ac98b30ac81a24b97983a45f59c",
+  "oracle.py": "e8107292d2eb99c874c2b5270ae846058709c9a2ad3ddec6f77094f6fd0cb171",
+  "families.py": "963b174ba6aea2e1db11137eaeddfe1cdd1438520a8844005b38042984aec9e7"
+ }
+}

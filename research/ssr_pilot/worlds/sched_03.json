@@ -1,0 +1,39 @@
+{
+ "constraints": [],
+ "family": "scheduling",
+ "id": "sched_03",
+ "policy": "SJF",
+ "processes": [
+  {
+   "arrival": 0,
+   "burst": 4,
+   "pid": "P1",
+   "priority": 1
+  },
+  {
+   "arrival": 1,
+   "burst": 1,
+   "pid": "P2",
+   "priority": 3
+  },
+  {
+   "arrival": 0,
+   "burst": 2,
+   "pid": "P3",
+   "priority": 3
+  },
+  {
+   "arrival": 0,
+   "burst": 4,
+   "pid": "P4",
+   "priority": 1
+  },
+  {
+   "arrival": 2,
+   "burst": 4,
+   "pid": "P5",
+   "priority": 3
+  }
+ ],
+ "structure": "sjf"
+}

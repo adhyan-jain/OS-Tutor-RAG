@@ -1,0 +1,1713 @@
+{
+ "world": "bank_03",
+ "n_rules": 48,
+ "n_task": 48,
+ "reference": [
+  "P1",
+  "P0",
+  "P2",
+  "P3",
+  "P4"
+ ],
+ "valid": [
+  [
+   "P1",
+   "P0",
+   "P2",
+   "P4",
+   "P3"
+  ],
+  [
+   "P1",
+   "P0",
+   "P3",
+   "P2",
+   "P4"
+  ],
+  [
+   "P1",
+   "P0",
+   "P3",
+   "P4",
+   "P2"
+  ],
+  [
+   "P1",
+   "P0",
+   "P4",
+   "P2",
+   "P3"
+  ],
+  [
+   "P1",
+   "P0",
+   "P4",
+   "P3",
+   "P2"
+  ],
+  [
+   "P1",
+   "P2",
+   "P0",
+   "P3",
+   "P4"
+  ],
+  [
+   "P1",
+   "P2",
+   "P0",
+   "P4",
+   "P3"
+  ],
+  [
+   "P1",
+   "P2",
+   "P3",
+   "P0",
+   "P4"
+  ],
+  [
+   "P1",
+   "P2",
+   "P3",
+   "P4",
+   "P0"
+  ],
+  [
+   "P1",
+   "P2",
+   "P4",
+   "P0",
+   "P3"
+  ],
+  [
+   "P1",
+   "P2",
+   "P4",
+   "P3",
+   "P0"
+  ],
+  [
+   "P1",
+   "P3",
+   "P0",
+   "P2",
+   "P4"
+  ],
+  [
+   "P1",
+   "P3",
+   "P0",
+   "P4",
+   "P2"
+  ],
+  [
+   "P1",
+   "P3",
+   "P2",
+   "P0",
+   "P4"
+  ],
+  [
+   "P1",
+   "P3",
+   "P2",
+   "P4",
+   "P0"
+  ],
+  [
+   "P1",
+   "P3",
+   "P4",
+   "P0",
+   "P2"
+  ],
+  [
+   "P1",
+   "P3",
+   "P4",
+   "P2",
+   "P0"
+  ],
+  [
+   "P1",
+   "P4",
+   "P0",
+   "P2",
+   "P3"
+  ],
+  [
+   "P1",
+   "P4",
+   "P0",
+   "P3",
+   "P2"
+  ],
+  [
+   "P1",
+   "P4",
+   "P2",
+   "P0",
+   "P3"
+  ],
+  [
+   "P1",
+   "P4",
+   "P2",
+   "P3",
+   "P0"
+  ],
+  [
+   "P1",
+   "P4",
+   "P3",
+   "P0",
+   "P2"
+  ],
+  [
+   "P1",
+   "P4",
+   "P3",
+   "P2",
+   "P0"
+  ],
+  [
+   "P3",
+   "P0",
+   "P1",
+   "P2",
+   "P4"
+  ],
+  [
+   "P3",
+   "P0",
+   "P1",
+   "P4",
+   "P2"
+  ],
+  [
+   "P3",
+   "P0",
+   "P2",
+   "P1",
+   "P4"
+  ],
+  [
+   "P3",
+   "P0",
+   "P2",
+   "P4",
+   "P1"
+  ],
+  [
+   "P3",
+   "P0",
+   "P4",
+   "P1",
+   "P2"
+  ],
+  [
+   "P3",
+   "P0",
+   "P4",
+   "P2",
+   "P1"
+  ],
+  [
+   "P3",
+   "P1",
+   "P0",
+   "P2",
+   "P4"
+  ],
+  [
+   "P3",
+   "P1",
+   "P0",
+   "P4",
+   "P2"
+  ],
+  [
+   "P3",
+   "P1",
+   "P2",
+   "P0",
+   "P4"
+  ],
+  [
+   "P3",
+   "P1",
+   "P2",
+   "P4",
+   "P0"
+  ],
+  [
+   "P3",
+   "P1",
+   "P4",
+   "P0",
+   "P2"
+  ],
+  [
+   "P3",
+   "P1",
+   "P4",
+   "P2",
+   "P0"
+  ],
+  [
+   "P3",
+   "P2",
+   "P0",
+   "P1",
+   "P4"
+  ],
+  [
+   "P3",
+   "P2",
+   "P0",
+   "P4",
+   "P1"
+  ],
+  [
+   "P3",
+   "P2",
+   "P1",
+   "P0",
+   "P4"
+  ],
+  [
+   "P3",
+   "P2",
+   "P1",
+   "P4",
+   "P0"
+  ],
+  [
+   "P3",
+   "P2",
+   "P4",
+   "P0",
+   "P1"
+  ],
+  [
+   "P3",
+   "P2",
+   "P4",
+   "P1",
+   "P0"
+  ],
+  [
+   "P3",
+   "P4",
+   "P0",
+   "P1",
+   "P2"
+  ],
+  [
+   "P3",
+   "P4",
+   "P0",
+   "P2",
+   "P1"
+  ],
+  [
+   "P3",
+   "P4",
+   "P1",
+   "P0",
+   "P2"
+  ],
+  [
+   "P3",
+   "P4",
+   "P1",
+   "P2",
+   "P0"
+  ],
+  [
+   "P3",
+   "P4",
+   "P2",
+   "P0",
+   "P1"
+  ],
+  [
+   "P3",
+   "P4",
+   "P2",
+   "P1",
+   "P0"
+  ]
+ ],
+ "invalid_rule": [
+  {
+   "steps": [
+    "P4",
+    "P1",
+    "P0",
+    "P3",
+    "P2"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P4",
+    "P1",
+    "P0",
+    "P2",
+    "P3"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P4",
+    "P0",
+    "P3",
+    "P1"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P4",
+    "P3",
+    "P1",
+    "P2",
+    "P0"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P0",
+    "P4",
+    "P3",
+    "P1"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P4",
+    "P1",
+    "P0",
+    "P3"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P3",
+    "P0",
+    "P1",
+    "P4"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P1",
+    "P4",
+    "P2",
+    "P3"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P4",
+    "P3",
+    "P2",
+    "P0",
+    "P1"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P4",
+    "P2",
+    "P3",
+    "P1",
+    "P0"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P4",
+    "P3",
+    "P1",
+    "P0"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P4",
+    "P0",
+    "P2",
+    "P3",
+    "P1"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P4",
+    "P3",
+    "P1",
+    "P0",
+    "P2"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P3",
+    "P4",
+    "P2",
+    "P1"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P3",
+    "P1",
+    "P4",
+    "P2"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P4",
+    "P1",
+    "P2",
+    "P3"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P2",
+    "P4",
+    "P3",
+    "P1"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P3",
+    "P2",
+    "P1",
+    "P4"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P1",
+    "P3",
+    "P4",
+    "P0"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P4",
+    "P0",
+    "P2",
+    "P1",
+    "P3"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P0",
+    "P3",
+    "P4",
+    "P1"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P2",
+    "P3",
+    "P1",
+    "P4"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P3",
+    "P4",
+    "P1",
+    "P0"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P1",
+    "P3",
+    "P2",
+    "P4"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P4",
+    "P3",
+    "P0",
+    "P1",
+    "P2"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P1",
+    "P4",
+    "P3",
+    "P0"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P4",
+    "P0",
+    "P3",
+    "P2",
+    "P1"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P3",
+    "P4",
+    "P1",
+    "P2"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P4",
+    "P2",
+    "P0",
+    "P3",
+    "P1"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P4",
+    "P2",
+    "P3",
+    "P1"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P1",
+    "P0",
+    "P4",
+    "P3"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P2",
+    "P3",
+    "P4",
+    "P1"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P4",
+    "P0",
+    "P1",
+    "P2",
+    "P3"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P4",
+    "P3",
+    "P1",
+    "P2"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P1",
+    "P0",
+    "P3",
+    "P4"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P2",
+    "P1",
+    "P3",
+    "P4"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P3",
+    "P1",
+    "P2",
+    "P4"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P0",
+    "P1",
+    "P4",
+    "P3"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P4",
+    "P3",
+    "P0",
+    "P1"
+   ],
+   "relaxation": "skip_one_check",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P1",
+    "P2",
+    "P3",
+    "P4"
+   ],
+   "relaxation": "skip_one_check",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P4",
+    "P1",
+    "P2",
+    "P3",
+    "P0"
+   ],
+   "relaxation": "skip_one_check",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P0",
+    "P3",
+    "P1",
+    "P4"
+   ],
+   "relaxation": "skip_one_check",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P4",
+    "P1",
+    "P3",
+    "P2"
+   ],
+   "relaxation": "skip_one_check",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P1",
+    "P3",
+    "P0",
+    "P4"
+   ],
+   "relaxation": "skip_one_check",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P0",
+    "P4",
+    "P1",
+    "P3"
+   ],
+   "relaxation": "skip_one_check",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P2",
+    "P0",
+    "P1",
+    "P3",
+    "P4"
+   ],
+   "relaxation": "skip_one_check",
+   "reason": "need_exceeds_work"
+  },
+  {
+   "steps": [
+    "P0",
+    "P4",
+    "P2",
+    "P1",
+    "P3"
+   ],
+   "relaxation": "skip_one_check",
+   "reason": "need_exceeds_work"
+  }
+ ],
+ "invalid_constraint": [],
+ "pairs": [
+  {
+   "valid": [
+    "P3",
+    "P4",
+    "P1",
+    "P2",
+    "P0"
+   ],
+   "invalid": [
+    "P4",
+    "P3",
+    "P0",
+    "P1",
+    "P2"
+   ],
+   "class": "rule",
+   "cost": 1.618324952527149e-07
+  },
+  {
+   "valid": [
+    "P1",
+    "P0",
+    "P2",
+    "P4",
+    "P3"
+   ],
+   "invalid": [
+    "P4",
+    "P1",
+    "P0",
+    "P2",
+    "P3"
+   ],
+   "class": "rule",
+   "cost": 1.6000002820708685
+  },
+  {
+   "valid": [
+    "P3",
+    "P1",
+    "P2",
+    "P0",
+    "P4"
+   ],
+   "invalid": [
+    "P0",
+    "P3",
+    "P2",
+    "P1",
+    "P4"
+   ],
+   "class": "rule",
+   "cost": 1.1217267627295913e-08
+  },
+  {
+   "valid": [
+    "P3",
+    "P1",
+    "P2",
+    "P4",
+    "P0"
+   ],
+   "invalid": [
+    "P2",
+    "P1",
+    "P4",
+    "P3",
+    "P0"
+   ],
+   "class": "rule",
+   "cost": 1.7823826177172706e-08
+  },
+  {
+   "valid": [
+    "P3",
+    "P0",
+    "P4",
+    "P2",
+    "P1"
+   ],
+   "invalid": [
+    "P4",
+    "P3",
+    "P1",
+    "P0",
+    "P2"
+   ],
+   "class": "rule",
+   "cost": 4.450828345022062e-08
+  },
+  {
+   "valid": [
+    "P3",
+    "P2",
+    "P4",
+    "P0",
+    "P1"
+   ],
+   "invalid": [
+    "P2",
+    "P4",
+    "P3",
+    "P1",
+    "P0"
+   ],
+   "class": "rule",
+   "cost": 5.686296045134543e-07
+  },
+  {
+   "valid": [
+    "P3",
+    "P2",
+    "P1",
+    "P0",
+    "P4"
+   ],
+   "invalid": [
+    "P0",
+    "P3",
+    "P1",
+    "P2",
+    "P4"
+   ],
+   "class": "rule",
+   "cost": 3.163618906384553e-07
+  },
+  {
+   "valid": [
+    "P1",
+    "P3",
+    "P2",
+    "P0",
+    "P4"
+   ],
+   "invalid": [
+    "P0",
+    "P2",
+    "P3",
+    "P1",
+    "P4"
+   ],
+   "class": "rule",
+   "cost": 1.200000129628418
+  },
+  {
+   "valid": [
+    "P1",
+    "P0",
+    "P3",
+    "P2",
+    "P4"
+   ],
+   "invalid": [
+    "P2",
+    "P1",
+    "P0",
+    "P3",
+    "P4"
+   ],
+   "class": "rule",
+   "cost": 1.4000002694323248
+  },
+  {
+   "valid": [
+    "P3",
+    "P1",
+    "P0",
+    "P2",
+    "P4"
+   ],
+   "invalid": [
+    "P2",
+    "P0",
+    "P1",
+    "P3",
+    "P4"
+   ],
+   "class": "rule",
+   "cost": 7.578248957444275e-07
+  },
+  {
+   "valid": [
+    "P1",
+    "P3",
+    "P2",
+    "P4",
+    "P0"
+   ],
+   "invalid": [
+    "P0",
+    "P2",
+    "P4",
+    "P3",
+    "P1"
+   ],
+   "class": "rule",
+   "cost": 1.2000000866387295
+  },
+  {
+   "valid": [
+    "P1",
+    "P0",
+    "P4",
+    "P3",
+    "P2"
+   ],
+   "invalid": [
+    "P4",
+    "P0",
+    "P2",
+    "P3",
+    "P1"
+   ],
+   "class": "rule",
+   "cost": 1.400000623103766
+  },
+  {
+   "valid": [
+    "P3",
+    "P4",
+    "P0",
+    "P2",
+    "P1"
+   ],
+   "invalid": [
+    "P0",
+    "P3",
+    "P4",
+    "P1",
+    "P2"
+   ],
+   "class": "rule",
+   "cost": 1.2837088103217264e-08
+  },
+  {
+   "valid": [
+    "P1",
+    "P4",
+    "P0",
+    "P2",
+    "P3"
+   ],
+   "invalid": [
+    "P0",
+    "P2",
+    "P3",
+    "P4",
+    "P1"
+   ],
+   "class": "rule",
+   "cost": 1.2000006858315642
+  },
+  {
+   "valid": [
+    "P1",
+    "P2",
+    "P3",
+    "P0",
+    "P4"
+   ],
+   "invalid": [
+    "P0",
+    "P2",
+    "P1",
+    "P3",
+    "P4"
+   ],
+   "class": "rule",
+   "cost": 1.2000005427064908
+  },
+  {
+   "valid": [
+    "P1",
+    "P4",
+    "P2",
+    "P3",
+    "P0"
+   ],
+   "invalid": [
+    "P2",
+    "P1",
+    "P0",
+    "P4",
+    "P3"
+   ],
+   "class": "rule",
+   "cost": 1.4000001210133972
+  },
+  {
+   "valid": [
+    "P3",
+    "P2",
+    "P4",
+    "P1",
+    "P0"
+   ],
+   "invalid": [
+    "P2",
+    "P4",
+    "P3",
+    "P0",
+    "P1"
+   ],
+   "class": "rule",
+   "cost": 8.401589033867443e-07
+  },
+  {
+   "valid": [
+    "P3",
+    "P1",
+    "P0",
+    "P4",
+    "P2"
+   ],
+   "invalid": [
+    "P2",
+    "P1",
+    "P3",
+    "P4",
+    "P0"
+   ],
+   "class": "rule",
+   "cost": 2.644891387760917e-09
+  },
+  {
+   "valid": [
+    "P1",
+    "P4",
+    "P0",
+    "P3",
+    "P2"
+   ],
+   "invalid": [
+    "P2",
+    "P0",
+    "P4",
+    "P3",
+    "P1"
+   ],
+   "class": "rule",
+   "cost": 1.2000002580941946
+  },
+  {
+   "valid": [
+    "P3",
+    "P4",
+    "P2",
+    "P0",
+    "P1"
+   ],
+   "invalid": [
+    "P2",
+    "P4",
+    "P1",
+    "P0",
+    "P3"
+   ],
+   "class": "rule",
+   "cost": 2.4131333112206276e-08
+  },
+  {
+   "valid": [
+    "P3",
+    "P2",
+    "P0",
+    "P4",
+    "P1"
+   ],
+   "invalid": [
+    "P4",
+    "P2",
+    "P3",
+    "P1",
+    "P0"
+   ],
+   "class": "rule",
+   "cost": 1.66994836785147e-08
+  },
+  {
+   "valid": [
+    "P3",
+    "P4",
+    "P2",
+    "P1",
+    "P0"
+   ],
+   "invalid": [
+    "P2",
+    "P4",
+    "P0",
+    "P3",
+    "P1"
+   ],
+   "class": "rule",
+   "cost": 2.529264366854367e-08
+  },
+  {
+   "valid": [
+    "P3",
+    "P2",
+    "P1",
+    "P4",
+    "P0"
+   ],
+   "invalid": [
+    "P0",
+    "P3",
+    "P1",
+    "P4",
+    "P2"
+   ],
+   "class": "rule",
+   "cost": 6.818091853295361e-08
+  },
+  {
+   "valid": [
+    "P1",
+    "P0",
+    "P4",
+    "P2",
+    "P3"
+   ],
+   "invalid": [
+    "P0",
+    "P4",
+    "P2",
+    "P3",
+    "P1"
+   ],
+   "class": "rule",
+   "cost": 1.6000000190263592
+  },
+  {
+   "valid": [
+    "P3",
+    "P0",
+    "P2",
+    "P1",
+    "P4"
+   ],
+   "invalid": [
+    "P0",
+    "P1",
+    "P2",
+    "P3",
+    "P4"
+   ],
+   "class": "rule",
+   "cost": 3.933999457953895e-07
+  },
+  {
+   "valid": [
+    "P1",
+    "P4",
+    "P3",
+    "P0",
+    "P2"
+   ],
+   "invalid": [
+    "P4",
+    "P3",
+    "P2",
+    "P0",
+    "P1"
+   ],
+   "class": "rule",
+   "cost": 1.2000000965845117
+  },
+  {
+   "valid": [
+    "P3",
+    "P1",
+    "P4",
+    "P0",
+    "P2"
+   ],
+   "invalid": [
+    "P4",
+    "P2",
+    "P0",
+    "P3",
+    "P1"
+   ],
+   "class": "rule",
+   "cost": 2.6472928088062672e-08
+  },
+  {
+   "valid": [
+    "P1",
+    "P2",
+    "P4",
+    "P3",
+    "P0"
+   ],
+   "invalid": [
+    "P4",
+    "P0",
+    "P1",
+    "P2",
+    "P3"
+   ],
+   "class": "rule",
+   "cost": 1.2000000253639924
+  },
+  {
+   "valid": [
+    "P1",
+    "P2",
+    "P0",
+    "P3",
+    "P4"
+   ],
+   "invalid": [
+    "P0",
+    "P1",
+    "P3",
+    "P2",
+    "P4"
+   ],
+   "class": "rule",
+   "cost": 1.400000437803052
+  },
+  {
+   "valid": [
+    "P1",
+    "P2",
+    "P4",
+    "P0",
+    "P3"
+   ],
+   "invalid": [
+    "P2",
+    "P3",
+    "P4",
+    "P1",
+    "P0"
+   ],
+   "class": "rule",
+   "cost": 1.2000000922028984
+  },
+  {
+   "valid": [
+    "P1",
+    "P3",
+    "P4",
+    "P0",
+    "P2"
+   ],
+   "invalid": [
+    "P2",
+    "P0",
+    "P4",
+    "P1",
+    "P3"
+   ],
+   "class": "rule",
+   "cost": 1.2000000479143371
+  },
+  {
+   "valid": [
+    "P3",
+    "P0",
+    "P1",
+    "P2",
+    "P4"
+   ],
+   "invalid": [
+    "P2",
+    "P0",
+    "P3",
+    "P1",
+    "P4"
+   ],
+   "class": "rule",
+   "cost": 9.855913252026756e-07
+  },
+  {
+   "valid": [
+    "P1",
+    "P0",
+    "P3",
+    "P4",
+    "P2"
+   ],
+   "invalid": [
+    "P2",
+    "P0",
+    "P3",
+    "P4",
+    "P1"
+   ],
+   "class": "rule",
+   "cost": 1.6000000265148082
+  },
+  {
+   "valid": [
+    "P1",
+    "P3",
+    "P4",
+    "P2",
+    "P0"
+   ],
+   "invalid": [
+    "P4",
+    "P0",
+    "P3",
+    "P2",
+    "P1"
+   ],
+   "class": "rule",
+   "cost": 1.2000000772202455
+  },
+  {
+   "valid": [
+    "P1",
+    "P2",
+    "P0",
+    "P4",
+    "P3"
+   ],
+   "invalid": [
+    "P4",
+    "P1",
+    "P2",
+    "P3",
+    "P0"
+   ],
+   "class": "rule",
+   "cost": 1.2000001493465302
+  },
+  {
+   "valid": [
+    "P1",
+    "P4",
+    "P3",
+    "P2",
+    "P0"
+   ],
+   "invalid": [
+    "P0",
+    "P4",
+    "P3",
+    "P1",
+    "P2"
+   ],
+   "class": "rule",
+   "cost": 1.200000079209125
+  },
+  {
+   "valid": [
+    "P1",
+    "P3",
+    "P0",
+    "P4",
+    "P2"
+   ],
+   "invalid": [
+    "P0",
+    "P4",
+    "P2",
+    "P1",
+    "P3"
+   ],
+   "class": "rule",
+   "cost": 1.200000042985538
+  },
+  {
+   "valid": [
+    "P3",
+    "P4",
+    "P0",
+    "P1",
+    "P2"
+   ],
+   "invalid": [
+    "P4",
+    "P3",
+    "P1",
+    "P2",
+    "P0"
+   ],
+   "class": "rule",
+   "cost": 2.2660408555252875e-07
+  },
+  {
+   "valid": [
+    "P3",
+    "P4",
+    "P1",
+    "P0",
+    "P2"
+   ],
+   "invalid": [
+    "P0",
+    "P4",
+    "P1",
+    "P3",
+    "P2"
+   ],
+   "class": "rule",
+   "cost": 1.0670687635630427e-07
+  },
+  {
+   "valid": [
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P0"
+   ],
+   "invalid": [
+    "P4",
+    "P0",
+    "P2",
+    "P1",
+    "P3"
+   ],
+   "class": "rule",
+   "cost": 1.4000001123859538
+  },
+  {
+   "valid": [
+    "P1",
+    "P4",
+    "P2",
+    "P0",
+    "P3"
+   ],
+   "invalid": [
+    "P0",
+    "P1",
+    "P4",
+    "P2",
+    "P3"
+   ],
+   "class": "rule",
+   "cost": 1.2000000356167688
+  },
+  {
+   "valid": [
+    "P3",
+    "P2",
+    "P0",
+    "P1",
+    "P4"
+   ],
+   "invalid": [
+    "P2",
+    "P3",
+    "P0",
+    "P1",
+    "P4"
+   ],
+   "class": "rule",
+   "cost": 2.5011900088006754e-07
+  },
+  {
+   "valid": [
+    "P3",
+    "P0",
+    "P4",
+    "P1",
+    "P2"
+   ],
+   "invalid": [
+    "P0",
+    "P3",
+    "P4",
+    "P2",
+    "P1"
+   ],
+   "class": "rule",
+   "cost": 4.467261474328632e-09
+  },
+  {
+   "valid": [
+    "P1",
+    "P3",
+    "P0",
+    "P2",
+    "P4"
+   ],
+   "invalid": [
+    "P2",
+    "P1",
+    "P3",
+    "P0",
+    "P4"
+   ],
+   "class": "rule",
+   "cost": 1.600000728873144
+  },
+  {
+   "valid": [
+    "P3",
+    "P0",
+    "P2",
+    "P4",
+    "P1"
+   ],
+   "invalid": [
+    "P4",
+    "P1",
+    "P0",
+    "P3",
+    "P2"
+   ],
+   "class": "rule",
+   "cost": 2.2538838026532336e-09
+  },
+  {
+   "valid": [
+    "P3",
+    "P0",
+    "P1",
+    "P4",
+    "P2"
+   ],
+   "invalid": [
+    "P0",
+    "P4",
+    "P1",
+    "P2",
+    "P3"
+   ],
+   "class": "rule",
+   "cost": 1.4276512829710928e-07
+  },
+  {
+   "valid": [
+    "P3",
+    "P1",
+    "P4",
+    "P2",
+    "P0"
+   ],
+   "invalid": [
+    "P2",
+    "P0",
+    "P1",
+    "P4",
+    "P3"
+   ],
+   "class": "rule",
+   "cost": 5.538483111776915e-08
+  }
+ ],
+ "n_invalid_rule_pool": 71,
+ "n_invalid_constraint_pool": 0
+}

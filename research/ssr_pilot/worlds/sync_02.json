@@ -1,0 +1,69 @@
+{
+ "constraints": [
+  {
+   "a": [
+    "T3",
+    "lock",
+    "m2"
+   ],
+   "b": [
+    "T1",
+    "write",
+    "y"
+   ],
+   "type": "before"
+  }
+ ],
+ "family": "sync",
+ "id": "sync_02",
+ "semaphores": {},
+ "structure": "mutex",
+ "threads": {
+  "T1": [
+   [
+    "write",
+    "y"
+   ]
+  ],
+  "T2": [
+   [
+    "lock",
+    "m2"
+   ],
+   [
+    "write",
+    "y"
+   ],
+   [
+    "unlock",
+    "m2"
+   ],
+   [
+    "lock",
+    "m1"
+   ],
+   [
+    "write",
+    "y"
+   ],
+   [
+    "unlock",
+    "m1"
+   ]
+  ],
+  "T3": [
+   [
+    "lock",
+    "m2"
+   ],
+   [
+    "write",
+    "y"
+   ],
+   [
+    "unlock",
+    "m2"
+   ]
+  ]
+ }
+}

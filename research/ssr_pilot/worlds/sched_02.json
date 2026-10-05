@@ -1,0 +1,39 @@
+{
+ "constraints": [
+  {
+   "first": "P3",
+   "second": "P4",
+   "type": "precedence"
+  }
+ ],
+ "family": "scheduling",
+ "id": "sched_02",
+ "policy": "FCFS",
+ "processes": [
+  {
+   "arrival": 0,
+   "burst": 1,
+   "pid": "P1",
+   "priority": 3
+  },
+  {
+   "arrival": 2,
+   "burst": 4,
+   "pid": "P2",
+   "priority": 1
+  },
+  {
+   "arrival": 0,
+   "burst": 1,
+   "pid": "P3",
+   "priority": 3
+  },
+  {
+   "arrival": 0,
+   "burst": 4,
+   "pid": "P4",
+   "priority": 1
+  }
+ ],
+ "structure": "fcfs"
+}

@@ -1,0 +1,51 @@
+{
+ "constraints": [],
+ "family": "sync",
+ "id": "sync_03",
+ "semaphores": {},
+ "structure": "mutex",
+ "threads": {
+  "T1": [
+   [
+    "lock",
+    "m2"
+   ],
+   [
+    "write",
+    "y"
+   ],
+   [
+    "unlock",
+    "m2"
+   ]
+  ],
+  "T2": [
+   [
+    "lock",
+    "m2"
+   ],
+   [
+    "write",
+    "x"
+   ],
+   [
+    "unlock",
+    "m2"
+   ]
+  ],
+  "T3": [
+   [
+    "lock",
+    "m1"
+   ],
+   [
+    "write",
+    "x"
+   ],
+   [
+    "unlock",
+    "m1"
+   ]
+  ]
+ }
+}

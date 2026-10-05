@@ -1,0 +1,39 @@
+{
+ "constraints": [
+  {
+   "by": 5,
+   "pid": "P4",
+   "type": "deadline"
+  }
+ ],
+ "family": "scheduling",
+ "id": "sched_06",
+ "policy": "PRIORITY",
+ "processes": [
+  {
+   "arrival": 0,
+   "burst": 2,
+   "pid": "P1",
+   "priority": 3
+  },
+  {
+   "arrival": 0,
+   "burst": 2,
+   "pid": "P2",
+   "priority": 1
+  },
+  {
+   "arrival": 0,
+   "burst": 1,
+   "pid": "P3",
+   "priority": 3
+  },
+  {
+   "arrival": 1,
+   "burst": 3,
+   "pid": "P4",
+   "priority": 3
+  }
+ ],
+ "structure": "priority"
+}

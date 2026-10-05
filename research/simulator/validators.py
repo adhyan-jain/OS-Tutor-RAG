@@ -53,6 +53,8 @@ def _validate_nonpreemptive(procs, policy, tr) -> Result:
         if pid == IDLE:
             if ready:
                 return False, "idle_while_ready"
+            if not pending:  # nothing left to wait for: trailing idle time is not part of any valid schedule
+                return False, "idle_after_completion"
             if end != min(q["arrival"] for q in pending):
                 return False, "idle_wrong_length"
         else:

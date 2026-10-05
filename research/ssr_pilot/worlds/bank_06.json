@@ -1,0 +1,89 @@
+{
+ "available": [
+  2,
+  3,
+  0
+ ],
+ "constraints": [
+  {
+   "a": "P2",
+   "b": "P0",
+   "type": "before"
+  }
+ ],
+ "family": "banker",
+ "id": "bank_06",
+ "processes": [
+  {
+   "alloc": [
+    0,
+    3,
+    1
+   ],
+   "max": [
+    2,
+    3,
+    1
+   ],
+   "pid": "P0"
+  },
+  {
+   "alloc": [
+    3,
+    3,
+    3
+   ],
+   "max": [
+    6,
+    3,
+    5
+   ],
+   "pid": "P1"
+  },
+  {
+   "alloc": [
+    1,
+    1,
+    1
+   ],
+   "max": [
+    1,
+    1,
+    1
+   ],
+   "pid": "P2"
+  },
+  {
+   "alloc": [
+    1,
+    0,
+    3
+   ],
+   "max": [
+    1,
+    0,
+    6
+   ],
+   "pid": "P3"
+  },
+  {
+   "alloc": [
+    1,
+    1,
+    1
+   ],
+   "max": [
+    4,
+    3,
+    4
+   ],
+   "pid": "P4"
+  }
+ ],
+ "resources": [
+  "A",
+  "B",
+  "C"
+ ],
+ "structure": "banker"
+}

@@ -1,0 +1,99 @@
+# Competence pilot — resource log
+
+Timestamps are local time. One line per event.
+
+- `2026-10-03T17:45:51` [gemma3:12b] waiting for its download to finish — VRAM 4967/8188 MiB, util 44%, RAM avail 3.6 GB, ollama ps ['qwen2.5:7b']
+- `2026-10-03T17:50:51` [gemma3:12b] waiting for its download to finish — VRAM 4967/8188 MiB, util 58%, RAM avail 3.7 GB, ollama ps ['qwen2.5:7b']
+- `2026-10-03T17:55:51` [gemma3:12b] waiting for its download to finish — VRAM 4967/8188 MiB, util 55%, RAM avail 4.0 GB, ollama ps ['qwen2.5:7b']
+- `2026-10-03T18:00:51` [gemma3:12b] waiting for its download to finish — VRAM 4967/8188 MiB, util 33%, RAM avail 4.6 GB, ollama ps ['qwen2.5:7b']
+- `2026-10-03T18:05:51` [gemma3:12b] waiting for its download to finish — VRAM 4967/8188 MiB, util 62%, RAM avail 4.3 GB, ollama ps ['qwen2.5:7b']
+- `2026-10-03T18:10:51` [gemma3:12b] waiting for its download to finish — VRAM 4967/8188 MiB, util 54%, RAM avail 3.9 GB, ollama ps ['qwen2.5:7b']
+- `2026-10-03T18:15:51` [gemma3:12b] waiting for its download to finish — VRAM 4967/8188 MiB, util 66%, RAM avail 3.6 GB, ollama ps ['qwen2.5:7b']
+- `2026-10-03T18:20:51` [gemma3:12b] waiting for its download to finish — VRAM 4967/8188 MiB, util 61%, RAM avail 3.3 GB, ollama ps ['qwen2.5:7b']
+- `2026-10-03T18:25:51` [gemma3:12b] waiting for its download to finish — VRAM 5341/8188 MiB, util 70%, RAM avail 3.2 GB, ollama ps ['llama3:latest']
+- `2026-10-03T18:30:51` [gemma3:12b] waiting for its download to finish — VRAM 5341/8188 MiB, util 60%, RAM avail 2.8 GB, ollama ps ['llama3:latest']
+- `2026-10-03T18:35:52` [gemma3:12b] waiting for its download to finish — VRAM 5341/8188 MiB, util 68%, RAM avail 2.9 GB, ollama ps ['llama3:latest']
+- `2026-10-03T18:40:52` [gemma3:12b] waiting for its download to finish — VRAM 5341/8188 MiB, util 69%, RAM avail 3.0 GB, ollama ps ['llama3:latest']
+- `2026-10-03T18:45:52` [gemma3:12b] gate BUSY (before load), poll 0: foreign job running: 2254431 /usr/bin/bash -c source /home/adhyan/.claude/shell-snapshots/snapshot-bash-1790958259923-uqn9nz.sh 2>/dev/null |; foreign model resident in Ollama: ['llama3:latest']; RAM available 3.0 GB < required 9.6 GB — VRAM 5341/8188 MiB, util 60%, RAM avail 3.0 GB, ollama ps ['llama3:latest']
+- `2026-10-03T18:50:52` [gemma3:12b] gate BUSY (before load), poll 1: foreign job running: 2254431 /usr/bin/bash -c source /home/adhyan/.claude/shell-snapshots/snapshot-bash-1790958259923-uqn9nz.sh 2>/dev/null |; foreign model resident in Ollama: ['llama3:latest']; RAM available 2.9 GB < required 9.6 GB — VRAM 5341/8188 MiB, util 59%, RAM avail 3.0 GB, ollama ps ['llama3:latest']
+- `2026-10-03T18:55:52` [gemma3:12b] gate BUSY (before load), poll 2: foreign job running: 2254431 /usr/bin/bash -c source /home/adhyan/.claude/shell-snapshots/snapshot-bash-1790958259923-uqn9nz.sh 2>/dev/null |; foreign model resident in Ollama: ['llama3:latest']; RAM available 3.0 GB < required 9.6 GB — VRAM 5341/8188 MiB, util 71%, RAM avail 3.0 GB, ollama ps ['llama3:latest']
+- `2026-10-03T19:00:52` [gemma3:12b] gate BUSY (before load), poll 3: foreign job running: 2254431 /usr/bin/bash -c source /home/adhyan/.claude/shell-snapshots/snapshot-bash-1790958259923-uqn9nz.sh 2>/dev/null |; foreign model resident in Ollama: ['llama3:latest']; RAM available 3.0 GB < required 9.6 GB — VRAM 5341/8188 MiB, util 44%, RAM avail 3.0 GB, ollama ps ['llama3:latest']
+- `2026-10-03T19:05:52` [gemma3:12b] gate BUSY (before load), poll 4: foreign job running: 2254431 /usr/bin/bash -c source /home/adhyan/.claude/shell-snapshots/snapshot-bash-1790958259923-uqn9nz.sh 2>/dev/null |; foreign model resident in Ollama: ['llama3:latest']; RAM available 3.0 GB < required 9.6 GB — VRAM 5341/8188 MiB, util 65%, RAM avail 3.0 GB, ollama ps ['llama3:latest']
+- `2026-10-03T19:10:52` [gemma3:12b] gate BUSY (before load), poll 5: foreign job running: 2254431 /usr/bin/bash -c source /home/adhyan/.claude/shell-snapshots/snapshot-bash-1790958259923-uqn9nz.sh 2>/dev/null |; foreign model resident in Ollama: ['llama3:latest']; RAM available 3.1 GB < required 9.6 GB — VRAM 5341/8188 MiB, util 67%, RAM avail 3.1 GB, ollama ps ['llama3:latest']
+- `2026-10-03T19:15:52` [gemma3:12b] gate BUSY (before load), poll 6: foreign job running: 2254431 /usr/bin/bash -c source /home/adhyan/.claude/shell-snapshots/snapshot-bash-1790958259923-uqn9nz.sh 2>/dev/null |; foreign model resident in Ollama: ['qwen3:8b']; RAM available 3.6 GB < required 9.6 GB — VRAM 5775/8188 MiB, util 98%, RAM avail 3.6 GB, ollama ps ['qwen3:8b']
+- `2026-10-03T19:20:52` [gemma3:12b] gate BUSY (before load), poll 7: foreign job running: 2254431 /usr/bin/bash -c source /home/adhyan/.claude/shell-snapshots/snapshot-bash-1790958259923-uqn9nz.sh 2>/dev/null |; foreign model resident in Ollama: ['qwen3:8b']; RAM available 3.2 GB < required 9.6 GB — VRAM 5775/8188 MiB, util 100%, RAM avail 3.2 GB, ollama ps ['qwen3:8b']
+- `2026-10-03T19:25:52` [gemma3:12b] gate BUSY (before load), poll 8: foreign job running: 2254431 /usr/bin/bash -c source /home/adhyan/.claude/shell-snapshots/snapshot-bash-1790958259923-uqn9nz.sh 2>/dev/null |; foreign model resident in Ollama: ['qwen3:8b']; RAM available 3.4 GB < required 9.6 GB — VRAM 5775/8188 MiB, util 98%, RAM avail 3.4 GB, ollama ps ['qwen3:8b']
+- `2026-10-03T19:30:52` [gemma3:12b] gate BUSY (before load), poll 9: foreign model resident in Ollama: ['qwen3:8b']; RAM available 3.3 GB < required 9.6 GB — VRAM 5775/8188 MiB, util 0%, RAM avail 3.3 GB, ollama ps ['qwen3:8b']
+- `2026-10-03T19:35:53` [gemma3:12b] gate BUSY (before load), poll 10: RAM available 4.5 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 4.5 GB, ollama ps -
+- `2026-10-03T19:40:53` [gemma3:12b] gate BUSY (before load), poll 11: foreign model resident in Ollama: ['qwen2.5:7b']; RAM available 3.7 GB < required 9.6 GB — VRAM 4855/8188 MiB, util 100%, RAM avail 3.7 GB, ollama ps ['qwen2.5:7b']
+- `2026-10-03T19:45:53` [gemma3:12b] gate BUSY (before load), poll 12: foreign model resident in Ollama: ['qwen2.5:7b']; RAM available 3.6 GB < required 9.6 GB — VRAM 4857/8188 MiB, util 100%, RAM avail 3.6 GB, ollama ps ['qwen2.5:7b']
+- `2026-10-03T19:50:53` [gemma3:12b] gate BUSY (before load), poll 13: RAM available 4.5 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 4.5 GB, ollama ps -
+- `2026-10-03T19:55:53` [gemma3:12b] gate BUSY (before load), poll 14: GPU memory in use by another process: 4269 MiB; GPU utilisation 95% from another process; RAM available 4.8 GB < required 9.6 GB — VRAM 4269/8188 MiB, util 95%, RAM avail 4.8 GB, ollama ps -
+- `2026-10-03T20:00:53` [gemma3:12b] gate BUSY (before load), poll 15: GPU memory in use by another process: 5997 MiB; GPU utilisation 95% from another process; RAM available 4.2 GB < required 9.6 GB — VRAM 5997/8188 MiB, util 95%, RAM avail 4.2 GB, ollama ps -
+- `2026-10-03T20:05:53` [gemma3:12b] gate BUSY (before load), poll 16: GPU memory in use by another process: 6003 MiB; GPU utilisation 95% from another process; RAM available 3.5 GB < required 9.6 GB — VRAM 6003/8188 MiB, util 95%, RAM avail 3.5 GB, ollama ps -
+- `2026-10-03T20:10:53` [gemma3:12b] gate BUSY (before load), poll 17: GPU memory in use by another process: 6003 MiB; GPU utilisation 93% from another process; RAM available 3.4 GB < required 9.6 GB — VRAM 6003/8188 MiB, util 93%, RAM avail 3.4 GB, ollama ps -
+- `2026-10-03T20:15:53` [gemma3:12b] gate BUSY (before load), poll 18: GPU memory in use by another process: 6005 MiB; GPU utilisation 96% from another process; RAM available 3.3 GB < required 9.6 GB — VRAM 6005/8188 MiB, util 96%, RAM avail 3.3 GB, ollama ps -
+- `2026-10-03T20:20:54` [gemma3:12b] gate BUSY (before load), poll 19: GPU memory in use by another process: 2223 MiB; RAM available 2.8 GB < required 9.6 GB — VRAM 2223/8188 MiB, util 0%, RAM avail 2.8 GB, ollama ps -
+- `2026-10-03T20:25:54` [gemma3:12b] gate BUSY (before load), poll 20: RAM available 5.1 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 5.1 GB, ollama ps -
+- `2026-10-03T20:30:54` [gemma3:12b] gate BUSY (before load), poll 21: GPU memory in use by another process: 3757 MiB; GPU utilisation 91% from another process; RAM available 4.8 GB < required 9.6 GB — VRAM 3757/8188 MiB, util 91%, RAM avail 4.8 GB, ollama ps -
+- `2026-10-03T20:35:54` [gemma3:12b] gate BUSY (before load), poll 22: RAM available 6.2 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 6.2 GB, ollama ps -
+- `2026-10-03T20:40:54` [gemma3:12b] gate BUSY (before load), poll 23: RAM available 6.0 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 6.0 GB, ollama ps -
+- `2026-10-03T20:45:54` [gemma3:12b] gate BUSY (before load), poll 24: RAM available 5.2 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 5.2 GB, ollama ps -
+- `2026-10-03T20:50:54` [gemma3:12b] gate BUSY (before load), poll 25: RAM available 5.1 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 5.1 GB, ollama ps -
+- `2026-10-03T20:55:54` [gemma3:12b] gate BUSY (before load), poll 26: RAM available 4.8 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 4.8 GB, ollama ps -
+- `2026-10-03T21:00:55` [gemma3:12b] gate BUSY (before load), poll 27: RAM available 4.9 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 4.9 GB, ollama ps -
+- `2026-10-03T21:05:55` [gemma3:12b] gate BUSY (before load), poll 28: RAM available 4.8 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 4.9 GB, ollama ps -
+- `2026-10-03T21:10:55` [gemma3:12b] gate BUSY (before load), poll 29: RAM available 4.8 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 4.8 GB, ollama ps -
+- `2026-10-03T21:15:55` [gemma3:12b] gate BUSY (before load), poll 30: RAM available 4.8 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 4.8 GB, ollama ps -
+- `2026-10-03T21:20:56` [gemma3:12b] gate BUSY (before load), poll 31: RAM available 4.1 GB < required 9.6 GB — VRAM 15/8188 MiB, util 0%, RAM avail 4.1 GB, ollama ps -
+- `2026-10-04` **PHASE CLOSED as Decision C.** Runner and downloads had been stopped earlier on 2026-10-04 (no generation ever started; `runs_competence_pilot/` empty). Totals: 32 busy gate polls 18:45–21:20 on 2026-10-03; RAM short in 32/32; other project blocking 19; GPU idle with RAM as the only reason in the last 13. No files were deleted; partial downloads and gemma3:12b remain.
+- `2026-10-05T01:25:06` [gemma3:12b] gate BUSY (before load), poll 0: foreign model resident in Ollama: ['olmo2:7b']; RAM available 4.8 GB < required 9.6 GB — VRAM 6457/8188 MiB, util 0%, RAM avail 4.8 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:26:36` [gemma3:12b] gate free (before load) after 0 busy poll(s) — VRAM 15/8188 MiB, util 0%, RAM avail 5.3 GB, ollama ps -
+- `2026-10-05T01:26:36` [gemma3:12b] START smoke: 9 to run, 0 cached — VRAM 15/8188 MiB, util 0%, RAM avail 5.3 GB, ollama ps -
+- `2026-10-05T01:27:13` [gemma3:12b] END smoke: 9 calls, 4.1s/call, 1 min — VRAM 7259/8188 MiB, util 43%, RAM avail 2.3 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:27:14` [olmo2:7b] gate BUSY (before load), poll 0: foreign model resident in Ollama: ['gemma3:12b']; RAM available 3.0 GB < required 3.5 GB — VRAM 7259/8188 MiB, util 0%, RAM avail 3.3 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:28:05` [gemma3:12b] nothing to run (9 cached) — VRAM 15/8188 MiB, util 0%, RAM avail 5.2 GB, ollama ps -
+- `2026-10-05T01:28:05` [olmo2:7b] gate free (before load) after 0 busy poll(s) — VRAM 15/8188 MiB, util 0%, RAM avail 5.2 GB, ollama ps -
+- `2026-10-05T01:28:05` [olmo2:7b] START smoke: 9 to run, 0 cached — VRAM 15/8188 MiB, util 0%, RAM avail 5.1 GB, ollama ps -
+- `2026-10-05T01:28:28` [olmo2:7b] END smoke: 9 calls, 2.5s/call, 0 min — VRAM 6459/8188 MiB, util 95%, RAM avail 4.9 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:28:28` STATUS {"gemma3:12b": "done", "olmo2:7b": "done"} — VRAM 6459/8188 MiB, util 54%, RAM avail 4.9 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:28:39` [gemma3:12b] gate free (before load) after 0 busy poll(s) — VRAM 15/8188 MiB, util 0%, RAM avail 5.2 GB, ollama ps -
+- `2026-10-05T01:28:39` [gemma3:12b] START full: 279 to run, 9 cached — VRAM 15/8188 MiB, util 0%, RAM avail 5.2 GB, ollama ps -
+- `2026-10-05T01:30:00` [gemma3:12b] gate free (checkpoint 25) after 0 busy poll(s) — VRAM 7259/8188 MiB, util 41%, RAM avail 2.3 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:30:00` [gemma3:12b] 25/279 3.2s/call eta 14 min — VRAM 7259/8188 MiB, util 41%, RAM avail 2.3 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:31:34` [gemma3:12b] gate free (checkpoint 50) after 0 busy poll(s) — VRAM 7259/8188 MiB, util 52%, RAM avail 2.3 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:31:34` [gemma3:12b] 50/279 3.5s/call eta 13 min — VRAM 7259/8188 MiB, util 52%, RAM avail 2.4 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:35:02` [gemma3:12b] gate free (checkpoint 75) after 0 busy poll(s) — VRAM 7259/8188 MiB, util 33%, RAM avail 2.5 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:35:02` [gemma3:12b] 75/279 5.1s/call eta 17 min — VRAM 7259/8188 MiB, util 33%, RAM avail 2.6 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:42:30` [gemma3:12b] gate free (checkpoint 100) after 0 busy poll(s) — VRAM 7259/8188 MiB, util 41%, RAM avail 2.5 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:42:30` [gemma3:12b] 100/279 8.3s/call eta 25 min — VRAM 7259/8188 MiB, util 41%, RAM avail 2.5 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:45:15` [gemma3:12b] gate free (checkpoint 125) after 0 busy poll(s) — VRAM 7259/8188 MiB, util 34%, RAM avail 2.4 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:45:15` [gemma3:12b] 125/279 8.0s/call eta 20 min — VRAM 7259/8188 MiB, util 34%, RAM avail 2.4 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:47:21` [gemma3:12b] gate free (checkpoint 150) after 0 busy poll(s) — VRAM 7259/8188 MiB, util 51%, RAM avail 2.7 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:47:21` [gemma3:12b] 150/279 7.5s/call eta 16 min — VRAM 7259/8188 MiB, util 51%, RAM avail 2.7 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:49:14` [gemma3:12b] gate free (checkpoint 175) after 0 busy poll(s) — VRAM 7259/8188 MiB, util 54%, RAM avail 2.7 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:49:14` [gemma3:12b] 175/279 7.1s/call eta 12 min — VRAM 7259/8188 MiB, util 0%, RAM avail 2.7 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:50:38` [gemma3:12b] gate free (checkpoint 200) after 0 busy poll(s) — VRAM 7259/8188 MiB, util 20%, RAM avail 2.5 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:50:38` [gemma3:12b] 200/279 6.6s/call eta 9 min — VRAM 7259/8188 MiB, util 20%, RAM avail 2.5 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:51:30` [gemma3:12b] gate free (checkpoint 225) after 0 busy poll(s) — VRAM 7259/8188 MiB, util 52%, RAM avail 2.5 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:51:30` [gemma3:12b] 225/279 6.1s/call eta 5 min — VRAM 7259/8188 MiB, util 52%, RAM avail 2.6 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:52:21` [gemma3:12b] gate free (checkpoint 250) after 0 busy poll(s) — VRAM 7259/8188 MiB, util 54%, RAM avail 2.5 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:52:21` [gemma3:12b] 250/279 5.7s/call eta 3 min — VRAM 7259/8188 MiB, util 29%, RAM avail 2.4 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:53:12` [gemma3:12b] gate free (checkpoint 275) after 0 busy poll(s) — VRAM 7259/8188 MiB, util 48%, RAM avail 2.5 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:53:12` [gemma3:12b] 275/279 5.4s/call eta 0 min — VRAM 7259/8188 MiB, util 48%, RAM avail 2.5 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:53:47` [gemma3:12b] END full: 279 calls, 5.4s/call, 25 min — VRAM 7257/8188 MiB, util 53%, RAM avail 3.0 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:53:48` [olmo2:7b] gate BUSY (before load), poll 0: foreign model resident in Ollama: ['gemma3:12b'] — VRAM 7257/8188 MiB, util 0%, RAM avail 4.4 GB, ollama ps ['gemma3:12b']
+- `2026-10-05T01:53:53` [olmo2:7b] gate free (before load) after 1 busy poll(s) — VRAM 15/8188 MiB, util 0%, RAM avail 5.9 GB, ollama ps -
+- `2026-10-05T01:53:53` [olmo2:7b] START full: 279 to run, 9 cached — VRAM 15/8188 MiB, util 0%, RAM avail 5.9 GB, ollama ps -
+- `2026-10-05T01:54:49` [olmo2:7b] gate free (checkpoint 25) after 0 busy poll(s) — VRAM 6459/8188 MiB, util 96%, RAM avail 5.1 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:54:49` [olmo2:7b] 25/279 2.3s/call eta 10 min — VRAM 6459/8188 MiB, util 96%, RAM avail 5.1 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:55:40` [olmo2:7b] gate free (checkpoint 50) after 0 busy poll(s) — VRAM 6461/8188 MiB, util 94%, RAM avail 5.0 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:55:40` [olmo2:7b] 50/279 2.1s/call eta 8 min — VRAM 6461/8188 MiB, util 94%, RAM avail 5.0 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:56:14` [olmo2:7b] gate free (checkpoint 75) after 0 busy poll(s) — VRAM 6461/8188 MiB, util 96%, RAM avail 4.9 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:56:14` [olmo2:7b] 75/279 1.9s/call eta 6 min — VRAM 6461/8188 MiB, util 96%, RAM avail 4.9 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:57:34` [olmo2:7b] gate free (checkpoint 100) after 0 busy poll(s) — VRAM 6461/8188 MiB, util 95%, RAM avail 4.8 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:57:34` [olmo2:7b] 100/279 2.2s/call eta 7 min — VRAM 6461/8188 MiB, util 95%, RAM avail 5.0 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:58:34` [olmo2:7b] gate free (checkpoint 125) after 0 busy poll(s) — VRAM 6461/8188 MiB, util 97%, RAM avail 4.8 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:58:35` [olmo2:7b] 125/279 2.3s/call eta 6 min — VRAM 6461/8188 MiB, util 97%, RAM avail 4.8 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:59:13` [olmo2:7b] gate free (checkpoint 150) after 0 busy poll(s) — VRAM 6461/8188 MiB, util 94%, RAM avail 4.7 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T01:59:13` [olmo2:7b] 150/279 2.1s/call eta 5 min — VRAM 6461/8188 MiB, util 94%, RAM avail 4.7 GB, ollama ps ['olmo2:7b']

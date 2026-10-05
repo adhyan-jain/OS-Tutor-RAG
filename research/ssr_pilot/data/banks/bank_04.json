@@ -1,0 +1,90 @@
+{
+ "world": "bank_04",
+ "n_rules": 6,
+ "n_task": 3,
+ "reference": [
+  "P0",
+  "P2",
+  "P1",
+  "P3",
+  "P4"
+ ],
+ "valid": [
+  [
+   "P0",
+   "P2",
+   "P3",
+   "P1",
+   "P4"
+  ],
+  [
+   "P0",
+   "P2",
+   "P3",
+   "P4",
+   "P1"
+  ]
+ ],
+ "invalid_rule": [
+  {
+   "steps": [
+    "P0",
+    "P3",
+    "P1",
+    "P2",
+    "P4"
+   ],
+   "relaxation": "ignore_need",
+   "reason": "need_exceeds_work"
+  }
+ ],
+ "invalid_constraint": [
+  [
+   "P0",
+   "P2",
+   "P4",
+   "P3",
+   "P1"
+  ]
+ ],
+ "pairs": [
+  {
+   "valid": [
+    "P0",
+    "P2",
+    "P3",
+    "P1",
+    "P4"
+   ],
+   "invalid": [
+    "P0",
+    "P3",
+    "P1",
+    "P2",
+    "P4"
+   ],
+   "class": "rule",
+   "cost": 0.20000009530420876
+  },
+  {
+   "valid": [
+    "P0",
+    "P2",
+    "P3",
+    "P4",
+    "P1"
+   ],
+   "invalid": [
+    "P0",
+    "P2",
+    "P4",
+    "P3",
+    "P1"
+   ],
+   "class": "constraint",
+   "cost": 2.497046692442566e-07
+  }
+ ],
+ "n_invalid_rule_pool": 97,
+ "n_invalid_constraint_pool": 3
+}

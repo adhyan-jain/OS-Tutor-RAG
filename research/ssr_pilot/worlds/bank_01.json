@@ -1,0 +1,84 @@
+{
+ "available": [
+  3,
+  3,
+  2
+ ],
+ "constraints": [],
+ "family": "banker",
+ "id": "bank_01",
+ "processes": [
+  {
+   "alloc": [
+    0,
+    1,
+    0
+   ],
+   "max": [
+    7,
+    5,
+    3
+   ],
+   "pid": "P0"
+  },
+  {
+   "alloc": [
+    2,
+    0,
+    0
+   ],
+   "max": [
+    3,
+    2,
+    2
+   ],
+   "pid": "P1"
+  },
+  {
+   "alloc": [
+    3,
+    0,
+    2
+   ],
+   "max": [
+    9,
+    0,
+    2
+   ],
+   "pid": "P2"
+  },
+  {
+   "alloc": [
+    2,
+    1,
+    1
+   ],
+   "max": [
+    2,
+    2,
+    2
+   ],
+   "pid": "P3"
+  },
+  {
+   "alloc": [
+    0,
+    0,
+    2
+   ],
+   "max": [
+    4,
+    3,
+    3
+   ],
+   "pid": "P4"
+  }
+ ],
+ "resources": [
+  "A",
+  "B",
+  "C"
+ ],
+ "structure": "banker",
+ "textbook": "Silberschatz & Galvin Banker's example (5 processes, 3 resource types)"
+}

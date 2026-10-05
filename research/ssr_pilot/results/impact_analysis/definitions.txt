@@ -1,0 +1,19 @@
+Unit: world. s[m,w] = mean over the 12 generations (3 variants x 4 seeds) of model m in world w.
+Evaluators: B (oracle, UNVERIFIABLE = invalid), C (B and outcome-equivalent to R), A_norm, A_strict.
+Pairwise gap d_E(a,b) = mean over worlds of s_E[a] - s_E[b]; CI = 95% percentile, 2,000 world bootstraps (seed 0).
+1. Weak ranking reversal (pair): sign(d_B) and sign(d_A) are both nonzero and opposite. NOT called a reversal on its own.
+2. Decisive ranking reversal (pair): weak reversal AND both 95% CIs (d_B and d_A) exclude 0.
+3. Ranking stability: per evaluator, P(bootstrap rank order == point-estimate rank order); paired agreement
+   P(rank order under A_norm == rank order under B within the same bootstrap sample); Kendall tau between the evaluators
+   (point estimate and bootstrap CI); rank-probability matrix.
+4. Pairwise decision reversal: for a pair, the decision "a better than b" (sign of the gap, only counted when the
+   evaluator's CI excludes 0) differs between evaluators, including "decided" vs "undecided".
+5. Nominal significance change (pair): Holm-adjusted paired sign-flip decisions (alpha 0.05, 6 pairs, 20,000 flips)
+   differ between A_norm and B.  Supported significance change: nominal AND the 95% CI of the evaluator effect on the
+   gap (d_A - d_B) excludes 0 (so a difference between 'significant' and 'not significant' is not itself taken as evidence).
+6. Relative distortion: gap ratio d_B/d_A, reported only when |d_A| >= 0.02 (otherwise undefined); spread ratio =
+   (max-min model score under B) / (same under A_norm).
+7. Absolute distortion: per model B - A_norm and A_norm / B with world-bootstrap CI.
+8. Taxonomy distortion: per model share of A_norm-'wrong' outputs that are oracle-valid (ratio of sums over worlds, CI),
+   and the shares valid-noncanonical / invalid (FALSE) / UNVERIFIABLE among all outputs.
+A pair is labelled 'reversal' ONLY under definition 2; 'significance change' ONLY under definition 5 (supported).

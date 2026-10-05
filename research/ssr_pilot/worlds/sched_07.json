@@ -1,0 +1,29 @@
+{
+ "constraints": [],
+ "family": "scheduling",
+ "id": "sched_07",
+ "policy": "RR",
+ "processes": [
+  {
+   "arrival": 0,
+   "burst": 24,
+   "pid": "P1",
+   "priority": 3
+  },
+  {
+   "arrival": 0,
+   "burst": 3,
+   "pid": "P2",
+   "priority": 3
+  },
+  {
+   "arrival": 0,
+   "burst": 3,
+   "pid": "P3",
+   "priority": 3
+  }
+ ],
+ "quantum": 4,
+ "structure": "rr",
+ "textbook": "Silberschatz & Galvin: P1=24, P2=3, P3=3, all arrive at 0"
+}

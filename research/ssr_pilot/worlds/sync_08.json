@@ -1,0 +1,67 @@
+{
+ "constraints": [
+  {
+   "a": [
+    "T1",
+    "write",
+    "buf"
+   ],
+   "b": [
+    "T3",
+    "write",
+    "out"
+   ],
+   "type": "before"
+  }
+ ],
+ "family": "sync",
+ "id": "sync_08",
+ "semaphores": {
+  "slots": 2
+ },
+ "structure": "semaphore",
+ "threads": {
+  "T1": [
+   [
+    "wait",
+    "slots"
+   ],
+   [
+    "write",
+    "buf"
+   ],
+   [
+    "signal",
+    "slots"
+   ]
+  ],
+  "T2": [
+   [
+    "wait",
+    "slots"
+   ],
+   [
+    "write",
+    "buf"
+   ],
+   [
+    "signal",
+    "slots"
+   ]
+  ],
+  "T3": [
+   [
+    "wait",
+    "slots"
+   ],
+   [
+    "write",
+    "out"
+   ],
+   [
+    "signal",
+    "slots"
+   ]
+  ]
+ }
+}

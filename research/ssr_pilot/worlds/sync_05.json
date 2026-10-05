@@ -1,0 +1,41 @@
+{
+ "constraints": [],
+ "family": "sync",
+ "id": "sync_05",
+ "semaphores": {
+  "s1": 0
+ },
+ "structure": "semaphore",
+ "threads": {
+  "T1": [
+   [
+    "write",
+    "y"
+   ],
+   [
+    "signal",
+    "s1"
+   ]
+  ],
+  "T2": [
+   [
+    "write",
+    "y"
+   ],
+   [
+    "wait",
+    "s1"
+   ],
+   [
+    "write",
+    "x"
+   ]
+  ],
+  "T3": [
+   [
+    "write",
+    "out"
+   ]
+  ]
+ }
+}

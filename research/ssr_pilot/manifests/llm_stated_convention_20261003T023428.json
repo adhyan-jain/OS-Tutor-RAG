@@ -1,0 +1,36 @@
+{
+ "kind": "llm_stated_convention",
+ "created": "2026-10-03T02:34:28",
+ "git_head": "f16448ca95d7c2b4e061dde153e0e62587bcbd10",
+ "models": {
+  "qwen3:8b": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41"
+ },
+ "settings": {
+  "temperature": 0.7,
+  "top_p": 0.95,
+  "num_ctx": 4096,
+  "num_predict": 600
+ },
+ "seeds": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "variants": [
+  "v0",
+  "v1",
+  "v2"
+ ],
+ "n_worlds": 1,
+ "n_calls_per_model": 12,
+ "sha256": {
+  "prereg": "0a2714b04126bbea4b974abb6e4f604c01d05628b02e1bb361159ff2034c27d1",
+  "worlds_index": "331d41eb5117a5a1085aacee1986e92a7687035c45d03b9f4b0d5b40478f53a5",
+  "render.py": "c8142b7754c22409414a969c3dc23e6438c7116fe9321bbd5bcb5d10993114af",
+  "all_prompts": "063e010b197fdee1625611c0cf70db22fd2719a385430317ce835be302913bdf",
+  "oracle.py": "e8107292d2eb99c874c2b5270ae846058709c9a2ad3ddec6f77094f6fd0cb171",
+  "families.py": "963b174ba6aea2e1db11137eaeddfe1cdd1438520a8844005b38042984aec9e7"
+ },
+ "stated_convention": true
+}
