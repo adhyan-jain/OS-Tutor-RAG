@@ -1,5 +1,6 @@
 """
 Benchmark-level ranking and pairwise model stability across valid reference choices.
+Includes tie-aware ranking mechanics (fractional ranks and Kendall tau-b) without artificial string tie-breaking.
 """
 
 from typing import Dict, List, Sequence, Tuple
@@ -22,28 +23,50 @@ def compute_model_scores(verdicts: Sequence[EvaluatorVerdict]) -> Dict[str, floa
 def get_model_ranking(scores: Dict[str, float]) -> List[str]:
     """
     Returns sorted model names from highest score to lowest score.
-    Ties broken alphabetically for stability.
+    Ties are grouped into tied rank sets (alphabetical ordering retained only for list output presentation,
+    while statistical Kendall tau computations use exact score vectors with tie handling).
     """
     return sorted(scores.keys(), key=lambda m: (-scores[m], m))
 
 
+def compute_kendall_tau_scores(scores1: Dict[str, float], scores2: Dict[str, float]) -> float:
+    """
+    Computes Kendall's tau-b correlation directly from model score vectors, natively handling ties.
+    """
+    models = sorted(list(scores1.keys()))
+    assert set(models) == set(scores2.keys()), "Score dicts must contain identical model sets"
+    
+    vec1 = np.array([scores1[m] for m in models])
+    vec2 = np.array([scores2[m] for m in models])
+    
+    # Check if all scores are identical in either vector (tau is undefined, return 1.0 if identical vectors, else 0.0)
+    if np.all(vec1 == vec1[0]) and np.all(vec2 == vec2[0]):
+        return 1.0
+    if np.all(vec1 == vec1[0]) or np.all(vec2 == vec2[0]):
+        return 0.0
+        
+    tau, _ = stats.kendalltau(vec1, vec2, variant='b')
+    return float(tau) if not np.isnan(tau) else 1.0
+
+
 def compute_kendall_tau(ranking1: List[str], ranking2: List[str]) -> float:
     """
-    Computes Kendall's tau correlation between two model rankings.
+    Legacy wrapper for rank lists. Computes Kendall's tau correlation between two model rank lists.
     """
     assert set(ranking1) == set(ranking2), "Rankings must contain identical model sets"
     m_list = sorted(list(ranking1))
     r1_pos = [ranking1.index(m) for m in m_list]
     r2_pos = [ranking2.index(m) for m in m_list]
-    tau, _ = stats.kendalltau(r1_pos, r2_pos)
+    tau, _ = stats.kendalltau(r1_pos, r2_pos, variant='b')
     return float(tau) if not np.isnan(tau) else 1.0
 
 
 def compute_pairwise_win_matrix(scores_by_ref: Dict[int, Dict[str, float]]) -> Dict:
     """
-    Computes pairwise win probabilities across all evaluated reference choices.
-    For models A and B:
-    P(A > B): fraction of references where score(A) > score(B).
+    Computes pairwise win probabilities and reversal probabilities across all evaluated reference choices.
+    Ties are explicitly counted.
+    Strict reversal probability: fraction of reference pairs (R1, R2) where pairwise winner strictly flips
+    (i.e., score(A) > score(B) under R1 and score(B) > score(A) under R2).
     """
     models = sorted(list(next(iter(scores_by_ref.values())).keys()))
     win_counts: Dict[str, Dict[str, int]] = {m1: {m2: 0 for m2 in models} for m1 in models}
@@ -70,28 +93,34 @@ def compute_pairwise_win_matrix(scores_by_ref: Dict[int, Dict[str, float]]) -> D
             else:
                 pairwise_prob[m1][m2] = win_counts[m1][m2] / n_refs
 
-    # Reversal probability: fraction of reference pairs (R1, R2) where pairwise winner flips
-    reversal_counts = 0
-    total_pairs = 0
-    refs = list(scores_by_ref.keys())
+    # Reversal probability calculation across reference draws
+    # To handle 50,000 reference draws efficiently without O(N^2) loops over 50k draws,
+    # for each model pair (A, B), we count how many draws have A > B (n_win_A), B > A (n_win_B), and A == B (n_tie).
+    # Total reference pairs for pair (A, B) is N * (N - 1) / 2.
+    # A strict reversal occurs when drawing one reference where A > B and another where B > A.
+    # So number of reversing pairs for (A, B) is n_win_A * n_win_B.
     
-    for i, r1 in enumerate(refs):
-        for r2 in refs[i + 1:]:
-            s_r1 = scores_by_ref[r1]
-            s_r2 = scores_by_ref[r2]
-            for m_i, m1 in enumerate(models):
-                for m2 in models[m_i + 1:]:
-                    w1 = np.sign(s_r1[m1] - s_r1[m2])
-                    w2 = np.sign(s_r2[m1] - s_r2[m2])
-                    if w1 != 0 and w2 != 0 and w1 != w2:
-                        reversal_counts += 1
-                    total_pairs += 1
+    total_pair_comparisons = 0
+    total_reversals = 0
+    
+    n_model_pairs = len(models) * (len(models) - 1) // 2
+    
+    for i, m1 in enumerate(models):
+        for m2 in models[i + 1:]:
+            n_win_1 = win_counts[m1][m2]
+            n_win_2 = win_counts[m2][m1]
+            n_reversals_pair = n_win_1 * n_win_2
+            n_total_ref_pairs = n_refs * (n_refs - 1) // 2
+            
+            total_reversals += n_reversals_pair
+            total_pair_comparisons += n_total_ref_pairs
 
-    reversal_prob = (reversal_counts / total_pairs) if total_pairs > 0 else 0.0
+    reversal_prob = (total_reversals / total_pair_comparisons) if total_pair_comparisons > 0 else 0.0
 
     return {
         "models": models,
         "n_references": n_refs,
         "pairwise_win_probabilities": pairwise_prob,
-        "pairwise_reversal_probability": reversal_prob,
+        "pairwise_reversal_probability": float(reversal_prob),
     }
+
