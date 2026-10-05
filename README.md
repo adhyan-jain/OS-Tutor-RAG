@@ -25,11 +25,13 @@ This repository contains two main subsystems:
 - **Paper Claims Audit**: [`paper/CLAIMS_AUDIT_FINAL.md`](paper/CLAIMS_AUDIT_FINAL.md)
 - **Reviewer Attack Report**: [`paper/REVIEWER_ATTACK.md`](paper/REVIEWER_ATTACK.md)
 - **Novelty & Prior Art Audit**: [`paper/NOVELTY_POSITIONING_FINAL.md`](paper/NOVELTY_POSITIONING_FINAL.md)
+- **Final Research Status Report**: [`paper/FINAL_RESEARCH_STATUS.md`](paper/FINAL_RESEARCH_STATUS.md)
 - **Dead Code & Docs Audit Log**: [`DEAD_CODE_AND_DOCS_AUDIT.md`](DEAD_CODE_AND_DOCS_AUDIT.md)
+- **Recomputed RCR Summary Data**: [`research/ssr_pilot/results/rcrc/rcr_summary.json`](research/ssr_pilot/results/rcrc/rcr_summary.json)
 - **RCR Core Engine**: [`research/ssr_pilot/core/`](research/ssr_pilot/core/)
 - **RCR Protocol & Analysis**: [`research/ssr_pilot/rcrc/`](research/ssr_pilot/rcrc/)
 - **Adversarial Meta-Evaluation**: [`research/ssr_pilot/adversarial/`](research/ssr_pilot/adversarial/)
-- **Unit Test Suite**: [`tests/ssr_pilot/`](tests/ssr_pilot/)
+- **Automated Consistency Gate & Test Suite**: [`tests/`](tests/)
 
 ---
 
@@ -41,6 +43,42 @@ ingestion -> chunking -> retrieval -> reranking -> diversification -> expansion 
 ```
 Measurements of technique performance are recorded in [`FINDINGS.md`](FINDINGS.md).
 
+### Implemented Techniques
+- **Ingestion**: PPTX (per-slide title/bullets/notes), PDF (per-page text), DOCX (per-heading section).
+- **Chunking**: Structure-aware (`pptx`, `docx`), Page-aware (`pdf`), Semantic (plain text).
+- **Retrieval**: Dense (FAISS + `bge-large`), Sparse (BM25), Hybrid RRF, HyDE, Multi-query wrapping.
+- **Reranking**: Cross-encoder (`bge-reranker-large`), Pointwise LLM-as-judge.
+- **Diversification**: Maximal Marginal Relevance (MMR).
+- **Context Expansion**: Parent slide/page substitution with token windowing.
+- **Generation**: Local LLM via Ollama (`llama3`, `qwen3`, `gemma3`, `olmo2`).
+
+---
+
+## 📁 Repository Layout
+
+```
+paper/
+  PAPER_FINAL.md                canonical journal manuscript
+  CLAIMS_AUDIT_FINAL.md         complete claims traceability matrix
+  REPRODUCIBILITY.md            reproducibility guide & 64-char SHA-256 hashes
+  REVIEWER_ATTACK.md            5-reviewer hostile attack simulation
+  NOVELTY_POSITIONING_FINAL.md   prior art & novelty audit
+  FINAL_RESEARCH_STATUS.md      research status report & decision gate
+research/
+  ssr_pilot/core/              reference-independent semantic oracle & valid-space enumeration
+  ssr_pilot/rcrc/              50,000-draw RCR Monte Carlo protocol & statistics engine
+  ssr_pilot/adversarial/       adversarial contrast dataset & evaluator meta-evaluation
+  ssr_pilot/runs/              raw baseline generation outputs (1,152 records)
+  ssr_pilot/runs_stated_conv/  raw stated-convention control outputs (1,152 records)
+  ssr_pilot/results/           recomputed JSON summary artifacts
+tests/
+  test_consistency_gate.py     automated manuscript-to-JSON consistency gate
+  ssr_pilot/                   unit tests for semantics, valid space, oracle, & statistics
+src/                           OS-Tutor-RAG ingestion, retrieval, & generation pipeline
+api/                           FastAPI backend routes
+frontend/                      Next.js web user interface
+```
+
 ---
 
 ## 🚀 Quick Start & Reproducibility
@@ -51,7 +89,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Run Unit Tests & Consistency Gate
+### Run Unit Tests & Automated Consistency Gate
 ```bash
 PYTHONPATH=. .venv/bin/pytest tests/ -v
 ```
@@ -61,12 +99,12 @@ PYTHONPATH=. .venv/bin/pytest tests/ -v
 PYTHONPATH=. .venv/bin/python -m research.ssr_pilot.rcrc.protocol --regime FULL_REFERENCE_ENUMERATION
 ```
 
-### Run Stated-Convention Analysis
+### Run Stated-Convention Control Analysis
 ```bash
 PYTHONPATH=. .venv/bin/python -m research.ssr_pilot.analyze_stated_convention
 ```
 
-### Run Competence Analysis
+### Run Competence Pilot Analysis
 ```bash
 PYTHONPATH=. .venv/bin/python -m research.ssr_pilot.analyze_competence_pilot
 ```
@@ -74,4 +112,13 @@ PYTHONPATH=. .venv/bin/python -m research.ssr_pilot.analyze_competence_pilot
 ### Run Adversarial Meta-Evaluation
 ```bash
 PYTHONPATH=. .venv/bin/python -c "from research.ssr_pilot.adversarial.construction import build_adversarial_dataset, evaluate_evaluators_on_adversarial; evaluate_evaluators_on_adversarial(build_adversarial_dataset())"
+```
+
+### Run Application (FastAPI + Next.js)
+```bash
+# Backend (FastAPI)
+PYTHONPATH=. .venv/bin/uvicorn api.main:app --port 8000
+
+# Frontend (Next.js)
+cd frontend && npm install && npm run dev
 ```
