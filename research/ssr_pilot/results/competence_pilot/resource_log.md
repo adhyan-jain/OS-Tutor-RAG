@@ -97,3 +97,16 @@ Timestamps are local time. One line per event.
 - `2026-10-05T01:58:35` [olmo2:7b] 125/279 2.3s/call eta 6 min — VRAM 6461/8188 MiB, util 97%, RAM avail 4.8 GB, ollama ps ['olmo2:7b']
 - `2026-10-05T01:59:13` [olmo2:7b] gate free (checkpoint 150) after 0 busy poll(s) — VRAM 6461/8188 MiB, util 94%, RAM avail 4.7 GB, ollama ps ['olmo2:7b']
 - `2026-10-05T01:59:13` [olmo2:7b] 150/279 2.1s/call eta 5 min — VRAM 6461/8188 MiB, util 94%, RAM avail 4.7 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T21:28:12` [gemma3:12b] nothing to run (288 cached) — VRAM 15/8188 MiB, util 0%, RAM avail 3.6 GB, ollama ps -
+- `2026-10-05T21:28:12` [olmo2:7b] gate free (before load) after 0 busy poll(s) — VRAM 15/8188 MiB, util 0%, RAM avail 3.6 GB, ollama ps -
+- `2026-10-05T21:28:12` [olmo2:7b] START full: 121 to run, 167 cached — VRAM 15/8188 MiB, util 0%, RAM avail 3.5 GB, ollama ps -
+- `2026-10-05T21:28:56` [olmo2:7b] gate free (checkpoint 25) after 0 busy poll(s) — VRAM 6461/8188 MiB, util 96%, RAM avail 3.8 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T21:28:56` [olmo2:7b] 25/121 1.8s/call eta 3 min — VRAM 6461/8188 MiB, util 96%, RAM avail 3.8 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T21:29:23` [olmo2:7b] gate free (checkpoint 50) after 0 busy poll(s) — VRAM 6461/8188 MiB, util 95%, RAM avail 3.7 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T21:29:23` [olmo2:7b] 50/121 1.4s/call eta 2 min — VRAM 6461/8188 MiB, util 95%, RAM avail 3.7 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T21:29:39` [olmo2:7b] gate free (checkpoint 75) after 0 busy poll(s) — VRAM 6461/8188 MiB, util 34%, RAM avail 3.7 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T21:29:39` [olmo2:7b] 75/121 1.2s/call eta 1 min — VRAM 6461/8188 MiB, util 34%, RAM avail 3.7 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T21:29:54` [olmo2:7b] gate free (checkpoint 100) after 0 busy poll(s) — VRAM 6461/8188 MiB, util 95%, RAM avail 3.8 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T21:29:54` [olmo2:7b] 100/121 1.0s/call eta 0 min — VRAM 6461/8188 MiB, util 95%, RAM avail 3.8 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T21:30:08` [olmo2:7b] END full: 121 calls, 1.0s/call, 2 min — VRAM 6461/8188 MiB, util 96%, RAM avail 3.6 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T21:30:08` STATUS {"gemma3:12b": "done", "olmo2:7b": "done"} — VRAM 6461/8188 MiB, util 95%, RAM avail 3.6 GB, ollama ps ['olmo2:7b']

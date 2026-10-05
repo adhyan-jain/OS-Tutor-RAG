@@ -10,8 +10,8 @@ The stated-convention arm kept the evaluator discrepancy high (pooled FRR_norm 0
 
 | model | family | size | installed | outputs scored | run status |
 |---|---|---|---|---|---|
-| gemma3:12b | Google Gemma 3 (12B) | 2.0 GB (Q4_K_M) | yes | 288 / 288 | not run |
-| olmo2:7b | Allen Institute OLMo 2 (7B) | 2.0 GB (Q4_K_M) | yes | 167 / 288 | not run |
+| gemma3:12b | Google Gemma 3 (12B) | 2.0 GB (Q4_K_M) | yes | 288 / 288 | done |
+| olmo2:7b | Allen Institute OLMo 2 (7B) | 2.0 GB (Q4_K_M) | yes | 288 / 288 | done |
 
 Full reasoning and hardware feasibility: `model_selection.md`.
 
@@ -26,6 +26,7 @@ GPU-gate polls that found the GPU or RAM busy: **35** (every 5 minutes; see `res
 | model | calls | s/call | minutes |
 |---|---|---|---|
 | gemma3:12b | 279 | 5.4 | 25 |
+| olmo2:7b | 121 | 1.0 | 2 |
 
 Key events:
 
@@ -37,14 +38,17 @@ Key events:
 - `2026-10-05T01:28:39` [gemma3:12b] START full: 279 to run, 9 cached — VRAM 15/8188 MiB, util 0%, RAM avail 5.2 GB, ollama ps -
 - `2026-10-05T01:53:47` [gemma3:12b] END full: 279 calls, 5.4s/call, 25 min — VRAM 7257/8188 MiB, util 53%, RAM avail 3.0 GB, ollama ps ['gemma3:12b']
 - `2026-10-05T01:53:53` [olmo2:7b] START full: 279 to run, 9 cached — VRAM 15/8188 MiB, util 0%, RAM avail 5.9 GB, ollama ps -
+- `2026-10-05T21:28:12` [olmo2:7b] START full: 121 to run, 167 cached — VRAM 15/8188 MiB, util 0%, RAM avail 3.5 GB, ollama ps -
+- `2026-10-05T21:30:08` [olmo2:7b] END full: 121 calls, 1.0s/call, 2 min — VRAM 6461/8188 MiB, util 96%, RAM avail 3.6 GB, ollama ps ['olmo2:7b']
+- `2026-10-05T21:30:08` STATUS {"gemma3:12b": "done", "olmo2:7b": "done"} — VRAM 6461/8188 MiB, util 95%, RAM avail 3.6 GB, ollama ps ['olmo2:7b']
 
 ## E. Overall validity (world-clustered 95% CI; UNVERIFIABLE counted as not valid)
 
 | model | n | B semantic | A_norm | A_strict | C | UNVERIF |
 |---|---|---|---|---|---|---|
 | gemma3:12b | 288 | 0.146 [0.062, 0.240] | 0.056 [0.014, 0.108] | 0.042 [0.003, 0.087] | 0.118 [0.049, 0.208] | 0.000 |
-| olmo2:7b | 167 | 0.006 [0.000, 0.018] | 0.000 [0.000, 0.000] | 0.000 [0.000, 0.000] | 0.000 [0.000, 0.000] | 0.287 |
-| **new models pooled** | 455 | 0.095 [0.042, 0.156] | 0.035 [0.008, 0.068] | 0.026 [0.002, 0.056] | 0.075 [0.030, 0.136] | 0.105 |
+| olmo2:7b | 288 | 0.021 [0.007, 0.038] | 0.000 [0.000, 0.000] | 0.000 [0.000, 0.000] | 0.017 [0.003, 0.035] | 0.222 |
+| **new models pooled** | 576 | 0.083 [0.042, 0.132] | 0.028 [0.007, 0.054] | 0.021 [0.002, 0.043] | 0.068 [0.030, 0.115] | 0.111 |
 | *baseline (4 local) pooled* | 1152 | 0.153 [0.095, 0.217] | 0.057 [0.022, 0.099] | 0.031 [0.011, 0.055] | 0.114 [0.060, 0.176] | 0.081 |
 
 ## F. Competence-conditioned disagreement (among semantically valid outputs)
@@ -52,24 +56,24 @@ Key events:
 | model | semantically valid | canonical accepted | canonical rejected | **FRR_norm** | FRR_strict | FRR_norm, UNVERIF as valid | valid-but-reference-wrong (share of all outputs) |
 |---|---|---|---|---|---|---|---|
 | gemma3:12b | 42 | 16 | 26 | 0.619 [0.440, 0.839] | 0.714 [0.578, 0.912] | 0.619 [0.440, 0.839] | 0.090 |
-| olmo2:7b | 1 | 0 | 1 | 1.000 [1.000, 1.000] | 1.000 [1.000, 1.000] | 1.000 [1.000, 1.000] | 0.006 |
-| **new models pooled** | 43 | 16 | 27 | **0.628 [0.462, 0.833]** | 0.721 [0.582, 0.914] | 0.824 [0.732, 0.943] | 0.059 |
+| olmo2:7b | 6 | 0 | 6 | 1.000 [1.000, 1.000] | 1.000 [1.000, 1.000] | 1.000 [1.000, 1.000] | 0.021 |
+| **new models pooled** | 48 | 16 | 32 | **0.667 [0.500, 0.867]** | 0.750 [0.619, 0.943] | 0.857 [0.780, 0.955] | 0.056 |
 | *baseline pooled* | 176 | 66 | 110 | 0.625 [0.443, 0.816] | 0.795 [0.676, 0.911] | 0.755 [0.636, 0.876] | 0.095 |
 
-Total canonical (A_norm) outputs, new models: 16 of 455.
+Total canonical (A_norm) outputs, new models: 16 of 576.
 
 ## G. Comparison to the stated-convention baseline
 
 - Baseline pooled FRR_norm: **0.625 [0.443, 0.816]** (n valid 176).
-- New-model pooled FRR_norm: **0.628 [0.462, 0.833]** (n valid 43).
-- Competence gain (pooled B): **-0.058** (0.095 vs 0.153).
-- Difference in FRR_norm (new − baseline), world-clustered: **+0.003 [-0.197, +0.205]**
+- New-model pooled FRR_norm: **0.667 [0.500, 0.867]** (n valid 48).
+- Competence gain (pooled B): **-0.069** (0.083 vs 0.153).
+- Difference in FRR_norm (new − baseline), world-clustered: **+0.042 [-0.147, +0.231]**
 
 All models, ordered by semantic validity (descriptive; does validity rise together with non-canonical output?):
 
 | model | arm | B | A_norm | n valid | FRR_norm |
 |---|---|---|---|---|---|
-| olmo2:7b | new | 0.006 | 0.000 | 1 | 1.000 |
+| olmo2:7b | new | 0.021 | 0.000 | 6 | 1.000 |
 | mistral:7b-instruct | baseline | 0.031 | 0.000 | 9 | 1.000 |
 | llama3.1:8b | baseline | 0.090 | 0.003 | 26 | 0.962 |
 | gemma3:12b | new | 0.146 | 0.056 | 42 | 0.619 |
@@ -82,9 +86,9 @@ Spearman correlation between B and FRR_norm across models with ≥ 1 valid outpu
 
 | stratum | arm | n outputs | n valid | B | FRR_norm |
 |---|---|---|---|---|---|
-| D (R is the literal reading) | new | 299 | 39 | 0.130 | 0.590 [0.417, 0.806] |
+| D (R is the literal reading) | new | 384 | 44 | 0.115 | 0.636 [0.469, 0.846] |
 | D (R is the literal reading) | baseline | 768 | 142 | 0.185 | 0.542 [0.364, 0.738] |
-| U (R underdetermined) | new | 156 | 4 | 0.026 | 1.000 [1.000, 1.000] |
+| U (R underdetermined) | new | 192 | 4 | 0.021 | 1.000 [1.000, 1.000] |
 | U (R underdetermined) | baseline | 384 | 34 | 0.089 | 0.971 [0.750, 1.000] |
 
 ## H. Family and variant breakdown (new models pooled; baseline alongside)
@@ -93,12 +97,12 @@ Cells with fewer than 10 valid outputs are marked *too few to interpret*.
 
 | group | n valid (new) | B (new) | FRR_norm (new) | FRR_norm (baseline) |
 |---|---|---|---|---|
-| banker | 5 | 0.051 | 1.000 [1.000, 1.000] *too few to interpret* | 0.837 [0.719, 1.000] |
+| banker | 9 | 0.047 | 1.000 [1.000, 1.000] *too few to interpret* | 0.837 [0.719, 1.000] |
 | scheduling | 11 | 0.057 | 0.364 [0.000, 0.571] | 0.423 [0.190, 0.789] |
-| sync | 27 | 0.165 | 0.667 [0.500, 0.947] | 0.574 [0.322, 0.870] |
-| v0 | 15 | 0.098 | 0.467 [0.111, 1.000] | 0.543 [0.294, 0.793] |
-| v1 | 8 | 0.052 | 0.500 [0.000, 1.000] *too few to interpret* | 0.702 [0.489, 0.909] |
-| v2 | 20 | 0.134 | 0.800 [0.400, 1.000] | 0.627 [0.375, 0.897] |
+| sync | 28 | 0.146 | 0.679 [0.522, 0.947] | 0.574 [0.322, 0.870] |
+| v0 | 20 | 0.104 | 0.600 [0.304, 1.000] | 0.543 [0.294, 0.793] |
+| v1 | 8 | 0.042 | 0.500 [0.000, 1.000] *too few to interpret* | 0.702 [0.489, 0.909] |
+| v2 | 20 | 0.104 | 0.800 [0.400, 1.000] | 0.627 [0.375, 0.897] |
 
 ## I. Statistical results
 
@@ -108,14 +112,14 @@ Pairwise comparisons among the new models, A_norm vs B (descriptive; no competen
 
 | pair | Δ A_norm | Δ B | p(A) Holm | p(B) Holm | reversed | evaluator effect on the gap [95% CI] |
 |---|---|---|---|---|---|---|
-| gemma3:12b|olmo2:7b | +0.067 | +0.156 | 0.122 | 0.0287 | False | [-0.167, -0.017] |
+| gemma3:12b|olmo2:7b | +0.056 | +0.125 | 0.0616 | 0.0135 | False | [-0.132, -0.016] |
 
 Cheap proxies against the oracle on the new models' outputs (descriptive):
 
 | proxy | balanced agreement [95% CI] | accepts when oracle rejects |
 |---|---|---|
-| distance | 0.751 [0.600, 0.873] | 0.172 |
-| final_state_only | 0.665 [0.497, 0.804] | 0.461 |
+| distance | 0.723 [0.578, 0.833] | 0.178 |
+| final_state_only | 0.658 [0.511, 0.782] | 0.496 |
 
 ## J. Limitations
 
@@ -125,14 +129,12 @@ Cheap proxies against the oracle on the new models' outputs (descriptive):
 - **Hardware constraints:** the GPU is shared with another project; runs wait for a free GPU and enough RAM (see Section D).
 - The competence gate, the 0.50/0.15 survival thresholds and the strata were fixed before any output; no threshold was changed afterwards. The result describes these worlds and models only; no novelty, universality, frontier-model, or publication-readiness claim is made.
 
-- **Incomplete or skipped models:** gemma3:12b, olmo2:7b (see Section B and `resource_log.md`).
-
 ## K. Decision
 
 **C) INCONCLUSIVE DUE TO MODEL/POWER LIMITATIONS**
 
-Rule application: competence gate failed (gain -0.058 vs required >= 0.15, n_valid 43 vs required >= 100).
+Rule application: competence gate failed (gain -0.069 vs required >= 0.15, n_valid 48 vs required >= 100).
 
-- Competence gate: gain -0.058 (need ≥ 0.15) and n_valid 43 (need ≥ 100) → FAILED.
-- Pooled FRR_norm 0.628 [0.462, 0.833] against the 0.625 baseline.
+- Competence gate: gain -0.069 (need ≥ 0.15) and n_valid 48 (need ≥ 100) → FAILED.
+- Pooled FRR_norm 0.667 [0.500, 0.867] against the 0.625 baseline.
 
