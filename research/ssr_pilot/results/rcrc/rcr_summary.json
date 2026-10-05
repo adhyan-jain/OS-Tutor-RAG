@@ -1,18 +1,20 @@
 {
   "provenance": {
     "experiment_name": "rcr_core_analysis",
-    "timestamp": "2026-10-05T16:02:16.579922+00:00",
-    "git_sha": "152782e36525f46551bc6d819ad1f41a765d0cea",
-    "git_branch": "ssr-pilot",
+    "timestamp": "2026-10-05T21:37:56.927246+00:00",
+    "git_sha": "d899d1f21beaad1d3293b8bb3c440574771abbb4",
+    "git_branch": "main",
     "python_version": "3.14.7 (main, Aug 10 2026, 07:46:56) [GCC 16.1.1 20260728]",
     "platform": "Linux-7.2.4-arch1-2-x86_64-with-glibc2.44",
     "hostname": "adhyan-omarchy",
-    "pid": 4064294,
+    "pid": 878520,
     "n_generations": 1152,
-    "regime": "FULL_REFERENCE_ENUMERATION"
+    "regime": "FULL_REFERENCE_ENUMERATION",
+    "n_draws": 50000
   },
   "n_worlds": 24,
   "n_generations": 1152,
+  "n_monte_carlo_draws": 50000,
   "evaluators": {
     "E1_CANONICAL_EXACT": {
       "evaluator_id": "E1_CANONICAL_EXACT",
@@ -40,9 +42,11 @@
         "mistral:7b-instruct",
         "llama3.1:8b"
       ],
-      "kendall_tau_mean": 0.82,
-      "kendall_tau_std": 0.3955867653105813,
-      "kendall_tau_min": -0.6666666666666669,
+      "n_monte_carlo_draws": 50000,
+      "kendall_tau_mean": 0.7068653282843338,
+      "kendall_tau_std": 0.356516864027703,
+      "kendall_tau_se": 0.0015943918861819869,
+      "kendall_tau_min": -0.8944271909999159,
       "kendall_tau_max": 1.0,
       "pairwise_win_matrix": {
         "models": [
@@ -51,120 +55,124 @@
           "mistral:7b-instruct",
           "qwen3:8b"
         ],
-        "n_references": 100,
+        "n_references": 50000,
         "pairwise_win_probabilities": {
           "gemma2:9b": {
             "gemma2:9b": 0.0,
-            "llama3.1:8b": 0.48,
-            "mistral:7b-instruct": 0.46,
-            "qwen3:8b": 0.04
+            "llama3.1:8b": 0.49184,
+            "mistral:7b-instruct": 0.4655,
+            "qwen3:8b": 0.06648
           },
           "llama3.1:8b": {
-            "gemma2:9b": 0.02,
+            "gemma2:9b": 0.01076,
             "llama3.1:8b": 0.0,
-            "mistral:7b-instruct": 0.09,
-            "qwen3:8b": 0.02
+            "mistral:7b-instruct": 0.078,
+            "qwen3:8b": 0.01214
           },
           "mistral:7b-instruct": {
-            "gemma2:9b": 0.1,
-            "llama3.1:8b": 0.15,
+            "gemma2:9b": 0.08324,
+            "llama3.1:8b": 0.14094,
             "mistral:7b-instruct": 0.0,
-            "qwen3:8b": 0.04
+            "qwen3:8b": 0.0231
           },
           "qwen3:8b": {
-            "gemma2:9b": 0.91,
-            "llama3.1:8b": 0.91,
-            "mistral:7b-instruct": 0.91,
+            "gemma2:9b": 0.82838,
+            "llama3.1:8b": 0.84354,
+            "mistral:7b-instruct": 0.84332,
             "qwen3:8b": 0.0
           }
         },
-        "pairwise_reversal_probability": 0.05390572390572391
+        "pairwise_reversal_probability": 0.0466095016566998
       },
       "significance_stability": {
-        "n_references": 100,
+        "n_references": 200,
+        "n_sign_flips": 20000,
         "pairwise_significance_summary": {
           "gemma2:9b_vs_llama3.1:8b": {
             "decision_distribution": {
               "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.8559375,
-            "std_p_value": 0.2421378981463868,
-            "min_p_value": 0.125,
-            "max_p_value": 1.0,
+            "mean_adj_p_value": 1.0,
+            "std_adj_p_value": 0.0,
+            "min_adj_p_value": 1.0,
+            "max_adj_p_value": 1.0,
+            "mean_raw_p_value": 0.9589318034098295,
             "is_decision_constant": true
           },
           "gemma2:9b_vs_mistral:7b-instruct": {
             "decision_distribution": {
               "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.855,
-            "std_p_value": 0.26188618711188266,
-            "min_p_value": 0.0625,
-            "max_p_value": 1.0,
+            "mean_adj_p_value": 1.0,
+            "std_adj_p_value": 0.0,
+            "min_adj_p_value": 1.0,
+            "max_adj_p_value": 1.0,
+            "mean_raw_p_value": 0.9626718664066797,
             "is_decision_constant": true
           },
           "gemma2:9b_vs_qwen3:8b": {
             "decision_distribution": {
-              "SIGNIFICANT_B_WINS": 0.44,
-              "NON_SIGNIFICANT": 0.56
+              "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.229874267578125,
-            "std_p_value": 0.31601613739264484,
-            "min_p_value": 0.0001220703125,
-            "max_p_value": 1.0,
-            "is_decision_constant": false
+            "mean_adj_p_value": 0.9853832308384581,
+            "std_adj_p_value": 0.06858638420109338,
+            "min_adj_p_value": 0.36928153592320384,
+            "max_adj_p_value": 1.0,
+            "mean_raw_p_value": 0.6933335833208341,
+            "is_decision_constant": true
           },
           "llama3.1:8b_vs_mistral:7b-instruct": {
             "decision_distribution": {
               "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 1.0,
-            "std_p_value": 0.0,
-            "min_p_value": 1.0,
-            "max_p_value": 1.0,
+            "mean_adj_p_value": 1.0,
+            "std_adj_p_value": 0.0,
+            "min_adj_p_value": 1.0,
+            "max_adj_p_value": 1.0,
+            "mean_raw_p_value": 1.0,
             "is_decision_constant": true
           },
           "llama3.1:8b_vs_qwen3:8b": {
             "decision_distribution": {
-              "SIGNIFICANT_B_WINS": 0.5,
-              "NON_SIGNIFICANT": 0.5
+              "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.16837554931640625,
-            "std_p_value": 0.28492382911482583,
-            "min_p_value": 0.0001220703125,
-            "max_p_value": 1.0,
-            "is_decision_constant": false
+            "mean_adj_p_value": 0.9841525423728814,
+            "std_adj_p_value": 0.0704948150229447,
+            "min_adj_p_value": 0.36928153592320384,
+            "max_adj_p_value": 1.0,
+            "mean_raw_p_value": 0.6878911054447278,
+            "is_decision_constant": true
           },
           "mistral:7b-instruct_vs_qwen3:8b": {
             "decision_distribution": {
-              "SIGNIFICANT_B_WINS": 0.5,
-              "NON_SIGNIFICANT": 0.5
+              "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.17372344970703124,
-            "std_p_value": 0.28612383428864513,
-            "min_p_value": 3.0517578125e-05,
-            "max_p_value": 1.0,
-            "is_decision_constant": false
+            "mean_adj_p_value": 0.9841525423728814,
+            "std_adj_p_value": 0.0704948150229447,
+            "min_adj_p_value": 0.36928153592320384,
+            "max_adj_p_value": 1.0,
+            "mean_raw_p_value": 0.6878911054447278,
+            "is_decision_constant": true
           }
         }
       },
       "taxonomy_stability": {
-        "n_references": 100,
+        "n_references": 1,
         "dominant_failure_category_distribution": {
           "rule_violation": 1.0
         },
         "is_dominant_category_stable": true
       },
       "oracle_recovery": {
-        "n_references": 100,
+        "n_references": 50000,
         "oracle_ranking": [
           "qwen3:8b",
           "gemma2:9b",
           "mistral:7b-instruct",
           "llama3.1:8b"
         ],
-        "oracle_recovery_rate": 0.04,
-        "rankings_matching_oracle": 4
+        "oracle_recovery_rate": 0.0286,
+        "rankings_matching_oracle": 1430
       },
       "canonical_reference_diagnostic": {
         "canonical_pass_rate": 0.08333333333333333,
@@ -200,9 +208,11 @@
         "mistral:7b-instruct",
         "llama3.1:8b"
       ],
-      "kendall_tau_mean": 0.46333333333333343,
-      "kendall_tau_std": 0.3428475527759305,
-      "kendall_tau_min": -0.6666666666666669,
+      "n_monte_carlo_draws": 50000,
+      "kendall_tau_mean": 0.4892941731490662,
+      "kendall_tau_std": 0.35573506201187693,
+      "kendall_tau_se": 0.00159089556127732,
+      "kendall_tau_min": -1.0,
       "kendall_tau_max": 1.0,
       "pairwise_win_matrix": {
         "models": [
@@ -211,123 +221,124 @@
           "mistral:7b-instruct",
           "qwen3:8b"
         ],
-        "n_references": 100,
+        "n_references": 50000,
         "pairwise_win_probabilities": {
           "gemma2:9b": {
             "gemma2:9b": 0.0,
-            "llama3.1:8b": 0.76,
-            "mistral:7b-instruct": 0.7,
-            "qwen3:8b": 0.11
+            "llama3.1:8b": 0.70358,
+            "mistral:7b-instruct": 0.6609,
+            "qwen3:8b": 0.09532
           },
           "llama3.1:8b": {
-            "gemma2:9b": 0.11,
+            "gemma2:9b": 0.14346,
             "llama3.1:8b": 0.0,
-            "mistral:7b-instruct": 0.32,
-            "qwen3:8b": 0.02
+            "mistral:7b-instruct": 0.334,
+            "qwen3:8b": 0.04348
           },
           "mistral:7b-instruct": {
-            "gemma2:9b": 0.21,
-            "llama3.1:8b": 0.52,
+            "gemma2:9b": 0.21418,
+            "llama3.1:8b": 0.47164,
             "mistral:7b-instruct": 0.0,
-            "qwen3:8b": 0.04
+            "qwen3:8b": 0.03712
           },
           "qwen3:8b": {
-            "gemma2:9b": 0.85,
-            "llama3.1:8b": 0.96,
-            "mistral:7b-instruct": 0.96,
+            "gemma2:9b": 0.87224,
+            "llama3.1:8b": 0.93164,
+            "mistral:7b-instruct": 0.9358,
             "qwen3:8b": 0.0
           }
         },
-        "pairwise_reversal_probability": 0.18454545454545454
+        "pairwise_reversal_probability": 0.186137532350647
       },
       "significance_stability": {
-        "n_references": 100,
+        "n_references": 200,
+        "n_sign_flips": 20000,
         "pairwise_significance_summary": {
           "gemma2:9b_vs_llama3.1:8b": {
             "decision_distribution": {
-              "SIGNIFICANT_A_WINS": 0.29,
-              "NON_SIGNIFICANT": 0.71
+              "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.4129119110107422,
-            "std_p_value": 0.4115441349749566,
-            "min_p_value": 4.00543212890625e-05,
-            "max_p_value": 1.0,
-            "is_decision_constant": false
+            "mean_adj_p_value": 0.9885595720213991,
+            "std_adj_p_value": 0.06285239845642143,
+            "min_adj_p_value": 0.5007749612519374,
+            "max_adj_p_value": 1.0,
+            "mean_raw_p_value": 0.7848275086245688,
+            "is_decision_constant": true
           },
           "gemma2:9b_vs_mistral:7b-instruct": {
             "decision_distribution": {
-              "SIGNIFICANT_A_WINS": 0.23,
-              "NON_SIGNIFICANT": 0.77
+              "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.49422393798828124,
-            "std_p_value": 0.41769166850763,
-            "min_p_value": 0.000244140625,
-            "max_p_value": 1.0,
-            "is_decision_constant": false
+            "mean_adj_p_value": 0.9899245037748113,
+            "std_adj_p_value": 0.0604399674544993,
+            "min_adj_p_value": 0.4971751412429379,
+            "max_adj_p_value": 1.0,
+            "mean_raw_p_value": 0.7497000149992499,
+            "is_decision_constant": true
           },
           "gemma2:9b_vs_qwen3:8b": {
             "decision_distribution": {
-              "SIGNIFICANT_B_WINS": 0.39,
-              "NON_SIGNIFICANT": 0.61
+              "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.282605065186508,
-            "std_p_value": 0.3422617453566559,
-            "min_p_value": 7.916241884231567e-09,
-            "max_p_value": 1.0,
-            "is_decision_constant": false
+            "mean_adj_p_value": 0.9299942502874856,
+            "std_adj_p_value": 0.1697449581572959,
+            "min_adj_p_value": 0.08999550022498876,
+            "max_adj_p_value": 1.0,
+            "mean_raw_p_value": 0.5315639218039098,
+            "is_decision_constant": true
           },
           "llama3.1:8b_vs_mistral:7b-instruct": {
             "decision_distribution": {
-              "SIGNIFICANT_B_WINS": 0.03,
-              "NON_SIGNIFICANT": 0.97
+              "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.6842578125,
-            "std_p_value": 0.35058373084263755,
-            "min_p_value": 0.01171875,
-            "max_p_value": 1.0,
-            "is_decision_constant": false
+            "mean_adj_p_value": 0.9956384680765962,
+            "std_adj_p_value": 0.04002693443025737,
+            "min_adj_p_value": 0.4971751412429379,
+            "max_adj_p_value": 1.0,
+            "mean_raw_p_value": 0.8164976751162442,
+            "is_decision_constant": true
           },
           "llama3.1:8b_vs_qwen3:8b": {
             "decision_distribution": {
-              "SIGNIFICANT_B_WINS": 0.71,
-              "NON_SIGNIFICANT": 0.29
+              "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.11560226708796108,
-            "std_p_value": 0.2522476464750813,
-            "min_p_value": 1.4551915228366852e-10,
-            "max_p_value": 1.0,
-            "is_decision_constant": false
+            "mean_adj_p_value": 0.9102299885005749,
+            "std_adj_p_value": 0.18796393568265207,
+            "min_adj_p_value": 0.08999550022498876,
+            "max_adj_p_value": 1.0,
+            "mean_raw_p_value": 0.47117469126543676,
+            "is_decision_constant": true
           },
           "mistral:7b-instruct_vs_qwen3:8b": {
             "decision_distribution": {
-              "SIGNIFICANT_B_WINS": 0.68,
-              "NON_SIGNIFICANT": 0.32
+              "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.1099007047014311,
-            "std_p_value": 0.2208538077902017,
-            "min_p_value": 1.1920928955078125e-07,
-            "max_p_value": 1.0,
-            "is_decision_constant": false
+            "mean_adj_p_value": 0.9109307034648267,
+            "std_adj_p_value": 0.18656671667916122,
+            "min_adj_p_value": 0.08999550022498876,
+            "max_adj_p_value": 1.0,
+            "mean_raw_p_value": 0.4633228338583071,
+            "is_decision_constant": true
           }
         }
       },
       "taxonomy_stability": {
-        "n_references": 100,
+        "n_references": 1,
         "dominant_failure_category_distribution": {
           "rule_violation": 1.0
         },
         "is_dominant_category_stable": true
       },
       "oracle_recovery": {
-        "n_references": 100,
+        "n_references": 50000,
         "oracle_ranking": [
           "qwen3:8b",
           "gemma2:9b",
           "mistral:7b-instruct",
           "llama3.1:8b"
         ],
-        "oracle_recovery_rate": 0.28,
-        "rankings_matching_oracle": 28
+        "oracle_recovery_rate": 0.2392,
+        "rankings_matching_oracle": 11960
       },
       "canonical_reference_diagnostic": {
         "canonical_pass_rate": 0.16666666666666666,
@@ -363,8 +374,10 @@
         "mistral:7b-instruct",
         "llama3.1:8b"
       ],
+      "n_monte_carlo_draws": 50000,
       "kendall_tau_mean": 1.0,
       "kendall_tau_std": 0.0,
+      "kendall_tau_se": 0.0,
       "kendall_tau_min": 1.0,
       "kendall_tau_max": 1.0,
       "pairwise_win_matrix": {
@@ -374,7 +387,7 @@
           "mistral:7b-instruct",
           "qwen3:8b"
         ],
-        "n_references": 100,
+        "n_references": 50000,
         "pairwise_win_probabilities": {
           "gemma2:9b": {
             "gemma2:9b": 0.0,
@@ -404,79 +417,86 @@
         "pairwise_reversal_probability": 0.0
       },
       "significance_stability": {
-        "n_references": 100,
+        "n_references": 200,
+        "n_sign_flips": 20000,
         "pairwise_significance_summary": {
           "gemma2:9b_vs_llama3.1:8b": {
             "decision_distribution": {
-              "SIGNIFICANT_A_WINS": 1.0
+              "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 1.5221826110689564e-05,
-            "std_p_value": 0.0,
-            "min_p_value": 1.5221826110689564e-05,
-            "max_p_value": 1.5221826110689564e-05,
+            "mean_adj_p_value": 0.1914774261286936,
+            "std_adj_p_value": 0.005577590875120654,
+            "min_adj_p_value": 0.17639118044097796,
+            "max_adj_p_value": 0.2055897205139743,
+            "mean_raw_p_value": 0.048245587720613964,
             "is_decision_constant": true
           },
           "gemma2:9b_vs_mistral:7b-instruct": {
             "decision_distribution": {
-              "SIGNIFICANT_A_WINS": 1.0
+              "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.000584364628044346,
-            "std_p_value": 1.0842021724855044e-19,
-            "min_p_value": 0.0005843646280443461,
-            "max_p_value": 0.0005843646280443461,
+            "mean_adj_p_value": 0.19268586570671467,
+            "std_adj_p_value": 0.004760185264984536,
+            "min_adj_p_value": 0.1807909604519774,
+            "max_adj_p_value": 0.2055897205139743,
+            "mean_raw_p_value": 0.09468501574921254,
             "is_decision_constant": true
           },
           "gemma2:9b_vs_qwen3:8b": {
             "decision_distribution": {
-              "SIGNIFICANT_B_WINS": 1.0
+              "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 2.9664529225201862e-05,
-            "std_p_value": 3.3881317890172014e-21,
-            "min_p_value": 2.9664529225201866e-05,
-            "max_p_value": 2.9664529225201866e-05,
+            "mean_adj_p_value": 0.1914774261286936,
+            "std_adj_p_value": 0.005577590875120654,
+            "min_adj_p_value": 0.17639118044097796,
+            "max_adj_p_value": 0.2055897205139743,
+            "mean_raw_p_value": 0.049619519024048805,
             "is_decision_constant": true
           },
           "llama3.1:8b_vs_mistral:7b-instruct": {
             "decision_distribution": {
               "NON_SIGNIFICANT": 1.0
             },
-            "mean_p_value": 0.7283324808813632,
-            "std_p_value": 0.0,
-            "min_p_value": 0.7283324808813632,
-            "max_p_value": 0.7283324808813632,
+            "mean_adj_p_value": 0.6572671366431679,
+            "std_adj_p_value": 0.00329256600143568,
+            "min_adj_p_value": 0.648367581620919,
+            "max_adj_p_value": 0.6658667066646667,
+            "mean_raw_p_value": 0.6572671366431679,
             "is_decision_constant": true
           },
           "llama3.1:8b_vs_qwen3:8b": {
             "decision_distribution": {
               "SIGNIFICANT_B_WINS": 1.0
             },
-            "mean_p_value": 1.0521598690598086e-14,
-            "std_p_value": 0.0,
-            "min_p_value": 1.0521598690598086e-14,
-            "max_p_value": 1.0521598690598086e-14,
+            "mean_adj_p_value": 0.012951852407379632,
+            "std_adj_p_value": 0.0019881645958702656,
+            "min_adj_p_value": 0.007499625018749062,
+            "max_adj_p_value": 0.01829908504574771,
+            "mean_raw_p_value": 0.002158642067896605,
             "is_decision_constant": true
           },
           "mistral:7b-instruct_vs_qwen3:8b": {
             "decision_distribution": {
               "SIGNIFICANT_B_WINS": 1.0
             },
-            "mean_p_value": 1.367383267102241e-13,
-            "std_p_value": 0.0,
-            "min_p_value": 1.367383267102241e-13,
-            "max_p_value": 1.367383267102241e-13,
+            "mean_adj_p_value": 0.01826033698315084,
+            "std_adj_p_value": 0.0019351515307575457,
+            "min_adj_p_value": 0.013499325033748313,
+            "max_adj_p_value": 0.023998800059997,
+            "mean_raw_p_value": 0.0036520673966301685,
             "is_decision_constant": true
           }
         }
       },
       "taxonomy_stability": {
-        "n_references": 100,
+        "n_references": 1,
         "dominant_failure_category_distribution": {
           "rule_violation": 1.0
         },
         "is_dominant_category_stable": true
       },
       "oracle_recovery": {
-        "n_references": 100,
+        "n_references": 50000,
         "oracle_ranking": [
           "qwen3:8b",
           "gemma2:9b",
@@ -484,7 +504,7 @@
           "llama3.1:8b"
         ],
         "oracle_recovery_rate": 1.0,
-        "rankings_matching_oracle": 100
+        "rankings_matching_oracle": 50000
       },
       "canonical_reference_diagnostic": {
         "canonical_pass_rate": 0.25,
