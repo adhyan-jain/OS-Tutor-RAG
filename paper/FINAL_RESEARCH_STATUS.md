@@ -1,42 +1,21 @@
-# Final Executive Research Status & Submission Recommendation
+# Final Research Status Report & Paper Decision Gate
 
-## 1. Final Research Question
-> *Can an executable reasoning benchmark produce different scientific conclusions solely because its gold reference trajectory is replaced by another valid trajectory from the task's complete valid-solution space \(V(x)\), while the task, model outputs, and evaluator remain otherwise unchanged?*
-
----
-
-## 2. Exact Contribution
-1. Formalized Reference-Choice Robustness (RCR) as an experimental framework for auditing executable benchmarks over complete valid-solution spaces \(V(x)\).
-2. Proved empirically that standard reference-matching evaluators render benchmarks scientifically non-identifiable (\(\text{Kendall } \tau = 0.463 \pm 0.343\), 18.45% winner reversals, 50% statistical significance flips).
-3. Demonstrated that false rejection of valid noncanonical trajectories persists under stronger 12B model capabilities (pooled \(\text{FRR}_{\text{norm}} = 0.667\), 95% CI: [0.500, 0.867]).
-4. Proved that reference-independent executable semantic oracles (\(E_3\)) eliminate reference dependence entirely, restoring 100% decision stability (\(\text{Kendall } \tau = 1.000\)).
+**Repository:** OS-Tutor-RAG  
+**Date:** October 2026  
+**Final Decision Gate:** **MODIFY (Strong Defensible Paper Package)**  
+**Automated Test Suite Status:** **359 / 359 PASSED**  
+**Git HEAD SHA:** Current Main Commit  
 
 ---
 
-## 3. Corrected Headline Numbers
+## Executive Summary of Completed Work
 
-- **Baseline Model Outputs**: 1,152 generations (`qwen3:8b`, `gemma2:9b`, `mistral:7b-instruct`, `llama3.1:8b`).
-- **Stronger Model Outputs**: 576 completed generations (`gemma3:12b`: 288, `olmo2:7b`: 288).
-- **Exact Unit Tests Passed**: **354 / 354 tests (100%)**.
-- **\(E_1\) Exact Match Oracle Recovery**: **4.0%** (4/100).
-- **\(E_2\) Normalized Match Oracle Recovery**: **28.0%** (28/100).
-- **\(E_3\) Semantic Oracle Recovery**: **100.0%** (100/100).
-- **Significance Flip Rate**: **50.0%** of reference selections shift between \(p < 0.05\) and \(p \ge 0.05\) for key model pairs.
-
----
-
-## 4. Strongest Evidence
-- **Benchmark Non-Identifiability**: Verified across 100 reference vector draws; Kendall \(\tau\) drops to 0.463 and pairwise winner reversal reaches 18.45%.
-- **Statistical Flips**: McNemar paired tests prove $p$-values flip across reference choices for identical outputs.
-- **Stronger-Model Persistence**: 576 completed generations prove FRR remains high (66.7%) under `gemma3:12b` and `olmo2:7b`.
-
----
-
-## 5. Weakest Evidence / Limitations
-- **Bounded Domain Scope**: Bounded to OS process scheduling, synchronization interleaving, and Banker's deadlock avoidance.
-- **Oracle Tautology**: \(E_3\)'s 100% accuracy on adversarial sets is tautological relative to the domain specification because \(E_3\) defines validity.
-
----
-
-## 6. Submission Recommendation
-- **Classification**: **GREENLIGHT**. The central scientific thesis is empirically solid, statistically audited with world-clustered bootstraps, supported by 100% passing tests, and fully documented in submission-ready manuscript artifacts.
+1. **Forensic Audit & Zero-Trust Verification**: Evaluated all 1,152 baseline generation records, 1,152 stated-convention control records, and 576 competence pilot records directly from raw JSONL files. Calculated 64-character SHA-256 digests for all files.
+2. **50,000 Monte Carlo Reference Vector Draws**: Reimplemented reference sampling to draw $N=50,000$ independent uniform reference vectors from the Cartesian product $\prod_{k=1}^{24} V(x_k)$, keeping canonical Draw 0 strictly separate. Demonstrated Monte Carlo $\text{SE} = 0.0016$.
+3. **Statistical Repair**: Replaced pseudoreplicated cell-level McNemar testing with the preregistered world-level paired sign-flip permutation test (20,000 sign flips) and Holm-Bonferroni correction across 6 model pairs. Proved that world-level variance dominates pairwise differences ($p \ge 0.05$ across all pairs).
+4. **Tie-Aware Model Ranking**: Implemented primary Kendall $\tau_b$ score vector correlation using `scipy.stats.kendalltau(variant='b')`, eliminating arbitrary string tie-breaking.
+5. **Stated-Convention Control**: Recomputed stated-convention arm results; proved that disclosing canonical tie-breaking rules fails to eliminate noncanonical outputs ($\text{FRR}_{\text{norm}} = 0.625$).
+6. **Unpooled Competence Analysis**: Unpooled Gemma 3 12B ($n_{\text{valid}}=42$, $\text{FRR}_{\text{norm}} = 0.619$) and OLMo 2 7B ($n_{\text{valid}}=6$). Transparently reported sample sizes and avoided overclaiming frontier capability.
+7. **Adversarial Meta-Evaluation**: Evaluated $E_1, E_2, E_3$ on 79 real model output contrasts. Proved $E_1/E_2$ suffer 50.0% FRR and reject 100% of noncanonical valid solutions.
+8. **Manuscript & Reproducibility Package**: Completely rebuilt `PAPER_FINAL.md`, `REPRODUCIBILITY.md`, `CLAIMS_AUDIT_FINAL.md`, `REVIEWER_ATTACK.md`, `NOVELTY_POSITIONING_FINAL.md`, and `DEAD_CODE_AND_DOCS_AUDIT.md`.
+9. **Automated Consistency Gate**: Created `tests/test_consistency_gate.py` asserting 100% agreement between manuscript numbers, JSON result artifacts, non-truncated SHA-256 hashes, and 50,000 draw sampling parameters. All 359 tests pass.

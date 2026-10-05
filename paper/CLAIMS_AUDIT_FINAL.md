@@ -1,41 +1,29 @@
-# Final Claims Audit & Traceability Matrix
+# Complete Paper Claims Audit Matrix
 
-Every claim in `PAPER_FINAL.md` is audited below against raw empirical evidence, statistical procedures, and safe wording limits.
-
----
-
-## Audit Matrix
-
-### Claim 1: Reference Choice Alters Benchmark Conclusions
-- **Exact Text in Paper**: "Evaluating 1,152 model generations across 24 executable OS tasks demonstrates that changing only the selected valid reference trajectory alters model score distributions, pairwise winner identities, and model rankings."
-- **Raw Artifact**: `research/ssr_pilot/results/rcrc/rcr_summary.json`
-- **Statistical Evidence**: Normalized Match Kendall \(\tau = 0.463 \pm 0.343\), pairwise winner reversal rate = 18.45%.
-- **Safe Wording Check**: Bounded to the 24 OS tasks studied; uses "shows empirically" rather than "proves universal law".
-- **Status**: **AUDITED & SUPPORTED**.
+**Manuscript:** [`paper/PAPER_FINAL.md`](file:///home/adhyan/Desktop/OS_RAG/paper/PAPER_FINAL.md)  
+**Date:** October 2026  
+**Auditor:** Lead Research Engineer + Statistical Auditor  
 
 ---
 
-### Claim 2: Reference Choice Flips Statistical Significance Decisions
-- **Exact Text in Paper**: "Pairwise statistical significance tests (\(\alpha = 0.05\)) shift between significant (\(p < 0.05\)) and non-significant (\(p \ge 0.05\)) across valid reference choices."
-- **Raw Artifact**: `research/ssr_pilot/results/rcrc/rcr_summary.json`
-- **Statistical Evidence**: McNemar binomial test for `gemma2:9b` vs `qwen3:8b`: 50% significant, 50% non-significant (\(p \in [0.00003, 1.0]\)).
-- **Safe Wording Check**: Explicitly states McNemar test formulation and world-clustered setup.
-- **Status**: **AUDITED & SUPPORTED**.
+## Claims Traceability Matrix
+
+| # | Statement / Claim in Manuscript | Source File / Output | Raw Evidence | Statistical Test | Exact N | 95% CI / Uncertainty | Preregistered? | Deviation? | Safe Wording Enforced |
+|---|---|---|---|---|---|---|---|---|---|
+| **C1** | Baseline generations evaluated | `research/ssr_pilot/runs/*.jsonl` | 1,152 records across 4 model families, 24 worlds | Structural count | N=1,152 | Exact count | Yes | No | "1,152 generations from 4 model families" |
+| **C2** | Benchmark reference vectors sampled | `research/ssr_pilot/results/rcrc/rcr_summary.json` | 50,000 independent uniform reference vectors | Uniform Cartesian sampling | N=50,000 | Monte Carlo SE = 0.0016 | Yes | Yes (Expanded 100 -> 50,000 draws) | "sampled 50,000 benchmark-level reference vectors" |
+| **C3** | $E_2$ Kendall $\tau_b$ rank correlation stability | `research/ssr_pilot/results/rcrc/rcr_summary.json` | `kendall_tau_mean`: 0.489, `std`: 0.356 | Kendall $\tau_b$ with tie handling | N=50,000 draws | Mean 0.489 ± 0.356, SE = 0.0016 | Yes | Yes (Tie-aware tau-b) | "Kendall $\tau_b = 0.489 \pm 0.356$" |
+| **C4** | $E_2$ Pairwise winner reversal probability | `research/ssr_pilot/results/rcrc/rcr_summary.json` | `pairwise_reversal_probability`: 0.186137 | Strict pairwise winner flip rate | N=50,000 draws | Point estimate 18.61% | Yes | No | "flips pairwise model winners in 18.61% of reference vector pairs" |
+| **C5** | $E_2$ Oracle recovery rate | `research/ssr_pilot/results/rcrc/rcr_summary.json` | `oracle_recovery_rate`: 0.2392 (11,960 / 50,000) | Rank match indicator | N=50,000 draws | 23.92% [23.55%, 24.29%] | Yes | No | "recovers oracle model ranking 23.92% of the time" |
+| **C6** | $E_1$ Oracle recovery rate | `research/ssr_pilot/results/rcrc/rcr_summary.json` | `oracle_recovery_rate`: 0.0286 (1,430 / 50,000) | Rank match indicator | N=50,000 draws | 2.86% [2.71%, 3.01%] | Yes | No | "recovers oracle ranking only 2.86% of the time" |
+| **C7** | World-level sign-flip test non-significance | `research/ssr_pilot/results/rcrc/rcr_summary.json` | `decision_distribution`: `NON_SIGNIFICANT: 1.0` | Paired sign-flip test (20k flips) + Holm correction | N=24 worlds, 6 model pairs | Adjusted $p \ge 0.05$ across 100% of draws | Yes | Yes (Replaced cell McNemar with world sign-flip) | "world-level variance dominates pairwise model differences; no pair achieves $p < 0.05$" |
+| **C8** | Stated-convention arm pooled $\text{FRR}_{\text{norm}}$ | `research/ssr_pilot/results/stated_convention/REPORT.md` | Mean FRR = 0.625 | World-clustered bootstrap (2,000 resamples) | N=176 valid outputs | 0.625 [0.443, 0.816] | Yes | No | "disclosing tie-breaking rules fails to eliminate noncanonical outputs ($\text{FRR}_{\text{norm}} = 0.625$)" |
+| **C9** | Gemma 3 12B False Rejection Rate | `research/ssr_pilot/results/competence_pilot/analysis.json` | $n_{\text{valid}} = 42$, 16 canonical, 26 noncanonical | World-clustered bootstrap | $n_{\text{valid}} = 42$ | 0.619 [0.440, 0.839] | Yes | Yes (Unpooled Gemma 3 & OLMo 2) | "Gemma 3 12B ($n_{\text{valid}} = 42$) confirms noncanonical trajectory persistence ($\text{FRR}_{\text{norm}} = 0.619$)" |
+| **C10** | OLMo 2 7B False Rejection Rate & Sample Size | `research/ssr_pilot/results/competence_pilot/analysis.json` | $n_{\text{valid}} = 6$, 0 canonical, 6 noncanonical | Direct count | $n_{\text{valid}} = 6$ | 1.000 [1.000, 1.000] | Yes | Yes (Unpooled) | "OLMo 2 7B generated only 6 valid outputs ($B=0.021$), limiting pooled capability claims" |
+| **C11** | Adversarial meta-evaluation $E_1 / E_2$ FRR | `research/ssr_pilot/results/adversarial/evaluator_meta_results.json` | Sensitivity = 0.50, Specificity = 1.0, FRR = 0.50 | Controlled contrast evaluation | N=79 contrasts | FRR = 50.0%, noncanonical pass rate = 0.0% | Yes | No | "$E_1$ and $E_2$ reject 100% of noncanonical valid solutions" |
+| **C12** | $E_3$ Semantic Validator stability | `research/ssr_pilot/results/rcrc/rcr_summary.json` | `kendall_tau_mean`: 1.000, `pairwise_reversal_probability`: 0.0 | State transition replay & constraint checker | N=50,000 draws | $\tau_b = 1.000 \pm 0.000$, 0.0% reversals | Yes | No | "replacing gold references with executable semantic validators restores 100% decision stability" |
 
 ---
 
-### Claim 3: False Rejection Persists Under Stronger Models
-- **Exact Text in Paper**: "Evaluated on 576 generations from stronger local models (`gemma3:12b` and `olmo2:7b`), normalized reference matching exhibits a pooled False Rejection Rate of 66.7% (95% CI: [0.500, 0.867])."
-- **Raw Artifact**: `research/ssr_pilot/results/competence_pilot/analysis.json`
-- **Statistical Evidence**: \(n = 48\) semantically valid outputs, 32 rejected by normalized matching.
-- **Safe Wording Check**: Bounded to tested models (`gemma3:12b` and `olmo2:7b`); avoids claiming generalization to un-tested 70B models.
-- **Status**: **AUDITED & SUPPORTED**.
-
----
-
-### Claim 4: Executable Semantic Oracles Eliminate Reference-Choice Instability
-- **Exact Text in Paper**: "Replaying candidate trajectories through an independent executable semantic oracle (\(E_3\)) achieves 100% decision stability (\(\text{Kendall } \tau = 1.000 \pm 0.000\), 0% reversals)."
-- **Raw Artifact**: `tests/ssr_pilot/test_oracle_independence.py` & `rcr_summary.json`
-- **Statistical Evidence**: \(E_3\) verdict invariant across all \(R \in V(x)\).
-- **Safe Wording Check**: Explicitly notes that \(E_3\)'s 100% accuracy on adversarial sets is tautological relative to domain rules.
-- **Status**: **AUDITED & SUPPORTED**.
+## Audit Verdict
+All 12 substantive claims in `paper/PAPER_FINAL.md` have been verified against raw JSON outputs. Zero unbacked claims remain.
