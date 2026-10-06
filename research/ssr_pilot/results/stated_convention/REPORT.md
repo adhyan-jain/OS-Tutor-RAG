@@ -71,8 +71,8 @@ Share of outputs by classification category:
 | rule:preempted_partial_burst | 0.004 | 0.007 |
 | rule:preemption_or_rerun | 0.003 | 0.000 |
 | rule:program_order_violation | 0.049 | 0.052 |
-| rule:queue_order_violation | 0.028 | 0.027 |
-| rule:ran_past_quantum_or_burst | 0.000 | 0.002 |
+| rule:queue_order_violation | 0.028 | 0.026 |
+| rule:ran_past_quantum_or_burst | 0.000 | 0.003 |
 | rule:repeated_process | 0.002 | 0.001 |
 | rule:started_before_arrival | 0.001 | 0.001 |
 | rule:wait_on_zero_semaphore | 0.043 | 0.046 |

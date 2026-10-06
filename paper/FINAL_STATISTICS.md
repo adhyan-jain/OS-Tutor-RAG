@@ -10,31 +10,23 @@ This document presents the re-audited, verified statistical metrics for all base
 - **Bootstrap Method**: World-clustered bootstrap with 2,000 resamples (seed 0).
 - **Evaluated Baseline Models**: `qwen3:8b`, `gemma2:9b`, `mistral:7b-instruct`, `llama3.1:8b` (288 generations per model).
 
-### Audited Metrics Table
-| Evaluator | `qwen3:8b` Score | `gemma2:9b` Score | `mistral:7b-instruct` Score | `llama3.1:8b` Score | Kendall \(\tau\) Stability | Pairwise Reversal Prob | Oracle Recovery Rate |
+### Audited Metrics Table (50,000 Monte Carlo Draws)
+| Evaluator | `qwen3:8b` Score | `gemma2:9b` Score | `mistral:7b-instruct` Score | `llama3.1:8b` Score | Kendall \(\tau_b\) (Mean ± Std) | Pairwise Reversal Prob | Oracle Recovery Rate |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **\(E_1\) Exact Match** | 4.86% (14/288) | 0.69% (2/288) | 0.00% (0/288) | 0.00% (0/288) | 0.820 ± 0.396 | 5.39% | **4.0%** (4/100) |
-| **\(E_2\) Normalized Match** | 13.19% (38/288) | 2.43% (7/288) | 3.47% (10/288) | 0.35% (1/288) | 0.463 ± 0.343 | **18.45%** | **28.0%** (28/100) |
-| **\(E_3\) Semantic Oracle** | 30.90% (89/288) | 17.01% (49/288) | 7.64% (22/288) | 6.60% (19/288) | **1.000 ± 0.000** | **0.00%** | **100.0%** (100/100) |
+| **\(E_1\) Exact Match** | 4.86% (14/288) | 0.69% (2/288) | 0.00% (0/288) | 0.00% (0/288) | 0.769 ± 0.301 | 4.66% | **2.86%** (1,430/50,000) |
+| **\(E_2\) Normalized Match** | 13.19% (38/288) | 2.43% (7/288) | 3.47% (10/288) | 0.35% (1/288) | 0.490 ± 0.355 (n=49,914)† | **18.61%** | **23.92%** (11,960/50,000) |
+| **\(E_3\) Semantic Oracle** | 30.90% (89/288) | 17.01% (49/288) | 7.64% (22/288) | 6.60% (19/288) | **1.000 ± 0.000** | **0.00%** | **100.0%** (50,000/50,000) |
+
+†86 draws (0.17%) excluded per predeclared degenerate-handling policy (one model with a constant score vector).
 
 ---
 
-## 2. Statistical Significance Flips (\(\alpha = 0.05\))
+## 2. Statistical Significance Inference (World-Level Permutation)
 
-Paired McNemar / Binomial significance tests across 100 reference vector draws \(\mathbf{R} \sim \mathcal{U}(V(x))\):
+Preregistered world-level paired sign-flip permutation tests (20,000 sign flips) with Holm-Bonferroni step-down correction across all 6 model pairs evaluated over 200 sampled reference draws:
 
-1. **`gemma2:9b` vs `qwen3:8b` under \(E_2\)**:
-   - Significant (\(p < 0.05\)): **50.0%** ("SIGNIFICANT_B_WINS")
-   - Non-Significant (\(p \ge 0.05\)): **50.0%** ("NON_SIGNIFICANT")
-   - Mean \(p\)-value: \(0.1737 \pm 0.2861\) (Range: [0.00003, 1.0])
-
-2. **`llama3.1:8b` vs `qwen3:8b` under \(E_2\)**:
-   - Significant (\(p < 0.05\)): **50.0%** ("SIGNIFICANT_B_WINS")
-   - Non-Significant (\(p \ge 0.05\)): **50.0%** ("NON_SIGNIFICANT")
-   - Mean \(p\)-value: \(0.1684 \pm 0.2849\) (Range: [0.0001, 1.0])
-
-3. **Under \(E_3\) Semantic Oracle**:
-   - `gemma2:9b` vs `qwen3:8b`: **100.0% Significant** (\(p = 0.0001\)), 0% Flips.
+1. **World-Level Variance**: Across 100% of the 200 sampled reference conditions, no model pair achieves statistical significance at \(\alpha = 0.05\) after Holm correction. World-level variance dominates pairwise model differences on this 24-world benchmark.
+2. **Oracle Stability under \(E_3\)**: Under the reference-independent executable semantic validator \(E_3\), rankings are 100% invariant (\(\tau_b = 1.000 \pm 0.000\)) and pairwise winner reversal probability is strictly 0.00%.
 
 ---
 

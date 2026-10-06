@@ -250,3 +250,72 @@ def test_banker_validator_standalone():
     ok, reason = validate_banker(world, invalid_seq)
     assert not ok and reason == "need_exceeds_work"
 
+
+def test_banker_solver_and_validator_agree_all_worlds():
+    import itertools
+    from research.simulator.banker import BankerSolver
+    from research.simulator.validators import validate_banker
+    from research.ssr_pilot.worlds import load_worlds
+
+    worlds = [w for w in load_worlds() if w["family"] == "banker"]
+    assert len(worlds) == 8
+
+    for world in worlds:
+        solver = BankerSolver(world["processes"], world["available"])
+        enumerated = set(solver.enumerate())
+        assert solver.count_paths() == len(enumerated)
+
+        # 1. Every enumerated sequence is accepted by solver and validator
+        for seq in enumerated:
+            assert solver.accepts(seq), (world["id"], seq)
+            ok, reason = validate_banker(world, seq)
+            assert ok and reason == "ok", (world["id"], seq, reason)
+
+        # 2. Canonical sequence is the first in enumeration
+        if enumerated:
+            assert solver.canonical() == solver.enumerate()[0]
+
+        # 3. Cross-validate with independent brute-force permutation search
+        pids = [p["pid"] for p in world["processes"]]
+        bf_valid = set()
+        for perm in itertools.permutations(pids):
+            ok, _ = validate_banker(world, perm)
+            if ok:
+                bf_valid.add(perm)
+
+        assert enumerated == bf_valid, f"Mismatch in world {world['id']}"
+
+
+@pytest.mark.parametrize("seed", range(4))
+def test_random_banker_solver_and_validator_agree(seed):
+    import itertools
+    from research.simulator.banker import BankerSolver
+    from research.simulator.validators import validate_banker
+
+    rng = random.Random(2026 + seed)
+    for _ in range(20):
+        n_procs = rng.randint(2, 5)
+        n_res = rng.randint(2, 4)
+        available = [rng.randint(1, 4) for _ in range(n_res)]
+        procs = []
+        for i in range(n_procs):
+            alloc = [rng.randint(0, 3) for _ in range(n_res)]
+            max_need = [a + rng.randint(0, 3) for a in alloc]
+            procs.append({"pid": f"P{i}", "alloc": alloc, "max": max_need})
+
+        prob = {"processes": procs, "available": available}
+        solver = BankerSolver(procs, available)
+        enumerated = set(solver.enumerate())
+        assert solver.count_paths() == len(enumerated)
+
+        for seq in enumerated:
+            assert solver.accepts(seq)
+            ok, reason = validate_banker(prob, seq)
+            assert ok and reason == "ok"
+
+        # Sampling test if safe sequences exist
+        if enumerated:
+            sample = solver.sample(rng)
+            assert sample in enumerated
+
+

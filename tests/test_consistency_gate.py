@@ -166,3 +166,46 @@ def test_reproducibility_hashes_not_truncated():
             continue
         if len(h) != 64 and not h.isdigit():
             pytest.fail(f"Truncated SHA-256 (length {len(h)}): {h}")
+
+
+def test_manuscript_claims_phrases_present():
+    """Verify that every claim's declared manuscript phrase appears in PAPER_FINAL.md."""
+    manifest = load_manifest()
+    assert os.path.exists(MANUSCRIPT_PATH), f"Missing manuscript: {MANUSCRIPT_PATH}"
+    with open(MANUSCRIPT_PATH) as f:
+        manuscript_text = f.read()
+
+    missing = []
+    for claim in manifest["claims"]:
+        phrase = claim.get("manuscript_phrase")
+        if phrase and phrase not in manuscript_text:
+            missing.append(f"Claim {claim['id']}: phrase '{phrase}' not found in manuscript")
+
+    assert not missing, "Manuscript phrase verification failures:\n" + "\n".join(missing)
+
+
+def test_generating_commit_sha_consistency():
+    """
+    Verify that the generating git commit SHA recorded in rcr_summary.json matches
+    the commit SHAs documented in REPRODUCIBILITY.md and FINAL_RESEARCH_STATUS.md.
+    """
+    summary_path = "research/ssr_pilot/results/rcrc/rcr_summary.json"
+    assert os.path.exists(summary_path)
+    with open(summary_path) as f:
+        summary_data = json.load(f)
+    provenance_sha = summary_data.get("provenance", {}).get("git_sha")
+    assert provenance_sha and len(provenance_sha) == 40, f"Invalid provenance git SHA: {provenance_sha}"
+
+    # Check REPRODUCIBILITY.md
+    assert os.path.exists(REPRODUCIBILITY_PATH)
+    with open(REPRODUCIBILITY_PATH) as f:
+        repro_text = f.read()
+    assert provenance_sha in repro_text, f"Generating commit SHA {provenance_sha} missing from {REPRODUCIBILITY_PATH}"
+
+    # Check FINAL_RESEARCH_STATUS.md
+    status_path = "paper/FINAL_RESEARCH_STATUS.md"
+    assert os.path.exists(status_path)
+    with open(status_path) as f:
+        status_text = f.read()
+    assert provenance_sha in status_text, f"Generating commit SHA {provenance_sha} missing from {status_path}"
+

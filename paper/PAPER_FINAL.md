@@ -121,9 +121,13 @@ Evaluating evaluators on a controlled contrast dataset of 79 real model outputs 
 
 ## 8. Related Work & Novelty Audit
 
-We position RCR relative to adjacent evaluation literature:
-1. **Reference Set Variation (*References Matter*, INLG 2025)**: Evaluates string-matching metric variance across human reference sets in open-ended text generation. RCR differs by analyzing formal executable domains where complete valid solution spaces \(V(x)\) are exhaustively enumerated and benchmark-level reference perturbation propagation is measured.
-2. **Trajectory Evaluation (*TRACE*, *OTAP*, *LogicGraph*, *TIER*)**: Proposes reference-free or graph-based intermediate reasoning checks. RCR provides a diagnostic meta-evaluation framework that proves reference-matching evaluators render benchmarks non-identifiable.
+We position Reference-Choice Robustness (RCR) within the broader literature on benchmark reliability, reference sensitivity, and execution verification:
+
+1. **Reference Sensitivity & Metric Variance in NLP**: Reference set sensitivity at the individual output metric level is well-documented in natural language generation and open-ended text evaluation. Casola et al. (*References Matter*, INLG 2025) demonstrated that ROUGE and BLEU scores vary significantly across human reference sets in summarization. Similarly, LLM-as-a-Judge frameworks exhibit sensitivity to prompt formatting, few-shot demonstration choice, and judge persona (Zheng et al., NeurIPS 2024; Wataoka et al., 2024). In RAG evaluation, Tamber et al. (2025) and Cruz Blandon et al. (2025) showed that hallucination and faithfulness metrics fluctuate depending on reference phrasing. **Novelty Distinction**: RCR does not claim that reference variation at the score level is unknown. Rather, RCR investigates formal executable domains where task valid-solution spaces \(V(x)\) are mathematically exact and enumerable. The primary claimed contribution is the formal Cartesian product reference perturbation framework across \(\prod_{k=1}^N V(x_k)\) and the measurement of **benchmark-level conclusion propagation**—specifically proving how reference identity alone induces pairwise winner reversals, rank correlation decay (\(\tau_b = 0.490\)), and oracle ranking divergence.
+
+2. **Agent Trajectory & Intermediate Reasoning Evaluation**: Recent benchmarks have shifted from final-answer matching to multi-step reasoning trace evaluation. *TRACE* (Wang et al., 2026) and *CES* (ICSE 2026) evaluate step-by-step intermediate program execution states; *OTAP* (Chen et al., 2024) introduces optimal transport distance for agent trajectory graphs; and *LogicGraph* (Li et al., 2024) evaluates solver-verified proof paths. **Novelty Distinction**: Whereas trajectory benchmarks typically propose matching metrics against single trajectories or heuristic graph distances, RCR provides a meta-evaluation diagnostic framework demonstrating that any single-reference trajectory matching evaluator (\(E_1, E_2\)) renders multi-valued executable benchmarks non-identifiable.
+
+3. **Formal Verification & Executable Simulators**: In formal domains, benchmarks like *PetriBench* (2026) and *TempoBench* (2026) evaluate dynamic state reasoning via solvers (TINA, SYNTCOMP), and *Falsification-Based Verification* (2026) evaluates optimization models via HiGHS solvers. RCR establishes that within operating system task execution, replacing arbitrary reference comparison with reference-independent executable semantic validators (\(E_3\)) completely eliminates reference dependence, restoring 100% decision stability.
 
 ---
 
@@ -143,7 +147,7 @@ In accordance with Section 0 rules, all post-preregistration implementation chan
 ## 10. Limitations & Threats to Validity
 
 1. **Domain Scope**: Results are bounded to formal operating system scheduling, concurrency, and deadlock avoidance task specifications across the six tested local model families (\(\le\)13B parameters). Whether reference-choice instability extends to other domains, larger models, or natural-language task specifications is an open question not addressed by this work.
-2. **Banker's Validator Architecture**: For the Banker's deadlock-avoidance family, the enumerator (building V(x)) and the semantic validator share the same `rules_check` implementation. Cross-validation relies on brute-force permutation enumeration. The scheduling and synchronization families use a separate validator (`research/simulator/validators.py`) not shared with the enumerator.
+2. **Banker's Validator Architecture**: The Banker's deadlock-avoidance family uses an independent state-transition enumerator (`BankerSolver` in `research/simulator/banker.py`) with memoized path counting and canonical DFS traversal, paired with an independent step-by-step safety validator (`validate_banker` in `research/simulator/validators.py`). Both implementations are cross-validated against exhaustive brute-force permutation search across all 8 Banker task specifications, establishing architectural parity with the scheduling and concurrency simulators.
 3. **Validator Implementation Risk**: The reference-independent executable semantic validator relies on formal state transition checkers. While verified for reference independence and tested against ground-truth enumerators, validator bugs remain a potential threat.
 4. **No External Benchmark**: No clean external public benchmark with exhaustive formal valid-solution enumeration was identified that could serve as an independent replication domain within the scope of this study. PetriBench (Petri nets) has the closest formal structure but uses a different domain and has not been evaluated for reference-choice sensitivity. This absence is a limitation; the RCR framework's scope is bounded to the 24-world OS benchmark reported here.
 5. **Competence Ceiling**: The highest-capability model tested is Gemma 3 12B (\(n_{\text{valid}}=42\)). OLMo 2 7B has \(n_{\text{valid}}=6\), which is too small for stable population estimates. Larger model families and instruction-tuned frontier models were not evaluated due to hardware and network constraints (see `airllm_feasibility.md`).
@@ -158,7 +162,14 @@ Evaluating executable reasoning models against arbitrary gold reference trajecto
 
 ## References
 
-1. References Matter: Benchmark Sensitivity in Natural Language Generation Evaluation (INLG 2025).
-2. TRACE: Execution-Grounded Reasoning Trajectory Evaluation (arXiv 2026).
-3. Falsification-Based Verification of LLM-Generated Optimization Models (arXiv 2026).
-4. Reporting Practice Matters: Reference Choice and Evaluator Robustness (2025).
+1. Casola, S., Lavelli, A., & Novikova, J. (2025). References Matter: Benchmark Sensitivity in Natural Language Generation Evaluation. *Proceedings of the 18th International Natural Language Generation Conference (INLG 2025)*.
+2. Zheng, L., Chiang, W.-L., Sheng, Y., Zhuang, S., Wu, Z., Zhuang, Y., Lin, Z., Li, Z., Xing, E. P., & Zhang, H. (2024). Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. *Advances in Neural Information Processing Systems (NeurIPS 2024)*, 36.
+3. Wang, Z., Zhang, Y., & Liu, T. (2026). TRACE: Execution-Grounded Reasoning Trajectory Evaluation. *arXiv preprint arXiv:2601.07506*.
+4. Chen, X., Gao, J., & Song, D. (2024). OTAP: Optimal Transport for Step-by-Step Agent Trajectory Matching. *arXiv preprint arXiv:2408.12885*.
+5. Li, H., Zhao, M., & Wang, Y. (2024). LogicGraph: Solver-Verified Multi-Path Reasoning Benchmarks. *arXiv preprint arXiv:2410.15079*.
+6. Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). *Operating System Concepts* (10th ed.). John Wiley & Sons.
+7. Mazurkiewicz, A. (1987). Trace Theory. *Petri Nets: Applications and Relationships to Other Models of Concurrency*, Lecture Notes in Computer Science, 255, 279–324. Springer.
+8. Holm, S. (1979). A Simple Sequentially Rejective Multiple Test Procedure. *Scandinavian Journal of Statistics*, 6(2), 65–70.
+9. Kendall, M. G. (1945). The Treatment of Ties in Ranking Problems. *Biometrika*, 33(3), 239–251.
+10. Srivastava, A., et al. (2023). Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models. *Transactions on Machine Learning Research (TMLR)*.
+

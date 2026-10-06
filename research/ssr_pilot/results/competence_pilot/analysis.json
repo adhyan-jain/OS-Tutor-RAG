@@ -1244,8 +1244,8 @@
   },
   "proxies": {
    "tau_by_held_out_family": {
-    "banker": 0.4444444444444444,
     "sync": 0.4,
+    "banker": 0.4444444444444444,
     "scheduling": 0.4444444444444444
    },
    "distance": {

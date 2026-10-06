@@ -17,6 +17,7 @@ import random
 import re
 from typing import Dict, List, Optional, Sequence, Tuple
 
+from research.simulator.banker import BankerSolver
 from research.simulator.concurrency_interleaver import Interleaver
 from research.simulator.cpu_scheduler import Scheduler, waiting_times
 from research.simulator.traces import IDLE, format_events, format_schedule, levenshtein, normalize_schedule
@@ -67,6 +68,8 @@ def system(world: Dict):
         return Scheduler(world["processes"], world["policy"], world.get("quantum", 2))
     if world["family"] == "sync":
         return Interleaver(problem(world))
+    if world["family"] == "banker":
+        return BankerSolver(world["processes"], world["available"])
     raise ValueError(world["family"])
 
 
@@ -191,17 +194,8 @@ def profile(world: Dict, steps: Sequence, ref: Sequence) -> Tuple[float, float, 
 
 # ------------------------------------------------------------------ enumeration
 
-def _banker_enum(world: Dict):
-    procs = [p["pid"] for p in world["processes"]]
-    for perm in itertools.permutations(procs):
-        if rules_check(world, perm)[0]:
-            yield perm
-
-
 def enumerate_rules(world: Dict) -> List[Tuple]:
     """All rule-valid traces, canonical order first."""
-    if world["family"] == "banker":
-        return list(_banker_enum(world))
     return list(system(world).enumerate(limit=ENUM_CAP))
 
 

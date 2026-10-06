@@ -2,9 +2,9 @@
   "_comment": "Machine-readable claims manifest. Each entry maps a claim ID to its source artifact, JSONPath, tolerance, and manuscript phrase. Used by tests/test_consistency_gate.py.",
   "_generated": "2026-10-06",
   "_artifact_sha256": {
-    "research/ssr_pilot/results/rcrc/rcr_summary.json": "f11636309b7fc6b5ee76711b4a4204754950a3e981258ac34a955b6bf335e545",
-    "research/ssr_pilot/results/stated_convention/analysis.json": "9859f64bf1de436842a8ad3e3c8a9a341e86b459971cc47ee5d8ca2e458354e6",
-    "research/ssr_pilot/results/competence_pilot/analysis.json": "529eb507e34f03f47896aaa54931a23cb70b5240d72f56d8c7606747b7c4b6b2"
+    "research/ssr_pilot/results/rcrc/rcr_summary.json": "c6824c09b78f06668eab84e4639a02a491ac9a2df7bf1dd0a3a9b365444423f7",
+    "research/ssr_pilot/results/stated_convention/analysis.json": "f9901318ebf6aac58ee35a9a3a84b66a065f5d6b9c5bcd0a03d57a66e37a0772",
+    "research/ssr_pilot/results/competence_pilot/analysis.json": "f06397607da4cb1a5a44a803e1b39c50dfb5b8542c6f8e77d7262b48d22867fa"
   },
   "claims": [
     {
@@ -23,7 +23,7 @@
       "jsonpath": "n_monte_carlo_draws",
       "expected_value": 50000,
       "tolerance": 0,
-      "manuscript_phrase": "sampled 50,000 benchmark-level reference vectors"
+      "manuscript_phrase": "50,000 benchmark-level reference vectors"
     },
     {
       "id": "C3_tau_mean",
@@ -95,7 +95,7 @@
       "jsonpath": "baseline.pooled.FRR_norm.mean",
       "expected_value": 0.625,
       "tolerance": 0.001,
-      "manuscript_phrase": "FRR_norm = 0.625"
+      "manuscript_phrase": "FRR}_{\\text{norm}} = 0.625"
     },
     {
       "id": "C9_frr_norm",
@@ -104,7 +104,7 @@
       "jsonpath": "new.per_model.gemma3:12b.FRR_norm.mean",
       "expected_value": 0.619,
       "tolerance": 0.002,
-      "manuscript_phrase": "FRR_norm = 0.619"
+      "manuscript_phrase": "FRR}_{\\text{norm}} = 0.619"
     },
     {
       "id": "C9_n_valid",
@@ -113,7 +113,7 @@
       "jsonpath": "new.per_model.gemma3:12b.n_valid",
       "expected_value": 42,
       "tolerance": 0,
-      "manuscript_phrase": "n_valid = 42"
+      "manuscript_phrase": "n_{\\text{valid}} = 42"
     },
     {
       "id": "C10_n_valid",
@@ -122,7 +122,7 @@
       "jsonpath": "new.per_model.olmo2:7b.n_valid",
       "expected_value": 6,
       "tolerance": 0,
-      "manuscript_phrase": "only 6 valid outputs"
+      "manuscript_phrase": "n_{\\text{valid}} = 6"
     },
     {
       "id": "C12_e3_tau",
