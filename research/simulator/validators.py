@@ -182,6 +182,32 @@ def validate_events(problem: Dict, trace: Sequence) -> Result:
 
 
 def validate(problem: Dict, trace: Sequence) -> Result:
-    if problem["domain"] == "scheduling":
+    domain = problem.get("domain") or problem.get("family")
+    if domain == "scheduling":
         return validate_schedule(problem, trace)
-    return validate_events(problem, trace)
+    if domain == "concurrency" or domain == "sync":
+        return validate_events(problem, trace)
+    if domain == "banker":
+        return validate_banker(problem, trace)
+    raise ValueError(f"Unknown domain/family: {domain}")
+
+
+# ---------------------------------------------------------------- banker
+
+def validate_banker(problem: Dict, trace: Sequence) -> Result:
+    procs = {p["pid"]: p for p in problem["processes"]}
+    work, done = list(problem["available"]), set()
+    for p in trace:
+        if p not in procs:
+            return False, f"unknown_process:{p}"
+        if p in done:
+            return False, "repeated_process"
+        need = [m - a for m, a in zip(procs[p]["max"], procs[p]["alloc"])]
+        if any(n > w for n, w in zip(need, work)):
+            return False, "need_exceeds_work"
+        work = [w + a for w, a in zip(work, procs[p]["alloc"])]
+        done.add(p)
+    if len(done) != len(procs):
+        return False, "incomplete"
+    return True, "ok"
+

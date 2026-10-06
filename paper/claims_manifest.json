@@ -2,7 +2,7 @@
   "_comment": "Machine-readable claims manifest. Each entry maps a claim ID to its source artifact, JSONPath, tolerance, and manuscript phrase. Used by tests/test_consistency_gate.py.",
   "_generated": "2026-10-06",
   "_artifact_sha256": {
-    "research/ssr_pilot/results/rcrc/rcr_summary.json": "54574db93fc819c0d2d57976b68f068b53733063e30b82b0196d24d2db2dba1d",
+    "research/ssr_pilot/results/rcrc/rcr_summary.json": "f11636309b7fc6b5ee76711b4a4204754950a3e981258ac34a955b6bf335e545",
     "research/ssr_pilot/results/stated_convention/analysis.json": "9859f64bf1de436842a8ad3e3c8a9a341e86b459971cc47ee5d8ca2e458354e6",
     "research/ssr_pilot/results/competence_pilot/analysis.json": "529eb507e34f03f47896aaa54931a23cb70b5240d72f56d8c7606747b7c4b6b2"
   },

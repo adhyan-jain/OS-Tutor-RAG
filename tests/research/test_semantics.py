@@ -227,3 +227,26 @@ def test_alternatives_are_substantive(bench):
 def test_no_duplicate_problems(bench):
     keys = [json.dumps(i["problem"], sort_keys=True) for i in bench["instances"]]
     assert len(keys) == len(set(keys))
+
+
+def test_banker_validator_standalone():
+    from research.simulator.validators import validate_banker
+    world = {
+        "family": "banker",
+        "available": [3, 3, 2],
+        "processes": [
+            {"pid": "P0", "max": [7, 5, 3], "alloc": [0, 1, 0]},
+            {"pid": "P1", "max": [3, 2, 2], "alloc": [2, 0, 0]},
+            {"pid": "P2", "max": [9, 0, 2], "alloc": [3, 0, 2]},
+            {"pid": "P3", "max": [2, 2, 2], "alloc": [2, 1, 1]},
+            {"pid": "P4", "max": [4, 3, 3], "alloc": [0, 0, 2]},
+        ]
+    }
+    valid_seq = ("P1", "P3", "P4", "P0", "P2")
+    ok, reason = validate_banker(world, valid_seq)
+    assert ok and reason == "ok"
+
+    invalid_seq = ("P0", "P1", "P2", "P3", "P4")
+    ok, reason = validate_banker(world, invalid_seq)
+    assert not ok and reason == "need_exceeds_work"
+

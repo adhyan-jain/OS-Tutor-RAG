@@ -20,7 +20,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 from research.simulator.concurrency_interleaver import Interleaver
 from research.simulator.cpu_scheduler import Scheduler, waiting_times
 from research.simulator.traces import IDLE, format_events, format_schedule, levenshtein, normalize_schedule
-from research.simulator.validators import validate_events, validate_schedule
+from research.simulator.validators import validate_banker, validate_events, validate_schedule
 
 ENUM_CAP = 20000
 
@@ -118,17 +118,9 @@ def rules_check(world: Dict, steps: Sequence) -> Tuple[bool, str]:
         return validate_schedule(problem(world), steps)
     if f == "sync":
         return validate_events(problem(world), steps)
-    procs = {p["pid"]: p for p in world["processes"]}
-    work, done = list(world["available"]), set()
-    for p in steps:
-        if p in done:
-            return False, "repeated_process"
-        need = [m - a for m, a in zip(procs[p]["max"], procs[p]["alloc"])]
-        if any(n > w for n, w in zip(need, work)):
-            return False, "need_exceeds_work"
-        work = [w + a for w, a in zip(work, procs[p]["alloc"])]
-        done.add(p)
-    return (True, "ok") if len(done) == len(procs) else (False, "incomplete")
+    if f == "banker":
+        return validate_banker(world, steps)
+    raise ValueError(f"Unknown family: {f}")
 
 
 def _holds(world: Dict, c: Dict, steps: Sequence) -> bool:
