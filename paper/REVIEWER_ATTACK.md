@@ -71,5 +71,5 @@ The "100% decision stability" language in Section 11 was updated in this forensi
 5. Oracle invariance test fixed (fake loop → real reference-exercising test); placeholder valid-space test replaced with oracle roundtrip + metamorphic mutation assertions
 6. Independent Banker verifier (`validate_banker` in `validators.py`) implemented and integrated cleanly
 7. Primary-source literature audit completed for References Matter, ILR, OTAP, LogicGraph, TIER, PROBE, ReRef, confirming narrow novelty boundaries
-8. 367/367 tests pass; claims manifest independently recomputes all headline numbers and SHA-256 digests
+8. 376/376 tests pass; claims manifest independently recomputes all headline numbers and SHA-256 digests
 

@@ -209,3 +209,54 @@ def test_generating_commit_sha_consistency():
         status_text = f.read()
     assert provenance_sha in status_text, f"Generating commit SHA {provenance_sha} missing from {status_path}"
 
+
+def test_significance_stability_c7():
+    """
+    Verify C7: World-level paired sign-flip permutation tests (20,000 flips)
+    across 6 model pairs over 200 sampled reference conditions produce 100% constant
+    NON_SIGNIFICANT decisions with adjusted p-values >= 0.05 after Holm correction.
+    """
+    summary_path = "research/ssr_pilot/results/rcrc/rcr_summary.json"
+    assert os.path.exists(summary_path)
+    with open(summary_path) as f:
+        data = json.load(f)
+
+    e2 = data["evaluators"]["E2_NORMALIZED_MATCH"]
+    sig = e2["significance_stability"]
+    assert sig["n_references"] == 200
+    assert sig["n_sign_flips"] == 20000
+
+    pairs = sig["pairwise_significance_summary"]
+    assert len(pairs) == 6, f"Expected 6 model pairs, got {len(pairs)}"
+    for pair_name, summary in pairs.items():
+        assert summary["is_decision_constant"] is True, f"Decision not constant for {pair_name}"
+        assert summary["decision_distribution"] == {"NON_SIGNIFICANT": 1.0}, f"Non-significant distribution mismatch for {pair_name}"
+        assert summary["min_adj_p_value"] >= 0.05, f"Adjusted p-value < 0.05 for {pair_name}"
+
+
+def test_adversarial_meta_evaluation_c11():
+    """
+    Verify C11: Adversarial contrast meta-evaluation proves that E1 and E2
+    exhibit 50% FRR and reject 100% of noncanonical valid solutions, while
+    E3 achieves 100% sensitivity and 0% FRR.
+    """
+    adv_path = "research/ssr_pilot/results/adversarial/evaluator_meta_results.json"
+    assert os.path.exists(adv_path)
+    with open(adv_path) as f:
+        meta = json.load(f)
+
+    for e_id in ["E1_CANONICAL_EXACT", "E2_NORMALIZED_MATCH"]:
+        e_data = meta[e_id]
+        assert e_data["sensitivity"] == 0.5
+        assert e_data["specificity"] == 1.0
+        assert e_data["frr"] == 0.5
+        assert e_data["category_pass_rates"]["canonical_valid"] == 1.0
+        assert e_data["category_pass_rates"]["noncanonical_valid"] == 0.0
+
+    e3_data = meta["E3_SEMANTIC_ORACLE"]
+    assert e3_data["sensitivity"] == 1.0
+    assert e3_data["specificity"] == 1.0
+    assert e3_data["frr"] == 0.0
+    assert e3_data["category_pass_rates"]["canonical_valid"] == 1.0
+    assert e3_data["category_pass_rates"]["noncanonical_valid"] == 1.0
+

@@ -52,13 +52,13 @@ PYTHONPATH=. .venv/bin/python -c "from research.ssr_pilot.adversarial.constructi
 ## 3. Complete SHA-256 Artifact Checksums
 
 **Experiment-Generating Commit:** `e2a60d30fb4acd6b6311f88ade9972f647c806ee` (the clean commit at which the 50,000-draw RCR Monte Carlo protocol and auxiliary analyses were executed and recorded in `research/ssr_pilot/results/rcrc/rcr_summary.json`).  
-**Final Submission Package Commit:** `4e3afcbf7b85a93df60fb71d9f0877776d9eb839` (incorporating independent Banker solver, scholarly bibliography, and extended consistency gate). The artifact hashes below reflect the current clean repository state.
+**Final Submission Package Commit:** `a3d727a1faef49f9667d968264ee336b3ef0cd38` (incorporating independent Banker solver, scholarly bibliography, and extended consistency gate). The artifact hashes below reflect the current clean repository state.
 
 | File Path | Full SHA-256 Checksum |
 |---|---|
 | `paper/PAPER_FINAL.md` | `ab1a224696f404cbd60dd8935c09885e0d655efe7bdb5be70b8782f0fedac7d8` |
 | `paper/CLAIMS_AUDIT_FINAL.md` | `2ad11694c476390abf9e868fb99f77aa703dde9ba29928905327756895d1163a` |
-| `paper/claims_manifest.json` | `e4221cdc301dc2698a22413712b9d3000acf400139bbfd62c209d149d85b1d73` |
+| `paper/claims_manifest.json` | `edbb9fdf9533aaa9906b9a4a02b2bb0304005da8c7e815875a33ab5217e82f57` |
 | `paper/NOVELTY_POSITIONING_FINAL.md` | `6db384eafd704a3a1feb9049768d76fc2c25a4bedd88553fc4fb55e76e5af8d1` |
 | `docs/research/SSR_PILOT_PREREG.md` | `0a2714b04126bbea4b974abb6e4f604c01d05628b02e1bb361159ff2034c27d1` |
 | `research/ssr_pilot/results/rcrc/rcr_summary.json` | `c6824c09b78f06668eab84e4639a02a491ac9a2df7bf1dd0a3a9b365444423f7` |

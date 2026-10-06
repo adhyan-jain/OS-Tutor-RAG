@@ -4,7 +4,8 @@
   "_artifact_sha256": {
     "research/ssr_pilot/results/rcrc/rcr_summary.json": "c6824c09b78f06668eab84e4639a02a491ac9a2df7bf1dd0a3a9b365444423f7",
     "research/ssr_pilot/results/stated_convention/analysis.json": "f9901318ebf6aac58ee35a9a3a84b66a065f5d6b9c5bcd0a03d57a66e37a0772",
-    "research/ssr_pilot/results/competence_pilot/analysis.json": "f06397607da4cb1a5a44a803e1b39c50dfb5b8542c6f8e77d7262b48d22867fa"
+    "research/ssr_pilot/results/competence_pilot/analysis.json": "f06397607da4cb1a5a44a803e1b39c50dfb5b8542c6f8e77d7262b48d22867fa",
+    "research/ssr_pilot/results/adversarial/evaluator_meta_results.json": "d486835a35d780fc45e9e1f0c02e9ebdd8387d9e98d504709dee5522c4bba284"
   },
   "claims": [
     {
@@ -89,13 +90,31 @@
       "manuscript_phrase": "2.86%"
     },
     {
+      "id": "C7_n_sampled_draws",
+      "description": "World-level sign-flip test sampled reference conditions",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "evaluators.E2_NORMALIZED_MATCH.significance_n_sampled_draws",
+      "expected_value": 200,
+      "tolerance": 0,
+      "manuscript_phrase": "subsample of 200 sampled reference conditions"
+    },
+    {
+      "id": "C7_n_sign_flips",
+      "description": "World-level sign-flip permutations per condition",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "evaluators.E2_NORMALIZED_MATCH.significance_stability.n_sign_flips",
+      "expected_value": 20000,
+      "tolerance": 0,
+      "manuscript_phrase": "20,000 paired sign-flip permutations"
+    },
+    {
       "id": "C8_frr_norm",
       "description": "Stated-convention baseline arm pooled FRR_norm",
       "artifact": "research/ssr_pilot/results/competence_pilot/analysis.json",
       "jsonpath": "baseline.pooled.FRR_norm.mean",
       "expected_value": 0.625,
       "tolerance": 0.001,
-      "manuscript_phrase": "FRR}_{\\text{norm}} = 0.625"
+      "manuscript_phrase": "\\text{FRR}_{\\text{norm}} = 0.625"
     },
     {
       "id": "C9_frr_norm",
@@ -104,7 +123,7 @@
       "jsonpath": "new.per_model.gemma3:12b.FRR_norm.mean",
       "expected_value": 0.619,
       "tolerance": 0.002,
-      "manuscript_phrase": "FRR}_{\\text{norm}} = 0.619"
+      "manuscript_phrase": "\\text{FRR}_{\\text{norm}} = 0.619"
     },
     {
       "id": "C9_n_valid",
@@ -123,6 +142,60 @@
       "expected_value": 6,
       "tolerance": 0,
       "manuscript_phrase": "n_{\\text{valid}} = 6"
+    },
+    {
+      "id": "C10_frr_norm",
+      "description": "OLMo2 7B FRR_norm",
+      "artifact": "research/ssr_pilot/results/competence_pilot/analysis.json",
+      "jsonpath": "new.per_model.olmo2:7b.FRR_norm.mean",
+      "expected_value": 1.0,
+      "tolerance": 0.0,
+      "manuscript_phrase": "\\text{FRR}_{\\text{norm}} = 1.000"
+    },
+    {
+      "id": "C11_e1_frr",
+      "description": "E1 adversarial meta-evaluation false rejection rate",
+      "artifact": "research/ssr_pilot/results/adversarial/evaluator_meta_results.json",
+      "jsonpath": "E1_CANONICAL_EXACT.frr",
+      "expected_value": 0.5,
+      "tolerance": 0.0,
+      "manuscript_phrase": "False Rejection Rate = **50.0%**"
+    },
+    {
+      "id": "C11_e2_frr",
+      "description": "E2 adversarial meta-evaluation false rejection rate",
+      "artifact": "research/ssr_pilot/results/adversarial/evaluator_meta_results.json",
+      "jsonpath": "E2_NORMALIZED_MATCH.frr",
+      "expected_value": 0.5,
+      "tolerance": 0.0,
+      "manuscript_phrase": "False Rejection Rate = **50.0%**"
+    },
+    {
+      "id": "C11_e1_noncanonical_pass",
+      "description": "E1 adversarial meta-evaluation pass rate on noncanonical valid",
+      "artifact": "research/ssr_pilot/results/adversarial/evaluator_meta_results.json",
+      "jsonpath": "E1_CANONICAL_EXACT.category_pass_rates.noncanonical_valid",
+      "expected_value": 0.0,
+      "tolerance": 0.0,
+      "manuscript_phrase": "Pass rate on noncanonical valid solutions = **0.0%**"
+    },
+    {
+      "id": "C11_e2_noncanonical_pass",
+      "description": "E2 adversarial meta-evaluation pass rate on noncanonical valid",
+      "artifact": "research/ssr_pilot/results/adversarial/evaluator_meta_results.json",
+      "jsonpath": "E2_NORMALIZED_MATCH.category_pass_rates.noncanonical_valid",
+      "expected_value": 0.0,
+      "tolerance": 0.0,
+      "manuscript_phrase": "Pass rate on noncanonical valid solutions = **0.0%**"
+    },
+    {
+      "id": "C11_e3_noncanonical_pass",
+      "description": "E3 adversarial meta-evaluation pass rate on noncanonical valid",
+      "artifact": "research/ssr_pilot/results/adversarial/evaluator_meta_results.json",
+      "jsonpath": "E3_SEMANTIC_ORACLE.category_pass_rates.noncanonical_valid",
+      "expected_value": 1.0,
+      "tolerance": 0.0,
+      "manuscript_phrase": "Pass rate on noncanonical valid solutions = **100.0%**"
     },
     {
       "id": "C12_e3_tau",
