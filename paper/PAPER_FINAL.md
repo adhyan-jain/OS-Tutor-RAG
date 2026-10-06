@@ -1,7 +1,7 @@
 # Reference-Choice Robustness in Executable Reasoning Benchmarks
 
 **Abstract**  
-Executable reasoning benchmarks evaluate model-generated trajectories by comparing them against gold reference solutions. However, in formal executable domains such as operating system task scheduling, concurrency synchronization, and deadlock avoidance, the set of semantically valid solutions \(V(x)\) is multi-valued (\(|V(x)| > 1\)). In this paper, we formalize **Reference-Choice Robustness (RCR)** to evaluate whether benchmark conclusions—model scores, pairwise model rankings, statistical significance decisions, and failure taxonomies—depend on which valid trajectory is selected as the reference. Evaluating 1,152 generations from four baseline model families across 24 executable OS tasks, we sample 50,000 benchmark-level reference vectors from the Cartesian product \(\prod_{k=1}^{24} V(x_k)\). We demonstrate empirically that changing only the selected gold reference while holding tasks, candidate model outputs, and evaluators fixed causes substantial ranking instability (\(\text{Kendall } \tau_b = 0.490 \pm 0.355\), \(\text{SE} = 0.0016\), computed over 49,914 non-degenerate draws; 86/50,000 draws, 0.17%, had a one-constant score vector and are excluded per the predeclared degenerate-handling policy), flips pairwise model winners in **18.61%** of reference vector pairs, and recovers the oracle model ranking only **23.92%** of the time under normalized reference matching (\(E_2\)) and **2.86%** under strict exact matching (\(E_1\)). Applying the preregistered world-level paired sign-flip permutation test (20,000 sign flips, Holm-Bonferroni corrected over 6 model pairs evaluated over a subsample of 200 sampled reference conditions) reveals that world-level variance dominates pairwise model differences. Furthermore, evaluating stated-convention prompts shows that disclosing canonical tie-breaking rules fails to eliminate noncanonical outputs (\(\text{FRR}_{\text{norm}} = 0.625\)), and unpooled evaluation on Gemma 3 12B (\(n_{\text{valid}} = 42\)) confirms that noncanonical trajectory generation persists under increased capability (\(\text{FRR}_{\text{norm}} = 0.619\)). Replacing arbitrary gold references with reference-independent executable semantic validators (\(E_3\)) eliminates reference dependence entirely, restoring 100% decision stability (\(\text{Kendall } \tau_b = 1.000\)).
+Executable reasoning benchmarks evaluate model-generated trajectories by comparing them against gold reference solutions. However, in formal executable domains such as operating system task scheduling, concurrency synchronization, and deadlock avoidance, the set of semantically valid solutions \(V(x)\) is multi-valued (\(|V(x)| > 1\)). In this paper, we formalize **Reference-Choice Robustness (RCR)** to evaluate whether benchmark conclusions—model scores, pairwise model rankings, statistical significance decisions, and failure taxonomies—depend on which valid trajectory is selected as the reference. Evaluating 1,152 generations from four baseline model families across 24 executable OS tasks, we sample 50,000 benchmark-level reference vectors from the Cartesian product \(\prod_{k=1}^{24} V(x_k)\). Under uniform reference sampling, changing only the selected gold reference while holding tasks, candidate model outputs, and evaluators fixed causes substantial ranking instability (\(\text{Kendall } \tau_b = 0.490 \pm 0.355\), \(\text{SE} = 0.0016\), computed over 49,914 non-degenerate draws; 86/50,000 draws, 0.17%, had a one-constant score vector and are excluded per the predeclared degenerate-handling policy), flips pairwise model winners in **18.61%** of reference vector pairs, and recovers the \(E_3\) reference-invariant ranking only **23.92%** of the time under normalized reference matching (\(E_2\)) and **2.86%** under strict exact matching (\(E_1\)). Evaluating reference-distribution sensitivity demonstrates that this ranking instability is robust to curator selection bias: pairwise winner reversals remain **17.72%** under inverse structural distance weighting, **11.73%** under 50% canonical bias (\(p=0.50\)), **7.67%** at \(p=0.80\), and **2.69%** at \(p=0.95\). Applying the preregistered world-level paired sign-flip permutation test (20,000 sign flips, Holm-Bonferroni corrected over 6 model pairs evaluated over a subsample of 200 sampled reference conditions across the \(N=24\) scientific units) reveals that world-level variance dominates pairwise model differences. Furthermore, evaluating stated-convention prompts shows that disclosing canonical tie-breaking rules fails to eliminate noncanonical outputs (\(\text{FRR}_{\text{norm}} = 0.625\)), and a small higher-parameter feasibility/consistency arm on Gemma 3 12B (\(n_{\text{valid}} = 42\)) confirms that noncanonical trajectory generation persists (\(\text{FRR}_{\text{norm}} = 0.619\)). Replacing arbitrary gold references with reference-independent executable semantic validators (\(E_3\)) eliminates reference dependence entirely, restoring 100% decision stability (\(\text{Kendall } \tau_b = 1.000\)).
 
 ---
 
@@ -42,8 +42,8 @@ Holding candidate outputs \(\{y_{m,k}\}\) and task semantics fixed across 50,000
    $$\tau_b(\mathbf{R}) = \text{KendallTauB}\left( S(\cdot \mid \mathbf{R}), S(\cdot \mid \mathbf{R}_{\text{canonical}}) \right)$$
 3. **Pairwise Winner Reversal Probability**: The probability that drawing two independent reference vectors \(\mathbf{R}_1, \mathbf{R}_2\) reverses the strict pairwise winner between model \(A\) and model \(B\):
    $$P(\text{Reversal}) = \mathbb{P}_{\mathbf{R}_1, \mathbf{R}_2} \left[ \text{sign}(S_A(\mathbf{R}_1) - S_B(\mathbf{R}_1)) \cdot \text{sign}(S_A(\mathbf{R}_2) - S_B(\mathbf{R}_2)) = -1 \right]$$
-4. **Oracle Recovery Rate**: The fraction of reference vector draws under which evaluator \(E\)'s induced model ranking matches the reference-independent semantic oracle ranking:
-   $$\text{Recovery}(E) \triangleq \mathbb{P}_{\mathbf{R} \sim \prod V(x_k)} \left[ \text{Rank}_E(\mathbf{R}) == \text{Rank}_{\text{oracle}} \right]$$
+4. **\(E_3\) Ranking Recovery Rate**: The fraction of reference vector draws under which evaluator \(E\)'s induced model ranking matches the \(E_3\) reference-invariant executable-validator ranking:
+   $$\text{Recovery}(E) \triangleq \mathbb{P}_{\mathbf{R} \sim \prod V(x_k)} \left[ \text{Rank}_E(\mathbf{R}) == \text{Rank}_{E_3} \right]$$
 
 ---
 
@@ -55,7 +55,7 @@ Holding candidate outputs \(\{y_{m,k}\}\) and task semantics fixed across 50,000
   3. *Banker's Deadlock Avoidance*: Safe resource allocation sequences (8 worlds).
 - **Baseline Models (1,152 Generations)**: `qwen3:8b`, `gemma2:9b`, `mistral:7b-instruct`, `llama3.1:8b` (24 worlds \(\times\) 3 surface variants \(\times\) 4 seeds).
 - **Stated-Convention Control (1,152 Generations)**: Identical 24 worlds and models with canonical tie-breaking rules explicitly stated in the prompt.
-- **Competence Pilot (576 Generations)**: `gemma3:12b` (12B parameters) and `olmo2:7b` (7B parameters) under stated-convention prompts.
+- **Competence/Feasibility Arm (576 Generations)**: `gemma3:12b` (12B parameters) and `olmo2:7b` (7B parameters) under stated-convention prompts.
 - **Evaluator Classes**:
   - \(E_1\) **Canonical Exact Match**: Whitespace-normalized exact string comparison against selected reference \(R \in V(x)\).
   - \(E_2\) **Normalized Match**: Normalized schedule/event trajectory comparison against selected reference \(R \in V(x)\).
@@ -69,7 +69,7 @@ Holding candidate outputs \(\{y_{m,k}\}\) and task semantics fixed across 50,000
 Table 1 presents the primary RCR metrics computed from 50,000 independent uniform reference vector draws sampled from \(\prod_{k=1}^{24} V(x_k)\). The canonical reference vector \(\mathbf{R}_{\text{canonical}}\) is evaluated separately as Draw 0.
 
 #### Table 1: Primary Reference-Choice Robustness Metrics (50,000 Monte Carlo Draws)
-| Evaluator Class | `qwen3:8b` Score | `gemma2:9b` Score | `mistral:7b` Score | `llama3.1:8b` Score | Kendall \(\tau_b\) (Mean ± Std) | Monte Carlo SE | Pairwise Reversal Prob | Oracle Recovery Rate |
+| Evaluator Class | `qwen3:8b` Score | `gemma2:9b` Score | `mistral:7b` Score | `llama3.1:8b` Score | Kendall \(\tau_b\) (Mean ± Std) | Monte Carlo SE | Pairwise Reversal Prob | \(E_3\) Ranking Recovery Rate |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **\(E_1\) Canonical Exact** | 4.86% | 0.69% | 0.00% | 0.00% | 0.769 ± 0.301 | 0.0014 | 4.66% | **2.86%** |
 | **\(E_2\) Normalized Match** | 13.19% | 2.43% | 3.47% | 0.35% | 0.490 ± 0.355 (n=49,914)† | 0.0016 | **18.61%** | **23.92%** |
@@ -84,6 +84,30 @@ Running 20,000 paired sign-flip permutations with Holm-Bonferroni step-down corr
 
 *Correction Note*: Prior uncorrected reports performed McNemar testing on individual \((w, v, s)\) cells (\(N=288\)), which treated nested seeds and variants as independent observations (pseudoreplication) and artificially reported "50% significance decision flips". World-level inference correctly reflects sample uncertainty and shows that pairwise model differences on this 24-world benchmark cannot be asserted as statistically significant across the 200 sampled reference conditions evaluated for sign-flip stability.
 
+### 4.3 Reference-Selection Distribution Sensitivity Analysis
+To test whether the observed RCR instability is an artifact of uniform sampling across \(V(x)\), we evaluated 50,000 Monte Carlo benchmark reference-vector draws across alternative reference-selection distributions while holding the 1,152 candidate generations strictly frozen:
+
+1. **Canonical Bias (\(p \in [0.0, 0.99]\))**: A benchmark curator selects the canonical reference \(R_0\) with probability \(p\) and samples uniformly from \(V(x) \setminus \{R_0\}\) with probability \(1-p\).
+2. **Similarity Bias**: Valid references are weighted inversely by normalized structural distance to the canonical reference: \(w(R) = 1 / (1 + d(R, R_0))\).
+3. **Adversarial Upper-Bound Stress Condition**: A deterministic stress condition selecting the reference in \(V(x)\) that maximizes candidate score divergence from canonical evaluation.
+
+#### Table 2: Reference-Selection Distribution Sensitivity Matrix (50,000 Draws per Distribution)
+| Reference Selection Distribution | Parameter | \(E_1\) Reversal | \(E_2\) Reversal | \(E_1\) \(E_3\)-Recovery | \(E_2\) \(E_3\)-Recovery | \(E_2\) Kendall \(\tau_b\) (Mean ± Std) | Valid \(\tau_b\) Draws |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Uniform Baseline (Reproduction)** | N/A | 4.67% | **18.22%** | 5.34% | 27.52% | 0.4892 ± 0.3550 | 49,920 |
+| **Canonical Bias (\(p=0.00\))** | \(p=0.00\) | 6.99% | **16.95%** | 2.14% | 5.70% | 0.2473 ± 0.3923 | 49,368 |
+| **Canonical Bias (\(p=0.25\))** | \(p=0.25\) | 4.25% | **15.01%** | 4.59% | 34.72% | 0.5939 ± 0.3151 | 49,912 |
+| **Canonical Bias (\(p=0.50\))** | \(p=0.50\) | 1.50% | **11.73%** | 4.80% | 41.35% | 0.7519 ± 0.2150 | 49,991 |
+| **Canonical Bias (\(p=0.75\))** | \(p=0.75\) | 0.29% | **8.59%** | 3.07% | 29.72% | 0.8591 ± 0.1672 | 50,000 |
+| **Canonical Bias (\(p=0.80\))** | \(p=0.80\) | 0.19% | **7.67%** | 2.58% | 24.95% | 0.8830 ± 0.1582 | 50,000 |
+| **Canonical Bias (\(p=0.90\))** | \(p=0.90\) | 0.04% | **4.85%** | 1.38% | 14.14% | 0.9343 ± 0.1294 | 50,000 |
+| **Canonical Bias (\(p=0.95\))** | \(p=0.95\) | 0.01% | **2.69%** | 0.68% | 7.50% | 0.9653 ± 0.0992 | 50,000 |
+| **Canonical Bias (\(p=0.99\))** | \(p=0.99\) | 0.00% | **0.60%** | 0.13% | 1.62% | 0.9926 ± 0.0480 | 50,000 |
+| **Similarity Bias (Structural Distance)** | N/A | 4.57% | **17.72%** | 6.27% | 31.74% | 0.5529 ± 0.3420 | 49,947 |
+| **Adversarial Upper-Bound Stress Condition** | Worst-case | 0.00% | 0.00% | 0.00% | 0.00% | 0.3333 ± 0.0000 | 1 |
+
+*Sensitivity Interpretation*: The sensitivity audit confirms that while increasing canonical bias attenuates ranking flips monotonically, \(E_2\) pairwise winner reversals remain **17.72%** under structural similarity weighting, **11.73%** under 50% canonical bias (\(p=0.50\)), **7.67%** at \(p=0.80\), and **2.69%** even when 95% of reference choices are canonical (\(p=0.95\)). This confirms that benchmark ranking instability is not an artifact of uniform sampling over atypical references, but persists whenever alternative valid solutions enter benchmark evaluation.
+
 ---
 
 ## 5. Stated-Convention Robustness Control
@@ -97,25 +121,25 @@ Evaluating 1,152 generations under stated-convention prompts demonstrates that *
 
 ---
 
-## 6. Model Competence & Capability Analysis
+## 6. Small Higher-Parameter Feasibility/Consistency Arm
 
-To evaluate whether noncanonical trajectory diversity persists in more capable models, we evaluated 576 generations from `gemma3:12b` (12B parameters) and `olmo2:7b` (7B parameters) under stated-convention prompts.
+To evaluate whether noncanonical trajectory diversity persists in higher-parameter models, we evaluated 576 generations from `gemma3:12b` (12B parameters) and `olmo2:7b` (7B parameters) under stated-convention prompts.
 
 Reporting the models unpooled demonstrates marked capability divergence:
 - **`gemma3:12b`**: 42 semantically valid outputs (\(B = 0.146\)). Of these, 16 match canonical references and 26 are valid-noncanonical. \(\text{FRR}_{\text{norm}} = 0.619\) (95% CI: [0.440, 0.839]).
 - **`olmo2:7b`**: 6 semantically valid outputs (\(B = 0.021\)). Of these, 0 match canonical references and 6 are valid-noncanonical. \(\text{FRR}_{\text{norm}} = 1.000\) (95% CI: [1.000, 1.000]).
 
-*Capability Scope*: Unpooling proves that noncanonical trajectory diversity persists in `gemma3:12b` (\(\text{FRR}_{\text{norm}} = 61.9\%\)). However, because `olmo2:7b` was exceptionally weak (\(n_{\text{valid}} = 6\)), pooled figures (\(n_{\text{valid}} = 48\)) must not be used to assert general frontier-model trends.
+*Capability Scope*: Unpooling confirms that noncanonical trajectory diversity persists in `gemma3:12b` (\(\text{FRR}_{\text{norm}} = 61.9\%\)). However, because `olmo2:7b` produced only 6 valid outputs (\(n_{\text{valid}} = 6\)), pooled figures (\(n_{\text{valid}} = 48\)) serve as supporting feasibility evidence and must not be used to assert general frontier-model trends.
 
 ---
 
-## 7. Adversarial & Meta-Evaluation Analysis
+## 7. Adversarial Controlled Meta-Evaluation Analysis
 
-Evaluating evaluators on a controlled contrast dataset of 79 real model outputs across 7 structural categories demonstrates severe proxy bias:
+Evaluating evaluators on an adversarial controlled contrast dataset of 79 real model outputs across 7 structural categories demonstrates severe proxy bias:
 - **\(E_1\) Exact Match & \(E_2\) Normalized Match**: Sensitivity = **50.0%**, Specificity = **100.0%**, False Rejection Rate = **50.0%**. Pass rate on noncanonical valid solutions = **0.0%** (100% of noncanonical valid solutions rejected).
 - **\(E_3\) Executable Semantic Validator**: Sensitivity = **100.0%**, Specificity = **100.0%**, FRR = **0.0%**. Pass rate on noncanonical valid solutions = **100.0%**.
 
-*Tautology Note*: \(E_3\)'s 100% accuracy on adversarial sets is tautological relative to domain specifications because \(E_3\) defines valid execution; the critical empirical finding is that reference-matching evaluators reject 100% of noncanonical valid trajectories.
+*Evidence Scope Note*: \(E_3\)'s 100% accuracy on adversarial sets is tautological relative to domain specifications because \(E_3\) defines valid execution; the critical empirical finding is controlled evidence that single-reference matching evaluators reject 100% of noncanonical valid trajectories. This is an adversarial stress diagnostic and is not presented as an unbiased estimate of natural evaluator error rates.
 
 ---
 
@@ -123,7 +147,7 @@ Evaluating evaluators on a controlled contrast dataset of 79 real model outputs 
 
 We position Reference-Choice Robustness (RCR) within the broader literature on benchmark reliability, reference sensitivity, and execution verification:
 
-1. **Reference Sensitivity & Metric Variance in NLP**: Reference set sensitivity at the individual output metric level is well-documented in natural language generation and open-ended text evaluation. Casola et al. (*References Matter*, INLG 2025) demonstrated that ROUGE and BLEU scores vary significantly across human reference sets in summarization. Similarly, LLM-as-a-Judge frameworks exhibit sensitivity to prompt formatting, few-shot demonstration choice, and judge persona (Zheng et al., NeurIPS 2024; Wataoka et al., 2024). In RAG evaluation, Tamber et al. (2025) and Cruz Blandon et al. (2025) showed that hallucination and faithfulness metrics fluctuate depending on reference phrasing. **Novelty Distinction**: RCR does not claim that reference variation at the score level is unknown. Rather, RCR investigates formal executable domains where task valid-solution spaces \(V(x)\) are mathematically exact and enumerable. The primary claimed contribution is the formal Cartesian product reference perturbation framework across \(\prod_{k=1}^N V(x_k)\) and the measurement of **benchmark-level conclusion propagation**—specifically proving how reference identity alone induces pairwise winner reversals, rank correlation decay (\(\tau_b = 0.490\)), and oracle ranking divergence.
+1. **Reference Sensitivity & Metric Variance in NLP**: Reference set sensitivity at the individual output metric level is well-documented in natural language generation and open-ended text evaluation. Casola et al. (*References Matter*, INLG 2025) demonstrated that ROUGE and BLEU scores vary significantly across human reference sets in summarization. Similarly, LLM-as-a-Judge frameworks exhibit sensitivity to prompt formatting, few-shot demonstration choice, and judge persona (Zheng et al., NeurIPS 2024; Wataoka et al., 2024). In RAG evaluation, Tamber et al. (2025) and Cruz Blandon et al. (2025) showed that hallucination and faithfulness metrics fluctuate depending on reference phrasing. **Novelty Distinction**: RCR does not claim that reference variation at the score level is unknown. Rather, RCR investigates formal executable domains where task valid-solution spaces \(V(x)\) are mathematically exact and enumerable. The primary claimed contribution is the formal Cartesian product reference perturbation framework across \(\prod_{k=1}^N V(x_k)\) and the measurement of **benchmark-level conclusion propagation**—specifically proving how reference identity alone induces pairwise winner reversals, rank correlation decay (\(\tau_b = 0.490\)), and ranking divergence.
 
 2. **Agent Trajectory & Intermediate Reasoning Evaluation**: Recent benchmarks have shifted from final-answer matching to multi-step reasoning trace evaluation. *TRACE* (Wang et al., 2026) and *CES* (ICSE 2026) evaluate step-by-step intermediate program execution states; *OTAP* (Chen et al., 2024) introduces optimal transport distance for agent trajectory graphs; and *LogicGraph* (Li et al., 2024) evaluates solver-verified proof paths. **Novelty Distinction**: Whereas trajectory benchmarks typically propose matching metrics against single trajectories or heuristic graph distances, RCR provides a meta-evaluation diagnostic framework demonstrating that any single-reference trajectory matching evaluator (\(E_1, E_2\)) renders multi-valued executable benchmarks non-identifiable.
 
@@ -149,14 +173,14 @@ In accordance with Section 0 rules, all post-preregistration implementation chan
 1. **Domain Scope**: Results are bounded to formal operating system scheduling, concurrency, and deadlock avoidance task specifications across the six tested local model families (\(\le\)13B parameters). Whether reference-choice instability extends to other domains, larger models, or natural-language task specifications is an open question not addressed by this work.
 2. **Banker's Validator Architecture**: The Banker's deadlock-avoidance family uses an independent state-transition enumerator (`BankerSolver` in `research/simulator/banker.py`) with memoized path counting and canonical DFS traversal, paired with an independent step-by-step safety validator (`validate_banker` in `research/simulator/validators.py`). Both implementations are cross-validated against exhaustive brute-force permutation search across all 8 Banker task specifications, establishing architectural parity with the scheduling and concurrency simulators.
 3. **Validator Implementation Risk**: The reference-independent executable semantic validator relies on formal state transition checkers. While verified for reference independence and tested against ground-truth enumerators, validator bugs remain a potential threat.
-4. **No External Benchmark**: No clean external public benchmark with exhaustive formal valid-solution enumeration was identified that could serve as an independent replication domain within the scope of this study. PetriBench (Petri nets) has the closest formal structure but uses a different domain and has not been evaluated for reference-choice sensitivity. This absence is a limitation; the RCR framework's scope is bounded to the 24-world OS benchmark reported here.
+4. **No External Benchmark**: No clean external public benchmark with exhaustive formal valid-solution enumeration was identified that could serve as an independent replication domain within the scope of this study. PetriBench (Petri nets) has the closest formal structure but uses a different domain and has not been evaluated for reference-choice sensitivity. This absence is a limitation; the RCR framework's scope is bounded to the 24-world OS benchmark reported here as a controlled case study.
 5. **Competence Ceiling**: The highest-capability model tested is Gemma 3 12B (\(n_{\text{valid}}=42\)). OLMo 2 7B has \(n_{\text{valid}}=6\), which is too small for stable population estimates. Larger model families and instruction-tuned frontier models were not evaluated due to hardware and network constraints (see `airllm_feasibility.md`).
 
 ---
 
 ## 11. Conclusion & Recommendations
 
-Evaluating executable reasoning models against arbitrary gold reference trajectories compromises benchmark identifiability. Within this OS-domain benchmark, reference-matching evaluators flip pairwise model winners in 18.61% of valid reference draw pairs. Replacing arbitrary gold references with reference-independent executable semantic validators eliminates reference bias entirely within this benchmark, with 0% winner reversals and 100% oracle recovery across all sampled reference conditions (scoped to the 50,000-draw Monte Carlo distribution over the 24-world OS benchmark reported here).
+Evaluating executable reasoning models against arbitrary gold reference trajectories compromises benchmark identifiability. Within this OS-domain benchmark, reference-matching evaluators flip pairwise model winners in 18.61% of valid reference draw pairs under uniform sampling and 17.72% under structural similarity weighting. Replacing arbitrary gold references with reference-independent executable semantic validators eliminates reference bias entirely within this benchmark, with 0% winner reversals and 100% recovery across all sampled reference conditions.
 
 ---
 
@@ -172,4 +196,3 @@ Evaluating executable reasoning models against arbitrary gold reference trajecto
 8. Holm, S. (1979). A Simple Sequentially Rejective Multiple Test Procedure. *Scandinavian Journal of Statistics*, 6(2), 65–70.
 9. Kendall, M. G. (1945). The Treatment of Ties in Ranking Problems. *Biometrika*, 33(3), 239–251.
 10. Srivastava, A., et al. (2023). Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models. *Transactions on Machine Learning Research (TMLR)*.
-

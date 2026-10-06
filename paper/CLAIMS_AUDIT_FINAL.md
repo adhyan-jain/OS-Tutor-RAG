@@ -22,8 +22,14 @@
 | **C10** | OLMo 2 7B False Rejection Rate & Sample Size | `research/ssr_pilot/results/competence_pilot/analysis.json` | $n_{\text{valid}} = 6$, 0 canonical, 6 noncanonical | Direct count | $n_{\text{valid}} = 6$ | 1.000 [1.000, 1.000] | Yes | Yes (Unpooled) | "OLMo 2 7B generated only 6 valid outputs ($B=0.021$), limiting pooled capability claims" |
 | **C11** | Adversarial meta-evaluation $E_1 / E_2$ FRR | `research/ssr_pilot/results/adversarial/evaluator_meta_results.json` | Sensitivity = 0.50, Specificity = 1.0, FRR = 0.50 | Controlled contrast evaluation | N=79 contrasts | FRR = 50.0%, noncanonical pass rate = 0.0% | Yes | No | "$E_1$ and $E_2$ reject 100% of noncanonical valid solutions" |
 | **C12** | $E_3$ Semantic Validator stability | `research/ssr_pilot/results/rcrc/rcr_summary.json` | `kendall_tau_mean`: 1.000, `pairwise_reversal_probability`: 0.0 | State transition replay & constraint checker | N=50,000 draws | $\tau_b = 1.000 \pm 0.000$, 0.0% reversals | Yes | No | "replacing gold references with executable semantic validators restores 100% decision stability" |
+| **C13** | Sensitivity uniform baseline reproduction | `research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json` | `pairwise_reversal_probability`: 0.182177 | 50,000 independent uniform draws | N=50,000 draws | 18.22% | Yes (Sensitivity) | No | "Uniform baseline reproduction (18.22%)" |
+| **C14** | Sensitivity canonical bias $p=0.50$ | `research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json` | `pairwise_reversal_probability`: 0.117311 | 50,000 draws with $P(R_0)=0.50$ | N=50,000 draws | 11.73% | Yes (Sensitivity) | No | "11.73% under 50% canonical bias" |
+| **C15** | Sensitivity canonical bias $p=0.80$ | `research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json` | `pairwise_reversal_probability`: 0.076661 | 50,000 draws with $P(R_0)=0.80$ | N=50,000 draws | 7.67% | Yes (Sensitivity) | No | "7.67% at p=0.80" |
+| **C16** | Sensitivity canonical bias $p=0.95$ | `research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json` | `pairwise_reversal_probability`: 0.026902 | 50,000 draws with $P(R_0)=0.95$ | N=50,000 draws | 2.69% | Yes (Sensitivity) | No | "2.69% at p=0.95" |
+| **C17** | Sensitivity similarity weighting | `research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json` | `pairwise_reversal_probability`: 0.177247 | 50,000 draws with $w(R)=1/(1+d)$ | N=50,000 draws | 17.72% | Yes (Sensitivity) | No | "17.72% under inverse structural distance weighting" |
+| **C18** | Sensitivity adversarial upper bound | `research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json` | `kendall_tau_mean`: 0.333333 | Deterministic maximum divergence | N=1 draw | Point estimate 0.3333 | Yes (Sensitivity) | No | "Adversarial upper-bound stress condition (tau_b = 0.3333)" |
 
 ---
 
 ## Audit Verdict
-All 12 substantive claims in `paper/PAPER_FINAL.md` have been verified against raw JSON outputs. Zero unbacked claims remain.
+All 18 substantive claims in `paper/PAPER_FINAL.md` have been verified against raw JSON outputs. Zero unbacked claims remain.

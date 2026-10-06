@@ -47,6 +47,12 @@ PYTHONPATH=. .venv/bin/python -c "from research.ssr_pilot.adversarial.constructi
 ```
 *Output*: Updates `research/ssr_pilot/results/adversarial/evaluator_meta_results.json`.
 
+### Step 6: Re-run Reference-Distribution Sensitivity Analysis
+```bash
+PYTHONPATH=. .venv/bin/python -m research.ssr_pilot.rcr_reference_distribution_sensitivity
+```
+*Output*: Updates `research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json` and `.csv`.
+
 ---
 
 ## 3. Complete SHA-256 Artifact Checksums
@@ -56,12 +62,13 @@ PYTHONPATH=. .venv/bin/python -c "from research.ssr_pilot.adversarial.constructi
 
 | File Path | Full SHA-256 Checksum |
 |---|---|
-| `paper/PAPER_FINAL.md` | `ab1a224696f404cbd60dd8935c09885e0d655efe7bdb5be70b8782f0fedac7d8` |
-| `paper/CLAIMS_AUDIT_FINAL.md` | `2ad11694c476390abf9e868fb99f77aa703dde9ba29928905327756895d1163a` |
-| `paper/claims_manifest.json` | `edbb9fdf9533aaa9906b9a4a02b2bb0304005da8c7e815875a33ab5217e82f57` |
+| `paper/PAPER_FINAL.md` | `38d4930f3bfaee7988cd037ee8ba82859b504c486f0feacf3d2c8dba72983394` |
+| `paper/CLAIMS_AUDIT_FINAL.md` | `317c54be5df87600ff99dc957e4e65caa6541d84d5d9eaf902a4a37da37bb633` |
+| `paper/claims_manifest.json` | `8aaa29c493fe633e50d717851a2eb1ac46488fb798f0d890c702e8eccdf196a7` |
 | `paper/NOVELTY_POSITIONING_FINAL.md` | `6db384eafd704a3a1feb9049768d76fc2c25a4bedd88553fc4fb55e76e5af8d1` |
 | `docs/research/SSR_PILOT_PREREG.md` | `0a2714b04126bbea4b974abb6e4f604c01d05628b02e1bb361159ff2034c27d1` |
 | `research/ssr_pilot/results/rcrc/rcr_summary.json` | `c6824c09b78f06668eab84e4639a02a491ac9a2df7bf1dd0a3a9b365444423f7` |
+| `research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json` | `09cb6b9ba10bb1ff33d856bf680ef5b9b6ad61c28b5b225025a9e74818f295b0` |
 | `research/ssr_pilot/results/stated_convention/analysis.json` | `f9901318ebf6aac58ee35a9a3a84b66a065f5d6b9c5bcd0a03d57a66e37a0772` |
 | `research/ssr_pilot/results/stated_convention/REPORT.md` | `55373a622df56ba223688069f36242b5ec71e84b6eae1c2424efc7d0ad09a01a` |
 | `research/ssr_pilot/results/competence_pilot/analysis.json` | `f06397607da4cb1a5a44a803e1b39c50dfb5b8542c6f8e77d7262b48d22867fa` |

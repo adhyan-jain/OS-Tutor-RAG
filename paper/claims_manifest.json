@@ -1,11 +1,12 @@
 {
   "_comment": "Machine-readable claims manifest. Each entry maps a claim ID to its source artifact, JSONPath, tolerance, and manuscript phrase. Used by tests/test_consistency_gate.py.",
-  "_generated": "2026-10-06",
+  "_generated": "2026-10-07",
   "_artifact_sha256": {
     "research/ssr_pilot/results/rcrc/rcr_summary.json": "c6824c09b78f06668eab84e4639a02a491ac9a2df7bf1dd0a3a9b365444423f7",
     "research/ssr_pilot/results/stated_convention/analysis.json": "f9901318ebf6aac58ee35a9a3a84b66a065f5d6b9c5bcd0a03d57a66e37a0772",
     "research/ssr_pilot/results/competence_pilot/analysis.json": "f06397607da4cb1a5a44a803e1b39c50dfb5b8542c6f8e77d7262b48d22867fa",
-    "research/ssr_pilot/results/adversarial/evaluator_meta_results.json": "d486835a35d780fc45e9e1f0c02e9ebdd8387d9e98d504709dee5522c4bba284"
+    "research/ssr_pilot/results/adversarial/evaluator_meta_results.json": "d486835a35d780fc45e9e1f0c02e9ebdd8387d9e98d504709dee5522c4bba284",
+    "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json": "09cb6b9ba10bb1ff33d856bf680ef5b9b6ad61c28b5b225025a9e74818f295b0"
   },
   "claims": [
     {
@@ -214,6 +215,60 @@
       "expected_value": 0.0,
       "tolerance": 0.0,
       "manuscript_phrase": "0.00%"
+    },
+    {
+      "id": "C13_uniform_baseline_reproduction",
+      "description": "Sensitivity uniform baseline E2 pairwise winner reversal reproduction",
+      "artifact": "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json",
+      "jsonpath": "distributions.UNIFORM.evaluators.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
+      "expected_value": 0.1822,
+      "tolerance": 0.002,
+      "manuscript_phrase": "18.22%"
+    },
+    {
+      "id": "C14_canonical_bias_p50",
+      "description": "Sensitivity canonical bias p=0.50 E2 pairwise winner reversal",
+      "artifact": "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json",
+      "jsonpath": "distributions.CANONICAL_BIAS_P50.evaluators.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
+      "expected_value": 0.1173,
+      "tolerance": 0.002,
+      "manuscript_phrase": "11.73%"
+    },
+    {
+      "id": "C15_canonical_bias_p80",
+      "description": "Sensitivity canonical bias p=0.80 E2 pairwise winner reversal",
+      "artifact": "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json",
+      "jsonpath": "distributions.CANONICAL_BIAS_P80.evaluators.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
+      "expected_value": 0.0767,
+      "tolerance": 0.002,
+      "manuscript_phrase": "7.67%"
+    },
+    {
+      "id": "C16_canonical_bias_p95",
+      "description": "Sensitivity canonical bias p=0.95 E2 pairwise winner reversal",
+      "artifact": "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json",
+      "jsonpath": "distributions.CANONICAL_BIAS_P95.evaluators.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
+      "expected_value": 0.0269,
+      "tolerance": 0.002,
+      "manuscript_phrase": "2.69%"
+    },
+    {
+      "id": "C17_similarity_sensitivity",
+      "description": "Sensitivity structural similarity weighting E2 pairwise winner reversal",
+      "artifact": "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json",
+      "jsonpath": "distributions.SIMILARITY_BIAS.evaluators.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
+      "expected_value": 0.1772,
+      "tolerance": 0.002,
+      "manuscript_phrase": "17.72%"
+    },
+    {
+      "id": "C18_adversarial_upper_bound",
+      "description": "Sensitivity adversarial upper bound stress condition E2 Kendall tau-b",
+      "artifact": "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json",
+      "jsonpath": "distributions.ADVERSARIAL_UPPER_BOUND.evaluators.E2_NORMALIZED_MATCH.kendall_tau_mean",
+      "expected_value": 0.3333,
+      "tolerance": 0.002,
+      "manuscript_phrase": "0.3333"
     }
   ]
 }

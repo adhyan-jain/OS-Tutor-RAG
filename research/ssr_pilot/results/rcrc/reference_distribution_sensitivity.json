@@ -1,0 +1,1121 @@
+{
+  "provenance": {
+    "experiment_name": "rcr_reference_distribution_sensitivity",
+    "timestamp": "2026-10-07T02:40:00+00:00",
+    "git_sha": "511327ae04a47afb34274f11fbede3c00d01d627",
+    "base_seed": 20261007,
+    "n_draws_per_stochastic_distribution": 50000,
+    "n_worlds": 24,
+    "n_generations": 1152,
+    "input_file_sha256": {
+      "research/ssr_pilot/runs/gemma2_9b.jsonl": "e09be2ef399ac04902a844e119aad73af2a0640bbae7db22fade1d5bd956dd75",
+      "research/ssr_pilot/runs/llama3.1_8b.jsonl": "38a2ac8b9c6a82dcfe4a9e6f63de6b53b5b04dc80fb7398f9d3d465fdd1d217a",
+      "research/ssr_pilot/runs/mistral_7b-instruct.jsonl": "320267aa897fd26237a70702f28b55ccc1e34d06dcd409b9f5253c4fa3727d9a",
+      "research/ssr_pilot/runs/qwen3_8b.jsonl": "1f00104a7c27f245270845f1a53d8d775bf02231ba31f40e3f39b6bd5b645497"
+    }
+  },
+  "canonical_draw_0": {
+    "model_scores": {
+      "E1_CANONICAL_EXACT": {
+        "gemma2:9b": 0.006944444444444444,
+        "llama3.1:8b": 0.0,
+        "mistral:7b-instruct": 0.0,
+        "qwen3:8b": 0.048611111111111105
+      },
+      "E2_NORMALIZED_MATCH": {
+        "gemma2:9b": 0.024305555555555556,
+        "llama3.1:8b": 0.003472222222222222,
+        "mistral:7b-instruct": 0.03472222222222222,
+        "qwen3:8b": 0.13194444444444445
+      },
+      "E3_SEMANTIC_ORACLE": {
+        "gemma2:9b": 0.17013888888888887,
+        "llama3.1:8b": 0.06597222222222222,
+        "mistral:7b-instruct": 0.07638888888888888,
+        "qwen3:8b": 0.30902777777777773
+      }
+    },
+    "ranking": {
+      "E1_CANONICAL_EXACT": [
+        "qwen3:8b",
+        "gemma2:9b",
+        "llama3.1:8b",
+        "mistral:7b-instruct"
+      ],
+      "E2_NORMALIZED_MATCH": [
+        "qwen3:8b",
+        "mistral:7b-instruct",
+        "gemma2:9b",
+        "llama3.1:8b"
+      ],
+      "E3_SEMANTIC_ORACLE": [
+        "qwen3:8b",
+        "gemma2:9b",
+        "mistral:7b-instruct",
+        "llama3.1:8b"
+      ]
+    }
+  },
+  "e3_reference_invariant_ranking": [
+    "qwen3:8b",
+    "gemma2:9b",
+    "mistral:7b-instruct",
+    "llama3.1:8b"
+  ],
+  "e3_reference_invariant_scores": {
+    "gemma2:9b": 0.17013888888888887,
+    "llama3.1:8b": 0.06597222222222222,
+    "mistral:7b-instruct": 0.07638888888888888,
+    "qwen3:8b": 0.30902777777777773
+  },
+  "distributions": {
+    "UNIFORM": {
+      "id": "UNIFORM",
+      "name": "Uniform",
+      "type": "uniform",
+      "param": null,
+      "description": "Uniform sampling across all valid solutions: P(R) = 1 / |V(x)|",
+      "seed": 20261007,
+      "n_draws": 50000,
+      "evaluators": {
+        "E1_CANONICAL_EXACT": {
+          "kendall_tau_mean": 0.7692443928605597,
+          "kendall_tau_std": 0.2997515299762378,
+          "kendall_tau_se": 0.00139744682676129,
+          "kendall_tau_n_valid_draws": 46010,
+          "kendall_tau_n_degenerate_draws": 3990,
+          "pairwise_reversal_probability": 0.04673272665453309,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.010144470089401787,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.07719060941218825,
+            "gemma2:9b_vs_qwen3:8b": 0.11190044280885618,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.02197338186763735,
+            "llama3.1:8b_vs_qwen3:8b": 0.021644695293905877,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0375427604552091
+          },
+          "oracle_recovery_rate": 0.05344,
+          "oracle_recovery_matching_draws": 2672,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.003172013888888889,
+            "llama3.1:8b": 0.00028958333333333337,
+            "mistral:7b-instruct": 0.0005133333333333333,
+            "qwen3:8b": 0.01861840277777778
+          }
+        },
+        "E2_NORMALIZED_MATCH": {
+          "kendall_tau_mean": 0.4891653151133239,
+          "kendall_tau_std": 0.35500988757154117,
+          "kendall_tau_se": 0.0015889241307565465,
+          "kendall_tau_n_valid_draws": 49920,
+          "kendall_tau_n_degenerate_draws": 80,
+          "pairwise_reversal_probability": 0.1821767146009587,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.20170718934378687,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.27948639132782654,
+            "gemma2:9b_vs_qwen3:8b": 0.1490817592351847,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.313622439648793,
+            "llama3.1:8b_vs_qwen3:8b": 0.07904197603952079,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.07012053201064021
+          },
+          "oracle_recovery_rate": 0.27518,
+          "oracle_recovery_matching_draws": 13759,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.01709270833333333,
+            "llama3.1:8b": 0.004860208333333334,
+            "mistral:7b-instruct": 0.00807111111111111,
+            "qwen3:8b": 0.04134291666666666
+          }
+        },
+        "E3_SEMANTIC_ORACLE": {
+          "kendall_tau_mean": 1.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.0,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 1.0,
+          "oracle_recovery_matching_draws": 50000,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.17013888888888884,
+            "llama3.1:8b": 0.06597222222222221,
+            "mistral:7b-instruct": 0.07638888888888885,
+            "qwen3:8b": 0.3090277777777778
+          }
+        }
+      }
+    },
+    "CANONICAL_BIAS_P00": {
+      "id": "CANONICAL_BIAS_P00",
+      "name": "Canonical Bias (p=0.00)",
+      "type": "canonical_bias",
+      "param": 0.0,
+      "description": "P(R=R0) = 0.00, remaining 1.00 uniform over V(x) \\ {R0}",
+      "seed": 20261008,
+      "n_draws": 50000,
+      "evaluators": {
+        "E1_CANONICAL_EXACT": {
+          "kendall_tau_mean": 0.5231095134104408,
+          "kendall_tau_std": 0.44953149928365393,
+          "kendall_tau_se": 0.0023211540494926766,
+          "kendall_tau_n_valid_draws": 37507,
+          "kendall_tau_n_degenerate_draws": 12493,
+          "pairwise_reversal_probability": 0.06993959519190383,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.010127726554531091,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.07473283705674114,
+            "gemma2:9b_vs_qwen3:8b": 0.18828902658053162,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.02505132662653253,
+            "llama3.1:8b_vs_qwen3:8b": 0.042875863917278344,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.07856079041580831
+          },
+          "oracle_recovery_rate": 0.02138,
+          "oracle_recovery_matching_draws": 1069,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.0019980555555555554,
+            "llama3.1:8b": 0.0003070833333333333,
+            "mistral:7b-instruct": 0.0005522916666666666,
+            "qwen3:8b": 0.006890416666666667
+          }
+        },
+        "E2_NORMALIZED_MATCH": {
+          "kendall_tau_mean": 0.2473147097712751,
+          "kendall_tau_std": 0.3922832132973714,
+          "kendall_tau_se": 0.0017655375445335773,
+          "kendall_tau_n_valid_draws": 49368,
+          "kendall_tau_n_degenerate_draws": 632,
+          "pairwise_reversal_probability": 0.16949965932651986,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.13492758095161902,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.11993785475709515,
+            "gemma2:9b_vs_qwen3:8b": 0.3279137126742535,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.1554537530750615,
+            "llama3.1:8b_vs_qwen3:8b": 0.13873680513610273,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.1400282493649873
+          },
+          "oracle_recovery_rate": 0.057,
+          "oracle_recovery_matching_draws": 2850,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.014927708333333334,
+            "llama3.1:8b": 0.0035702083333333337,
+            "mistral:7b-instruct": 0.0015920138888888891,
+            "qwen3:8b": 0.022066319444444444
+          }
+        },
+        "E3_SEMANTIC_ORACLE": {
+          "kendall_tau_mean": 1.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.0,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 1.0,
+          "oracle_recovery_matching_draws": 50000,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.17013888888888884,
+            "llama3.1:8b": 0.06597222222222221,
+            "mistral:7b-instruct": 0.07638888888888885,
+            "qwen3:8b": 0.3090277777777778
+          }
+        }
+      }
+    },
+    "CANONICAL_BIAS_P25": {
+      "id": "CANONICAL_BIAS_P25",
+      "name": "Canonical Bias (p=0.25)",
+      "type": "canonical_bias",
+      "param": 0.25,
+      "description": "P(R=R0) = 0.25, remaining 0.75 uniform over V(x) \\ {R0}",
+      "seed": 20261009,
+      "n_draws": 50000,
+      "evaluators": {
+        "E1_CANONICAL_EXACT": {
+          "kendall_tau_mean": 0.7820047704024491,
+          "kendall_tau_std": 0.297735970815504,
+          "kendall_tau_se": 0.0014059642980816492,
+          "kendall_tau_n_valid_draws": 44845,
+          "kendall_tau_n_degenerate_draws": 5155,
+          "pairwise_reversal_probability": 0.04249079701594032,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.007605752115042301,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.060999655993119864,
+            "gemma2:9b_vs_qwen3:8b": 0.11877578351567031,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.014199039980799615,
+            "llama3.1:8b_vs_qwen3:8b": 0.01944784495689914,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.033916705534110685
+          },
+          "oracle_recovery_rate": 0.04594,
+          "oracle_recovery_matching_draws": 2297,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.0032520138888888894,
+            "llama3.1:8b": 0.0002302777777777778,
+            "mistral:7b-instruct": 0.00040715277777777776,
+            "qwen3:8b": 0.017265694444444445
+          }
+        },
+        "E2_NORMALIZED_MATCH": {
+          "kendall_tau_mean": 0.5939035534393393,
+          "kendall_tau_std": 0.3150817831415774,
+          "kendall_tau_se": 0.0014103302082970662,
+          "kendall_tau_n_valid_draws": 49912,
+          "kendall_tau_n_degenerate_draws": 88,
+          "pairwise_reversal_probability": 0.15011827956559132,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.1505377307546151,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.31751015020300405,
+            "gemma2:9b_vs_qwen3:8b": 0.09347677833556671,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.2542210940218804,
+            "llama3.1:8b_vs_qwen3:8b": 0.039340089201784036,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.045623834876697536
+          },
+          "oracle_recovery_rate": 0.34716,
+          "oracle_recovery_matching_draws": 17358,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.017270277777777777,
+            "llama3.1:8b": 0.003509375,
+            "mistral:7b-instruct": 0.009930069444444443,
+            "qwen3:8b": 0.04943368055555555
+          }
+        },
+        "E3_SEMANTIC_ORACLE": {
+          "kendall_tau_mean": 1.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.0,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 1.0,
+          "oracle_recovery_matching_draws": 50000,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.17013888888888884,
+            "llama3.1:8b": 0.06597222222222221,
+            "mistral:7b-instruct": 0.07638888888888885,
+            "qwen3:8b": 0.3090277777777778
+          }
+        }
+      }
+    },
+    "CANONICAL_BIAS_P50": {
+      "id": "CANONICAL_BIAS_P50",
+      "name": "Canonical Bias (p=0.50)",
+      "type": "canonical_bias",
+      "param": 0.5,
+      "description": "P(R=R0) = 0.50, remaining 0.50 uniform over V(x) \\ {R0}",
+      "seed": 20261010,
+      "n_draws": 50000,
+      "evaluators": {
+        "E1_CANONICAL_EXACT": {
+          "kendall_tau_mean": 0.8910452841604235,
+          "kendall_tau_std": 0.17367656257125869,
+          "kendall_tau_se": 0.0007862854813595984,
+          "kendall_tau_n_valid_draws": 48789,
+          "kendall_tau_n_degenerate_draws": 1211,
+          "pairwise_reversal_probability": 0.015020729081248291,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.004896659533190664,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0375914966299326,
+            "gemma2:9b_vs_qwen3:8b": 0.03189429788595772,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.006789135782715654,
+            "llama3.1:8b_vs_qwen3:8b": 0.0033813092261845237,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.00557147542950859
+          },
+          "oracle_recovery_rate": 0.048,
+          "oracle_recovery_matching_draws": 2400,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.0044800000000000005,
+            "llama3.1:8b": 0.00015652777777777778,
+            "mistral:7b-instruct": 0.00027590277777777775,
+            "qwen3:8b": 0.02771395833333333
+          }
+        },
+        "E2_NORMALIZED_MATCH": {
+          "kendall_tau_mean": 0.7519034823641103,
+          "kendall_tau_std": 0.2149928008343698,
+          "kendall_tau_se": 0.0009615635792942683,
+          "kendall_tau_n_valid_draws": 49991,
+          "kendall_tau_n_degenerate_draws": 9,
+          "pairwise_reversal_probability": 0.11731105942118843,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.15717736354727094,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.4163142014840297,
+            "gemma2:9b_vs_qwen3:8b": 0.00920167523350467,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.11284859137182744,
+            "llama3.1:8b_vs_qwen3:8b": 0.003267994959899198,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.005056529930598612
+          },
+          "oracle_recovery_rate": 0.4135,
+          "oracle_recovery_matching_draws": 20675,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.01961777777777778,
+            "llama3.1:8b": 0.003527013888888889,
+            "mistral:7b-instruct": 0.018217152777777773,
+            "qwen3:8b": 0.07714840277777778
+          }
+        },
+        "E3_SEMANTIC_ORACLE": {
+          "kendall_tau_mean": 1.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.0,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 1.0,
+          "oracle_recovery_matching_draws": 50000,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.17013888888888884,
+            "llama3.1:8b": 0.06597222222222221,
+            "mistral:7b-instruct": 0.07638888888888885,
+            "qwen3:8b": 0.3090277777777778
+          }
+        }
+      }
+    },
+    "CANONICAL_BIAS_P75": {
+      "id": "CANONICAL_BIAS_P75",
+      "name": "Canonical Bias (p=0.75)",
+      "type": "canonical_bias",
+      "param": 0.75,
+      "description": "P(R=R0) = 0.75, remaining 0.25 uniform over V(x) \\ {R0}",
+      "seed": 20261011,
+      "n_draws": 50000,
+      "evaluators": {
+        "E1_CANONICAL_EXACT": {
+          "kendall_tau_mean": 0.9515486403776644,
+          "kendall_tau_std": 0.10111334865018409,
+          "kendall_tau_se": 0.00045266365728790576,
+          "kendall_tau_n_valid_draws": 49896,
+          "kendall_tau_n_degenerate_draws": 104,
+          "pairwise_reversal_probability": 0.002884502623385801,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.001641072821456429,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.011850379407588152,
+            "gemma2:9b_vs_qwen3:8b": 0.002033390267805356,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0015428308566171323,
+            "llama3.1:8b_vs_qwen3:8b": 0.0001994519890397808,
+            "mistral:7b-instruct_vs_qwen3:8b": 3.989039780795616e-05
+          },
+          "oracle_recovery_rate": 0.03072,
+          "oracle_recovery_matching_draws": 1536,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.005699513888888891,
+            "llama3.1:8b": 7.152777777777778e-05,
+            "mistral:7b-instruct": 0.00013305555555555556,
+            "qwen3:8b": 0.038242986111111106
+          }
+        },
+        "E2_NORMALIZED_MATCH": {
+          "kendall_tau_mean": 0.8590759701527055,
+          "kendall_tau_std": 0.1672171899575474,
+          "kendall_tau_se": 0.0007478180075031423,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0859435078034894,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.13107785835716715,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.37009918118362367,
+            "gemma2:9b_vs_qwen3:8b": 0.00015997439948798976,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.014204040080801617,
+            "llama3.1:8b_vs_qwen3:8b": 3.999919998399968e-05,
+            "mistral:7b-instruct_vs_qwen3:8b": 7.999359987199744e-05
+          },
+          "oracle_recovery_rate": 0.29724,
+          "oracle_recovery_matching_draws": 14862,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.022013680555555557,
+            "llama3.1:8b": 0.0034964583333333336,
+            "mistral:7b-instruct": 0.02648368055555555,
+            "qwen3:8b": 0.10461180555555555
+          }
+        },
+        "E3_SEMANTIC_ORACLE": {
+          "kendall_tau_mean": 1.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.0,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 1.0,
+          "oracle_recovery_matching_draws": 50000,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.17013888888888884,
+            "llama3.1:8b": 0.06597222222222221,
+            "mistral:7b-instruct": 0.07638888888888885,
+            "qwen3:8b": 0.3090277777777778
+          }
+        }
+      }
+    },
+    "CANONICAL_BIAS_P80": {
+      "id": "CANONICAL_BIAS_P80",
+      "name": "Canonical Bias (p=0.80)",
+      "type": "canonical_bias",
+      "param": 0.8,
+      "description": "P(R=R0) = 0.80, remaining 0.20 uniform over V(x) \\ {R0}",
+      "seed": 20261012,
+      "n_draws": 50000,
+      "evaluators": {
+        "E1_CANONICAL_EXACT": {
+          "kendall_tau_mean": 0.9609550742128772,
+          "kendall_tau_std": 0.09043336000338655,
+          "kendall_tau_se": 0.0004046285974147789,
+          "kendall_tau_n_valid_draws": 49951,
+          "kendall_tau_n_degenerate_draws": 49,
+          "pairwise_reversal_probability": 0.0019058039827463216,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.00126397487949759,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.008182435648712974,
+            "gemma2:9b_vs_qwen3:8b": 0.0008387735754715094,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0011096909938198764,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 3.994879897597952e-05
+          },
+          "oracle_recovery_rate": 0.02582,
+          "oracle_recovery_matching_draws": 1291,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.0059582638888888905,
+            "llama3.1:8b": 6.381944444444444e-05,
+            "mistral:7b-instruct": 0.00010722222222222223,
+            "qwen3:8b": 0.04023805555555555
+          }
+        },
+        "E2_NORMALIZED_MATCH": {
+          "kendall_tau_mean": 0.8829705402128921,
+          "kendall_tau_std": 0.1582281145285641,
+          "kendall_tau_se": 0.0007076176400749829,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0766609894864564,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.12188200644012881,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.330395004700094,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.007688925778515571,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 0.2495,
+          "oracle_recovery_matching_draws": 12475,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.022446805555555557,
+            "llama3.1:8b": 0.003490138888888889,
+            "mistral:7b-instruct": 0.02814708333333333,
+            "qwen3:8b": 0.10994902777777778
+          }
+        },
+        "E3_SEMANTIC_ORACLE": {
+          "kendall_tau_mean": 1.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.0,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 1.0,
+          "oracle_recovery_matching_draws": 50000,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.17013888888888884,
+            "llama3.1:8b": 0.06597222222222221,
+            "mistral:7b-instruct": 0.07638888888888885,
+            "qwen3:8b": 0.3090277777777778
+          }
+        }
+      }
+    },
+    "CANONICAL_BIAS_P90": {
+      "id": "CANONICAL_BIAS_P90",
+      "name": "Canonical Bias (p=0.90)",
+      "type": "canonical_bias",
+      "param": 0.9,
+      "description": "P(R=R0) = 0.90, remaining 0.10 uniform over V(x) \\ {R0}",
+      "seed": 20261013,
+      "n_draws": 50000,
+      "evaluators": {
+        "E1_CANONICAL_EXACT": {
+          "kendall_tau_mean": 0.9807045905200078,
+          "kendall_tau_std": 0.0631638370658722,
+          "kendall_tau_se": 0.0002824829165128502,
+          "kendall_tau_n_valid_draws": 49998,
+          "kendall_tau_n_degenerate_draws": 2,
+          "pairwise_reversal_probability": 0.0004166535330706614,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.0002959931198623972,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0019232480649612992,
+            "gemma2:9b_vs_qwen3:8b": 3.999839996799936e-05,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.00024068161363227265,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 0.01378,
+          "oracle_recovery_matching_draws": 689,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.00643465277777778,
+            "llama3.1:8b": 2.8472222222222223e-05,
+            "mistral:7b-instruct": 5.173611111111111e-05,
+            "qwen3:8b": 0.04443569444444444
+          }
+        },
+        "E2_NORMALIZED_MATCH": {
+          "kendall_tau_mean": 0.9342933501067494,
+          "kendall_tau_std": 0.12944987168645744,
+          "kendall_tau_se": 0.0005789174255390883,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.04847235398041294,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.07861105702114042,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.21166433248664973,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0005587343746874938,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 0.1414,
+          "oracle_recovery_matching_draws": 7070,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.02334041666666667,
+            "llama3.1:8b": 0.003484861111111112,
+            "mistral:7b-instruct": 0.031390138888888884,
+            "qwen3:8b": 0.1209538888888889
+          }
+        },
+        "E3_SEMANTIC_ORACLE": {
+          "kendall_tau_mean": 1.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.0,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 1.0,
+          "oracle_recovery_matching_draws": 50000,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.17013888888888884,
+            "llama3.1:8b": 0.06597222222222221,
+            "mistral:7b-instruct": 0.07638888888888885,
+            "qwen3:8b": 0.3090277777777778
+          }
+        }
+      }
+    },
+    "CANONICAL_BIAS_P95": {
+      "id": "CANONICAL_BIAS_P95",
+      "name": "Canonical Bias (p=0.95)",
+      "type": "canonical_bias",
+      "param": 0.95,
+      "description": "P(R=R0) = 0.95, remaining 0.05 uniform over V(x) \\ {R0}",
+      "seed": 20261014,
+      "n_draws": 50000,
+      "evaluators": {
+        "E1_CANONICAL_EXACT": {
+          "kendall_tau_mean": 0.9903905846735616,
+          "kendall_tau_std": 0.04477897337621192,
+          "kendall_tau_se": 0.00020025765686372624,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.00010701880704280753,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.00011547830956619132,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0004618652373047461,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 6.476929538590771e-05,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 0.0068,
+          "oracle_recovery_matching_draws": 340,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.0066942361111111135,
+            "llama3.1:8b": 1.6041666666666666e-05,
+            "mistral:7b-instruct": 2.4513888888888884e-05,
+            "qwen3:8b": 0.04651062499999999
+          }
+        },
+        "E2_NORMALIZED_MATCH": {
+          "kendall_tau_mean": 0.9653424527946284,
+          "kendall_tau_std": 0.09923123359779275,
+          "kendall_tau_se": 0.00044377556763165125,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.026902398181296958,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.04300743934878697,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.11832697853957079,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 7.997119942398848e-05,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 0.07502,
+          "oracle_recovery_matching_draws": 3751,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.02381041666666667,
+            "llama3.1:8b": 0.0034743750000000013,
+            "mistral:7b-instruct": 0.0330467361111111,
+            "qwen3:8b": 0.12639506944444445
+          }
+        },
+        "E3_SEMANTIC_ORACLE": {
+          "kendall_tau_mean": 1.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.0,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 1.0,
+          "oracle_recovery_matching_draws": 50000,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.17013888888888884,
+            "llama3.1:8b": 0.06597222222222221,
+            "mistral:7b-instruct": 0.07638888888888885,
+            "qwen3:8b": 0.3090277777777778
+          }
+        }
+      }
+    },
+    "CANONICAL_BIAS_P99": {
+      "id": "CANONICAL_BIAS_P99",
+      "name": "Canonical Bias (p=0.99)",
+      "type": "canonical_bias",
+      "param": 0.99,
+      "description": "P(R=R0) = 0.99, remaining 0.01 uniform over V(x) \\ {R0}",
+      "seed": 20261015,
+      "n_draws": 50000,
+      "evaluators": {
+        "E1_CANONICAL_EXACT": {
+          "kendall_tau_mean": 0.9981470901112193,
+          "kendall_tau_std": 0.019693988147957316,
+          "kendall_tau_se": 8.80741924938155e-05,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 3.841410161536564e-07,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.0,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 2.3048460969219385e-06,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 0.00134,
+          "oracle_recovery_matching_draws": 67,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.006897013888888892,
+            "llama3.1:8b": 2.986111111111111e-06,
+            "mistral:7b-instruct": 4.652777777777778e-06,
+            "qwen3:8b": 0.04820743055555555
+          }
+        },
+        "E2_NORMALIZED_MATCH": {
+          "kendall_tau_mean": 0.9926220841190405,
+          "kendall_tau_std": 0.04799604505992582,
+          "kendall_tau_se": 0.00021464483881027422,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.006025293039194117,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.009430129402588052,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.02672162883257665,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 0.01616,
+          "oracle_recovery_matching_draws": 808,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.024235069444444444,
+            "llama3.1:8b": 0.0034763194444444455,
+            "mistral:7b-instruct": 0.03440249999999999,
+            "qwen3:8b": 0.13088562499999998
+          }
+        },
+        "E3_SEMANTIC_ORACLE": {
+          "kendall_tau_mean": 1.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.0,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 1.0,
+          "oracle_recovery_matching_draws": 50000,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.17013888888888884,
+            "llama3.1:8b": 0.06597222222222221,
+            "mistral:7b-instruct": 0.07638888888888885,
+            "qwen3:8b": 0.3090277777777778
+          }
+        }
+      }
+    },
+    "SIMILARITY_BIAS": {
+      "id": "SIMILARITY_BIAS",
+      "name": "Similarity Bias",
+      "type": "similarity_bias",
+      "param": null,
+      "description": "Inverse structural distance weighting: w(R) = 1 / (1 + d(R, R0)) normalized",
+      "seed": 20261016,
+      "n_draws": 50000,
+      "evaluators": {
+        "E1_CANONICAL_EXACT": {
+          "kendall_tau_mean": 0.7884743304786136,
+          "kendall_tau_std": 0.286844199241186,
+          "kendall_tau_se": 0.0013260086157285595,
+          "kendall_tau_n_valid_draws": 46795,
+          "kendall_tau_n_degenerate_draws": 3205,
+          "pairwise_reversal_probability": 0.045685886117722355,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.010245708914178284,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.08352245284905697,
+            "gemma2:9b_vs_qwen3:8b": 0.09947270385407708,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.025735460309206183,
+            "llama3.1:8b_vs_qwen3:8b": 0.02163892877857557,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.033500062001240026
+          },
+          "oracle_recovery_rate": 0.06268,
+          "oracle_recovery_matching_draws": 3134,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.0035924305555555553,
+            "llama3.1:8b": 0.0003206944444444444,
+            "mistral:7b-instruct": 0.0005453472222222222,
+            "qwen3:8b": 0.019968541666666666
+          }
+        },
+        "E2_NORMALIZED_MATCH": {
+          "kendall_tau_mean": 0.5528701532811646,
+          "kendall_tau_std": 0.34201028154241203,
+          "kendall_tau_se": 0.001530327765829765,
+          "kendall_tau_n_valid_draws": 49947,
+          "kendall_tau_n_degenerate_draws": 53,
+          "pairwise_reversal_probability": 0.17724716987673086,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.20839320386407728,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.32528081921638435,
+            "gemma2:9b_vs_qwen3:8b": 0.11282765495309906,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.30061086341726834,
+            "llama3.1:8b_vs_qwen3:8b": 0.062005657713154264,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.05436482009640193
+          },
+          "oracle_recovery_rate": 0.31738,
+          "oracle_recovery_matching_draws": 15869,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.01671770833333333,
+            "llama3.1:8b": 0.004716736111111112,
+            "mistral:7b-instruct": 0.010260833333333335,
+            "qwen3:8b": 0.045705555555555555
+          }
+        },
+        "E3_SEMANTIC_ORACLE": {
+          "kendall_tau_mean": 1.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 50000,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {
+            "gemma2:9b_vs_llama3.1:8b": 0.0,
+            "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+            "gemma2:9b_vs_qwen3:8b": 0.0,
+            "llama3.1:8b_vs_mistral:7b-instruct": 0.0,
+            "llama3.1:8b_vs_qwen3:8b": 0.0,
+            "mistral:7b-instruct_vs_qwen3:8b": 0.0
+          },
+          "oracle_recovery_rate": 1.0,
+          "oracle_recovery_matching_draws": 50000,
+          "n_monte_carlo_draws": 50000,
+          "mean_model_scores": {
+            "gemma2:9b": 0.17013888888888884,
+            "llama3.1:8b": 0.06597222222222221,
+            "mistral:7b-instruct": 0.07638888888888885,
+            "qwen3:8b": 0.3090277777777778
+          }
+        }
+      }
+    },
+    "ADVERSARIAL_UPPER_BOUND": {
+      "id": "ADVERSARIAL_UPPER_BOUND",
+      "name": "Adversarial Upper-Bound Stress Condition",
+      "type": "adversarial",
+      "param": null,
+      "description": "Deterministic worst-case reference maximizing candidate score disagreement with canonical reference",
+      "seed": null,
+      "n_draws": 1,
+      "evaluators": {
+        "E1_CANONICAL_EXACT": {
+          "kendall_tau_mean": 1.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 1,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {},
+          "oracle_recovery_rate": 0.0,
+          "oracle_recovery_matching_draws": 0,
+          "n_monte_carlo_draws": 1,
+          "mean_model_scores": {
+            "gemma2:9b": 0.010416666666666666,
+            "llama3.1:8b": 0.0,
+            "mistral:7b-instruct": 0.0,
+            "qwen3:8b": 0.01736111111111111
+          }
+        },
+        "E2_NORMALIZED_MATCH": {
+          "kendall_tau_mean": 0.3333333333333333,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 1,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {},
+          "oracle_recovery_rate": 0.0,
+          "oracle_recovery_matching_draws": 0,
+          "n_monte_carlo_draws": 1,
+          "mean_model_scores": {
+            "gemma2:9b": 0.0763888888888889,
+            "llama3.1:8b": 0.020833333333333332,
+            "mistral:7b-instruct": 0.013888888888888888,
+            "qwen3:8b": 0.08333333333333331
+          }
+        },
+        "E3_SEMANTIC_ORACLE": {
+          "kendall_tau_mean": 1.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_se": 0.0,
+          "kendall_tau_n_valid_draws": 1,
+          "kendall_tau_n_degenerate_draws": 0,
+          "pairwise_reversal_probability": 0.0,
+          "pairwise_reversals_by_pair": {},
+          "oracle_recovery_rate": 1.0,
+          "oracle_recovery_matching_draws": 1,
+          "n_monte_carlo_draws": 1,
+          "mean_model_scores": {
+            "gemma2:9b": 0.17013888888888892,
+            "llama3.1:8b": 0.06597222222222222,
+            "mistral:7b-instruct": 0.07638888888888888,
+            "qwen3:8b": 0.30902777777777785
+          }
+        }
+      }
+    }
+  },
+  "summary_table": [
+    {
+      "Distribution": "Uniform",
+      "Parameter": "N/A",
+      "E1_reversal": "4.67%",
+      "E2_reversal": "18.22%",
+      "E1_E3_recovery": "5.34%",
+      "E2_E3_recovery": "27.52%",
+      "E2_tau_b_mean": "0.4892",
+      "E2_tau_b_std": "0.3550",
+      "N_valid_tau": 49920
+    },
+    {
+      "Distribution": "Canonical Bias (p=0.00)",
+      "Parameter": "p=0.00",
+      "E1_reversal": "6.99%",
+      "E2_reversal": "16.95%",
+      "E1_E3_recovery": "2.14%",
+      "E2_E3_recovery": "5.70%",
+      "E2_tau_b_mean": "0.2473",
+      "E2_tau_b_std": "0.3923",
+      "N_valid_tau": 49368
+    },
+    {
+      "Distribution": "Canonical Bias (p=0.25)",
+      "Parameter": "p=0.25",
+      "E1_reversal": "4.25%",
+      "E2_reversal": "15.01%",
+      "E1_E3_recovery": "4.59%",
+      "E2_E3_recovery": "34.72%",
+      "E2_tau_b_mean": "0.5939",
+      "E2_tau_b_std": "0.3151",
+      "N_valid_tau": 49912
+    },
+    {
+      "Distribution": "Canonical Bias (p=0.50)",
+      "Parameter": "p=0.50",
+      "E1_reversal": "1.50%",
+      "E2_reversal": "11.73%",
+      "E1_E3_recovery": "4.80%",
+      "E2_E3_recovery": "41.35%",
+      "E2_tau_b_mean": "0.7519",
+      "E2_tau_b_std": "0.2150",
+      "N_valid_tau": 49991
+    },
+    {
+      "Distribution": "Canonical Bias (p=0.75)",
+      "Parameter": "p=0.75",
+      "E1_reversal": "0.29%",
+      "E2_reversal": "8.59%",
+      "E1_E3_recovery": "3.07%",
+      "E2_E3_recovery": "29.72%",
+      "E2_tau_b_mean": "0.8591",
+      "E2_tau_b_std": "0.1672",
+      "N_valid_tau": 50000
+    },
+    {
+      "Distribution": "Canonical Bias (p=0.80)",
+      "Parameter": "p=0.80",
+      "E1_reversal": "0.19%",
+      "E2_reversal": "7.67%",
+      "E1_E3_recovery": "2.58%",
+      "E2_E3_recovery": "24.95%",
+      "E2_tau_b_mean": "0.8830",
+      "E2_tau_b_std": "0.1582",
+      "N_valid_tau": 50000
+    },
+    {
+      "Distribution": "Canonical Bias (p=0.90)",
+      "Parameter": "p=0.90",
+      "E1_reversal": "0.04%",
+      "E2_reversal": "4.85%",
+      "E1_E3_recovery": "1.38%",
+      "E2_E3_recovery": "14.14%",
+      "E2_tau_b_mean": "0.9343",
+      "E2_tau_b_std": "0.1294",
+      "N_valid_tau": 50000
+    },
+    {
+      "Distribution": "Canonical Bias (p=0.95)",
+      "Parameter": "p=0.95",
+      "E1_reversal": "0.01%",
+      "E2_reversal": "2.69%",
+      "E1_E3_recovery": "0.68%",
+      "E2_E3_recovery": "7.50%",
+      "E2_tau_b_mean": "0.9653",
+      "E2_tau_b_std": "0.0992",
+      "N_valid_tau": 50000
+    },
+    {
+      "Distribution": "Canonical Bias (p=0.99)",
+      "Parameter": "p=0.99",
+      "E1_reversal": "0.00%",
+      "E2_reversal": "0.60%",
+      "E1_E3_recovery": "0.13%",
+      "E2_E3_recovery": "1.62%",
+      "E2_tau_b_mean": "0.9926",
+      "E2_tau_b_std": "0.0480",
+      "N_valid_tau": 50000
+    },
+    {
+      "Distribution": "Similarity Bias",
+      "Parameter": "N/A",
+      "E1_reversal": "4.57%",
+      "E2_reversal": "17.72%",
+      "E1_E3_recovery": "6.27%",
+      "E2_E3_recovery": "31.74%",
+      "E2_tau_b_mean": "0.5529",
+      "E2_tau_b_std": "0.3420",
+      "N_valid_tau": 49947
+    },
+    {
+      "Distribution": "Adversarial Upper-Bound Stress Condition",
+      "Parameter": "Worst-case",
+      "E1_reversal": "0.00%",
+      "E2_reversal": "0.00%",
+      "E1_E3_recovery": "0.00%",
+      "E2_E3_recovery": "0.00%",
+      "E2_tau_b_mean": "0.3333",
+      "E2_tau_b_std": "0.0000",
+      "N_valid_tau": 1
+    }
+  ]
+}

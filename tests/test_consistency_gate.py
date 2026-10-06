@@ -260,3 +260,40 @@ def test_adversarial_meta_evaluation_c11():
     assert e3_data["category_pass_rates"]["canonical_valid"] == 1.0
     assert e3_data["category_pass_rates"]["noncanonical_valid"] == 1.0
 
+
+def test_reference_distribution_sensitivity_artifact_integrity():
+    """
+    Verify reference_distribution_sensitivity.json structure, 11 distributions,
+    50,000 draws for stochastic distributions, and valid metadata provenance.
+    """
+    sens_path = "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json"
+    assert os.path.exists(sens_path), f"Missing sensitivity artifact: {sens_path}"
+    with open(sens_path) as f:
+        data = json.load(f)
+
+    assert len(data["distributions"]) == 11, f"Expected 11 distributions, got {len(data['distributions'])}"
+    for dist_id, dist_info in data["distributions"].items():
+        if dist_id != "ADVERSARIAL_UPPER_BOUND":
+            assert dist_info["n_draws"] == 50000, f"Expected 50k draws for {dist_id}"
+            assert dist_info["seed"] is not None
+
+
+def test_reference_distribution_sensitivity_monotonic_attenuation():
+    """
+    Verify that increasing canonical bias p monotonically decreases E2 pairwise reversal probability.
+    """
+    sens_path = "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json"
+    assert os.path.exists(sens_path)
+    with open(sens_path) as f:
+        data = json.load(f)
+
+    p_list = [0.0, 0.25, 0.50, 0.75, 0.80, 0.90, 0.95, 0.99]
+    rev_rates = []
+    for p in p_list:
+        dist_id = f"CANONICAL_BIAS_P{int(p*100):02d}"
+        rev = data["distributions"][dist_id]["evaluators"]["E2_NORMALIZED_MATCH"]["pairwise_reversal_probability"]
+        rev_rates.append(rev)
+
+    for i in range(1, len(rev_rates)):
+        assert rev_rates[i] <= rev_rates[i - 1], f"Non-monotonic reversal decrease at p={p_list[i]}: {rev_rates[i]} > {rev_rates[i-1]}"
+

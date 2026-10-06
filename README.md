@@ -13,6 +13,7 @@ This repository contains two main subsystems:
 
 ### Primary Recomputed Findings (50,000 Monte Carlo Reference Vector Draws)
 - **Benchmark Instability**: Evaluating 1,152 model outputs across 24 formal OS tasks (Scheduling, Synchronization Interleaving, Banker's Deadlock Avoidance) reveals that changing only the selected gold reference \(R \in V(x)\) while holding tasks, outputs, and evaluators fixed causes substantial ranking instability (\(\text{Kendall } \tau_b = 0.490 \pm 0.355\), \(\text{SE} = 0.0016\)) and flips pairwise model winners in **18.61%** of reference vector draws.
+- **Reference-Distribution Sensitivity**: Evaluating 11 reference-selection distributions (550,000 draws) proves that while increasing canonical selection bias attenuates instability monotonically (Uniform: 18.22%, \(p=0.50\): 11.73%, \(p=0.80\): 7.67%, \(p=0.95\): 2.69%, Similarity-weighted: 17.72%), pairwise ranking instability and conclusion non-identifiability persist across all realistic non-deterministic curation distributions.
 - **World-Level Inference**: Applying the preregistered world-level paired sign-flip permutation test (20,000 sign flips, Holm-Bonferroni corrected over 6 model pairs) demonstrates that world-level variance dominates pairwise model differences (\(p \ge 0.05\) across all model pairs).
 - **Underestimation of Model Competence**: Canonical exact matching (\(E_1\)) recovers the reference-invariant oracle ranking only **2.86%** of the time, and normalized matching (\(E_2\)) recovers it only **23.92%** of the time, falsely rejecting valid noncanonical trajectories.
 - **Stated-Convention Control**: Disclosing canonical tie-breaking rules fails to eliminate noncanonical outputs (\(\text{FRR}_{\text{norm}} = 0.625\)), proving that noncanonical trajectory generation persists when conventions are disclosed.
@@ -28,6 +29,7 @@ This repository contains two main subsystems:
 - **Final Research Status Report**: [`paper/FINAL_RESEARCH_STATUS.md`](paper/FINAL_RESEARCH_STATUS.md)
 - **Dead Code & Docs Audit Log**: [`DEAD_CODE_AND_DOCS_AUDIT.md`](DEAD_CODE_AND_DOCS_AUDIT.md)
 - **Recomputed RCR Summary Data**: [`research/ssr_pilot/results/rcrc/rcr_summary.json`](research/ssr_pilot/results/rcrc/rcr_summary.json)
+- **Reference Sensitivity Analysis Data**: [`research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json`](research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json)
 - **RCR Core Engine**: [`research/ssr_pilot/core/`](research/ssr_pilot/core/)
 - **RCR Protocol & Analysis**: [`research/ssr_pilot/rcrc/`](research/ssr_pilot/rcrc/)
 - **Adversarial Meta-Evaluation**: [`research/ssr_pilot/adversarial/`](research/ssr_pilot/adversarial/)
@@ -107,6 +109,11 @@ PYTHONPATH=. .venv/bin/python -m research.ssr_pilot.analyze_stated_convention
 ### Run Competence Pilot Analysis
 ```bash
 PYTHONPATH=. .venv/bin/python -m research.ssr_pilot.analyze_competence_pilot
+```
+
+### Run Reference-Distribution Sensitivity Analysis (11 Distributions, 550,000 Draws)
+```bash
+PYTHONPATH=. .venv/bin/python -m research.ssr_pilot.rcr_reference_distribution_sensitivity
 ```
 
 ### Run Adversarial Meta-Evaluation

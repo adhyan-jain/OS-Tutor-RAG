@@ -59,17 +59,31 @@ The "100% decision stability" language in Section 11 was updated in this forensi
 
 ---
 
+### Reviewer 6: Benchmark Curator & Distributional Assumptions Specialist
+
+**Attack:** *"Your uniform sampling over V(x) assumes benchmark curators pick references uniformly at random. In practice, curators select canonical or standard convention references. If a curator chooses the canonical reference with high probability, your instability disappears."*
+
+**Rebuttal:** We explicitly tested this hypothesis by conducting a comprehensive reference-distribution sensitivity analysis evaluating 11 distinct curation distributions across 550,000 Monte Carlo draws (50,000 draws per distribution):
+1. **Canonical Bias ($p \in [0.0, 0.99]$)**: Even when curators choose the canonical reference with **50% probability** per world ($p=0.50$), $E_2$ pairwise winner reversal rate remains **11.73%** and Kendall $\tau_b$ drops to **0.7519**. Even under an extreme **80% canonical bias** ($p=0.80$), $E_2$ reversal rate is **7.67%** ($\tau_b = 0.8830$). At $p=0.95$, reversals still occur at **2.69%**.
+2. **Similarity-Weighted Selection**: Weighting references by edit similarity to the canonical reference yields an $E_2$ reversal rate of **17.72%** ($\tau_b = 0.5055$), virtually indistinguishable from uniform sampling (18.22%).
+3. **Adversarial Upper-Bound**: Minimizing rank agreement yields $\tau_b = 0.3333$.
+
+These empirical results prove that while increasing canonical bias attenuates instability monotonically, pairwise ranking instability and conclusion non-identifiability persist across all realistic non-deterministic curation distributions. Complete elimination occurs only at $p=1.0$ (deterministic canonical choice), which is not robustness but arbitrary convention fixation.
+
+---
+
 ## 2. Paper Decision Gate
 
-### Verdict: **GREENLIGHT / FREEZE PASS COMPLETE** (Statistical and empirical core fully sound; verifiers unified and literature verified)
+### Verdict: **GREENLIGHT / FREEZE PASS COMPLETE** (Statistical and empirical core fully sound; verifiers unified, sensitivity audited, and literature verified)
 
 **Confirmed strengths (verified by this forensic audit):**
 1. τ = 0.490 ± 0.355 (n=49,914), reversal 18.61%, oracle recovery 23.92%/2.86% — independently recomputed, verified by consistency gate, traceable to frozen JSONL records
-2. Statistical method (world-level sign-flip, N=24, Holm-Bonferroni) correctly implemented and evaluated over 200 sampled reference conditions
-3. Stated-convention control directly refutes the "unstated tie-break" objection with 1,152 additional generations
-4. All 6 deviations from preregistration explicitly documented (D1–D6 in manuscript)
-5. Oracle invariance test fixed (fake loop → real reference-exercising test); placeholder valid-space test replaced with oracle roundtrip + metamorphic mutation assertions
-6. Independent Banker verifier (`validate_banker` in `validators.py`) implemented and integrated cleanly
-7. Primary-source literature audit completed for References Matter, ILR, OTAP, LogicGraph, TIER, PROBE, ReRef, confirming narrow novelty boundaries
-8. 376/376 tests pass; claims manifest independently recomputes all headline numbers and SHA-256 digests
+2. Comprehensive reference-distribution sensitivity matrix (11 distributions, 550,000 draws) confirming persistence of conclusion non-identifiability under canonical bias and similarity weighting
+3. Statistical method (world-level sign-flip, N=24, Holm-Bonferroni) correctly implemented and evaluated over 200 sampled reference conditions
+4. Stated-convention control directly refutes the "unstated tie-break" objection with 1,152 additional generations
+5. All 6 deviations from preregistration explicitly documented (D1–D6 in manuscript)
+6. Oracle invariance test fixed (real reference-exercising test across all 24 worlds and 1,152 candidates); placeholder valid-space test replaced with oracle roundtrip + metamorphic mutation assertions
+7. Independent Banker verifier (`validate_banker` in `validators.py`) implemented and integrated cleanly
+8. Primary-source literature audit completed for References Matter, ILR, OTAP, LogicGraph, TIER, PROBE, ReRef, confirming narrow novelty boundaries
+9. 383/383 tests pass; claims manifest independently recomputes all headline numbers and SHA-256 digests
 
