@@ -4,7 +4,8 @@
 **Date:** October 2026  
 **Final Decision Gate:** **GREENLIGHT (Final Freeze Pass Complete)**  
 **Automated Test Suite Status:** **374 / 374 PASSED**  
-**Git HEAD SHA:** `e2a60d30fb4acd6b6311f88ade9972f647c806ee`  
+**Experiment-Generating SHA:** `e2a60d30fb4acd6b6311f88ade9972f647c806ee`  
+**Final Package SHA:** `4e3afcbf7b85a93df60fb71d9f0877776d9eb839`  
 
 ---
 

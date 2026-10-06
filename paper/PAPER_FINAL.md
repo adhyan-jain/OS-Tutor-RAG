@@ -71,7 +71,7 @@ Table 1 presents the primary RCR metrics computed from 50,000 independent unifor
 #### Table 1: Primary Reference-Choice Robustness Metrics (50,000 Monte Carlo Draws)
 | Evaluator Class | `qwen3:8b` Score | `gemma2:9b` Score | `mistral:7b` Score | `llama3.1:8b` Score | Kendall \(\tau_b\) (Mean ± Std) | Monte Carlo SE | Pairwise Reversal Prob | Oracle Recovery Rate |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **\(E_1\) Canonical Exact** | 4.86% | 0.69% | 0.00% | 0.00% | 0.707 ± 0.357 | 0.0016 | 4.66% | **2.86%** |
+| **\(E_1\) Canonical Exact** | 4.86% | 0.69% | 0.00% | 0.00% | 0.769 ± 0.301 | 0.0014 | 4.66% | **2.86%** |
 | **\(E_2\) Normalized Match** | 13.19% | 2.43% | 3.47% | 0.35% | 0.490 ± 0.355 (n=49,914)† | 0.0016 | **18.61%** | **23.92%** |
 | **\(E_3\) Semantic Validator** | 30.90% | 17.01% | 7.64% | 6.60% | **1.000 ± 0.000** | 0.0000 | **0.00%** | **100.0%** |
 
@@ -82,7 +82,7 @@ Following the frozen preregistration, the statistical unit is the world (\(N=24\
 
 Running 20,000 paired sign-flip permutations with Holm-Bonferroni step-down correction across all 6 model pairs evaluated over a subsample of 200 sampled reference conditions (due to the computational cost of 20,000 permutations per draw) reveals that **world-level variance dominates pairwise model differences**. Across 100% of these 200 sampled reference conditions, no model pair achieves statistical significance at \(\alpha = 0.05\) after Holm correction.
 
-*Correction Note*: Prior uncorrected reports performed McNemar testing on individual \((w, v, s)\) cells (\(N=288\)), which treated nested seeds and variants as independent observations (pseudoreplication) and artificially reported "50% significance decision flips". World-level inference correctly reflects sample uncertainty and shows that pairwise model differences on this 24-world benchmark cannot be asserted as statistically significant under any reference choice.
+*Correction Note*: Prior uncorrected reports performed McNemar testing on individual \((w, v, s)\) cells (\(N=288\)), which treated nested seeds and variants as independent observations (pseudoreplication) and artificially reported "50% significance decision flips". World-level inference correctly reflects sample uncertainty and shows that pairwise model differences on this 24-world benchmark cannot be asserted as statistically significant across the 200 sampled reference conditions evaluated for sign-flip stability.
 
 ---
 
