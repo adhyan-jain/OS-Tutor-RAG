@@ -41,3 +41,30 @@ In accordance with Section 0 & 23 operating rules:
 - No core product code or valid research provenance was deleted.
 - Legacy draft files were updated with `SUPERSEDED / HISTORICAL` header banners.
 - Top-level `README.md` was streamlined to point exclusively to current canonical artifacts.
+
+---
+
+## 4. Phase G/I/J/M Forensic Audit Pass Addendum (2026-10-06)
+
+| Action | File | Finding | Resolution |
+|---|---|---|---|
+| FIXED | `research/ssr_pilot/core/oracle.py` | Fake invariance test: loop over `valid_references` never used `r` | Rewrote to call `compare_to_reference(world, steps, raw_text, r)` per iteration |
+| FIXED | `research/ssr_pilot/core/oracle.py` | Missing `Tuple` import (Python 3.14 annotation eval) | Added to typing imports |
+| ADDED | `research/ssr_pilot/core/oracle.py` | No architectural check that oracle has no reference parameter | Added `assert_oracle_has_no_reference_parameter()` |
+| FIXED | `tests/ssr_pilot/test_valid_space.py` | Placeholder `pass` in test loop | Replaced with oracle roundtrip assertions + metamorphic mutation test |
+| FIXED | `research/ssr_pilot/rcrc/ranking_metrics.py` | Degenerate tau: one-constant→0.0, NaN→1.0 (undocumented) | one-constant→NaN; both-constant→1.0 documented; NaN→NaN |
+| ADDED | `research/ssr_pilot/rcrc/ranking_metrics.py` | No tie-aware ranking identity check | Added `rankings_are_identical_tie_aware()` |
+| FIXED | `research/ssr_pilot/rcrc/analysis.py` | Oracle recovery used `tau==1.0` (wrong under ties); hardcoded n_draws | Fixed to `rankings_are_identical_tie_aware()`; fixed to use variable |
+| ADDED | `research/ssr_pilot/rcrc/analysis.py` | No tracking of degenerate-draw count | Added `kendall_tau_n_valid_draws`, `kendall_tau_n_degenerate_draws`, `significance_n_sampled_draws` |
+| FIXED | `research/ssr_pilot/core/provenance.py` | Missing `Optional` import; no package version or file hash capture | Fixed imports; added `_package_versions()`, `sha256_file()`, `input_files` |
+| ADDED | `tests/ssr_pilot/test_rcrc_statistics.py` | Missing tests for +1 MC correction, Holm monotonicity, N=24 guard | Added 4 synthetic tests |
+| REGENERATED | `research/ssr_pilot/results/rcrc/rcr_summary.json` | Stale SHA, τ=0.4893 (included degenerate), missing fields | τ=0.4901, n_valid=49914, n_degen=86, correct provenance |
+| REGENERATED | `research/ssr_pilot/results/stated_convention/analysis.json` | Potentially stale | Recomputed from frozen JSONL records |
+| REGENERATED | `research/ssr_pilot/results/competence_pilot/analysis.json` | Potentially stale | n_valid=48, FRR_norm=0.667, Decision C |
+| UPDATED | `paper/PAPER_FINAL.md` | τ=0.489, no degenerate disclosure, overclaimed scope | τ=0.490, n=49,914, D5/D6 added, scoped conclusion |
+| UPDATED | `paper/CLAIMS_AUDIT_FINAL.md` | C3 stale (0.489, N=50,000) | Updated to 0.490, N=49,914 |
+| CREATED | `paper/claims_manifest.json` | No machine-readable manifest | 15 claims with JSONPaths, tolerances, SHA-256 hashes |
+| UPDATED | `paper/REPRODUCIBILITY.md` | Stale SHA-256 hashes, missing commit SHA | Recomputed hashes; added generating commit `3a99f61e` |
+| REBUILT | `paper/NOVELTY_POSITIONING_FINAL.md` | 26-line stub with no adversarial analysis | 12-component overlap matrix, A/B/C/D classification |
+| REBUILT | `tests/test_consistency_gate.py` | Hardcoded expected values; manuscript string-matching | Rebuilt to load claims_manifest.json and recompute independently |
+| UPDATED | `research/ssr_pilot/results/competence_pilot/airllm_feasibility.md` | No Phase I live re-check | Appended live re-check (2026-10-06): disk still binding, network 4× faster |

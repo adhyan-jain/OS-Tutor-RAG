@@ -297,8 +297,7 @@
     "rule:policy_violation": 0.03819444444444445,
     "rule:preempted_partial_burst": 0.003472222222222222,
     "rule:program_order_violation": 0.08680555555555555,
-    "rule:queue_order_violation": 0.010416666666666666,
-    "rule:ran_past_quantum_or_burst": 0.003472222222222222,
+    "rule:queue_order_violation": 0.013888888888888888,
     "rule:repeated_process": 0.003472222222222222,
     "rule:started_before_arrival": 0.003472222222222222,
     "rule:wait_on_zero_semaphore": 0.0625,
@@ -627,8 +626,8 @@
    "rule:policy_violation": 0.05295138888888889,
    "rule:preempted_partial_burst": 0.006944444444444444,
    "rule:program_order_violation": 0.052083333333333336,
-   "rule:queue_order_violation": 0.026041666666666668,
-   "rule:ran_past_quantum_or_burst": 0.0026041666666666665,
+   "rule:queue_order_violation": 0.026909722222222224,
+   "rule:ran_past_quantum_or_burst": 0.001736111111111111,
    "rule:repeated_process": 0.0008680555555555555,
    "rule:started_before_arrival": 0.0008680555555555555,
    "rule:wait_on_zero_semaphore": 0.04600694444444445,
@@ -860,8 +859,8 @@
  "proxies": {
   "tau_by_held_out_family": {
    "scheduling": 0.3333333333333333,
-   "banker": 0.4,
-   "sync": 0.4
+   "sync": 0.4,
+   "banker": 0.4
   },
   "distance": {
    "balanced_agreement": 0.704405737704918,

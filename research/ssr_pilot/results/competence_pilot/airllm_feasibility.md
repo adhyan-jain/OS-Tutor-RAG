@@ -49,6 +49,32 @@ So **decoding speed alone does not rule it out**, provided AirLLM's batched samp
 
 Two of three criteria fail on measured numbers (download time and disk), so the planned run is **not reasonable**. The criterion that passes (generation time) rests on a projection, not a measurement, so AirLLM's actual speed remains unknown.
 
+---
+
+## Phase I live re-check — 2026-10-06
+
+**Re-check mandated by Phase I audit**: per the forensic completion plan, prior feasibility must be re-verified from live machine state, not trusted blindly.
+
+| Quantity | Re-check value | Change |
+|---|---|---|
+| GPU | RTX 4060 Laptop, 8188 MiB, **7875 MiB free** | +5.5 GB VRAM free (other project idle) |
+| RAM available | ~3.1 GB | similar to prior (12/15 GB in use) |
+| Free disk | **78 GB** | +7 GB (some Ollama cache cleared) |
+| Network (cloudflare speed test) | **1.8 MB/s** | ~4× faster than hf-mirror probe, ~45× faster than HuggingFace CDN measured 2026-10-04 |
+| AirLLM version | 4.0.0 (latest; no newer release) | unchanged |
+
+**Re-applying feasibility criteria with updated numbers:**
+
+| Criterion | Need | Re-check result | Pass |
+|---|---|---|---|
+| 1. Weights obtainable | ≤ 12 h | 65.5 GB at 1.8 MB/s = **10.1 h** — borderline | marginally passes |
+| 2. Disk | ≤ 68 GB (78 − 10 GB reserve) | fp16 shards 65.5 GB + 4-bit layer split ~17.5 GB = **~83 GB** peak vs 78 GB free | **still fails** |
+| 3. Generation time | ≤ 12 h | batched 4-bit, batch-16 lower bound 6.5 h | passes in principle, unmeasured |
+
+**Verdict: still blocked.** Criterion 2 (disk) is the binding constraint. The peak storage requirement (~83 GB) exceeds available free space (78 GB). Even with improved download speed (1.8 MB/s), disk headroom is insufficient for the simultaneous fp16 shard + 4-bit layer-split layout AirLLM requires. Freeing sufficient disk would require removing the active Ollama models (gemma3:12b, gemma2:9b, qwen3:8b, olmo2:7b, llama3.1:8b, mistral:7b-instruct ≈ 30–40 GB) which would invalidate the existing 1,728 generation records.
+
+**Decision: AirLLM infeasibility confirmed on live re-check 2026-10-06. Genuine infrastructure limitation. Proceeding to Phase J without AirLLM run.**
+
 ## What was and was not done
 - **Done:** read the AirLLM 4.0.0 source (supported architectures, `compression='4bit'|'8bit'`, requirements); measured SSD, download and memory; projected runtime with real token counts.
 - **Not done:** AirLLM was **not installed into the project environment**. It needs `transformers>=4.49,<6` while the project pins 4.48.0; it was unpacked with `--no-deps` into a throwaway environment for inspection only. No model weights were loaded, so AirLLM's own per-layer overhead and its batched-generation behaviour are **unmeasured**.

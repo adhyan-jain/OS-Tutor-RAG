@@ -31,22 +31,58 @@ def get_model_ranking(scores: Dict[str, float]) -> List[str]:
 
 def compute_kendall_tau_scores(scores1: Dict[str, float], scores2: Dict[str, float]) -> float:
     """
-    Computes Kendall's tau-b correlation directly from model score vectors, natively handling ties.
+    Computes Kendall's tau-b correlation directly from model score vectors.
+
+    Degenerate-vector handling policy (predeclared; see deviation log D4):
+    - Both vectors constant (all models score identically): return 1.0.
+      Justification: both ranking vectors rank all models tied #1 — the ranking
+      structure is identical, making 1.0 the most defensible finite value.
+      This holds regardless of whether the two constant values are equal.
+    - Exactly one vector constant: return float('nan').
+      Justification: tau-b denominator = 0 in one factor; the metric is genuinely
+      undefined. Callers must track and exclude these draws from aggregate statistics.
+    - scipy returns NaN for non-constant input: return float('nan').
+      Should not occur for tau-b with n=4 non-constant vectors; tracked if seen.
     """
     models = sorted(list(scores1.keys()))
     assert set(models) == set(scores2.keys()), "Score dicts must contain identical model sets"
-    
+
     vec1 = np.array([scores1[m] for m in models])
     vec2 = np.array([scores2[m] for m in models])
-    
-    # Check if all scores are identical in either vector (tau is undefined, return 1.0 if identical vectors, else 0.0)
-    if np.all(vec1 == vec1[0]) and np.all(vec2 == vec2[0]):
+
+    is_const1 = bool(np.all(vec1 == vec1[0]))
+    is_const2 = bool(np.all(vec2 == vec2[0]))
+
+    if is_const1 and is_const2:
+        # Both rankings are fully tied — identical ranking structure.
         return 1.0
-    if np.all(vec1 == vec1[0]) or np.all(vec2 == vec2[0]):
-        return 0.0
-        
+    if is_const1 or is_const2:
+        # One ranking is fully tied, the other is not — tau-b is undefined.
+        return float('nan')
+
     tau, _ = stats.kendalltau(vec1, vec2, variant='b')
-    return float(tau) if not np.isnan(tau) else 1.0
+    if np.isnan(tau):
+        return float('nan')
+    return float(tau)
+
+
+def rankings_are_identical_tie_aware(scores1: Dict[str, float], scores2: Dict[str, float]) -> bool:
+    """
+    Tie-aware ranking identity check: two score dicts have identical rankings iff
+    for every model pair (A, B): sign(s1_A - s1_B) == sign(s2_A - s2_B).
+
+    Ties are preserved: if A and B tie under scores1 they must also tie under scores2.
+    This is the correct criterion for oracle-recovery matching — a bare tau==1.0
+    check is equivalent only when no ties exist in either score vector.
+    """
+    models = sorted(scores1.keys())
+    for i, m1 in enumerate(models):
+        for m2 in models[i + 1:]:
+            sgn1 = np.sign(scores1[m1] - scores1[m2])
+            sgn2 = np.sign(scores2[m1] - scores2[m2])
+            if sgn1 != sgn2:
+                return False
+    return True
 
 
 def compute_kendall_tau(ranking1: List[str], ranking2: List[str]) -> float:
@@ -58,7 +94,7 @@ def compute_kendall_tau(ranking1: List[str], ranking2: List[str]) -> float:
     r1_pos = [ranking1.index(m) for m in m_list]
     r2_pos = [ranking2.index(m) for m in m_list]
     tau, _ = stats.kendalltau(r1_pos, r2_pos, variant='b')
-    return float(tau) if not np.isnan(tau) else 1.0
+    return float(tau) if not np.isnan(tau) else float('nan')
 
 
 def compute_pairwise_win_matrix(scores_by_ref: Dict[int, Dict[str, float]]) -> Dict:

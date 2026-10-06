@@ -51,15 +51,20 @@ PYTHONPATH=. .venv/bin/python -c "from research.ssr_pilot.adversarial.constructi
 
 ## 3. Complete SHA-256 Artifact Checksums
 
+**Generating commit:** `3a99f61e4d308b6d5d021afc853ea2cf4b6cb156` (branch `main`, 2026-10-06 forensic audit recompute). The prior session's hashes for `rcr_summary.json`, `CLAIMS_AUDIT_FINAL.md`, `PAPER_FINAL.md`, and `competence_pilot/analysis.json` are replaced below with recomputed values.
+
 | File Path | Full SHA-256 Checksum |
 |---|---|
-| `paper/PAPER_FINAL.md` | `e5fe6e7b9ed90c3f2dd8fa2ba4908ae09c1a0df462d01fcb691172e13b7c9f1f` |
-| `paper/CLAIMS_AUDIT_FINAL.md` | `b19c56b25c5f0805e55dfc6b53b6932a35da3b0af047694da0300b506e5d3213` |
-| `docs/PREREGISTRATION_V2.md` | `d7b59abdb01c623fd4ed2b2f9537ca0c4ef8400d13d0ef5f036b63bfcc755bdd` |
+| `paper/PAPER_FINAL.md` | `480c22a6c8b1d76770434fcfbc86d6f6235c0abc0d8b220683f6e1c8f5aa99b5` |
+| `paper/CLAIMS_AUDIT_FINAL.md` | `8a3e4bfc6b3bc3c5ac25ca668f3237f6710470b33863546f53884ea0eafa4b30` |
+| `paper/claims_manifest.json` | `b3ca7660ffb9b1459a19a802d848437fb5c56605126ca589d4ec4630d0197ae6` |
+| `paper/NOVELTY_POSITIONING_FINAL.md` | `d7ef5d89b7ed16a8bbb1f741f78aa17ebbd4647acdf22f93e7320015dbe7f00c` |
 | `docs/research/SSR_PILOT_PREREG.md` | `0a2714b04126bbea4b974abb6e4f604c01d05628b02e1bb361159ff2034c27d1` |
-| `research/ssr_pilot/results/rcrc/rcr_summary.json` | `23bc59f385274447e530bdcc0fd7165bf450cc2f604852bee322780c7eaf5b71` |
-| `research/ssr_pilot/results/stated_convention/REPORT.md` | `3e066a1532892939788a533e73e4659708f92b699c3a61632ff21cbc2c5eb524` |
-| `research/ssr_pilot/results/competence_pilot/analysis.json` | `ca4d5b11f5b0e4c92ac0ec38e216f4c9b4260958edfbd03f259ee7abbd5794cf` |
+| `research/ssr_pilot/results/rcrc/rcr_summary.json` | `54574db93fc819c0d2d57976b68f068b53733063e30b82b0196d24d2db2dba1d` |
+| `research/ssr_pilot/results/stated_convention/analysis.json` | `9859f64bf1de436842a8ad3e3c8a9a341e86b459971cc47ee5d8ca2e458354e6` |
+| `research/ssr_pilot/results/stated_convention/REPORT.md` | `3792bf8bb225bffc81a0bad8010a8fc031faca120bac4dab673c5ec42cb04e27` |
+| `research/ssr_pilot/results/competence_pilot/analysis.json` | `529eb507e34f03f47896aaa54931a23cb70b5240d72f56d8c7606747b7c4b6b2` |
+| `research/ssr_pilot/results/competence_pilot/airllm_feasibility.md` | `60b6593c3a80e13d9495ab6677cbe15f36487a103d33e9323db1e3cf76720d98` |
 | `research/ssr_pilot/results/adversarial/evaluator_meta_results.json` | `d486835a35d780fc45e9e1f0c02e9ebdd8387d9e98d504709dee5522c4bba284` |
 | `research/ssr_pilot/runs/gemma2_9b.jsonl` | `e09be2ef399ac04902a844e119aad73af2a0640bbae7db22fade1d5bd956dd75` |
 | `research/ssr_pilot/runs/llama3.1_8b.jsonl` | `38a2ac8b9c6a82dcfe4a9e6f63de6b53b5b04dc80fb7398f9d3d465fdd1d217a` |

@@ -1,0 +1,146 @@
+{
+  "_comment": "Machine-readable claims manifest. Each entry maps a claim ID to its source artifact, JSONPath, tolerance, and manuscript phrase. Used by tests/test_consistency_gate.py.",
+  "_generated": "2026-10-06",
+  "_artifact_sha256": {
+    "research/ssr_pilot/results/rcrc/rcr_summary.json": "54574db93fc819c0d2d57976b68f068b53733063e30b82b0196d24d2db2dba1d",
+    "research/ssr_pilot/results/stated_convention/analysis.json": "9859f64bf1de436842a8ad3e3c8a9a341e86b459971cc47ee5d8ca2e458354e6",
+    "research/ssr_pilot/results/competence_pilot/analysis.json": "529eb507e34f03f47896aaa54931a23cb70b5240d72f56d8c7606747b7c4b6b2"
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "description": "1,152 baseline generations evaluated",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "n_generations",
+      "expected_value": 1152,
+      "tolerance": 0,
+      "manuscript_phrase": "1,152 generations from four baseline model families"
+    },
+    {
+      "id": "C2",
+      "description": "50,000 Monte Carlo benchmark reference vectors sampled",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "n_monte_carlo_draws",
+      "expected_value": 50000,
+      "tolerance": 0,
+      "manuscript_phrase": "sampled 50,000 benchmark-level reference vectors"
+    },
+    {
+      "id": "C3_tau_mean",
+      "description": "E2 Kendall tau-b mean over non-degenerate draws",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "evaluators.E2_NORMALIZED_MATCH.kendall_tau_mean",
+      "expected_value": 0.4901,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "0.490"
+    },
+    {
+      "id": "C3_tau_std",
+      "description": "E2 Kendall tau-b std",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "evaluators.E2_NORMALIZED_MATCH.kendall_tau_std",
+      "expected_value": 0.3555,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "0.355"
+    },
+    {
+      "id": "C3_n_valid_draws",
+      "description": "E2 number of non-degenerate tau draws",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "evaluators.E2_NORMALIZED_MATCH.kendall_tau_n_valid_draws",
+      "expected_value": 49914,
+      "tolerance": 0,
+      "manuscript_phrase": "n=49,914"
+    },
+    {
+      "id": "C3_n_degen_draws",
+      "description": "E2 number of degenerate draws excluded",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "evaluators.E2_NORMALIZED_MATCH.kendall_tau_n_degenerate_draws",
+      "expected_value": 86,
+      "tolerance": 0,
+      "manuscript_phrase": "86/50,000 draws"
+    },
+    {
+      "id": "C4",
+      "description": "E2 pairwise winner reversal probability",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "evaluators.E2_NORMALIZED_MATCH.pairwise_win_matrix.pairwise_reversal_probability",
+      "expected_value": 0.1861,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "18.61%"
+    },
+    {
+      "id": "C5",
+      "description": "E2 oracle recovery rate",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "evaluators.E2_NORMALIZED_MATCH.oracle_recovery.oracle_recovery_rate",
+      "expected_value": 0.2392,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "23.92%"
+    },
+    {
+      "id": "C6",
+      "description": "E1 oracle recovery rate",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "evaluators.E1_CANONICAL_EXACT.oracle_recovery.oracle_recovery_rate",
+      "expected_value": 0.0286,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "2.86%"
+    },
+    {
+      "id": "C8_frr_norm",
+      "description": "Stated-convention baseline arm pooled FRR_norm",
+      "artifact": "research/ssr_pilot/results/competence_pilot/analysis.json",
+      "jsonpath": "baseline.pooled.FRR_norm.mean",
+      "expected_value": 0.625,
+      "tolerance": 0.001,
+      "manuscript_phrase": "FRR_norm = 0.625"
+    },
+    {
+      "id": "C9_frr_norm",
+      "description": "Gemma3 12B FRR_norm",
+      "artifact": "research/ssr_pilot/results/competence_pilot/analysis.json",
+      "jsonpath": "new.per_model.gemma3:12b.FRR_norm.mean",
+      "expected_value": 0.619,
+      "tolerance": 0.002,
+      "manuscript_phrase": "FRR_norm = 0.619"
+    },
+    {
+      "id": "C9_n_valid",
+      "description": "Gemma3 12B n_valid",
+      "artifact": "research/ssr_pilot/results/competence_pilot/analysis.json",
+      "jsonpath": "new.per_model.gemma3:12b.n_valid",
+      "expected_value": 42,
+      "tolerance": 0,
+      "manuscript_phrase": "n_valid = 42"
+    },
+    {
+      "id": "C10_n_valid",
+      "description": "OLMo2 7B n_valid",
+      "artifact": "research/ssr_pilot/results/competence_pilot/analysis.json",
+      "jsonpath": "new.per_model.olmo2:7b.n_valid",
+      "expected_value": 6,
+      "tolerance": 0,
+      "manuscript_phrase": "only 6 valid outputs"
+    },
+    {
+      "id": "C12_e3_tau",
+      "description": "E3 Kendall tau-b mean (reference-invariant oracle, should be 1.0)",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "evaluators.E3_SEMANTIC_ORACLE.kendall_tau_mean",
+      "expected_value": 1.0,
+      "tolerance": 0.0,
+      "manuscript_phrase": "1.000"
+    },
+    {
+      "id": "C12_e3_reversal",
+      "description": "E3 pairwise reversal probability (should be exactly 0.0)",
+      "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
+      "jsonpath": "evaluators.E3_SEMANTIC_ORACLE.pairwise_win_matrix.pairwise_reversal_probability",
+      "expected_value": 0.0,
+      "tolerance": 0.0,
+      "manuscript_phrase": "0.00%"
+    }
+  ]
+}

@@ -1,16 +1,31 @@
 {
   "provenance": {
     "experiment_name": "rcr_core_analysis",
-    "timestamp": "2026-10-05T21:37:56.927246+00:00",
-    "git_sha": "d899d1f21beaad1d3293b8bb3c440574771abbb4",
+    "timestamp": "2026-10-05T22:17:53.513255+00:00",
+    "git_sha": "3a99f61e4d308b6d5d021afc853ea2cf4b6cb156",
     "git_branch": "main",
     "python_version": "3.14.7 (main, Aug 10 2026, 07:46:56) [GCC 16.1.1 20260728]",
     "platform": "Linux-7.2.4-arch1-2-x86_64-with-glibc2.44",
     "hostname": "adhyan-omarchy",
-    "pid": 878520,
+    "pid": 1036585,
+    "package_versions": {
+      "numpy": "2.5.1",
+      "scipy": "1.18.0",
+      "pytest": "9.1.1"
+    },
+    "input_file_sha256": {
+      "research/ssr_pilot/runs/gemma2_9b.jsonl": "e09be2ef399ac04902a844e119aad73af2a0640bbae7db22fade1d5bd956dd75",
+      "research/ssr_pilot/runs/llama3.1_8b.jsonl": "38a2ac8b9c6a82dcfe4a9e6f63de6b53b5b04dc80fb7398f9d3d465fdd1d217a",
+      "research/ssr_pilot/runs/mistral_7b-instruct.jsonl": "320267aa897fd26237a70702f28b55ccc1e34d06dcd409b9f5253c4fa3727d9a",
+      "research/ssr_pilot/runs/qwen3_8b.jsonl": "1f00104a7c27f245270845f1a53d8d775bf02231ba31f40e3f39b6bd5b645497"
+    },
     "n_generations": 1152,
     "regime": "FULL_REFERENCE_ENUMERATION",
-    "n_draws": 50000
+    "n_draws": 50000,
+    "n_worlds": 24,
+    "rng_seed": 20261005,
+    "n_sign_flip_subsample": 200,
+    "sign_flip_seed": 20261005
   },
   "n_worlds": 24,
   "n_generations": 1152,
@@ -43,11 +58,13 @@
         "llama3.1:8b"
       ],
       "n_monte_carlo_draws": 50000,
-      "kendall_tau_mean": 0.7068653282843338,
-      "kendall_tau_std": 0.356516864027703,
-      "kendall_tau_se": 0.0015943918861819869,
+      "kendall_tau_mean": 0.7686660812139341,
+      "kendall_tau_std": 0.30118560999933,
+      "kendall_tau_se": 0.0014045905264494295,
       "kendall_tau_min": -0.8944271909999159,
       "kendall_tau_max": 1.0,
+      "kendall_tau_n_valid_draws": 45980,
+      "kendall_tau_n_degenerate_draws": 4020,
       "pairwise_win_matrix": {
         "models": [
           "gemma2:9b",
@@ -156,6 +173,7 @@
           }
         }
       },
+      "significance_n_sampled_draws": 200,
       "taxonomy_stability": {
         "n_references": 1,
         "dominant_failure_category_distribution": {
@@ -209,11 +227,13 @@
         "llama3.1:8b"
       ],
       "n_monte_carlo_draws": 50000,
-      "kendall_tau_mean": 0.4892941731490662,
-      "kendall_tau_std": 0.35573506201187693,
-      "kendall_tau_se": 0.00159089556127732,
+      "kendall_tau_mean": 0.49013720914880216,
+      "kendall_tau_std": 0.35546064148160395,
+      "kendall_tau_se": 0.0015910371962179375,
       "kendall_tau_min": -1.0,
       "kendall_tau_max": 1.0,
+      "kendall_tau_n_valid_draws": 49914,
+      "kendall_tau_n_degenerate_draws": 86,
       "pairwise_win_matrix": {
         "models": [
           "gemma2:9b",
@@ -322,6 +342,7 @@
           }
         }
       },
+      "significance_n_sampled_draws": 200,
       "taxonomy_stability": {
         "n_references": 1,
         "dominant_failure_category_distribution": {
@@ -380,6 +401,8 @@
       "kendall_tau_se": 0.0,
       "kendall_tau_min": 1.0,
       "kendall_tau_max": 1.0,
+      "kendall_tau_n_valid_draws": 50000,
+      "kendall_tau_n_degenerate_draws": 0,
       "pairwise_win_matrix": {
         "models": [
           "gemma2:9b",
@@ -488,6 +511,7 @@
           }
         }
       },
+      "significance_n_sampled_draws": 200,
       "taxonomy_stability": {
         "n_references": 1,
         "dominant_failure_category_distribution": {

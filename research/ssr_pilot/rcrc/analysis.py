@@ -236,11 +236,16 @@ def run_rcr_analysis(
         pairwise_summary = compute_pairwise_win_matrix(random_scores_by_draw)
 
         # Tie-aware Kendall tau-b distribution of random references against canonical reference
-        from research.ssr_pilot.rcrc.ranking_metrics import compute_kendall_tau_scores
-        kendall_taus = [compute_kendall_tau_scores(canonical_scores, r_scores) for r_scores in random_scores_by_draw.values()]
-        kendall_tau_mean = float(np.mean(kendall_taus))
-        kendall_tau_std = float(np.std(kendall_taus))
-        kendall_tau_se = float(kendall_tau_std / np.sqrt(len(kendall_taus)))
+        # NaN draws (one-constant degenerate vectors) are tracked separately and excluded from
+        # aggregate statistics per the predeclared degenerate handling policy (deviation D4).
+        from research.ssr_pilot.rcrc.ranking_metrics import compute_kendall_tau_scores, rankings_are_identical_tie_aware
+        kendall_taus_raw = [compute_kendall_tau_scores(canonical_scores, r_scores) for r_scores in random_scores_by_draw.values()]
+        n_degen_taus = int(sum(1 for t in kendall_taus_raw if np.isnan(t)))
+        kendall_taus = [t for t in kendall_taus_raw if not np.isnan(t)]
+        n_valid_taus = len(kendall_taus)
+        kendall_tau_mean = float(np.mean(kendall_taus)) if kendall_taus else float('nan')
+        kendall_tau_std = float(np.std(kendall_taus)) if kendall_taus else float('nan')
+        kendall_tau_se = float(kendall_tau_std / np.sqrt(n_valid_taus)) if n_valid_taus > 0 else float('nan')
 
         # Significance stability over representative uniform reference draws (subsample 200 draws for 20k sign-flip tests)
         from research.ssr_pilot.rcrc.significance_metrics import compute_significance_stability_fast
@@ -252,9 +257,9 @@ def run_rcr_analysis(
         tax_summary = compute_taxonomy_stability(benchmark_taxonomies_by_draw)
 
 
-        # Oracle recovery rate on random uniform references
-        from research.ssr_pilot.rcrc.ranking_metrics import compute_kendall_tau_scores
-        oracle_matches = sum(1 for r_scores in random_scores_by_draw.values() if compute_kendall_tau_scores(oracle_scores, r_scores) == 1.0)
+        # Oracle recovery rate on random uniform references.
+        # Uses tie-aware ranking identity (not tau==1.0) to correctly handle tied oracle scores.
+        oracle_matches = sum(1 for r_scores in random_scores_by_draw.values() if rankings_are_identical_tie_aware(oracle_scores, r_scores))
         oracle_rec_rate = float(oracle_matches / len(random_scores_by_draw))
         rec_summary = {
             "n_references": len(random_scores_by_draw),
@@ -280,17 +285,27 @@ def run_rcr_analysis(
             "kendall_tau_mean": kendall_tau_mean,
             "kendall_tau_std": kendall_tau_std,
             "kendall_tau_se": kendall_tau_se,
-            "kendall_tau_min": float(np.min(kendall_taus)),
-            "kendall_tau_max": float(np.max(kendall_taus)),
+            "kendall_tau_min": float(np.min(kendall_taus)) if kendall_taus else float('nan'),
+            "kendall_tau_max": float(np.max(kendall_taus)) if kendall_taus else float('nan'),
+            "kendall_tau_n_valid_draws": n_valid_taus,
+            "kendall_tau_n_degenerate_draws": n_degen_taus,
             "pairwise_win_matrix": pairwise_summary,
             "significance_stability": sig_summary,
+            "significance_n_sampled_draws": len(sig_vectors_subset),
             "taxonomy_stability": tax_summary,
             "oracle_recovery": rec_summary,
             "canonical_reference_diagnostic": canon_diag,
         }
 
     # Provenance
-    prov = capture_provenance("rcr_core_analysis", {"n_generations": len(raw_records), "regime": regime.value, "n_draws": 50000})
+    input_jsonl_paths = sorted(glob.glob(f"{RUNS_DIR}/*.jsonl"))
+    prov = capture_provenance(
+        "rcr_core_analysis",
+        extra_meta={"n_generations": len(raw_records), "regime": regime.value, "n_draws": n_bench_samples,
+                    "n_worlds": len(worlds), "rng_seed": 20261005, "n_sign_flip_subsample": 200,
+                    "sign_flip_seed": 20261005},
+        input_files=input_jsonl_paths
+    )
 
     output_data = {
         "provenance": prov,
