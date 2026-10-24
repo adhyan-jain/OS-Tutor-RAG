@@ -82,12 +82,12 @@ only by `api/Dockerfile`:
   static analysis of the eval-only cluster it looked like it belonged to.
 
 `requirements.txt` itself is untouched, since it's what the user's own GPU
-dev machine installs from (and per `DELAYED_TASKS.md` #1, it already has its
+dev machine installs from (and per `FINDINGS.md` "Technical debt" #1, it already has its
 own pin/Python-version reproducibility issues on that machine, unrelated to
 this task).
 
 The backend Dockerfile also deliberately pins Python 3.11 (`python:3.11-slim`)
-rather than whatever the dev machine runs, because DELAYED_TASKS.md #1 notes
+rather than whatever the dev machine runs, because FINDINGS.md "Technical debt" #1 notes
 the dev machine's Python 3.14 has no prebuilt wheels for several of these
 pins (`faiss-cpu==1.8.0`, `torch==2.4.0`); 3.11 is a version every pin here
 has a wheel for.
