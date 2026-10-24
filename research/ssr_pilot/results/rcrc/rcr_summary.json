@@ -1,13 +1,13 @@
 {
   "provenance": {
     "experiment_name": "rcr_core_analysis",
-    "timestamp": "2026-10-06T04:57:17.838023+00:00",
-    "git_sha": "e2a60d30fb4acd6b6311f88ade9972f647c806ee",
+    "timestamp": "2026-10-12T17:25:53.378543+00:00",
+    "git_sha": "81b9c7056464aa6d4049b6645201242d18fcba78",
     "git_branch": "main",
     "python_version": "3.14.7 (main, Aug 10 2026, 07:46:56) [GCC 16.1.1 20260728]",
     "platform": "Linux-7.2.4-arch1-2-x86_64-with-glibc2.44",
     "hostname": "adhyan-omarchy",
-    "pid": 2033750,
+    "pid": 2438387,
     "package_versions": {
       "numpy": "2.5.1",
       "scipy": "1.18.0",
@@ -205,13 +205,13 @@
       "canonical_model_scores": {
         "gemma2:9b": 0.024305555555555556,
         "llama3.1:8b": 0.003472222222222222,
-        "mistral:7b-instruct": 0.034722222222222224,
+        "mistral:7b-instruct": 0.017361111111111112,
         "qwen3:8b": 0.13194444444444445
       },
       "canonical_model_ranking": [
         "qwen3:8b",
-        "mistral:7b-instruct",
         "gemma2:9b",
+        "mistral:7b-instruct",
         "llama3.1:8b"
       ],
       "oracle_model_scores": {
@@ -227,13 +227,13 @@
         "llama3.1:8b"
       ],
       "n_monte_carlo_draws": 50000,
-      "kendall_tau_mean": 0.49013720914880216,
-      "kendall_tau_std": 0.35546064148160395,
-      "kendall_tau_se": 0.0015910371962179375,
+      "kendall_tau_mean": 0.6177305148134326,
+      "kendall_tau_std": 0.35053023031609615,
+      "kendall_tau_se": 0.0015689844570878843,
       "kendall_tau_min": -1.0,
       "kendall_tau_max": 1.0,
-      "kendall_tau_n_valid_draws": 49914,
-      "kendall_tau_n_degenerate_draws": 86,
+      "kendall_tau_n_valid_draws": 49913,
+      "kendall_tau_n_degenerate_draws": 87,
       "pairwise_win_matrix": {
         "models": [
           "gemma2:9b",
@@ -246,29 +246,29 @@
           "gemma2:9b": {
             "gemma2:9b": 0.0,
             "llama3.1:8b": 0.70358,
-            "mistral:7b-instruct": 0.6609,
+            "mistral:7b-instruct": 0.6854,
             "qwen3:8b": 0.09532
           },
           "llama3.1:8b": {
             "gemma2:9b": 0.14346,
             "llama3.1:8b": 0.0,
-            "mistral:7b-instruct": 0.334,
+            "mistral:7b-instruct": 0.42108,
             "qwen3:8b": 0.04348
           },
           "mistral:7b-instruct": {
-            "gemma2:9b": 0.21418,
-            "llama3.1:8b": 0.47164,
+            "gemma2:9b": 0.1875,
+            "llama3.1:8b": 0.33072,
             "mistral:7b-instruct": 0.0,
-            "qwen3:8b": 0.03712
+            "qwen3:8b": 0.03668
           },
           "qwen3:8b": {
             "gemma2:9b": 0.87224,
             "llama3.1:8b": 0.93164,
-            "mistral:7b-instruct": 0.9358,
+            "mistral:7b-instruct": 0.93642,
             "qwen3:8b": 0.0
           }
         },
-        "pairwise_reversal_probability": 0.186137532350647
+        "pairwise_reversal_probability": 0.17557190277138876
       },
       "significance_stability": {
         "n_references": 200,
@@ -278,8 +278,8 @@
             "decision_distribution": {
               "NON_SIGNIFICANT": 1.0
             },
-            "mean_adj_p_value": 0.9885595720213991,
-            "std_adj_p_value": 0.06285239845642143,
+            "mean_adj_p_value": 0.9886558172091395,
+            "std_adj_p_value": 0.0628551053903597,
             "min_adj_p_value": 0.5007749612519374,
             "max_adj_p_value": 1.0,
             "mean_raw_p_value": 0.7848275086245688,
@@ -289,19 +289,19 @@
             "decision_distribution": {
               "NON_SIGNIFICANT": 1.0
             },
-            "mean_adj_p_value": 0.9899245037748113,
-            "std_adj_p_value": 0.0604399674544993,
+            "mean_adj_p_value": 0.9889083045847706,
+            "std_adj_p_value": 0.06106752691758534,
             "min_adj_p_value": 0.4971751412429379,
             "max_adj_p_value": 1.0,
-            "mean_raw_p_value": 0.7497000149992499,
+            "mean_raw_p_value": 0.7452529873506325,
             "is_decision_constant": true
           },
           "gemma2:9b_vs_qwen3:8b": {
             "decision_distribution": {
               "NON_SIGNIFICANT": 1.0
             },
-            "mean_adj_p_value": 0.9299942502874856,
-            "std_adj_p_value": 0.1697449581572959,
+            "mean_adj_p_value": 0.9302409879506024,
+            "std_adj_p_value": 0.16915775931792304,
             "min_adj_p_value": 0.08999550022498876,
             "max_adj_p_value": 1.0,
             "mean_raw_p_value": 0.5315639218039098,
@@ -311,11 +311,11 @@
             "decision_distribution": {
               "NON_SIGNIFICANT": 1.0
             },
-            "mean_adj_p_value": 0.9956384680765962,
-            "std_adj_p_value": 0.04002693443025737,
+            "mean_adj_p_value": 0.9974371281435929,
+            "std_adj_p_value": 0.035465108211670794,
             "min_adj_p_value": 0.4971751412429379,
             "max_adj_p_value": 1.0,
-            "mean_raw_p_value": 0.8164976751162442,
+            "mean_raw_p_value": 0.8451899905004748,
             "is_decision_constant": true
           },
           "llama3.1:8b_vs_qwen3:8b": {
@@ -337,7 +337,7 @@
             "std_adj_p_value": 0.18656671667916122,
             "min_adj_p_value": 0.08999550022498876,
             "max_adj_p_value": 1.0,
-            "mean_raw_p_value": 0.4633228338583071,
+            "mean_raw_p_value": 0.46235338233088347,
             "is_decision_constant": true
           }
         }
@@ -358,8 +358,8 @@
           "mistral:7b-instruct",
           "llama3.1:8b"
         ],
-        "oracle_recovery_rate": 0.2392,
-        "rankings_matching_oracle": 11960
+        "oracle_recovery_rate": 0.13628,
+        "rankings_matching_oracle": 6814
       },
       "canonical_reference_diagnostic": {
         "canonical_pass_rate": 0.16666666666666666,

@@ -1,0 +1,338 @@
+{
+  "provenance": {
+    "experiment_name": "rcr_kref_analysis",
+    "timestamp": "2026-10-24T02:02:27.502600+00:00",
+    "git_sha": "81b9c7056464aa6d4049b6645201242d18fcba78",
+    "git_branch": "main",
+    "python_version": "3.14.7 (main, Aug 10 2026, 07:46:56) [GCC 16.1.1 20260728]",
+    "platform": "Linux-7.2.4-arch1-2-x86_64-with-glibc2.44",
+    "hostname": "adhyan-omarchy",
+    "pid": 801367,
+    "package_versions": {
+      "numpy": "2.5.1",
+      "scipy": "1.18.0",
+      "pytest": "9.1.1"
+    },
+    "input_file_sha256": {
+      "research/ssr_pilot/runs_claude/claude-haiku-4-5.jsonl": "9c4d80d3ec6359f95414f743e98c381ab749a60c7f2c68f514ebeec09ee6980a",
+      "research/ssr_pilot/runs_claude/claude-haiku-5-5.jsonl": "2cb15a6f3324d069339673d8c41e74596e48bd7b30b3d59a4a4c7d33347f1c1e",
+      "research/ssr_pilot/runs_claude/claude-sonnet-4-5.jsonl": "cded81739dc8f4a9e5f2f29f7343be57e2edc3f433bd8fe70f06f88a3c593025",
+      "research/ssr_pilot/runs_claude/claude-sonnet-5-5.jsonl": "021fa53424d401f8a29840b3516f2fb6ad0b029ad6bf57eb0c6c5d88eff97076"
+    },
+    "seed": 20261020,
+    "draws_per_setting": 2000,
+    "n_flips": 20000,
+    "k_grid": [
+      1,
+      2,
+      3,
+      5,
+      10,
+      25,
+      50,
+      "all"
+    ]
+  },
+  "models": [
+    "claude-haiku-4-5",
+    "claude-haiku-5-5",
+    "claude-sonnet-4-5",
+    "claude-sonnet-5-5"
+  ],
+  "pairs": [
+    "claude-haiku-4-5_vs_claude-haiku-5-5",
+    "claude-haiku-4-5_vs_claude-sonnet-4-5",
+    "claude-haiku-4-5_vs_claude-sonnet-5-5",
+    "claude-haiku-5-5_vs_claude-sonnet-4-5",
+    "claude-haiku-5-5_vs_claude-sonnet-5-5",
+    "claude-sonnet-4-5_vs_claude-sonnet-5-5"
+  ],
+  "oracle_gap": {
+    "claude-haiku-4-5_vs_claude-haiku-5-5": -0.2500000000000002,
+    "claude-haiku-4-5_vs_claude-sonnet-4-5": -0.06597222222222243,
+    "claude-haiku-4-5_vs_claude-sonnet-5-5": -0.26041666666666674,
+    "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.1840277777777778,
+    "claude-haiku-5-5_vs_claude-sonnet-5-5": -0.010416666666666519,
+    "claude-sonnet-4-5_vs_claude-sonnet-5-5": -0.1944444444444443
+  },
+  "oracle_decision": {
+    "claude-haiku-4-5_vs_claude-haiku-5-5": -1,
+    "claude-haiku-4-5_vs_claude-sonnet-4-5": 0,
+    "claude-haiku-4-5_vs_claude-sonnet-5-5": -1,
+    "claude-haiku-5-5_vs_claude-sonnet-4-5": 1,
+    "claude-haiku-5-5_vs_claude-sonnet-5-5": 0,
+    "claude-sonnet-4-5_vs_claude-sonnet-5-5": -1
+  },
+  "attenuation_law": {
+    "model": "E[E2 | uniform reference] = E3 / |V(x)| per (world, model) cell",
+    "n_cells_with_positive_E3": 92,
+    "pearson_r_observed_vs_predicted": 0.9999999999999998,
+    "median_ratio_observed_over_predicted": 1.0,
+    "mean_ratio_observed_over_predicted": 1.0,
+    "valid_generations_total": 1010,
+    "valid_generations_matching_no_reference": 0,
+    "valid_generations_matching_more_than_one_reference": 0,
+    "invalid_generations_matching_a_reference": 0,
+    "pairs": {
+      "claude-haiku-4-5_vs_claude-haiku-5-5": {
+        "oracle_gap": -0.25,
+        "observed_expected_e2_gap": -0.06522071116255145,
+        "predicted_expected_e2_gap": -0.06522071116255145,
+        "observed_retention": 0.2608828446502058,
+        "predicted_retention": 0.2608828446502058
+      },
+      "claude-haiku-4-5_vs_claude-sonnet-4-5": {
+        "oracle_gap": -0.06597222222222222,
+        "observed_expected_e2_gap": -0.009900541042034099,
+        "predicted_expected_e2_gap": -0.009900541042034099,
+        "observed_retention": 0.1500713589529379,
+        "predicted_retention": 0.1500713589529379
+      },
+      "claude-haiku-4-5_vs_claude-sonnet-5-5": {
+        "oracle_gap": -0.2604166666666667,
+        "observed_expected_e2_gap": -0.0649175806510876,
+        "predicted_expected_e2_gap": -0.0649175806510876,
+        "observed_retention": 0.24928350970017638,
+        "predicted_retention": 0.24928350970017638
+      },
+      "claude-haiku-5-5_vs_claude-sonnet-4-5": {
+        "oracle_gap": 0.18402777777777776,
+        "observed_expected_e2_gap": 0.05532017012051734,
+        "predicted_expected_e2_gap": 0.05532017012051734,
+        "observed_retention": 0.3006077168813018,
+        "predicted_retention": 0.3006077168813018
+      },
+      "claude-haiku-5-5_vs_claude-sonnet-5-5": {
+        "oracle_gap": -0.010416666666666671,
+        "observed_expected_e2_gap": 0.0003031305114638445,
+        "predicted_expected_e2_gap": 0.0003031305114638446,
+        "observed_retention": -0.02910052910052906,
+        "predicted_retention": -0.02910052910052907
+      },
+      "claude-sonnet-4-5_vs_claude-sonnet-5-5": {
+        "oracle_gap": -0.19444444444444445,
+        "observed_expected_e2_gap": -0.05501703960905349,
+        "predicted_expected_e2_gap": -0.0550170396090535,
+        "observed_retention": 0.2829447751322751,
+        "predicted_retention": 0.2829447751322751
+      }
+    }
+  },
+  "k_reference": {
+    "1": {
+      "mean_reversal_all_pairs": 0.2636703351675838,
+      "oracle_ordering_recovery": 0.206,
+      "detect_oracle_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.051,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.0455,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.018,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.018
+      },
+      "false_positive_any_nonseparated_pair": 0.015,
+      "wrong_direction_any_pair": 0.015,
+      "mean_gap_retained_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.26454861111111094,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.2527733333333333,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.3086320754716981,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.2905000000000002
+      }
+    },
+    "2": {
+      "mean_reversal_all_pairs": 0.1424777388694347,
+      "oracle_ordering_recovery": 0.3285,
+      "detect_oracle_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.0775,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.084,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.0965,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.0925
+      },
+      "false_positive_any_nonseparated_pair": 0.01,
+      "wrong_direction_any_pair": 0.01,
+      "mean_gap_retained_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.5191944444444442,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.5017266666666665,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.5948301886792453,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.567383928571429
+      }
+    },
+    "3": {
+      "mean_reversal_all_pairs": 0.13477955644488912,
+      "oracle_ordering_recovery": 0.299,
+      "detect_oracle_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.2,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.198,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.2235,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.1825
+      },
+      "false_positive_any_nonseparated_pair": 0.0055,
+      "wrong_direction_any_pair": 0.0055,
+      "mean_gap_retained_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.6246458333333328,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.5947666666666664,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.7307924528301888,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.6850892857142862
+      }
+    },
+    "5": {
+      "mean_reversal_all_pairs": 0.11922669668167418,
+      "oracle_ordering_recovery": 0.312,
+      "detect_oracle_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.3645,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.361,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.4415,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.372
+      },
+      "false_positive_any_nonseparated_pair": 0.0055,
+      "wrong_direction_any_pair": 0.0055,
+      "mean_gap_retained_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.7740763888888883,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.7372333333333332,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.8910188679245283,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.8354107142857149
+      }
+    },
+    "10": {
+      "mean_reversal_all_pairs": 0.1125969651492413,
+      "oracle_ordering_recovery": 0.335,
+      "detect_oracle_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.456,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.4065,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.5965,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.466
+      },
+      "false_positive_any_nonseparated_pair": 0.005,
+      "wrong_direction_any_pair": 0.005,
+      "mean_gap_retained_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.8489583333333326,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.8023933333333332,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.9855660377358489,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.9158839285714293
+      }
+    },
+    "25": {
+      "mean_reversal_all_pairs": 0.11528147407036853,
+      "oracle_ordering_recovery": 0.3745,
+      "detect_oracle_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.6025,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.505,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.67,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.6855
+      },
+      "false_positive_any_nonseparated_pair": 0.0,
+      "wrong_direction_any_pair": 0.0,
+      "mean_gap_retained_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.8656805555555549,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.8263133333333331,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 1.0117169811320754,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.9511696428571437
+      }
+    },
+    "50": {
+      "mean_reversal_all_pairs": 0.12268417542104386,
+      "oracle_ordering_recovery": 0.3745,
+      "detect_oracle_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.6595,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.575,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.655,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.684
+      },
+      "false_positive_any_nonseparated_pair": 0.0,
+      "wrong_direction_any_pair": 0.0,
+      "mean_gap_retained_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.8959444444444438,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.8611133333333332,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 1.054622641509434,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.999473214285715
+      }
+    },
+    "all": {
+      "mean_reversal_all_pairs": 0.0,
+      "oracle_ordering_recovery": 1.0,
+      "detect_oracle_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 1.0,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 1.0,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 1.0,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 1.0
+      },
+      "false_positive_any_nonseparated_pair": 0.0,
+      "wrong_direction_any_pair": 0.0,
+      "mean_gap_retained_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.9999999999999991,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.9999999999999996,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.9999999999999996,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 1.000000000000001
+      }
+    }
+  },
+  "inverse_V_correction": {
+    "1": {
+      "mean_estimated_gap_over_oracle_gap_separated": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 1.0416389018818728,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 1.0437133450782297,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.9180943340586041,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.9274910651871143
+      },
+      "sd_of_estimated_gap_separated": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.6672027363497318,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.8931249895186082,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.9939551558679711,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 1.0927089451240688
+      },
+      "detect_oracle_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.0415,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.0445,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.01,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.009
+      },
+      "false_positive_any_nonseparated_pair": 0.0195,
+      "wrong_direction_any_pair": 0.0205,
+      "mean_bias_all_pairs": -0.00820399475549517
+    },
+    "3": {
+      "mean_estimated_gap_over_oracle_gap_separated": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.9893564303765686,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.9703709745645519,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.9816571916780382,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.9566427011457943
+      },
+      "sd_of_estimated_gap_separated": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.37570579170095353,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.48093835456457273,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.4928949813228753,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.5438731513393271
+      },
+      "detect_oracle_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.094,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.09,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.103,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.0485
+      },
+      "false_positive_any_nonseparated_pair": 0.0145,
+      "wrong_direction_any_pair": 0.0145,
+      "mean_bias_all_pairs": 0.003295348311291569
+    },
+    "10": {
+      "mean_estimated_gap_over_oracle_gap_separated": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 1.0006443710153292,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 1.0043586390948294,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.9840131207507735,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.9898785467642766
+      },
+      "sd_of_estimated_gap_separated": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.1890158121674801,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.25997414805275404,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.27723796249348276,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.3069844457520594
+      },
+      "detect_oracle_separated_pairs": {
+        "claude-haiku-4-5_vs_claude-haiku-5-5": 0.2195,
+        "claude-haiku-4-5_vs_claude-sonnet-5-5": 0.137,
+        "claude-haiku-5-5_vs_claude-sonnet-4-5": 0.2335,
+        "claude-sonnet-4-5_vs_claude-sonnet-5-5": 0.1815
+      },
+      "false_positive_any_nonseparated_pair": 0.0075,
+      "wrong_direction_any_pair": 0.0075,
+      "mean_bias_all_pairs": -0.0010578694424453617
+    }
+  }
+}

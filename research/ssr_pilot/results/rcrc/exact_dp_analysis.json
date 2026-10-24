@@ -1,0 +1,987 @@
+{
+  "provenance": {
+    "experiment_name": "rcr_exact_dp_analysis",
+    "timestamp": "2026-10-13T16:12:11.335118+00:00",
+    "n_worlds": 24,
+    "n_models": 4,
+    "n_generations_per_cell": 12,
+    "method": "exact_dp_convolution",
+    "input_paths": [
+      "research/ssr_pilot/runs/gemma2_9b.jsonl",
+      "research/ssr_pilot/runs/llama3.1_8b.jsonl",
+      "research/ssr_pilot/runs/mistral_7b-instruct.jsonl",
+      "research/ssr_pilot/runs/qwen3_8b.jsonl"
+    ]
+  },
+  "models": [
+    "gemma2:9b",
+    "llama3.1:8b",
+    "mistral:7b-instruct",
+    "qwen3:8b"
+  ],
+  "pairs": [
+    "gemma2:9b_vs_llama3.1:8b",
+    "gemma2:9b_vs_mistral:7b-instruct",
+    "gemma2:9b_vs_qwen3:8b",
+    "llama3.1:8b_vs_mistral:7b-instruct",
+    "llama3.1:8b_vs_qwen3:8b",
+    "mistral:7b-instruct_vs_qwen3:8b"
+  ],
+  "evaluators": {
+    "E1_CANONICAL_EXACT": {
+      "mean_pairwise_reversal_probability": 0.046515664404168926,
+      "per_pair": {
+        "gemma2:9b_vs_llama3.1:8b": {
+          "model_a": "gemma2:9b",
+          "model_b": "llama3.1:8b",
+          "expected_margin": 0.002864329515919436,
+          "variance_margin": 1.2638080133983006e-05,
+          "std_margin": 0.0035550077544195323,
+          "p_positive": 0.49164856948505664,
+          "p_negative": 0.010721095272904503,
+          "p_zero": 0.4976303352420418,
+          "winner_reversal_probability": 0.010542022308473004,
+          "max_certifiable_tv_budget": 0.002864329515919436,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": 0.002864329515919436,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.002864) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": 0.002864329515919436,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.002864) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": 0.002864329515919436,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.002864) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": 0.002864329515919436,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.002864) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": 0.002864329515919436,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.002864) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 11,
+          "min_possible_margin": -0.003472222222222222,
+          "max_possible_margin": 0.03125
+        },
+        "gemma2:9b_vs_mistral:7b-instruct": {
+          "model_a": "gemma2:9b",
+          "model_b": "mistral:7b-instruct",
+          "expected_margin": 0.0026424930961663484,
+          "variance_margin": 1.8159710524500852e-05,
+          "std_margin": 0.004261421186001315,
+          "p_positive": 0.46497202932098886,
+          "p_negative": 0.08226389904158568,
+          "p_zero": 0.45276407163742804,
+          "winner_reversal_probability": 0.07650082415444609,
+          "max_certifiable_tv_budget": 0.0026424930961663484,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": 0.0026424930961663484,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.002642) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": 0.0026424930961663484,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.002642) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": 0.0026424930961663484,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.002642) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": 0.0026424930961663484,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.002642) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": 0.0026424930961663484,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.002642) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 13,
+          "min_possible_margin": -0.006944444444444444,
+          "max_possible_margin": 0.034722222222222224
+        },
+        "gemma2:9b_vs_qwen3:8b": {
+          "model_a": "gemma2:9b",
+          "model_b": "qwen3:8b",
+          "expected_margin": -0.015460082135315188,
+          "variance_margin": 0.00015176432651029429,
+          "std_margin": 0.012319266476145984,
+          "p_positive": 0.06674158189463117,
+          "p_negative": 0.8275990935998445,
+          "p_zero": 0.1056593245055274,
+          "winner_reversal_probability": 0.1104705453628331,
+          "max_certifiable_tv_budget": 0.015460082135315188,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": -0.015460082135315188,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.015460) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": -0.015460082135315188,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.015460) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": -0.015460082135315188,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.015460) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": -0.015460082135315188,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.015460) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": -0.015460082135315188,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.015460) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 31,
+          "min_possible_margin": -0.07291666666666667,
+          "max_possible_margin": 0.03125
+        },
+        "llama3.1:8b_vs_mistral:7b-instruct": {
+          "model_a": "llama3.1:8b",
+          "model_b": "mistral:7b-instruct",
+          "expected_margin": -0.00022183641975308705,
+          "variance_margin": 2.7213716557832337e-06,
+          "std_margin": 0.001649658042075155,
+          "p_positive": 0.0776909722222224,
+          "p_negative": 0.1401331018518522,
+          "p_zero": 0.7821759259259281,
+          "winner_reversal_probability": 0.021774153846772226,
+          "max_certifiable_tv_budget": 0.00022183641975308705,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": -0.00022183641975308705,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.000222) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": -0.00022183641975308705,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.000222) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": -0.00022183641975308705,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.000222) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": -0.00022183641975308705,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.000222) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": -0.00022183641975308705,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.000222) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 5,
+          "min_possible_margin": -0.006944444444444444,
+          "max_possible_margin": 0.006944444444444444
+        },
+        "llama3.1:8b_vs_qwen3:8b": {
+          "model_a": "llama3.1:8b",
+          "model_b": "qwen3:8b",
+          "expected_margin": -0.01832441165123462,
+          "variance_margin": 0.00016390325455853868,
+          "std_margin": 0.012802470642752464,
+          "p_positive": 0.012846142176247466,
+          "p_negative": 0.8432432261023526,
+          "p_zero": 0.14391063172140275,
+          "winner_reversal_probability": 0.021664844743336818,
+          "max_certifiable_tv_budget": 0.01832441165123462,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": -0.01832441165123462,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.018324) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": -0.01832441165123462,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.018324) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": -0.01832441165123462,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.018324) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": -0.01832441165123462,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.018324) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": -0.01832441165123462,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.018324) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 26,
+          "min_possible_margin": -0.0798611111111111,
+          "max_possible_margin": 0.006944444444444444
+        },
+        "mistral:7b-instruct_vs_qwen3:8b": {
+          "model_a": "mistral:7b-instruct",
+          "model_b": "qwen3:8b",
+          "expected_margin": -0.01810257523148153,
+          "variance_margin": 0.0001645315138600695,
+          "std_margin": 0.012826983817720732,
+          "p_positive": 0.02262048289609061,
+          "p_negative": 0.8430765201688981,
+          "p_zero": 0.1343029969350141,
+          "winner_reversal_probability": 0.0381415960091523,
+          "max_certifiable_tv_budget": 0.01810257523148153,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": -0.01810257523148153,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.018103) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": -0.01810257523148153,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.018103) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": -0.01810257523148153,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.018103) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": -0.01810257523148153,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.018103) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": -0.01810257523148153,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.018103) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 26,
+          "min_possible_margin": -0.0798611111111111,
+          "max_possible_margin": 0.006944444444444444
+        }
+      }
+    },
+    "E2_NORMALIZED_MATCH": {
+      "mean_pairwise_reversal_probability": 0.17151800998238678,
+      "per_pair": {
+        "gemma2:9b_vs_llama3.1:8b": {
+          "model_a": "gemma2:9b",
+          "model_b": "llama3.1:8b",
+          "expected_margin": 0.012238208489008048,
+          "variance_margin": 0.00020378021831011297,
+          "std_margin": 0.014275160885612216,
+          "p_positive": 0.703737897062044,
+          "p_negative": 0.14529997726118504,
+          "p_zero": 0.1509621256767739,
+          "winner_reversal_probability": 0.20450620088189836,
+          "max_certifiable_tv_budget": 0.012238208489008048,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": 0.012238208489008048,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.012238) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": 0.012238208489008048,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.012238) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": 0.012238208489008048,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.012238) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": 0.012238208489008048,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.012238) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": 0.012238208489008048,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.012238) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 41,
+          "min_possible_margin": -0.041666666666666664,
+          "max_possible_margin": 0.09722222222222222
+        },
+        "gemma2:9b_vs_mistral:7b-instruct": {
+          "model_a": "gemma2:9b",
+          "model_b": "mistral:7b-instruct",
+          "expected_margin": 0.012423474049707636,
+          "variance_margin": 0.0002536800710588647,
+          "std_margin": 0.015927337224371958,
+          "p_positive": 0.6864928364113344,
+          "p_negative": 0.1844723656238317,
+          "p_zero": 0.12903479796483666,
+          "winner_reversal_probability": 0.25327791503322594,
+          "max_certifiable_tv_budget": 0.012423474049707636,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": 0.012423474049707636,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.012423) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": 0.012423474049707636,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.012423) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": 0.012423474049707636,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.012423) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": 0.012423474049707636,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.012423) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": 0.012423474049707636,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.012423) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 45,
+          "min_possible_margin": -0.04513888888888889,
+          "max_possible_margin": 0.1076388888888889
+        },
+        "gemma2:9b_vs_qwen3:8b": {
+          "model_a": "gemma2:9b",
+          "model_b": "qwen3:8b",
+          "expected_margin": -0.024342785131230928,
+          "variance_margin": 0.0004060249232949489,
+          "std_margin": 0.020150060131298587,
+          "p_positive": 0.08386452947583246,
+          "p_negative": 0.8709202782043614,
+          "p_zero": 0.04521519231980915,
+          "winner_reversal_probability": 0.14607863868513973,
+          "max_certifiable_tv_budget": 0.024342785131230928,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": -0.024342785131230928,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.024343) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": -0.024342785131230928,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.024343) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": -0.024342785131230928,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.024343) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": -0.024342785131230928,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.024343) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": -0.024342785131230928,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.024343) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 61,
+          "min_possible_margin": -0.1597222222222222,
+          "max_possible_margin": 0.04861111111111111
+        },
+        "llama3.1:8b_vs_mistral:7b-instruct": {
+          "model_a": "llama3.1:8b",
+          "model_b": "mistral:7b-instruct",
+          "expected_margin": 0.00018526556069958815,
+          "variance_margin": 3.7630841793250744e-05,
+          "std_margin": 0.006134398242146555,
+          "p_positive": 0.4224270333483041,
+          "p_negative": 0.3287260228299124,
+          "p_zero": 0.24884694382178654,
+          "winner_reversal_probability": 0.27772551721685357,
+          "max_certifiable_tv_budget": 0.00018526556069958815,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": 0.00018526556069958815,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.000185) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": 0.00018526556069958815,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.000185) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": 0.00018526556069958815,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.000185) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": 0.00018526556069958815,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.000185) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": 0.00018526556069958815,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.000185) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 25,
+          "min_possible_margin": -0.041666666666666664,
+          "max_possible_margin": 0.041666666666666664
+        },
+        "llama3.1:8b_vs_qwen3:8b": {
+          "model_a": "llama3.1:8b",
+          "model_b": "qwen3:8b",
+          "expected_margin": -0.036580993620238984,
+          "variance_margin": 0.0006094298025910563,
+          "std_margin": 0.024686632062536525,
+          "p_positive": 0.04235793745160039,
+          "p_negative": 0.932680698434103,
+          "p_zero": 0.02496136411429983,
+          "winner_reversal_probability": 0.0790128613731734,
+          "max_certifiable_tv_budget": 0.036580993620238984,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": -0.036580993620238984,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.036581) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": -0.036580993620238984,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.036581) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": -0.036580993620238984,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.036581) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": -0.036580993620238984,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.036581) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": -0.036580993620238984,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.036581) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 76,
+          "min_possible_margin": -0.2152777777777778,
+          "max_possible_margin": 0.04513888888888889
+        },
+        "mistral:7b-instruct_vs_qwen3:8b": {
+          "model_a": "mistral:7b-instruct",
+          "model_b": "qwen3:8b",
+          "expected_margin": -0.03676625918093858,
+          "variance_margin": 0.0005823842639982634,
+          "std_margin": 0.024132638977083783,
+          "p_positive": 0.03656002480757409,
+          "p_negative": 0.9369102874601607,
+          "p_zero": 0.02652968773226866,
+          "winner_reversal_probability": 0.06850692670402969,
+          "max_certifiable_tv_budget": 0.03676625918093858,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": -0.03676625918093858,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.036766) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": -0.03676625918093858,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.036766) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": -0.03676625918093858,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.036766) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": -0.03676625918093858,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.036766) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": -0.03676625918093858,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.036766) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 72,
+          "min_possible_margin": -0.21180555555555555,
+          "max_possible_margin": 0.034722222222222224
+        }
+      }
+    },
+    "E3_SEMANTIC_ORACLE": {
+      "mean_pairwise_reversal_probability": 0.0,
+      "per_pair": {
+        "gemma2:9b_vs_llama3.1:8b": {
+          "model_a": "gemma2:9b",
+          "model_b": "llama3.1:8b",
+          "expected_margin": 0.10416666666666695,
+          "variance_margin": 7.703719777548964e-32,
+          "std_margin": 2.7755575615628953e-16,
+          "p_positive": 1.0000000000000027,
+          "p_negative": 0.0,
+          "p_zero": 0.0,
+          "winner_reversal_probability": 0.0,
+          "max_certifiable_tv_budget": 0.10416666666666695,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": 0.10416666666666695,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.104167) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": 0.10416666666666695,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.104167) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": 0.10416666666666695,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.104167) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": 0.10416666666666695,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.104167) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": 0.10416666666666695,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.104167) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 1,
+          "min_possible_margin": 0.10416666666666667,
+          "max_possible_margin": 0.10416666666666667
+        },
+        "gemma2:9b_vs_mistral:7b-instruct": {
+          "model_a": "gemma2:9b",
+          "model_b": "mistral:7b-instruct",
+          "expected_margin": 0.09375000000000025,
+          "variance_margin": 6.240013019814661e-32,
+          "std_margin": 2.4980018054066057e-16,
+          "p_positive": 1.0000000000000027,
+          "p_negative": 0.0,
+          "p_zero": 0.0,
+          "winner_reversal_probability": 0.0,
+          "max_certifiable_tv_budget": 0.09375000000000025,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": 0.09375000000000025,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.093750) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": 0.09375000000000025,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.093750) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": 0.09375000000000025,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.093750) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": 0.09375000000000025,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.093750) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": 0.09375000000000025,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.093750) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 1,
+          "min_possible_margin": 0.09375,
+          "max_possible_margin": 0.09375
+        },
+        "gemma2:9b_vs_qwen3:8b": {
+          "model_a": "gemma2:9b",
+          "model_b": "qwen3:8b",
+          "expected_margin": -0.13888888888888926,
+          "variance_margin": 1.301928642405775e-31,
+          "std_margin": 3.6082248300317637e-16,
+          "p_positive": 0.0,
+          "p_negative": 1.0000000000000027,
+          "p_zero": 0.0,
+          "winner_reversal_probability": 0.0,
+          "max_certifiable_tv_budget": 0.13888888888888926,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": -0.13888888888888926,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.138889) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": -0.13888888888888926,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.138889) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": -0.13888888888888926,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.138889) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": -0.13888888888888926,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.138889) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": -0.13888888888888926,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.138889) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 1,
+          "min_possible_margin": -0.1388888888888889,
+          "max_possible_margin": -0.1388888888888889
+        },
+        "llama3.1:8b_vs_mistral:7b-instruct": {
+          "model_a": "llama3.1:8b",
+          "model_b": "mistral:7b-instruct",
+          "expected_margin": -0.010416666666666694,
+          "variance_margin": 7.703719777548964e-34,
+          "std_margin": 2.775557561562895e-17,
+          "p_positive": 0.0,
+          "p_negative": 1.0000000000000027,
+          "p_zero": 0.0,
+          "winner_reversal_probability": 0.0,
+          "max_certifiable_tv_budget": 0.010416666666666694,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": -0.010416666666666694,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.010417) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": -0.010416666666666694,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.010417) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": -0.010416666666666694,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.010417) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": -0.010416666666666694,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.010417) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": -0.010416666666666694,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.010417) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 1,
+          "min_possible_margin": -0.010416666666666666,
+          "max_possible_margin": -0.010416666666666666
+        },
+        "llama3.1:8b_vs_qwen3:8b": {
+          "model_a": "llama3.1:8b",
+          "model_b": "qwen3:8b",
+          "expected_margin": -0.2430555555555562,
+          "variance_margin": 4.075267762323402e-31,
+          "std_margin": 6.383782391594658e-16,
+          "p_positive": 0.0,
+          "p_negative": 1.0000000000000027,
+          "p_zero": 0.0,
+          "winner_reversal_probability": 0.0,
+          "max_certifiable_tv_budget": 0.2430555555555562,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": -0.2430555555555562,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.243056) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": -0.2430555555555562,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.243056) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": -0.2430555555555562,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.243056) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": -0.2430555555555562,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.243056) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": -0.2430555555555562,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.243056) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 1,
+          "min_possible_margin": -0.24305555555555555,
+          "max_possible_margin": -0.24305555555555555
+        },
+        "mistral:7b-instruct_vs_qwen3:8b": {
+          "model_a": "mistral:7b-instruct",
+          "model_b": "qwen3:8b",
+          "expected_margin": -0.2326388888888895,
+          "variance_margin": 3.7286003723336987e-31,
+          "std_margin": 6.106226635438369e-16,
+          "p_positive": 0.0,
+          "p_negative": 1.0000000000000027,
+          "p_zero": 0.0,
+          "winner_reversal_probability": 0.0,
+          "max_certifiable_tv_budget": 0.2326388888888895,
+          "tv_certificates": {
+            "canonical_bias_p_0.1": {
+              "certified": false,
+              "expected_margin": -0.2326388888888895,
+              "tv_bound": 0.2616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.232639) <= tv_bound (0.261639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.25": {
+              "certified": false,
+              "expected_margin": -0.2326388888888895,
+              "tv_bound": 0.31441726422537825,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.232639) <= tv_bound (0.314417): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.5": {
+              "certified": false,
+              "expected_margin": -0.2326388888888895,
+              "tv_bound": 0.6616394864476004,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.232639) <= tv_bound (0.661639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.75": {
+              "certified": false,
+              "expected_margin": -0.2326388888888895,
+              "tv_bound": 1.1616394864476005,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.232639) <= tv_bound (1.161639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            },
+            "canonical_bias_p_0.9": {
+              "certified": false,
+              "expected_margin": -0.2326388888888895,
+              "tv_bound": 1.4616394864476003,
+              "certified_sign": null,
+              "certifying_condition": "|expected_margin| (0.232639) <= tv_bound (1.461639): sufficient bound cannot certify sign invariance (certificate failure; does not prove sign will flip)"
+            }
+          },
+          "margin_distribution_support_size": 1,
+          "min_possible_margin": -0.2326388888888889,
+          "max_possible_margin": -0.2326388888888889
+        }
+      }
+    }
+  },
+  "analytical_insights": {
+    "mc_agreement": "Exact DP E2 mean reversal probability is 0.1715, in exact agreement with Monte Carlo estimates (0.1718 in extended_analysis.json, 0.1723 in sensitivity.json) within expected MC sampling error (SE ~ 0.0016).",
+    "tv_conservatism": "For canonical bias p=0.50, the Lipschitz TV bound across 24 worlds is 0.6616, which vastly exceeds the expected pairwise margins (at most 0.0368). Because TV is a worst-case L1 bound on arbitrary perturbation, it certifies none of the realistic reference-distribution shifts."
+  }
+}

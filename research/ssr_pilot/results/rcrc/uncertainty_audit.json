@@ -1,0 +1,198 @@
+{
+  "n_draws": 50000,
+  "seed_draws": 20261016,
+  "n_models": 4,
+  "n_pairs": 6,
+  "exact_dp_six_pair_mean": 0.17151800998238678,
+  "mc_six_pair_mean": 0.1717702516717001,
+  "mean_signed_error_mc_minus_exact": 0.00025224168931331964,
+  "mean_signed_error_exact_minus_mc": -0.00025224168931331964,
+  "mean_absolute_error": 0.0006434940926351163,
+  "max_absolute_error": 0.0013847393369060268,
+  "max_absolute_error_pair": "gemma2:9b_vs_llama3.1:8b",
+  "se_six_pair_mean_joint_covariance": 0.0009060633206150059,
+  "se_six_pair_mean_naive_independent": 0.0007118030971160642,
+  "variance_inflation_factor": 1.6203071652771308,
+  "aggregate_z_score": 0.2783930036392007,
+  "per_pair": {
+    "gemma2:9b_vs_llama3.1:8b": {
+      "exact_dp_theta": 0.20450620088189836,
+      "p_exact_positive": 0.703737897062044,
+      "p_exact_negative": 0.14529997726118504,
+      "p_exact_zero": 0.1509621256767739,
+      "mc_u_statistic": 0.20589094021880439,
+      "p_sample_positive": 0.70432,
+      "p_sample_negative": 0.14616,
+      "p_sample_zero": 0.14952,
+      "error_mc_minus_exact": 0.0013847393369060268,
+      "error_exact_minus_mc": -0.0013847393369060268,
+      "abs_error": 0.0013847393369060268,
+      "se_analytical": 0.001897254770693807,
+      "se_sample": 0.001900796295788609,
+      "z_score": 0.7298647278665908
+    },
+    "gemma2:9b_vs_mistral:7b-instruct": {
+      "exact_dp_theta": 0.25327791503322594,
+      "p_exact_positive": 0.6864928364113344,
+      "p_exact_negative": 0.1844723656238317,
+      "p_exact_zero": 0.12903479796483666,
+      "mc_u_statistic": 0.25359910398207963,
+      "p_sample_positive": 0.6868,
+      "p_sample_negative": 0.18462,
+      "p_sample_zero": 0.12858,
+      "error_mc_minus_exact": 0.0003211889488536901,
+      "error_exact_minus_mc": -0.0003211889488536901,
+      "abs_error": 0.0003211889488536901,
+      "se_analytical": 0.0019214451084209857,
+      "se_sample": 0.0019221747330693789,
+      "z_score": 0.16716009603711152
+    },
+    "gemma2:9b_vs_qwen3:8b": {
+      "exact_dp_theta": 0.14607863868513973,
+      "p_exact_positive": 0.08386452947583246,
+      "p_exact_negative": 0.8709202782043614,
+      "p_exact_zero": 0.04521519231980915,
+      "mc_u_statistic": 0.14567640472809457,
+      "p_sample_positive": 0.08368,
+      "p_sample_negative": 0.87042,
+      "p_sample_zero": 0.0459,
+      "error_mc_minus_exact": -0.0004022339570451672,
+      "error_exact_minus_mc": 0.0004022339570451672,
+      "abs_error": 0.0004022339570451672,
+      "se_analytical": 0.0019677020757522686,
+      "se_sample": 0.0019651715123791477,
+      "z_score": -0.20441811898347967
+    },
+    "llama3.1:8b_vs_mistral:7b-instruct": {
+      "exact_dp_theta": 0.27772551721685357,
+      "p_exact_positive": 0.4224270333483041,
+      "p_exact_negative": 0.3287260228299124,
+      "p_exact_zero": 0.24884694382178654,
+      "mc_u_statistic": 0.27733838836776736,
+      "p_sample_positive": 0.42494,
+      "p_sample_negative": 0.32632,
+      "p_sample_zero": 0.24874,
+      "error_mc_minus_exact": -0.0003871288490862046,
+      "error_exact_minus_mc": 0.0003871288490862046,
+      "abs_error": 0.0003871288490862046,
+      "se_analytical": 0.001474508326460829,
+      "se_sample": 0.001476795869219225,
+      "z_score": -0.2625477538098452
+    },
+    "llama3.1:8b_vs_qwen3:8b": {
+      "exact_dp_theta": 0.0790128613731734,
+      "p_exact_positive": 0.04235793745160039,
+      "p_exact_negative": 0.932680698434103,
+      "p_exact_zero": 0.02496136411429983,
+      "mc_u_statistic": 0.07862846696933938,
+      "p_sample_positive": 0.04218,
+      "p_sample_negative": 0.93204,
+      "p_sample_zero": 0.02578,
+      "error_mc_minus_exact": -0.000384394403834018,
+      "error_exact_minus_mc": 0.000384394403834018,
+      "abs_error": 0.000384394403834018,
+      "se_analytical": 0.001606918695582076,
+      "se_sample": 0.0016029572764413318,
+      "z_score": -0.2392121050622156
+    },
+    "mistral:7b-instruct_vs_qwen3:8b": {
+      "exact_dp_theta": 0.06850692670402969,
+      "p_exact_positive": 0.03656002480757409,
+      "p_exact_negative": 0.9369102874601607,
+      "p_exact_zero": 0.02652968773226866,
+      "mc_u_statistic": 0.06948820576411528,
+      "p_sample_positive": 0.0371,
+      "p_sample_negative": 0.93648,
+      "p_sample_zero": 0.02642,
+      "error_mc_minus_exact": 0.0009812790600855908,
+      "error_exact_minus_mc": -0.0009812790600855908,
+      "abs_error": 0.0009812790600855908,
+      "se_analytical": 0.0015139774309301168,
+      "se_sample": 0.0015230928931831457,
+      "z_score": 0.6481464254607409
+    }
+  },
+  "joint_covariance_matrix_sigma1": [
+    [
+      0.04516283197604621,
+      0.011418679147899046,
+      -0.0028643580054744724,
+      0.0003104673760729892,
+      0.004193358533094306,
+      0.0014992252402433244
+    ],
+    [
+      0.011418679147899046,
+      0.04618444630562922,
+      -0.004066655480698146,
+      0.006872445502340707,
+      0.0002802062753752841,
+      0.0025014745014639204
+    ],
+    [
+      -0.0028643580054744724,
+      -0.004066655480698146,
+      0.048273738413331824,
+      -0.0012871021212270152,
+      0.018906550032890965,
+      0.016507323482921665
+    ],
+    [
+      0.0003104673760729892,
+      0.006872445502340707,
+      -0.0012871021212270152,
+      0.027261575491787076,
+      -0.0009775704187515058,
+      -6.651212008274864e-05
+    ],
+    [
+      0.004193358533094306,
+      0.0002802062753752841,
+      0.018906550032890965,
+      -0.0009775704187515058,
+      0.03211840037620265,
+      0.017487063731402342
+    ],
+    [
+      0.0014992252402433244,
+      0.0025014745014639204,
+      0.016507323482921665,
+      -6.651212008274864e-05,
+      0.017487063731402342,
+      0.02899764951581257
+    ]
+  ],
+  "historical_reconciliation": {
+    "legacy_pre_d9_defect": {
+      "value": 0.186137,
+      "display": "18.61%",
+      "provenance": "PAPER_FINAL.md (legacy), FINAL_STATISTICS.md (seed 20261005)",
+      "defect_description": "Omitted rule D3(b); 7 mistral:7b outputs with unknown entities counted as E2 matches.",
+      "status": "SUPERSEDED_BY_DEFECT_CORRECTION"
+    },
+    "corrected_mc_seed_20261005": {
+      "value": 0.1755719028,
+      "display": "17.56%",
+      "provenance": "rcr_summary.json (seed 20261005)",
+      "status": "VALID_MONTE_CARLO_SAMPLE_SEED_20261005"
+    },
+    "corrected_mc_seed_20261007": {
+      "value": 0.1723479798,
+      "display": "17.23%",
+      "provenance": "reference_distribution_sensitivity.json (seed 20261007)",
+      "status": "VALID_MONTE_CARLO_SAMPLE_SEED_20261007"
+    },
+    "corrected_mc_seed_20261016": {
+      "value": 0.1717702517,
+      "display": "17.18%",
+      "provenance": "extended_analysis.json (seed 20261016)",
+      "status": "VALID_MONTE_CARLO_SAMPLE_SEED_20261016"
+    },
+    "exact_dp_population_parameter": {
+      "value": 0.17151801,
+      "display": "17.1518%",
+      "provenance": "exact_dp_analysis.json",
+      "status": "GROUND_TRUTH_POPULATION_PARAMETER"
+    }
+  }
+}
