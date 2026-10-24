@@ -10,6 +10,7 @@ retriever / reranker rather than rebuilding them per call.
 from __future__ import annotations
 
 import logging
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -17,14 +18,33 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from api import pipeline_instance
 from api.pipeline_instance import load_index
-from api.routes import chat, models
+from api.routes import chat, models, tutor
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("api.main")
 
 
+def _use_installed_model() -> None:
+    """If the configured Ollama model (default llama3:latest) is not pulled on
+    this machine, use the first installed one from chat_model_preference so
+    query rewriting and other background LLM calls do not 404. Best effort."""
+    gen = pipeline_instance.pipeline.config.generation
+    try:
+        import httpx
+
+        names = [m["name"] for m in httpx.get(f"{gen.ollama_base_url}/api/tags", timeout=5).json().get("models", [])]
+    except Exception:
+        return
+    if not names or gen.model_name in names:
+        return
+    pick = next((m for m in gen.chat_model_preference if m in names), names[0])
+    logger.warning("Configured model %s is not installed; using %s instead.", gen.model_name, pick)
+    gen.model_name = pick
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    _use_installed_model()
     load_index()
     yield
 
@@ -33,7 +53,9 @@ app = FastAPI(title="os-tutor-rag API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=os.environ.get("CORS_ORIGINS", "http://localhost:3000").split(","),
+    # any local dev port (the frontend may run on 3000, 3200, ...)
+    allow_origin_regex=r"http://(localhost|127\.0\.0\.1):\d+",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,6 +63,7 @@ app.add_middleware(
 
 app.include_router(chat.router)
 app.include_router(models.router)
+app.include_router(tutor.router)
 
 
 @app.get("/health")

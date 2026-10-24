@@ -119,6 +119,12 @@ class RetrievalConfig:
     max_chunks_per_parent: int = 0
     rrf_k: int = 60
     index_dir: Path = field(default_factory=_default_index_dir)
+    # On by default: dense + multi_query + cross_encoder scored highest in the
+    # few_shot re-run (answer_correctness 0.7752, eval/comparison_results.md).
+    # Caveat: single run, 26 questions, run-to-run noise ~0.027, faithfulness is
+    # exactly 1.000 (a ceiling), and the same config ranked last (0.607) in the
+    # first sweep, so the lead is not established. Costs extra LLM calls per
+    # question.
     use_multi_query: bool = False
     # Used when use_multi_query is True. Five, not three: measured recall@5
     # 1.000 and full_recall 0.577 at five against 0.962 and 0.538 at three,
@@ -136,11 +142,11 @@ class RerankingConfig:
     "llm_rerank", or "none" to skip reranking entirely.
     """
 
-    # Off by default: the cross-encoder measured ~0.05 *worse* on
-    # answer_correctness than omitting it, consistently and in both MMR
-    # settings. Dense retrieval already reaches recall@5 of 0.923, so the
-    # reranker reorders an already-good ranking, and bge-reranker-large is
-    # general-purpose with no advantage on this material.
+    # On by default to match the highest-scoring few_shot sweep config (dense +
+    # multi_query + cross_encoder, 0.7752). Earlier, on the strict prompt, the
+    # cross-encoder was measured ~0.05 worse than omitting it in a different
+    # sweep, so its benefit is within noise and not established; set "none" to
+    # skip it.
     method: str = "none"
     cross_encoder_model_name: str = "BAAI/bge-reranker-large"
     top_n: int = 8
@@ -198,7 +204,7 @@ class GenerationConfig:
 
     Defaults to the "ollama" backend against a locally running llama3:latest
     model, since the real Llama-3.1-8B-Instruct/vLLM deploy target doesn't
-    fit this dev machine's 8GB VRAM without quantization (see DELAYED_TASKS.md).
+    fit this dev machine's 8GB VRAM without quantization (see FINDINGS.md, "Technical debt" #4).
     Swap ``model_name`` to "gemma2:9b" once pulled, or ``backend`` to "vllm"
     for the real deploy target.
     """
@@ -211,6 +217,32 @@ class GenerationConfig:
     # previously-tuned default without re-running the eval suite to
     # re-confirm it -- worth re-measuring later if scored again.
     max_tokens: int = 900
+    # The chat tutor has its own, much smaller budget: answers are meant to be a
+    # few short sentences (a student can always say "continue"). Kept apart from
+    # ``max_tokens`` so the evaluation, which measures the pipeline at 900, is
+    # untouched. api/routes/chat.py ends the stream on a sentence boundary when
+    # this cap is hit, so a cut never lands mid-word.
+    chat_max_tokens: int = 220
+    chat_num_ctx: int = 4096
+    chat_keep_alive: str = "30m"
+    # Top retrieval score below which a question that names no course concept is
+    # treated as off-topic and answered with a short authored bridge instead of a
+    # model call. Measured on this corpus: clearly unrelated questions ("what is
+    # fear", "what is love", "football") score 0.53-0.59, real course questions
+    # 0.65-0.94 (borderline ones such as "hard link vs soft link" 0.61), so 0.60 is
+    # deliberately conservative: it only catches the unambiguous cases.
+    chat_min_relevance: float = 0.60
+    # Hard cap on how many sentences/lines of an answer are sent (see tutor.shaping).
+    chat_max_units: int = 6
+    # (max new tokens, max sentence/line units) per detail level; undergrad matches the two
+    # fields above. Exam-prep needs room for a definition, bullets and an exam tip.
+    chat_level_budget: dict = field(default_factory=lambda: {
+        "eli5": (170, 5), "undergrad": (220, 6), "exam_prep": (320, 9)})
+    # Models the chat prefers, in order, when more than one is installed in
+    # Ollama. /models lists them first so the UI preselects a model that exists.
+    chat_model_preference: tuple[str, ...] = (
+        "llama3.1:8b", "qwen2.5:7b", "mistral:7b-instruct", "qwen3:8b", "gemma2:9b", "phi4-mini",
+    )
     # Zero, not 0.2, primarily for reproducibility rather than for score: this
     # temperature governs every LLM call in the pipeline, including the
     # multi-query variant generation, and A19 found that at 0.2 only 13 of 26

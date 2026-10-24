@@ -1,14 +1,14 @@
-"""Socratic, judgment-based teaching prompts, one per detail level.
+"""Teaching prompts for the chat tutor, one per detail level.
 
 Unlike the direct-answer templates in ``src.generation.local_llm``
-(``_RAG_PROMPT_TEMPLATES``), these tell the model to behave like a real
-Socratic tutor: default to guiding questions and small hints instead of
-handing over conclusions, let the student attempt each step before
-confirming or correcting, and reserve direct answers for narrow factual
-lookups or when the student explicitly asks to be told directly. Also
-follows the actual flow of the conversation -- including short continuation
-messages ("continue", "go on", "more") -- rather than treating every message
-as a brand new topic to be force-fit into one template shape.
+(``_RAG_PROMPT_TEMPLATES``, which the evaluation measures), these make the
+model a patient tutor: explain first, from the context, assuming the student may
+know nothing. The Socratic part -- which short question to ask next, grading the
+reply, hints, misconception probes, when to just tell the student -- is *policy*
+and lives in code (``src/tutor``), because code can grade an answer and a prompt
+cannot be tested. So the model is told not to quiz; the tutoring layer appends
+one graded question after the answer. Also follows the flow of the conversation,
+including short continuation messages ("continue", "go on", "more").
 
 Three separate template constants (not one parametrized string) so the
 detail levels can genuinely differ in analogy density and vocabulary rather
@@ -72,52 +72,97 @@ def is_continuation_message(question: str) -> bool:
     )
 
 
-_FLEXIBILITY_INSTRUCTIONS = (
-    "You are a Socratic tutor, not an answer machine. Your default move is "
-    "to teach through guiding questions that make the student do the "
-    "reasoning, not to hand over conclusions. Use your judgment for each "
-    "turn, but bias strongly toward the Socratic approach:\n"
-    "- Never open with the finished answer to a conceptual or \"why/how\" "
-    "question. Instead, ask a targeted question (or give one small hint) "
-    "that points the student at the relevant idea in the context, and let "
-    "them attempt it before you confirm, correct, or build further.\n"
-    "- For worked problems or multi-step reasoning, go one small step at a "
-    "time: pose a question or sub-step, wait for the student's attempt, "
-    "then respond to what they actually said before moving to the next "
-    "step. Never hand over the finished solution outright.\n"
-    "- Reserve a direct, complete answer for narrow factual lookups where "
-    "there is nothing to reason through (e.g. \"what does this flag stand "
-    "for\", \"what's the syscall name\") -- and even then, briefly probe "
-    "understanding afterward with a follow-up question when the term "
-    "connects to a bigger idea.\n"
-    "- If the student answers your question correctly, affirm briefly and "
-    "build on it with the next question or the next piece; if they answer "
-    "wrong or partially, don't just supply the correction -- ask a "
-    "narrower question that helps them see the gap themselves, then "
-    "clarify once they've had a real attempt.\n"
-    "- If the student explicitly asks you to just tell them, stop quizzing "
-    "them, or give a summary/overview, respect that and answer directly "
-    "-- don't force the Socratic method on someone who has opted out for "
-    "this turn.\n"
-    "- If the student's message is a short continuation (\"continue\", \"go "
-    "on\", \"more\", etc.) or otherwise just wants you to keep going, "
-    "continue naturally from exactly where the conversation left off -- "
-    "do NOT treat it as a new topic and do NOT answer it as if it were a "
-    "literal standalone question.\n"
-    "- Always address what the student is actually asking or needing right "
-    "now in this turn; use prior conversation for continuity and context, "
-    "never as a reason to keep repeating or drilling into an earlier "
-    "sub-topic instead of what's actually being asked.\n\n"
-    "Formatting: the interface renders standard markdown, so use it where it "
-    "genuinely helps -- **bold** for key terms, short bullet/numbered lists "
-    "for enumerable items, and especially a markdown table (GitHub-flavored "
-    "pipe table, e.g. `| column | column |`) whenever the content is "
-    "naturally tabular: comparing several things side by side, a set of "
-    "commands/operators/system calls with descriptions, or rows of "
-    "structured data such as the shell operator or permission-bit "
-    "references in the course material. Don't force a table onto content "
-    "that isn't actually tabular.\n\n"
+# Two instruction sets, chosen per request. Policy about *when to quiz the
+# student* lives in code (src/tutor), not here: the tutoring layer appends one
+# graded Socratic question after the answer and handles the reply to it. So the
+# model's job is to explain well and kindly, from the context, and to leave the
+# questioning to the layer that can actually grade it.
+_FORMAT_SHARED = (
+    "Start with the answer itself (no greeting, no 'Great question', no restating the "
+    "question) and stop when the idea is across. No headings. Use a markdown table only "
+    "if the student asks to compare or tabulate. If the context does not cover the "
+    "question, say so in ONE friendly sentence and name one related operating-systems "
+    "topic the student could ask about instead.\n\n"
 )
+
+# Each level gets its own length, structure and vocabulary rules: a shared "3 short
+# sentences, assume the student knows nothing" rule made undergrad and exam-prep
+# answers nearly identical, so the student's chosen level was barely visible.
+_FORMAT = {
+    "eli5": (
+        "Length and format (strict): this is a chat, so keep it SHORT -- at most 4 short "
+        "sentences, about 70 words. Build the explanation around ONE everyday analogy and "
+        "then say what it maps to in the OS. Use **bold** for at most two key terms and no "
+        "bullet lists. " + _FORMAT_SHARED
+    ),
+    "undergrad": (
+        "Length and format (strict): about 5 sentences, 90 to 110 words. Explain the "
+        "mechanism: what happens, in what order, and why the OS does it that way. Use "
+        "standard OS terminology (define a term only if it is advanced). Include one "
+        "concrete example in one sentence. Use **bold** for at most three key terms. Use a "
+        "short numbered list only for real steps (at most 4). " + _FORMAT_SHARED
+    ),
+    "exam_prep": (
+        "Length and format (strict): exam-ready notes, up to 8 short lines, about 120 to "
+        "150 words. Use this shape: (1) a precise one-sentence definition; (2) the key "
+        "points or steps as 3 to 5 terse bullets (use exact terms: PCB, trap, TLB, "
+        "mutual exclusion, and so on); (3) one final line starting 'Exam tip:' with the "
+        "distinction or common mistake an exam tests. No analogies. Use **bold** for "
+        "key terms. " + _FORMAT_SHARED
+    ),
+}
+
+_TONE = {
+    "eli5": (
+        "Tone: you are a patient, friendly tutor, like a helpful senior guiding a "
+        "junior. Be warm and encouraging without gushing; never condescending. "
+        "Assume the student knows nothing about the topic: define any term a "
+        "beginner would not know the first time you use it, and keep sentences short.\n\n"
+    ),
+    "undergrad": (
+        "Tone: you are a clear, friendly teaching assistant for an undergraduate OS "
+        "course. Assume the student knows basic CS (variables, functions, the CPU, "
+        "memory) but is new to OS; be precise but approachable.\n\n"
+    ),
+    "exam_prep": (
+        "Tone: you are a concise, exacting exam coach. Assume the student has met the "
+        "material before and now needs precise, complete, exam-ready statements; "
+        "no hand-holding or pleasantries.\n\n"
+    ),
+}
+
+_GUIDED_BODY = (
+    "How to answer:\n"
+    "- Answer what the student actually asked, directly and completely, from the "
+    "context. Explain first; never withhold the explanation to make the student "
+    "guess. A separate step of the app adds one short check-your-understanding "
+    "question after your answer, so do NOT end with a question of your own and do "
+    "NOT quiz the student.\n"
+    "- Keep it focused on what the student needs now, at the level and length set below; "
+    "the student can ask for more, an example, or a simpler version.\n"
+    "- If a note below says the student may hold a misconception, address it "
+    "gently inside your explanation without making them feel foolish.\n"
+    "- If the student's message is a short continuation (\"continue\", \"go on\", "
+    "\"more\"), continue naturally from exactly where the conversation left off -- "
+    "do NOT treat it as a new topic.\n"
+    "- Always address what the student needs right now; use earlier turns for "
+    "continuity, never as a reason to repeat or drill into an old sub-topic.\n\n"
+)
+
+_DIRECT_BODY = (
+    "How to answer:\n"
+    "- The student has asked for direct answers: answer completely from the "
+    "context and do not ask them any questions.\n"
+    "- If a note below says the student may hold a misconception, address it "
+    "gently inside your explanation.\n"
+    "- If the student's message is a short continuation (\"continue\", \"go on\", "
+    "\"more\"), continue exactly where the conversation left off.\n\n"
+)
+
+
+def _instructions(level: str, socratic: bool) -> str:
+    level = level if level in _FORMAT else "undergrad"
+    return _TONE[level] + (_GUIDED_BODY if socratic else _DIRECT_BODY) + _FORMAT[level]
 
 TEACHING_PROMPT_ELI5 = (
     "You are a patient, friendly tutor explaining operating systems to a "
@@ -161,9 +206,8 @@ TEACHING_PROMPT_EXAM_PREP = (
     "minimal analogy -- the student needs exam-ready command of definitions "
     "and distinctions, not simplifications.\n\n"
     "{flexibility_instructions}"
-    "When you do use a comprehension check, phrase it the way an exam "
-    "question would (a definition, a distinguishing case, or a 'what would "
-    "happen if' scenario).\n\n"
+    "Where it helps, frame the explanation the way an exam rewards it (a "
+    "definition, a distinguishing case, or a 'what would happen if' scenario).\n\n"
     "Use only the context below. If the context does not cover some part of "
     "the question, state that explicitly rather than supplying an answer "
     "the context does not support.\n\n"
@@ -188,6 +232,7 @@ def build_teaching_prompt(
     context: str,
     history_text: str = "",
     misconception_note: str = "",
+    socratic: bool = True,
 ) -> str:
     """Fill in the teaching-mode template for the given detail level.
 
@@ -198,6 +243,9 @@ def build_teaching_prompt(
         history_text: Prior conversation turns as plain text, or "" if none.
         misconception_note: A short note describing a suspected wrong mental
             model behind the question, or "" if none was detected.
+        socratic: True when the tutoring layer will append a graded Socratic
+            question after the answer (so the model must not ask one itself);
+            False for direct-answer mode.
 
     Returns:
         The assembled prompt string, with history/misconception/continuation
@@ -226,5 +274,5 @@ def build_teaching_prompt(
         history_block=history_block,
         misconception_block=misconception_block,
         continuation_block=continuation_block,
-        flexibility_instructions=_FLEXIBILITY_INSTRUCTIONS,
+        flexibility_instructions=_instructions(detail_level, socratic),
     )
