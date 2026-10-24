@@ -1,0 +1,112 @@
+[
+ [
+  "Student",
+  "I'm new to operating systems"
+ ],
+ [
+  "Tutor",
+  "Let's build up from the foundations. I'd start here:\n\n- **Operating system**: The software layer between user programs and the hardware.\n- **User mode and kernel mode**: The CPU has privilege levels.\n- **System calls and traps**: A system call is how a user program asks the OS to do something privileged.\n\nTap one to begin, or ask in your own words. No silly questions here."
+ ],
+ [
+  "chips",
+  [
+   "Explain operating system in simple words",
+   "Explain user mode and kernel mode in simple words",
+   "Explain system calls and traps in simple words"
+  ]
+ ],
+ [
+  "Student",
+  "Explain operating system in simple words"
+ ],
+ [
+  "Tutor",
+  "[grounded answer streamed by the model from the retrieved slides]\n\n**Think about this:** Why do we put an OS between programs and the hardware, instead of letting each program talk to the hardware directly?"
+ ],
+ [
+  "chips",
+  [
+   "Give me a hint",
+   "Just tell me",
+   "Skip this question"
+  ]
+ ],
+ [
+  "Student",
+  "no idea"
+ ],
+ [
+  "Tutor",
+  "That's completely fine, you don't need to know this already.\n\n**Operating system**, in simple terms: The software layer between user programs and the hardware.\n\n**An easier way in:** Imagine ten programs all writing to the same disk at once. What would you want in the middle to keep that sane, and to make it easier to program?"
+ ],
+ [
+  "chips",
+  [
+   "Just tell me",
+   "Skip this question"
+  ]
+ ],
+ [
+  "Student",
+  "hint"
+ ],
+ [
+  "Tutor",
+  "That is the only hint I have for this one. Have a go, or say \"just tell me\" and I will show the idea."
+ ],
+ [
+  "chips",
+  [
+   "Just tell me",
+   "Skip this question"
+  ]
+ ],
+ [
+  "Student",
+  "It hides the hardware behind a simple abstraction, and lets many programs share it safely without interfering."
+ ],
+ [
+  "Tutor",
+  "**Exactly.** The OS gives programs a simple abstraction of the hardware (convenience) and makes sure many programs can share it safely and efficiently (isolation and efficiency)."
+ ],
+ [
+  "chips",
+  [
+   "Explain operating system with a simple example",
+   "Test my understanding of operating system",
+   "How does operating system connect to user mode and kernel mode?"
+  ]
+ ],
+ [
+  "Student",
+  "I'm so confused by threads"
+ ],
+ [
+  "Tutor",
+  "That's okay, this one can take a moment to click.\n\n[grounded answer streamed by the model from the retrieved slides]"
+ ],
+ [
+  "chips",
+  [
+   "Explain threads more simply",
+   "Explain threads with a simple example",
+   "Where should I start?"
+  ]
+ ],
+ [
+  "Student",
+  "Test my understanding of paging"
+ ],
+ [
+  "Tutor",
+  "Let's check your understanding of **Paging**: 3 short questions. Answer in your own words; there are hints if you want them.\n\n**Question 1 of 3:** What does paging divide virtual memory and physical memory into?"
+ ],
+ [
+  "chips",
+  [
+   "Give me a hint",
+   "Just tell me",
+   "Skip this question"
+  ]
+ ]
+]
