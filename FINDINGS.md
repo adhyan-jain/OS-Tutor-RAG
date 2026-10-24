@@ -375,7 +375,7 @@ respectively.
 
 | run | scope | outcome |
 |---|---|---|
-| v1 | 84 variants x 5 questions, original chunking | stopped at 43/84; conclusions invalidated by F1, F2, F13. Preserved at `eval/_baseline_prefix_run/` as a before/after artifact -- **not comparable to later runs, do not merge** |
+| v1 | 84 variants x 5 questions, original chunking | stopped at 43/84; conclusions invalidated by F1, F2, F13. Its output directory (`eval/_baseline_prefix_run/`, local-only and git-ignored) was deleted in the 2026-10-24 repo cleanup, so the v1 numbers survive only as quoted in this log -- **not comparable to later runs, do not merge** |
 | v2 | 28 x 26, post-fix | stopped at variant 1; F10 discovered (GPU contention) |
 | v3 | 28 x 26, post-fix | in progress from 14:20 IST, ~28 min/variant |
 
@@ -944,6 +944,51 @@ per configuration, not a better setting.
   whether the cited slide survives into the generator's context.
 - **Scale-up:** ingest 100-200 documents and redo trend analysis. Pool size and
   reranking cost are corpus-independent, so they will not worsen with scale.
+
+## Technical debt and deliberate deferrals
+
+Merged from the retired `DELAYED_TASKS.md` / `current_status.md` (2026-10-24 cleanup);
+only items still true are kept. (The old "no test suite" item is obsolete:
+`tests/` now holds the RCR consistency gate, the research tests and `tests/tutor/`.)
+
+1. **`requirements.txt` does not match the working environment.** Pins that
+   cannot install on this machine's Python 3.14 were installed unpinned or from
+   another index: `torch==2.4.0+cu121` -> `2.13.0+cu126`, `faiss-cpu==1.8.0` ->
+   `1.14.3`, `vllm==0.5.4` not installed. `pip install -r requirements.txt` does
+   not reproduce the environment these results came from; bump the pins or state
+   the deploy Python (the backend Dockerfile pins 3.11, where every pin has a wheel).
+2. **Eval-set citations are hand-built and probably incomplete** (A8c). 17 of 26
+   questions carry multiple citations, mapped by reading page text. A mechanical
+   pass (search the corpus for each ground-truth answer's key entities, cite every
+   parent containing them) would be more defensible.
+3. **Refusal detection is by keyword and over-counts** (A4 case 3). Any quoted
+   "refusal rate" needs the stricter matcher, or an answer classification.
+4. **The vLLM backend was never exercised.** fp16 8B needs ~16GB against this
+   machine's 8GB. Ollama is the de facto permanent backend unless a quantized load
+   path (bitsandbytes/AWQ) is added; the README's wording implying both are
+   supported is misleading.
+5. **`llm_rerank` is implemented but unmeasured** (one LLM call per candidate).
+   Measure it once against the winning config or delete it; listwise would be the
+   fairer formulation than the current pointwise 0-10 scoring.
+6. **`eval/reranker_eval.py` was written but never run.** It tests
+   `bge-reranker-v2-m3` and `ms-marco-MiniLM-L-6-v2` and, more interestingly,
+   *blending* reranker scores with the retriever's instead of replacing them
+   (H8/H9): dense already reaches recall@5 1.000, so overruling it entirely is
+   the likely cost of reranking.
+7. **`eval/stage_tuning_eval.py` results were discarded** (it ran on the
+   pre-rebuild eval set). Re-run if stage sizing is revisited.
+8. **MMR is off in the default path** (A10); `mmr.py` runs only when a sweep
+   enables it. Kept for the comparison study.
+9. **Sheet names are order-dependent.** `_variant_sheet_names` prefixes a position
+   number, so the same config gets a different sheet name in a different sweep.
+10. **FAISS vs Qdrant remains undecided.** FAISS is embedded (`IndexFlatIP`, exact
+    search, parallel `dense_chunks.pkl` that must stay aligned by construction
+    order). Qdrant would add native metadata filtering, incremental upsert/delete
+    and sparse vectors; the case strengthens at 100-200 documents and weakens now
+    that BM25 measured dominated.
+11. **Scale the corpus** to 100-200 documents and redo the trend analysis (pool
+    size and reranking cost are corpus-independent). The corpus is now 37 files;
+    every number in this log was measured on the July 22-document corpus.
 
 ## Caveats that must appear in the formal write-up
 
