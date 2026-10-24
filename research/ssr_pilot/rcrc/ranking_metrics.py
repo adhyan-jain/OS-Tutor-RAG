@@ -33,7 +33,7 @@ def compute_kendall_tau_scores(scores1: Dict[str, float], scores2: Dict[str, flo
     """
     Computes Kendall's tau-b correlation directly from model score vectors.
 
-    Degenerate-vector handling policy (predeclared; see deviation log D4):
+    Degenerate-vector handling policy (predeclared; see deviation log D5):
     - Both vectors constant (all models score identically): return 1.0.
       Justification: both ranking vectors rank all models tied #1 — the ranking
       structure is identical, making 1.0 the most defensible finite value.

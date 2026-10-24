@@ -1,0 +1,513 @@
+{
+  "domain": "BlocksWorld_Planning_Confirmatory",
+  "n_tasks": 24,
+  "n_models": 4,
+  "total_generations": 1152,
+  "models": [
+    "qwen3:8b",
+    "gemma2:9b",
+    "llama3.1:8b",
+    "mistral:7b-instruct"
+  ],
+  "tasks": [
+    {
+      "id": "bw_01_single_stack",
+      "tier": 1,
+      "cardinality": 1,
+      "min_length": 1
+    },
+    {
+      "id": "bw_02_unstack_and_stack",
+      "tier": 1,
+      "cardinality": 1,
+      "min_length": 2
+    },
+    {
+      "id": "bw_03_sussman_anomaly",
+      "tier": 1,
+      "cardinality": 1,
+      "min_length": 3
+    },
+    {
+      "id": "bw_04_stack_three_linear",
+      "tier": 1,
+      "cardinality": 1,
+      "min_length": 2
+    },
+    {
+      "id": "bw_05_invert_two",
+      "tier": 1,
+      "cardinality": 1,
+      "min_length": 2
+    },
+    {
+      "id": "bw_06_clear_and_place",
+      "tier": 1,
+      "cardinality": 1,
+      "min_length": 2
+    },
+    {
+      "id": "bw_07_four_stack_linear",
+      "tier": 1,
+      "cardinality": 1,
+      "min_length": 3
+    },
+    {
+      "id": "bw_08_unstack_deep",
+      "tier": 1,
+      "cardinality": 1,
+      "min_length": 4
+    },
+    {
+      "id": "bw_09_independent_pairs",
+      "tier": 2,
+      "cardinality": 2,
+      "min_length": 2
+    },
+    {
+      "id": "bw_10_parallel_clear",
+      "tier": 2,
+      "cardinality": 2,
+      "min_length": 2
+    },
+    {
+      "id": "bw_11_clear_and_stack",
+      "tier": 2,
+      "cardinality": 2,
+      "min_length": 2
+    },
+    {
+      "id": "bw_12_two_towers_unstack_3",
+      "tier": 2,
+      "cardinality": 3,
+      "min_length": 3
+    },
+    {
+      "id": "bw_13_tower_and_single_4",
+      "tier": 2,
+      "cardinality": 4,
+      "min_length": 4
+    },
+    {
+      "id": "bw_14_three_subgoals",
+      "tier": 2,
+      "cardinality": 6,
+      "min_length": 3
+    },
+    {
+      "id": "bw_15_three_clears",
+      "tier": 2,
+      "cardinality": 6,
+      "min_length": 3
+    },
+    {
+      "id": "bw_16_two_towers_of_two_6",
+      "tier": 2,
+      "cardinality": 6,
+      "min_length": 4
+    },
+    {
+      "id": "bw_17_unstack_interleave_10",
+      "tier": 3,
+      "cardinality": 10,
+      "min_length": 5
+    },
+    {
+      "id": "bw_18_unstack_interleave_12",
+      "tier": 3,
+      "cardinality": 12,
+      "min_length": 4
+    },
+    {
+      "id": "bw_19_unstack_interleave_12_alt",
+      "tier": 3,
+      "cardinality": 12,
+      "min_length": 4
+    },
+    {
+      "id": "bw_20_unstack_interleave_20",
+      "tier": 3,
+      "cardinality": 20,
+      "min_length": 5
+    },
+    {
+      "id": "bw_21_unstack_interleave_20_alt",
+      "tier": 3,
+      "cardinality": 20,
+      "min_length": 5
+    },
+    {
+      "id": "bw_22_four_clears_24",
+      "tier": 3,
+      "cardinality": 24,
+      "min_length": 4
+    },
+    {
+      "id": "bw_23_four_clears_24_alt",
+      "tier": 3,
+      "cardinality": 24,
+      "min_length": 4
+    },
+    {
+      "id": "bw_24_unstack_interleave_10_alt",
+      "tier": 3,
+      "cardinality": 10,
+      "min_length": 5
+    }
+  ],
+  "semantic_pass_rates": {
+    "qwen3:8b": {
+      "overall": 0.0798611111111111,
+      "tier_1": 0.010416666666666666,
+      "tier_2": 0.14583333333333331,
+      "tier_3": 0.08333333333333333,
+      "per_task": {
+        "bw_01_single_stack": 0.0,
+        "bw_02_unstack_and_stack": 0.0,
+        "bw_03_sussman_anomaly": 0.0,
+        "bw_04_stack_three_linear": 0.0,
+        "bw_05_invert_two": 0.0,
+        "bw_06_clear_and_place": 0.08333333333333333,
+        "bw_07_four_stack_linear": 0.0,
+        "bw_08_unstack_deep": 0.0,
+        "bw_09_independent_pairs": 0.08333333333333333,
+        "bw_10_parallel_clear": 0.16666666666666666,
+        "bw_11_clear_and_stack": 0.3333333333333333,
+        "bw_12_two_towers_unstack_3": 0.0,
+        "bw_13_tower_and_single_4": 0.0,
+        "bw_14_three_subgoals": 0.3333333333333333,
+        "bw_15_three_clears": 0.25,
+        "bw_16_two_towers_of_two_6": 0.0,
+        "bw_17_unstack_interleave_10": 0.0,
+        "bw_18_unstack_interleave_12": 0.0,
+        "bw_19_unstack_interleave_12_alt": 0.0,
+        "bw_20_unstack_interleave_20": 0.0,
+        "bw_21_unstack_interleave_20_alt": 0.0,
+        "bw_22_four_clears_24": 0.3333333333333333,
+        "bw_23_four_clears_24_alt": 0.3333333333333333,
+        "bw_24_unstack_interleave_10_alt": 0.0
+      }
+    },
+    "gemma2:9b": {
+      "overall": 0.05555555555555555,
+      "tier_1": 0.0625,
+      "tier_2": 0.0625,
+      "tier_3": 0.041666666666666664,
+      "per_task": {
+        "bw_01_single_stack": 0.5,
+        "bw_02_unstack_and_stack": 0.0,
+        "bw_03_sussman_anomaly": 0.0,
+        "bw_04_stack_three_linear": 0.0,
+        "bw_05_invert_two": 0.0,
+        "bw_06_clear_and_place": 0.0,
+        "bw_07_four_stack_linear": 0.0,
+        "bw_08_unstack_deep": 0.0,
+        "bw_09_independent_pairs": 0.16666666666666666,
+        "bw_10_parallel_clear": 0.0,
+        "bw_11_clear_and_stack": 0.0,
+        "bw_12_two_towers_unstack_3": 0.0,
+        "bw_13_tower_and_single_4": 0.0,
+        "bw_14_three_subgoals": 0.25,
+        "bw_15_three_clears": 0.08333333333333333,
+        "bw_16_two_towers_of_two_6": 0.0,
+        "bw_17_unstack_interleave_10": 0.0,
+        "bw_18_unstack_interleave_12": 0.0,
+        "bw_19_unstack_interleave_12_alt": 0.0,
+        "bw_20_unstack_interleave_20": 0.0,
+        "bw_21_unstack_interleave_20_alt": 0.0,
+        "bw_22_four_clears_24": 0.25,
+        "bw_23_four_clears_24_alt": 0.08333333333333333,
+        "bw_24_unstack_interleave_10_alt": 0.0
+      }
+    },
+    "llama3.1:8b": {
+      "overall": 0.003472222222222222,
+      "tier_1": 0.0,
+      "tier_2": 0.0,
+      "tier_3": 0.010416666666666666,
+      "per_task": {
+        "bw_01_single_stack": 0.0,
+        "bw_02_unstack_and_stack": 0.0,
+        "bw_03_sussman_anomaly": 0.0,
+        "bw_04_stack_three_linear": 0.0,
+        "bw_05_invert_two": 0.0,
+        "bw_06_clear_and_place": 0.0,
+        "bw_07_four_stack_linear": 0.0,
+        "bw_08_unstack_deep": 0.0,
+        "bw_09_independent_pairs": 0.0,
+        "bw_10_parallel_clear": 0.0,
+        "bw_11_clear_and_stack": 0.0,
+        "bw_12_two_towers_unstack_3": 0.0,
+        "bw_13_tower_and_single_4": 0.0,
+        "bw_14_three_subgoals": 0.0,
+        "bw_15_three_clears": 0.0,
+        "bw_16_two_towers_of_two_6": 0.0,
+        "bw_17_unstack_interleave_10": 0.0,
+        "bw_18_unstack_interleave_12": 0.0,
+        "bw_19_unstack_interleave_12_alt": 0.08333333333333333,
+        "bw_20_unstack_interleave_20": 0.0,
+        "bw_21_unstack_interleave_20_alt": 0.0,
+        "bw_22_four_clears_24": 0.0,
+        "bw_23_four_clears_24_alt": 0.0,
+        "bw_24_unstack_interleave_10_alt": 0.0
+      }
+    },
+    "mistral:7b-instruct": {
+      "overall": 0.003472222222222222,
+      "tier_1": 0.010416666666666666,
+      "tier_2": 0.0,
+      "tier_3": 0.0,
+      "per_task": {
+        "bw_01_single_stack": 0.0,
+        "bw_02_unstack_and_stack": 0.0,
+        "bw_03_sussman_anomaly": 0.0,
+        "bw_04_stack_three_linear": 0.0,
+        "bw_05_invert_two": 0.0,
+        "bw_06_clear_and_place": 0.08333333333333333,
+        "bw_07_four_stack_linear": 0.0,
+        "bw_08_unstack_deep": 0.0,
+        "bw_09_independent_pairs": 0.0,
+        "bw_10_parallel_clear": 0.0,
+        "bw_11_clear_and_stack": 0.0,
+        "bw_12_two_towers_unstack_3": 0.0,
+        "bw_13_tower_and_single_4": 0.0,
+        "bw_14_three_subgoals": 0.0,
+        "bw_15_three_clears": 0.0,
+        "bw_16_two_towers_of_two_6": 0.0,
+        "bw_17_unstack_interleave_10": 0.0,
+        "bw_18_unstack_interleave_12": 0.0,
+        "bw_19_unstack_interleave_12_alt": 0.0,
+        "bw_20_unstack_interleave_20": 0.0,
+        "bw_21_unstack_interleave_20_alt": 0.0,
+        "bw_22_four_clears_24": 0.0,
+        "bw_23_four_clears_24_alt": 0.0,
+        "bw_24_unstack_interleave_10_alt": 0.0
+      }
+    }
+  },
+  "hypotheses_results": {
+    "H1_attenuation_law": {
+      "description": "E[S_mi^E2] = S_mi^E3 / |V_i|",
+      "pearson_r": 0.9854580284675707,
+      "pearson_r_nonzero_cells": 0.9854580284675707,
+      "pearson_r_all_cells": 0.9883683252604476,
+      "n_nonzero_cells": 16,
+      "median_ratio": 1.0,
+      "mean_ratio": 0.875,
+      "threshold_r": 0.98,
+      "threshold_ratio_window": [
+        0.95,
+        1.05
+      ],
+      "passed": true
+    },
+    "H2_ranking_instability": {
+      "description": "Mean pairwise winner reversal rate >= 8.0%",
+      "mean_reversal_probability": 0.04629671491876705,
+      "threshold": 0.08,
+      "per_pair": {
+        "qwen3:8b_vs_gemma2:9b": 0.2777802895126023,
+        "qwen3:8b_vs_llama3.1:8b": 0.0,
+        "qwen3:8b_vs_mistral:7b-instruct": 0.0,
+        "gemma2:9b_vs_llama3.1:8b": 0.0,
+        "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+        "llama3.1:8b_vs_mistral:7b-instruct": 0.0
+      },
+      "passed": false
+    },
+    "H3_near_tie_concentration": {
+      "description": "Share of reversal mass in E3-unseparated pairs >= 70.0%",
+      "unseparated_pairs": [
+        "qwen3:8b_vs_gemma2:9b",
+        "qwen3:8b_vs_llama3.1:8b",
+        "qwen3:8b_vs_mistral:7b-instruct",
+        "gemma2:9b_vs_llama3.1:8b",
+        "gemma2:9b_vs_mistral:7b-instruct",
+        "llama3.1:8b_vs_mistral:7b-instruct"
+      ],
+      "separated_pairs": [],
+      "unseparated_share": 1.0,
+      "threshold": 0.7,
+      "passed": null,
+      "status": "NOT_INFORMATIVE_NO_SEPARATED_PAIR"
+    },
+    "H4_detection_loss": {
+      "description": "Miss rate for E3-separated pairs >= 90.0%",
+      "miss_rate": null,
+      "threshold": 0.9,
+      "details": {},
+      "passed": null,
+      "status": "NOT_TESTABLE_NO_SEPARATED_PAIR"
+    }
+  },
+  "exact_dp_pairwise": {
+    "qwen3:8b_vs_gemma2:9b": {
+      "margin_distribution": {
+        "-0.020833333333333332": 0.07972246334876533,
+        "-0.017361111111111112": 0.0991331500771604,
+        "-0.013888888888888888": 0.11577088155864186,
+        "-0.010416666666666666": 0.12311921296296285,
+        "-0.006944444444444444": 0.12410180362654309,
+        "-0.003472222222222222": 0.12482518325617271,
+        "0.0": 0.12499397183641962,
+        "0.003472222222222222": 0.12499999999999988,
+        "0.006944444444444444": 0.04527753665123452,
+        "0.010416666666666666": 0.02586684992283948,
+        "0.013888888888888888": 0.009229118441358016,
+        "0.017361111111111112": 0.0018807870370370356,
+        "0.020833333333333332": 0.0008981963734567895,
+        "0.024305555555555556": 0.0001748167438271604,
+        "0.027777777777777776": 6.028163580246913e-06
+      },
+      "expected_margin": -0.006365740740740734,
+      "variance_margin": 7.648232542438262e-05,
+      "std_margin": 0.008745417395664007,
+      "p_positive": 0.20833333333333312,
+      "p_negative": 0.6666726948302463,
+      "p_zero": 0.12499397183641962,
+      "winner_reversal_probability": 0.2777802895126023,
+      "pairwise_reversal_probability": 0.2777802895126023,
+      "n_tasks": 24,
+      "K": 12
+    },
+    "qwen3:8b_vs_llama3.1:8b": {
+      "margin_distribution": {
+        "0.003472222222222222": 0.07972246334876533,
+        "0.006944444444444444": 0.07972246334876533,
+        "0.010416666666666666": 0.07972246334876533,
+        "0.013888888888888888": 0.09566695601851843,
+        "0.017361111111111112": 0.11854383680555546,
+        "0.020833333333333332": 0.11854383680555546,
+        "0.024305555555555556": 0.11854383680555546,
+        "0.027777777777777776": 0.12311921296296284,
+        "0.03125": 0.04493393132716044,
+        "0.034722222222222224": 0.04493393132716044,
+        "0.03819444444444445": 0.04493393132716044,
+        "0.041666666666666664": 0.029296874999999972,
+        "0.04513888888888889": 0.0064501350308641915,
+        "0.04861111111111111": 0.0064501350308641915,
+        "0.052083333333333336": 0.0064501350308641915,
+        "0.05555555555555555": 0.0018807870370370356,
+        "0.059027777777777776": 0.0003436053240740739,
+        "0.0625": 0.0003436053240740739,
+        "0.06597222222222222": 0.0003436053240740739,
+        "0.06944444444444445": 3.616898148148146e-05,
+        "0.07291666666666667": 6.028163580246913e-06,
+        "0.0763888888888889": 6.028163580246913e-06,
+        "0.0798611111111111": 6.028163580246913e-06
+      },
+      "expected_margin": 0.02083333333333331,
+      "variance_margin": 0.00012056327160493814,
+      "std_margin": 0.010980130764473534,
+      "p_positive": 0.999999999999999,
+      "p_negative": 0.0,
+      "p_zero": 0.0,
+      "winner_reversal_probability": 0.0,
+      "pairwise_reversal_probability": 0.0,
+      "n_tasks": 24,
+      "K": 12
+    },
+    "qwen3:8b_vs_mistral:7b-instruct": {
+      "margin_distribution": {
+        "0.003472222222222222": 0.07972246334876533,
+        "0.006944444444444444": 0.07972246334876533,
+        "0.010416666666666666": 0.07972246334876533,
+        "0.013888888888888888": 0.09566695601851843,
+        "0.017361111111111112": 0.11854383680555546,
+        "0.020833333333333332": 0.11854383680555546,
+        "0.024305555555555556": 0.11854383680555546,
+        "0.027777777777777776": 0.12311921296296284,
+        "0.03125": 0.04493393132716044,
+        "0.034722222222222224": 0.04493393132716044,
+        "0.03819444444444445": 0.04493393132716044,
+        "0.041666666666666664": 0.029296874999999972,
+        "0.04513888888888889": 0.0064501350308641915,
+        "0.04861111111111111": 0.0064501350308641915,
+        "0.052083333333333336": 0.0064501350308641915,
+        "0.05555555555555555": 0.0018807870370370356,
+        "0.059027777777777776": 0.0003436053240740739,
+        "0.0625": 0.0003436053240740739,
+        "0.06597222222222222": 0.0003436053240740739,
+        "0.06944444444444445": 3.616898148148146e-05,
+        "0.07291666666666667": 6.028163580246913e-06,
+        "0.0763888888888889": 6.028163580246913e-06,
+        "0.0798611111111111": 6.028163580246913e-06
+      },
+      "expected_margin": 0.02083333333333331,
+      "variance_margin": 0.00012056327160493814,
+      "std_margin": 0.010980130764473534,
+      "p_positive": 0.999999999999999,
+      "p_negative": 0.0,
+      "p_zero": 0.0,
+      "winner_reversal_probability": 0.0,
+      "pairwise_reversal_probability": 0.0,
+      "n_tasks": 24,
+      "K": 12
+    },
+    "gemma2:9b_vs_llama3.1:8b": {
+      "margin_distribution": {
+        "0.020833333333333332": 0.3188898533950613,
+        "0.024305555555555556": 0.07764274691358015,
+        "0.027777777777777776": 0.3216628086419749,
+        "0.03125": 0.1552854938271603,
+        "0.034722222222222224": 0.021677276234567885,
+        "0.03819444444444445": 0.0783179012345678,
+        "0.041666666666666664": 0.02167727623456788,
+        "0.04513888888888889": 0.001350308641975308,
+        "0.04861111111111111": 0.002797067901234566,
+        "0.052083333333333336": 0.0006751543209876541,
+        "0.05555555555555555": 2.4112654320987653e-05
+      },
+      "expected_margin": 0.027199074074074042,
+      "variance_margin": 3.361538440929352e-05,
+      "std_margin": 0.005797877577984337,
+      "p_positive": 0.9999999999999988,
+      "p_negative": 0.0,
+      "p_zero": 0.0,
+      "winner_reversal_probability": 0.0,
+      "pairwise_reversal_probability": 0.0,
+      "n_tasks": 24,
+      "K": 12
+    },
+    "gemma2:9b_vs_mistral:7b-instruct": {
+      "margin_distribution": {
+        "0.020833333333333332": 0.3188898533950613,
+        "0.024305555555555556": 0.07764274691358015,
+        "0.027777777777777776": 0.3216628086419749,
+        "0.03125": 0.1552854938271603,
+        "0.034722222222222224": 0.021677276234567885,
+        "0.03819444444444445": 0.0783179012345678,
+        "0.041666666666666664": 0.02167727623456788,
+        "0.04513888888888889": 0.001350308641975308,
+        "0.04861111111111111": 0.002797067901234566,
+        "0.052083333333333336": 0.0006751543209876541,
+        "0.05555555555555555": 2.4112654320987653e-05
+      },
+      "expected_margin": 0.027199074074074042,
+      "variance_margin": 3.361538440929352e-05,
+      "std_margin": 0.005797877577984337,
+      "p_positive": 0.9999999999999988,
+      "p_negative": 0.0,
+      "p_zero": 0.0,
+      "winner_reversal_probability": 0.0,
+      "pairwise_reversal_probability": 0.0,
+      "n_tasks": 24,
+      "K": 12
+    },
+    "llama3.1:8b_vs_mistral:7b-instruct": {
+      "margin_distribution": {
+        "0.0": 0.999999999999999
+      },
+      "expected_margin": 0.0,
+      "variance_margin": 0.0,
+      "std_margin": 0.0,
+      "p_positive": 0.0,
+      "p_negative": 0.0,
+      "p_zero": 0.999999999999999,
+      "winner_reversal_probability": 0.0,
+      "pairwise_reversal_probability": 0.0,
+      "n_tasks": 24,
+      "K": 12
+    }
+  }
+}

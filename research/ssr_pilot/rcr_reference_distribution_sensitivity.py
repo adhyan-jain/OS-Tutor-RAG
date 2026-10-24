@@ -219,7 +219,11 @@ def run_distribution_sensitivity(n_draws: int = 50000, base_seed: int = 20261007
             formatted_ref_squashed = formatted_refs_cache[w_id][r_idx]
             ref_obs = obs_refs_cache[w_id][r_idx]
 
-            ref_match_norm = (norm_cand == norm_ref) if norm_cand is not None else False
+            # D3(b): output mentioning entities outside the world never counts as a normalized match
+            # (same rule as research/ssr_pilot/scoring.py).
+            ref_match_norm = (
+                (norm_cand == norm_ref) and oracle_verdict.reason != "unknown_entity"
+            ) if norm_cand is not None else False
             ref_match_strict = (region_squashed == formatted_ref_squashed) if norm_cand is not None else False
 
             eval_passes_by_rec["E1_CANONICAL_EXACT"][w_id][r_idx].setdefault(model, []).append(ref_match_strict)
@@ -279,13 +283,21 @@ def run_distribution_sensitivity(n_draws: int = 50000, base_seed: int = 20261007
         "description": "Inverse structural distance weighting: w(R) = 1 / (1 + d(R, R0)) normalized"
     })
 
-    # Distribution D: Adversarial Upper-Bound Stress Condition
+    # Distribution D: Max Score Displacement (single deterministic draw)
+    # NAMING NOTE: The old ID 'ADVERSARIAL_UPPER_BOUND' was misleading. This regime selects
+    # the reference that maximizes the L1 distance of the E2 score vector from the canonical
+    # score vector — i.e., it maximizes sum_m |score_m(r) - score_m(r_canonical)|.
+    # This is NOT a worst-case for ranking disagreement, pairwise reversals, or Kendall tau.
+    # The label "upper bound" had no formal mathematical backing.
+    # The existing frozen JSON artifacts (reference_distribution_sensitivity.json) use the old
+    # key name "ADVERSARIAL_UPPER_BOUND" and are NOT regenerated — they remain historically accurate.
+    # This code now uses the corrected label for new runs only.
     dist_specs.append({
-        "id": "ADVERSARIAL_UPPER_BOUND",
-        "name": "Adversarial Upper-Bound Stress Condition",
+        "id": "MAX_SCORE_DISPLACEMENT",
+        "name": "Max Score Displacement (single deterministic draw)",
         "type": "adversarial",
         "param": None,
-        "description": "Deterministic worst-case reference maximizing candidate score disagreement with canonical reference"
+        "description": "Deterministic reference per world that maximizes L1 displacement of E2 score vector from canonical scores; NOT a worst-case for ranking disagreement or reversal probability"
     })
 
     # Build per-world probability arrays
@@ -383,7 +395,13 @@ def run_distribution_sensitivity(n_draws: int = 50000, base_seed: int = 20261007
                 pairwise_details = {}
 
             # Oracle ranking recovery
-            # Compare rankings against oracle_ranking
+            # NOTE ON ESTIMAND: get_model_ranking() uses alphabetical tie-breaking for equal scores.
+            # This gives a different oracle recovery rate than rankings_are_identical_tie_aware()
+            # when the oracle has tied model scores. For the current dataset the oracle has no ties
+            # (E3 scores: qwen3=0.309, gemma2=0.170, mistral=0.076, llama3.1=0.066), so both
+            # estimands agree numerically. See research/docs/TIE_HANDLING_ANALYSIS.md for the
+            # formal difference and a hand-constructed example where they diverge.
+            # If extended to datasets with oracle ties, replace with rankings_are_identical_tie_aware().
             matching_oracle_count = 0
             for d_i in range(n_samples):
                 d_s = {m: float(draw_scores_mat[d_i, m_i]) for m_i, m in enumerate(models_list)}

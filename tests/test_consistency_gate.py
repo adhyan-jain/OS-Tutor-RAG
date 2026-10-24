@@ -168,6 +168,27 @@ def test_reproducibility_hashes_not_truncated():
             pytest.fail(f"Truncated SHA-256 (length {len(h)}): {h}")
 
 
+def test_reproducibility_table_hashes_match_files():
+    """
+    Every `path` | `sha256` row in REPRODUCIBILITY.md must equal the file's actual SHA-256.
+    Catches documentation that was not re-synced after an artifact or manuscript edit.
+    """
+    with open(REPRODUCIBILITY_PATH) as f:
+        lines = f.readlines()
+    rows = []
+    for line in lines:
+        m = re.match(r"^\|\s*`([^`]+)`\s*\|\s*`([a-f0-9]{64})`\s*\|\s*$", line)
+        if m:
+            rows.append((m.group(1), m.group(2)))
+    assert len(rows) >= 15, f"Expected a full checksum table, found {len(rows)} rows"
+    mismatches = []
+    for path, expected in rows:
+        assert os.path.exists(path), f"Checksum row references missing file: {path}"
+        if _sha256(path) != expected:
+            mismatches.append(path)
+    assert not mismatches, f"Stale SHA-256 in REPRODUCIBILITY.md for: {mismatches}"
+
+
 def test_manuscript_claims_phrases_present():
     """Verify that every claim's declared manuscript phrase appears in PAPER_FINAL.md."""
     manifest = load_manifest()

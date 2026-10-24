@@ -1,0 +1,243 @@
+{
+  "status": "SUPPLEMENTARY_POST_HOC_NOT_CONFIRMATORY",
+  "failure_taxonomy": {
+    "qwen3:8b": {
+      "copied_prompt_example_invalid": 10,
+      "illegal_first_step": 144,
+      "illegal_later_step": 108,
+      "valid_shortest": 23,
+      "legal_but_goal_not_reached": 3
+    },
+    "gemma2:9b": {
+      "legal_but_goal_not_reached": 12,
+      "valid_shortest": 16,
+      "copied_prompt_example_invalid": 8,
+      "illegal_later_step": 156,
+      "illegal_first_step": 96
+    },
+    "llama3.1:8b": {
+      "illegal_first_step": 215,
+      "illegal_later_step": 63,
+      "legal_but_goal_not_reached": 9,
+      "valid_not_shortest": 1
+    },
+    "mistral:7b-instruct": {
+      "illegal_first_step": 224,
+      "illegal_later_step": 60,
+      "legal_but_goal_not_reached": 3,
+      "valid_not_shortest": 1
+    }
+  },
+  "pass_rate_ci": {
+    "qwen3:8b": {
+      "pass_rate": 0.0798611111111111,
+      "task_cluster_bootstrap_95ci": [
+        0.03125,
+        0.13194444444444445
+      ],
+      "n_valid_generations": 23,
+      "n_generations": 288,
+      "n_tasks_with_any_valid": 8
+    },
+    "gemma2:9b": {
+      "pass_rate": 0.05555555555555555,
+      "task_cluster_bootstrap_95ci": [
+        0.013888888888888888,
+        0.10763888888888888
+      ],
+      "n_valid_generations": 16,
+      "n_generations": 288,
+      "n_tasks_with_any_valid": 6
+    },
+    "llama3.1:8b": {
+      "pass_rate": 0.003472222222222222,
+      "task_cluster_bootstrap_95ci": [
+        0.0,
+        0.010416666666666666
+      ],
+      "n_valid_generations": 1,
+      "n_generations": 288,
+      "n_tasks_with_any_valid": 1
+    },
+    "mistral:7b-instruct": {
+      "pass_rate": 0.003472222222222222,
+      "task_cluster_bootstrap_95ci": [
+        0.0,
+        0.010416666666666666
+      ],
+      "n_valid_generations": 1,
+      "n_generations": 288,
+      "n_tasks_with_any_valid": 1
+    }
+  },
+  "variance_components": {
+    "qwen3:8b": {
+      "share_of_variance_between_tasks": 0.2242821985233799,
+      "pass_rate_by_prompt_variant": {
+        "v0": 0.0,
+        "v1": 0.23958333333333334,
+        "v2": 0.0
+      }
+    },
+    "gemma2:9b": {
+      "share_of_variance_between_tasks": 0.2720588235294119,
+      "pass_rate_by_prompt_variant": {
+        "v0": 0.08333333333333333,
+        "v1": 0.08333333333333333,
+        "v2": 0.0
+      }
+    },
+    "llama3.1:8b": {
+      "share_of_variance_between_tasks": 0.08013937282229965,
+      "pass_rate_by_prompt_variant": {
+        "v0": 0.0,
+        "v1": 0.0,
+        "v2": 0.010416666666666666
+      }
+    },
+    "mistral:7b-instruct": {
+      "share_of_variance_between_tasks": 0.08013937282229971,
+      "pass_rate_by_prompt_variant": {
+        "v0": 0.010416666666666666,
+        "v1": 0.0,
+        "v2": 0.0
+      }
+    }
+  },
+  "reversal_uncertainty": {
+    "point_exact_dp_mean": 0.04629671491876705,
+    "per_pair_exact_dp": {
+      "qwen3:8b_vs_gemma2:9b": 0.2777802895126023,
+      "qwen3:8b_vs_llama3.1:8b": 0.0,
+      "qwen3:8b_vs_mistral:7b-instruct": 0.0,
+      "gemma2:9b_vs_llama3.1:8b": 0.0,
+      "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+      "llama3.1:8b_vs_mistral:7b-instruct": 0.0
+    },
+    "generation_bootstrap": {
+      "mean": 0.04064926357542546,
+      "ci95": [
+        2.772525722815883e-05,
+        0.07928872992339135
+      ],
+      "share_ge_0.08": 0.0185
+    },
+    "task_bootstrap": {
+      "mean": 0.015515028488852464,
+      "ci95": [
+        0.0,
+        0.06894312864012893
+      ],
+      "share_ge_0.08": 0.004
+    },
+    "note": "Reference-choice variability is integrated out exactly by the DP (uniform q); the bootstrap intervals therefore isolate generation vs task variability."
+  },
+  "canonical_bias_sensitivity_exact_dp": {
+    "0.0": {
+      "mean_reversal": 0.04629671491876705,
+      "per_pair": {
+        "qwen3:8b_vs_gemma2:9b": 0.2777802895126023,
+        "qwen3:8b_vs_llama3.1:8b": 0.0,
+        "qwen3:8b_vs_mistral:7b-instruct": 0.0,
+        "gemma2:9b_vs_llama3.1:8b": 0.0,
+        "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+        "llama3.1:8b_vs_mistral:7b-instruct": 0.0
+      }
+    },
+    "0.25": {
+      "mean_reversal": 0.06120006051079746,
+      "per_pair": {
+        "qwen3:8b_vs_gemma2:9b": 0.36720036306478476,
+        "qwen3:8b_vs_llama3.1:8b": 0.0,
+        "qwen3:8b_vs_mistral:7b-instruct": 0.0,
+        "gemma2:9b_vs_llama3.1:8b": 0.0,
+        "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+        "llama3.1:8b_vs_mistral:7b-instruct": 0.0
+      }
+    },
+    "0.5": {
+      "mean_reversal": 0.05935846747712694,
+      "per_pair": {
+        "qwen3:8b_vs_gemma2:9b": 0.3561508048627616,
+        "qwen3:8b_vs_llama3.1:8b": 0.0,
+        "qwen3:8b_vs_mistral:7b-instruct": 0.0,
+        "gemma2:9b_vs_llama3.1:8b": 0.0,
+        "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+        "llama3.1:8b_vs_mistral:7b-instruct": 0.0
+      }
+    },
+    "0.8": {
+      "mean_reversal": 0.02521477833876525,
+      "per_pair": {
+        "qwen3:8b_vs_gemma2:9b": 0.1512886700325915,
+        "qwen3:8b_vs_llama3.1:8b": 0.0,
+        "qwen3:8b_vs_mistral:7b-instruct": 0.0,
+        "gemma2:9b_vs_llama3.1:8b": 0.0,
+        "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+        "llama3.1:8b_vs_mistral:7b-instruct": 0.0
+      }
+    },
+    "0.95": {
+      "mean_reversal": 0.0024834999887407214,
+      "per_pair": {
+        "qwen3:8b_vs_gemma2:9b": 0.014900999932444328,
+        "qwen3:8b_vs_llama3.1:8b": 0.0,
+        "qwen3:8b_vs_mistral:7b-instruct": 0.0,
+        "gemma2:9b_vs_llama3.1:8b": 0.0,
+        "gemma2:9b_vs_mistral:7b-instruct": 0.0,
+        "llama3.1:8b_vs_mistral:7b-instruct": 0.0
+      }
+    }
+  },
+  "e1_vs_e2_generation_level_disagreements": 0,
+  "exploratory_detection": {
+    "n_draws": 50000,
+    "n_sign_flips": 20000,
+    "note": "No pair is E3-separated at Holm alpha=0.05, so the locked H4 is untestable. Rates below are descriptive only.",
+    "per_pair": {
+      "qwen3:8b_vs_gemma2:9b": {
+        "e3_raw_p": 0.5174241287935604,
+        "e3_holm_p": 1.0,
+        "e2_detects_rate_holm_lt_0.05": 0.0,
+        "e2_n_draws_detecting": 0,
+        "e2_median_holm_p": 1.0
+      },
+      "qwen3:8b_vs_llama3.1:8b": {
+        "e3_raw_p": 0.014999250037498125,
+        "e3_holm_p": 0.08909554522273887,
+        "e2_detects_rate_holm_lt_0.05": 0.0,
+        "e2_n_draws_detecting": 0,
+        "e2_median_holm_p": 1.0
+      },
+      "qwen3:8b_vs_mistral:7b-instruct": {
+        "e3_raw_p": 0.014849257537123144,
+        "e3_holm_p": 0.08909554522273887,
+        "e2_detects_rate_holm_lt_0.05": 0.0,
+        "e2_n_draws_detecting": 0,
+        "e2_median_holm_p": 1.0
+      },
+      "gemma2:9b_vs_llama3.1:8b": {
+        "e3_raw_p": 0.061396930153492325,
+        "e3_holm_p": 0.2447877606119694,
+        "e2_detects_rate_holm_lt_0.05": 0.0,
+        "e2_n_draws_detecting": 0,
+        "e2_median_holm_p": 1.0
+      },
+      "gemma2:9b_vs_mistral:7b-instruct": {
+        "e3_raw_p": 0.06119694015299235,
+        "e3_holm_p": 0.2447877606119694,
+        "e2_detects_rate_holm_lt_0.05": 0.0,
+        "e2_n_draws_detecting": 0,
+        "e2_median_holm_p": 1.0
+      },
+      "llama3.1:8b_vs_mistral:7b-instruct": {
+        "e3_raw_p": 1.0,
+        "e3_holm_p": 1.0,
+        "e2_detects_rate_holm_lt_0.05": 0.0,
+        "e2_n_draws_detecting": 0,
+        "e2_median_holm_p": 1.0
+      }
+    }
+  },
+  "seed": 20261029
+}

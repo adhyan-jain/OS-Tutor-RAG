@@ -123,7 +123,11 @@ def run_rcr_analysis(
             formatted_ref_squashed = formatted_refs_cache[w_id][ref_idx]
             ref_obs = obs_refs_cache[w_id][ref_idx]
             
-            ref_match_norm = (norm_cand == norm_ref) if norm_cand is not None else False
+            # D3(b): output mentioning entities outside the world never counts as a normalized match
+            # (same rule as research/ssr_pilot/scoring.py).
+            ref_match_norm = (
+                (norm_cand == norm_ref) and oracle_verdict.reason != "unknown_entity"
+            ) if norm_cand is not None else False
             ref_match_strict = (region_squashed == formatted_ref_squashed) if norm_cand is not None else False
             obs_equiv = (cand_obs == ref_obs) if cand_obs is not None else False
 
@@ -237,7 +241,7 @@ def run_rcr_analysis(
 
         # Tie-aware Kendall tau-b distribution of random references against canonical reference
         # NaN draws (one-constant degenerate vectors) are tracked separately and excluded from
-        # aggregate statistics per the predeclared degenerate handling policy (deviation D4).
+        # aggregate statistics per the predeclared degenerate handling policy (deviation D5).
         from research.ssr_pilot.rcrc.ranking_metrics import compute_kendall_tau_scores, rankings_are_identical_tie_aware
         kendall_taus_raw = [compute_kendall_tau_scores(canonical_scores, r_scores) for r_scores in random_scores_by_draw.values()]
         n_degen_taus = int(sum(1 for t in kendall_taus_raw if np.isnan(t)))

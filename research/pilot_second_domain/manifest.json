@@ -1,0 +1,60 @@
+{
+  "domain": "Discrete_Classical_Planning_Blocks_World",
+  "study_type": "Confirmatory_Preregistered_Replication",
+  "created_at": "2026-10-14T00:19:23",
+  "git_commit": "81b9c7056464aa6d4049b6645201242d18fcba78",
+  "git_status_clean": false,
+  "environment": {
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU (8GB VRAM)",
+    "cuda_driver": "NVIDIA-SMI 615.71.09",
+    "runtime": "Ollama local inference",
+    "host_os": "Linux x86_64"
+  },
+  "models": {
+    "qwen3:8b": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "gemma2:9b": "ff02c3702f322b9e075e9568332d96c0a7028002f1a5a056e0a6784320a4db0b",
+    "llama3.1:8b": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+    "mistral:7b-instruct": "6577803aa9a036369e481d648a2baebb381ebc6e897f2bb9a766a2aa7bfbc1cf"
+  },
+  "generation_parameters": {
+    "settings": {
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "num_predict": 512
+    },
+    "variants": [
+      "v0",
+      "v1",
+      "v2"
+    ],
+    "seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "n_tasks": 24,
+    "generations_per_task": 12,
+    "generations_per_model": 288,
+    "total_generations": 1152
+  },
+  "sha256": {
+    "research/docs/SECOND_DOMAIN_PREREGISTRATION.md": "51cf19fd4cbc63055fa1ad959fdbb974dba0894fbfdd08f228719cfa71dd4edd",
+    "research/pilot_second_domain/blocks_world_tasks.py": "0484a8a5790a4266fcbb7f1bb5cc21bc96b3916ac05012d0ec97bbe4a10f1dfb",
+    "research/pilot_second_domain/blocks_world_rcr_pilot.py": "a31174a2f53fc81eeaba9f29f26d2012e4e315f8f4fa0d24d82916f3453ccb14",
+    "research/pilot_second_domain/run_blocks_world_confirmatory.py": "b788bf8f6225d536f67eb16fb3fd9376eea89b675c54574d4e12b4b87c85e0b6",
+    "research/pilot_second_domain/analyze_blocks_world_confirmatory.py": "bcc6e19cda36233b9c608481ce57b60c413280d389506607f6e72462cfff0907",
+    "research/pilot_second_domain/analyze_blocks_world_supplementary.py": "85158c43510850049a0ccfce55228ed29d0e01b5f8f9be3a1674615b8b81dd5c",
+    "research/pilot_second_domain/verify_reference_spaces.py": "be9c26d0a1fcb99413775490269ea71cce55ae74b4163b6f3394b54379723ac9",
+    "research/pilot_second_domain/results/blocks_world_confirmatory_as_executed_20261013.json": "dd8a865ca29e44b67c517b1b7f984336a1e5f53f4f5634eaa595f5151bf6857a",
+    "research/pilot_second_domain/results/blocks_world_supplementary.json": "e35cb03b4a7c205d184a3863b216bf97987f5aa222e24c6c8deb0a3c80db4bca",
+    "research/pilot_second_domain/results/reference_space_verification.json": "6bcb9b396df45e65a2aac01c2730ab0e006a9716f54981e2948473049bf1f6f1",
+    "tests/test_second_domain_pilot.py": "6cdded5c50bf802a6ce94f376a3a915d5c2437a98288be2dc62ce8c64b9e3983",
+    "tests/test_second_domain_confirmatory.py": "5108cdc5437a37c7d1f3104641118aec73cdeda430798eec996210da5604c54d",
+    "research/pilot_second_domain/runs/qwen3_8b.jsonl": "9856b34bebb8f34ef2bd897a9e31e33474cd7041dcf4ff922032f31c6f1a4c7f",
+    "research/pilot_second_domain/runs/gemma2_9b.jsonl": "0029fb3a26e1a463d5303e1ff391165d8dba0e5775ae1bd7a6b2707ff9fecd54",
+    "research/pilot_second_domain/runs/llama3.1_8b.jsonl": "63b3a64fcc6bec294dd1a63a3ddc6c3aeb890e7f61a32e1774059ed42a1543e0",
+    "research/pilot_second_domain/runs/mistral_7b-instruct.jsonl": "6d1b3ab5fcc24f469850dff5d9a5b0d0a9c79682dfdbfe02d52d1bc78534d82d",
+    "research/pilot_second_domain/results/blocks_world_confirmatory.json": "48b66fcc92c9a140bc5b3276e1e153d92b255183a35071a70be527db77940d8a"
+  }
+}

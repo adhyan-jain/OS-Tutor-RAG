@@ -1,0 +1,44 @@
+{
+  "domain": "BlocksWorld_Planning",
+  "n_worlds": 6,
+  "valid_space_sizes": {
+    "bw_01_single_stack": 1,
+    "bw_02_independent_pairs": 2,
+    "bw_03_three_subgoals": 6,
+    "bw_04_unstack_and_stack": 1,
+    "bw_05_sussman_anomaly": 1,
+    "bw_06_parallel_clear": 2
+  },
+  "models": [
+    "planner_alpha",
+    "planner_beta",
+    "planner_gamma"
+  ],
+  "pairwise_results": {
+    "planner_alpha_vs_planner_beta": {
+      "expected_margin": 0.23379629629629628,
+      "winner_reversal_probability": 0.0798611111111111,
+      "p_positive": 0.9583333333333333,
+      "p_negative": 0.041666666666666664,
+      "p_zero": 0.0
+    },
+    "planner_alpha_vs_planner_gamma": {
+      "expected_margin": 0.36574074074074076,
+      "winner_reversal_probability": 0.0,
+      "p_positive": 1.0,
+      "p_negative": 0.0,
+      "p_zero": 0.0
+    },
+    "planner_beta_vs_planner_gamma": {
+      "expected_margin": 0.13194444444444445,
+      "winner_reversal_probability": 0.0,
+      "p_positive": 0.9583333333333333,
+      "p_negative": 0.0,
+      "p_zero": 0.041666666666666664
+    }
+  },
+  "attenuation_check": {
+    "mean_ratio_observed_over_predicted": 1.0,
+    "max_absolute_error": 0.0
+  }
+}
