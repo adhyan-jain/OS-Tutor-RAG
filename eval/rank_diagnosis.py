@@ -18,7 +18,6 @@ import argparse
 import json
 import statistics
 from collections import Counter
-from pathlib import Path
 
 from src.config import GenerationConfig, PathConfig, PipelineConfig
 from src.pipeline import RAGPipeline

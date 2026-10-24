@@ -25,9 +25,7 @@ import argparse
 import json
 import statistics
 import time
-from pathlib import Path
 
-from src.chunking import chunk_document
 from src.config import ChunkingConfig, GenerationConfig, PathConfig, PipelineConfig
 from src.pipeline import RAGPipeline
 from eval.ragas_eval import load_raw_documents

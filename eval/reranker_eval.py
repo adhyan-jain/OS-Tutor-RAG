@@ -24,7 +24,6 @@ import argparse
 import json
 import statistics
 import time
-from pathlib import Path
 
 from src.config import GenerationConfig, PathConfig, PipelineConfig
 from src.embedding_cache import get_cross_encoder
