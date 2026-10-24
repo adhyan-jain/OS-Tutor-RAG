@@ -1,0 +1,8 @@
+# LaTeX build byproducts; PAPER_FINAL.tex and PAPER_FINAL.pdf are kept.
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc

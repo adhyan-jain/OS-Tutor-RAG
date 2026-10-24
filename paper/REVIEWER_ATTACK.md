@@ -1,89 +1,89 @@
-# Hostile Reviewer Simulation & Decision Gate
+# Hostile Reviewer Simulation & Decision Gate (revised 2026-10-12)
 
-**Manuscript:** [`paper/PAPER_FINAL.md`](paper/PAPER_FINAL.md)
-**Date:** 2026-10-06 (rebuilt by Phase P forensic audit; supersedes prior version)
-
----
-
-## 1. Five Hostile Expert Reviewer Attacks
-
-#### Reviewer 1: ML/NLP Evaluation Expert
-
-**Attack:** *"We already know single-reference exact match is bad. Prior work (References Matter, TRACE, OTAP, LogicGraph, ReRef) has shown that reference choice alters metric values. Your contribution sounds like: 'if you pick a different reference, you get a different score.' That is trivially true and has been known for years."*
-
-**Rebuttal:**
-Prior work operates at the **output-score level**: metric values shift when the reference changes (e.g., Casola et al. 2025 on summarization metrics, ReRef on radiology report style variation, ILR on prompt formatting). RCR operates at a strictly different level: **benchmark conclusion stability**. We measure whether the scientific conclusions of a benchmark — model rankings, pairwise winner decisions, statistical significance at α=0.05 — are invariant to reference choice.
-
-Under E2 (normalized reference matching), 18.61% of reference-vector pairs produce strictly reversed pairwise winners, and oracle rank recovery is only 23.92%. A fresh targeted primary-source literature audit confirms that no prior paper in the literature measures benchmark-level conclusion non-identifiability under formal reference vector perturbation in multi-valued executable domains.
+**Manuscript:** [`paper/PAPER_FINAL.md`](PAPER_FINAL.md)
+**Supersedes** the 2026-10-06 version, whose rebuttals to Reviewers 1, 3 and 5 relied on claims that the 2026-10-12 verification pass contradicted (see "What changed" at the end).
 
 ---
 
-### Reviewer 2: Formal Methods Specialist
+## 1. Nine Hostile Reviewer Attacks
 
-**Attack:** *"Your Banker's algorithm oracle is circular. The enumerator that builds V(x) and the semantic validator both use `rules_check`. You have not independently verified anything for the Banker's family — you've verified it against itself."*
+### Reviewer 1: ML/NLP Evaluation Expert — "this is known"
 
-**Rebuttal:**
-In the final submission-freeze pass, an independent Banker semantic verifier (`validate_banker` in `research/simulator/validators.py`) was implemented and integrated into the validator module without requiring new generation runs. All 24 worlds across CPU scheduling, concurrency synchronization, and Banker's deadlock avoidance now execute through independent trace validators in `validators.py`, fully resolving the shared implementation seam.
+**Attack:** *"Reference choice changing metric values and even system rankings is established (Casola et al., 2025; Jeong et al., 2026). OTAP and LogicGraph already evaluate against sets of valid solutions. What is new?"*
 
----
+**Response (concede, then narrow):** Agreed, and the manuscript says so (§1, §8): ranking-level instability under reference variation is **not** claimed as new. The contribution is methodological and scoped: because V(x) is enumerated exhaustively and a reference-independent validator exists, the *entire* reference-vector distribution and the ground-truth ranking are known exactly, which lets us measure what the human-reference studies cannot—**detection loss** (§4.4: reference matching misses the two oracle-significant differences in ≥99.99% of draws and retains 12–18% of true gaps, an exact 1/|V(x)| attenuation, §4.7) and the **location of instability** (§4.5–4.6). The novelty ratings in `NOVELTY_POSITIONING_FINAL.md` were downgraded accordingly.
+
+### Reviewer 2: Formal Methods Specialist — "circular oracle"
+
+**Attack:** *"The Banker's enumerator and the semantic validator may share logic; you verified the family against itself."*
+
+**Response:** The Banker's family uses `BankerSolver` (`research/simulator/banker.py`) and an independent step-by-step `validate_banker` (`research/simulator/validators.py`), cross-validated against exhaustive brute-force permutation search for all 8 specifications. Residual risk: E3 is still a simulator, not a human gold standard (§10.4).
 
 ### Reviewer 3: Statistics & Experimental Design Auditor
 
-**Attack:** *"Your Kendall τ mean is 0.490, but you excluded 86 draws as 'degenerate.' Why not assign 0? And your significance stability analysis uses only 200 of 50,000 draws — 0.4% of the claimed sample. This is a cherry-picked subsample."*
+**Attack 3a (previous version, now withdrawn):** *"Significance used only 200 of 50,000 draws."* → **Accepted and fixed.** Deviation 7: the sign-flip analysis now covers all 50,000 draws for each evaluator, with a cross-check of the new sampler against the legacy loop (§4.1).
 
-**Rebuttal on degenerate draws:** The 86 excluded draws had one model with a constant score vector (τ-b's denominator is zero; the metric is genuinely undefined). Assigning 0.0 would be incorrect: the fact that one model scores zero across all 24 worlds does not imply any particular rank correlation with the canonical ranking. The correct policy is to exclude and count separately. The 0.17% exclusion rate does not materially affect τ = 0.490 (the prior value with degenerate included as 0.0 was 0.4893; the difference is 0.0008). Deviation D5 documents this explicitly.
+**Attack 3b:** *"The earlier text said no pair is significant, but your own output shows two pairs significant under E3."* → **Accepted.** That summary was correct only for E1/E2; it is replaced by Table 3 and Deviation 7.
 
-**Rebuttal on significance subsampling:** The 200-draw significance stability analysis is a *stability check*, not the primary result. The primary claims — τ = 0.490 ± 0.355 and 18.61% reversal probability — use all 49,914 non-degenerate draws. Sign-flip permutation tests (20,000 flips each) are computationally expensive at n=50,000 scale; the 200-draw subsample measures whether significance decisions are stable. The finding ("no pair achieves significance in any of the 200 sampled reference conditions") is disclosed as deviation D6 with explicit n=200.
+**Attack 3c:** *"A significant result under one evaluator and a non-significant one under another is not evidence of an evaluator effect."* → **Addressed.** §4.4 / Table 4 tests the effect on each gap directly with a world-level paired bootstrap; the interval excludes zero for 5 of 6 pairs (gap retained: 12–18% for those pairs).
 
----
+**Attack 3d:** *"86 draws excluded as degenerate."* → Excluded because τ_b is undefined when exactly one vector is constant (0.17%; including them as 0.0 changes the mean by 0.0008; Deviation 5).
 
 ### Reviewer 4: Benchmark Methodology Reviewer
 
-**Attack:** *"Your stated-convention arm only reduces FRR_norm from 0.715 to 0.625. That's barely anything. Also, Gemma 3 12B n_valid=42 and OLMo2 7B n_valid=6. You cannot generalize from these numbers. And why didn't you test frontier 30B+ models?"*
+**Attack:** *"Stated conventions only reduced FRR from 0.715 to 0.625; Gemma n_valid=42, OLMo n_valid=6; no frontier models."* → The partial reduction shows disclosure does not eliminate noncanonical outputs (110/1,152 remain valid-noncanonical). Small n is reported with CIs and no pooled capability claim is made. Frontier models were not run (disk: ~83 GB needed vs 78 GB free, `airllm_feasibility.md`); this is Limitation 6.
 
-**Rebuttal on stated conventions:** The partial reduction (0.715 → 0.625) confirms that disclosure of tie-breaking conventions reduces but does not eliminate noncanonical outputs. 9.5% of all stated-convention outputs (110/1,152) remain valid-noncanonical. Reference-matching evaluators reject these semantically correct outputs under any reference selection — the problem is structural, not instruction-following.
+### Reviewer 5: Novelty / Editorial Reviewer — "E3 is a tautology"
 
-**Rebuttal on small n:** n_valid = 42 (Gemma3 12B) and n_valid = 6 (OLMo2 7B) are explicitly reported with uncertainty (95% CIs). We make no pooled population claim. The competence gate (Decision C: gain −0.069 vs required ≥ 0.15) is conservative precisely because of low n. We do not claim generality to frontier models; we claim noncanonical output persistence is not eliminated at the 12B scale.
+**Attack:** *"E3 is reference-independent by construction; τ_b = 1.000 is not a finding."* → **Conceded.** The abstract now states "removes reference dependence by construction"; the empirical content is the cost of *not* using E3, measured in §4.1–4.6.
 
-**Rebuttal on frontier models:** AirLLM feasibility was re-checked live on 2026-10-06 (see `airllm_feasibility.md`). Disk is the binding constraint: peak storage need ~83 GB vs 78 GB free. This is a real measured infrastructure limitation, not a refusal. It is disclosed in the manuscript as Limitation 5.
+### Reviewer 6: Curator / Distributional Assumptions Specialist
 
----
+**Attack:** *"Curators pick the canonical reference with high probability; instability disappears."* → Tested (§4.3, 11 distributions × 50,000 draws): E2 reversal is 12.14% at p=0.50, 7.35% at p=0.80, 2.30% at p=0.95, and vanishes only as p→1. The adversarial row is a **single** draw (n=1) and is labeled as a point value, not a distribution.
 
-### Reviewer 5: Novelty / Editorial Reviewer
+### Reviewer 7 (new): "It is just near-ties and a floor effect"
 
-**Attack:** *"Your claim that E3 restores '100% decision stability' is a tautology. E3 is reference-independent by construction. Of course τ=1.000 under a reference-free oracle."*
+**Attack:** *"Models solve 7–31% of tasks; E2 scores are 0.5–4%. Most pairs are statistically indistinguishable, so reversals are noise. Scheduling has zero reversals."*
 
-**Rebuttal:** The contribution is not that E3 is reference-free (trivially true by design). The contribution is the **quantification of the cost** of using reference-dependent evaluators instead. Under E2, oracle recovery is 23.92% — meaning 76.08% of reference draws fail to recover the oracle ranking. Under E1, 97.14% fail. This is measured by comparing E1/E2 outcomes across 49,914 reference-draw distributions to the E3 ground truth. The diagnostic value: "how well does canonical-reference matching approximate reference-independent evaluation?" Answer: poorly.
+**Response (largely concede):** The suspicion is correct and measured: 85.6% of E2 reversal mass is in oracle-non-separated pairs, mean reversal there is 22.1% vs 7.4% in separated pairs; scheduling's zero is uninformative because three models solve none of its worlds (§4.5, §4.6, Limitation 2). The manuscript therefore states that the headline 17.56% / 13.63% figures **must not** be read as the share of well-supported orderings that are overturned, and reframes the finding as *detection loss plus arbitrary near-tie orderings*.
 
-The "100% decision stability" language in Section 11 was updated in this forensic pass to: "0% winner reversals and 100% oracle recovery across all sampled reference conditions (scoped to the 50,000-draw Monte Carlo distribution over the 24-world OS benchmark reported here)."
+### Reviewer 8 (new): Process / Preregistration Reviewer
 
----
+**Attack:** *"Your own pilot returned CONDITIONAL and asked for ≥50%-valid models and ≥65 worlds. You ran neither, then redefined the study around metrics invented after seeing the data. 'Preregistered' is also overstated."*
 
-### Reviewer 6: Benchmark Curator & Distributional Assumptions Specialist
+**Response (concede):** §9 now states: the preregistration is an internal hash-stamped freeze (not externally registered; first committed with the runs); the pilot verdict was CONDITIONAL (K4 failed without adequate precision); the competence-floor and world-count conditions were **not** met; the RCR protocol and extended analyses are **post-hoc and exploratory** (Deviation 8). The paper positions itself as a scoped case study, not a confirmatory test.
 
-**Attack:** *"Your uniform sampling over V(x) assumes benchmark curators pick references uniformly at random. In practice, curators select canonical or standard convention references. If a curator chooses the canonical reference with high probability, your instability disappears."*
+### Reviewer 9 (new): Reproducibility / Process
 
-**Rebuttal:** We explicitly tested this hypothesis by conducting a comprehensive reference-distribution sensitivity analysis evaluating 11 distinct curation distributions across 550,000 Monte Carlo draws (50,000 draws per distribution):
-1. **Canonical Bias ($p \in [0.0, 0.99]$)**: Even when curators choose the canonical reference with **50% probability** per world ($p=0.50$), $E_2$ pairwise winner reversal rate remains **11.73%** and Kendall $\tau_b$ drops to **0.7519**. Even under an extreme **80% canonical bias** ($p=0.80$), $E_2$ reversal rate is **7.67%** ($\tau_b = 0.8830$). At $p=0.95$, reversals still occur at **2.69%**.
-2. **Similarity-Weighted Selection**: Weighting references by edit similarity to the canonical reference yields an $E_2$ reversal rate of **17.72%** ($\tau_b = 0.5055$), virtually indistinguishable from uniform sampling (18.22%).
-3. **Adversarial Upper-Bound**: Minimizing rank agreement yields $\tau_b = 0.3333$.
+**Attack:** *"The headline numbers in this version differ from the previous one (τ_b 0.490 → 0.618, reversal 18.61% → 17.56%, recovery 23.92% → 13.63%). Which is right, and what else could be wrong?"*
 
-These empirical results prove that while increasing canonical bias attenuates instability monotonically, pairwise ranking instability and conclusion non-identifiability persist across all realistic non-deterministic curation distributions. Complete elimination occurs only at $p=1.0$ (deterministic canonical choice), which is not robustness but arbitrary convention fixation.
+**Response:** The earlier numbers came from a bug: the RCR modules omitted the preregistered rule D3(b) that the pilot scorer applies (outputs that mention entities outside the world never count as a normalized match), so 7 `mistral:7b-instruct` outputs were counted as E2 matches. All RCR artifacts were regenerated; an independent vectorized implementation agrees with the corrected loop within Monte Carlo error; the canonical reference now reproduces the E3 ordering, consistent with the pilot report (τ = 1.0). Deviation 9 in the manuscript lists every before/after value, and the test suite pins the corrected values (the claims manifest plus a checksum-sync test). The qualitative conclusions (detection loss ≥99.99%, near-tie concentration, attenuation) are unchanged. Residual risk: any further divergence between the pilot scorer and the RCR modules would shift E2 results (Limitation 10).
 
 ---
 
 ## 2. Paper Decision Gate
 
-### Verdict: **GREENLIGHT / FREEZE PASS COMPLETE** (Statistical and empirical core fully sound; verifiers unified, sensitivity audited, and literature verified)
+### Verdict: **READY AS A SCOPED CASE STUDY / WORKSHOP-LEVEL SUBMISSION** (not a main-track confirmatory claim)
 
-**Confirmed strengths (verified by this forensic audit):**
-1. τ = 0.490 ± 0.355 (n=49,914), reversal 18.61%, oracle recovery 23.92%/2.86% — independently recomputed, verified by consistency gate, traceable to frozen JSONL records
-2. Comprehensive reference-distribution sensitivity matrix (11 distributions, 550,000 draws) confirming persistence of conclusion non-identifiability under canonical bias and similarity weighting
-3. Statistical method (world-level sign-flip, N=24, Holm-Bonferroni) correctly implemented and evaluated over 200 sampled reference conditions
-4. Stated-convention control directly refutes the "unstated tie-break" objection with 1,152 additional generations
-5. All 6 deviations from preregistration explicitly documented (D1–D6 in manuscript)
-6. Oracle invariance test fixed (real reference-exercising test across all 24 worlds and 1,152 candidates); placeholder valid-space test replaced with oracle roundtrip + metamorphic mutation assertions
-7. Independent Banker verifier (`validate_banker` in `validators.py`) implemented and integrated cleanly
-8. Primary-source literature audit completed for References Matter, ILR, OTAP, LogicGraph, TIER, PROBE, ReRef, confirming narrow novelty boundaries
-9. 383/383 tests pass; claims manifest independently recomputes all headline numbers and SHA-256 digests
+**Strengths (verified by the test suite and 44-claim manifest):**
+1. Headline numbers independently recomputed from frozen JSONL records; the vectorized re-implementation agrees with the legacy loop within Monte Carlo error.
+2. Detection-loss result is large, direction-consistent and computed on all 50,000 draws with an exactly reference-invariant oracle.
+3. Statistical unit (world, N=24) is respected; the evaluator-effect claim is tested directly rather than inferred from a significance contrast.
+4. Bibliography re-verified against primary sources; a gate test blocks mismatched identifiers.
+5. All deviations (D1–D8) and the pilot's CONDITIONAL verdict are disclosed.
 
+**Remaining weaknesses (cannot be repaired without new data):**
+1. One benchmark, 24 worlds, four sub-10B models at low accuracy.
+2. No second domain; the family breakdown is not independent replication.
+3. Post-hoc framing relative to the preregistered pilot.
+
+## 3. What changed vs the 2026-10-06 version
+
+| Item | 2026-10-06 | 2026-10-12 |
+|---|---|---|
+| Novelty claim | "no prior paper measures benchmark-level conclusion non-identifiability" | Ranking-level instability acknowledged as known; contribution narrowed to exact-enumeration + detection analysis |
+| Significance | "no pair significant; world-level variance dominates" (200 draws, evaluators pooled) | Per-evaluator, all 50,000 draws; E3 separates two pairs that E1/E2 never detect |
+| Bibliography | three IDs resolving to unrelated papers; wrong titles/authors | primary-source verified; gate test added |
+| E3 stability | "restores 100% decision stability" | "by construction"; cost of not using it is the finding |
+| Preregistration | "preregistered" | pre-specified (internal freeze); pilot verdict CONDITIONAL disclosed |
+| Verdict | GREENLIGHT / FREEZE PASS COMPLETE | Scoped case study; exploratory post-hoc analyses flagged |

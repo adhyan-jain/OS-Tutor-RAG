@@ -1,12 +1,17 @@
 {
   "_comment": "Machine-readable claims manifest. Each entry maps a claim ID to its source artifact, JSONPath, tolerance, and manuscript phrase. Used by tests/test_consistency_gate.py.",
-  "_generated": "2026-10-07",
+  "_generated": "2026-10-24",
   "_artifact_sha256": {
-    "research/ssr_pilot/results/rcrc/rcr_summary.json": "c6824c09b78f06668eab84e4639a02a491ac9a2df7bf1dd0a3a9b365444423f7",
+    "research/ssr_pilot/results/rcrc/rcr_summary.json": "956ebd4b86fdbf1764205d19f96dfd16be692b3af1eddf9b779ed8fbd093641b",
     "research/ssr_pilot/results/stated_convention/analysis.json": "f9901318ebf6aac58ee35a9a3a84b66a065f5d6b9c5bcd0a03d57a66e37a0772",
     "research/ssr_pilot/results/competence_pilot/analysis.json": "f06397607da4cb1a5a44a803e1b39c50dfb5b8542c6f8e77d7262b48d22867fa",
     "research/ssr_pilot/results/adversarial/evaluator_meta_results.json": "d486835a35d780fc45e9e1f0c02e9ebdd8387d9e98d504709dee5522c4bba284",
-    "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json": "09cb6b9ba10bb1ff33d856bf680ef5b9b6ad61c28b5b225025a9e74818f295b0"
+    "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json": "607393fe070b404ad24c3a3820843c7bfd6b6d2bb0fffdc81b6193f50990862c",
+    "research/ssr_pilot/results/rcrc/extended_analysis.json": "5228943a2ce011ee961a779f94615d05c4ff7f0f6d6c58f26c4792868afdcf31",
+    "research/ssr_pilot/results/rcrc/kref_attenuation.json": "25ff06fbb27f8862241b8e6f0304223760a890ca73a5e871b547b0b33119472f",
+    "research/ssr_pilot/results/rcrc_claude/hypotheses.json": "64fa18b103573827e79d3fc9e2ac3e8f0f3cb10c7ad71e7cde83e2bdf856af18",
+    "research/ssr_pilot/results/rcrc_claude/extended_analysis.json": "1b127acdbb27b7ec190ac082cac2337d7d44e461ea2602d57777c7e15a866671",
+    "research/ssr_pilot/results/rcrc_claude/kref_attenuation.json": "07c3b0380ebecd2d27cb160252bfb2c146a45a788046f2017486b2d040fcad7c"
   },
   "claims": [
     {
@@ -32,54 +37,54 @@
       "description": "E2 Kendall tau-b mean over non-degenerate draws",
       "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
       "jsonpath": "evaluators.E2_NORMALIZED_MATCH.kendall_tau_mean",
-      "expected_value": 0.4901,
-      "tolerance": 0.0005,
-      "manuscript_phrase": "0.490"
+      "expected_value": 0.6177,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "0.618"
     },
     {
       "id": "C3_tau_std",
       "description": "E2 Kendall tau-b std",
       "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
       "jsonpath": "evaluators.E2_NORMALIZED_MATCH.kendall_tau_std",
-      "expected_value": 0.3555,
-      "tolerance": 0.0005,
-      "manuscript_phrase": "0.355"
+      "expected_value": 0.3505,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "0.351"
     },
     {
       "id": "C3_n_valid_draws",
       "description": "E2 number of non-degenerate tau draws",
       "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
       "jsonpath": "evaluators.E2_NORMALIZED_MATCH.kendall_tau_n_valid_draws",
-      "expected_value": 49914,
+      "expected_value": 49913,
       "tolerance": 0,
-      "manuscript_phrase": "n=49,914"
+      "manuscript_phrase": "n=49,913"
     },
     {
       "id": "C3_n_degen_draws",
       "description": "E2 number of degenerate draws excluded",
       "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
       "jsonpath": "evaluators.E2_NORMALIZED_MATCH.kendall_tau_n_degenerate_draws",
-      "expected_value": 86,
+      "expected_value": 87,
       "tolerance": 0,
-      "manuscript_phrase": "86/50,000 draws"
+      "manuscript_phrase": "87/50,000 draws"
     },
     {
       "id": "C4",
       "description": "E2 pairwise winner reversal probability",
       "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
       "jsonpath": "evaluators.E2_NORMALIZED_MATCH.pairwise_win_matrix.pairwise_reversal_probability",
-      "expected_value": 0.1861,
-      "tolerance": 0.0005,
-      "manuscript_phrase": "18.61%"
+      "expected_value": 0.1756,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "17.56%"
     },
     {
       "id": "C5",
       "description": "E2 oracle recovery rate",
       "artifact": "research/ssr_pilot/results/rcrc/rcr_summary.json",
       "jsonpath": "evaluators.E2_NORMALIZED_MATCH.oracle_recovery.oracle_recovery_rate",
-      "expected_value": 0.2392,
-      "tolerance": 0.0005,
-      "manuscript_phrase": "23.92%"
+      "expected_value": 0.1363,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "13.63%"
     },
     {
       "id": "C6",
@@ -221,54 +226,324 @@
       "description": "Sensitivity uniform baseline E2 pairwise winner reversal reproduction",
       "artifact": "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json",
       "jsonpath": "distributions.UNIFORM.evaluators.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
-      "expected_value": 0.1822,
-      "tolerance": 0.002,
-      "manuscript_phrase": "18.22%"
+      "expected_value": 0.1723,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "17.23%"
     },
     {
       "id": "C14_canonical_bias_p50",
       "description": "Sensitivity canonical bias p=0.50 E2 pairwise winner reversal",
       "artifact": "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json",
       "jsonpath": "distributions.CANONICAL_BIAS_P50.evaluators.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
-      "expected_value": 0.1173,
-      "tolerance": 0.002,
-      "manuscript_phrase": "11.73%"
+      "expected_value": 0.1214,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "12.14%"
     },
     {
       "id": "C15_canonical_bias_p80",
       "description": "Sensitivity canonical bias p=0.80 E2 pairwise winner reversal",
       "artifact": "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json",
       "jsonpath": "distributions.CANONICAL_BIAS_P80.evaluators.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
-      "expected_value": 0.0767,
-      "tolerance": 0.002,
-      "manuscript_phrase": "7.67%"
+      "expected_value": 0.0735,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "7.35%"
     },
     {
       "id": "C16_canonical_bias_p95",
       "description": "Sensitivity canonical bias p=0.95 E2 pairwise winner reversal",
       "artifact": "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json",
       "jsonpath": "distributions.CANONICAL_BIAS_P95.evaluators.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
-      "expected_value": 0.0269,
-      "tolerance": 0.002,
-      "manuscript_phrase": "2.69%"
+      "expected_value": 0.023,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "2.30%"
     },
     {
       "id": "C17_similarity_sensitivity",
       "description": "Sensitivity structural similarity weighting E2 pairwise winner reversal",
       "artifact": "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json",
       "jsonpath": "distributions.SIMILARITY_BIAS.evaluators.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
-      "expected_value": 0.1772,
-      "tolerance": 0.002,
-      "manuscript_phrase": "17.72%"
+      "expected_value": 0.1704,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "17.04%"
     },
     {
       "id": "C18_adversarial_upper_bound",
       "description": "Sensitivity adversarial upper bound stress condition E2 Kendall tau-b",
       "artifact": "research/ssr_pilot/results/rcrc/reference_distribution_sensitivity.json",
       "jsonpath": "distributions.ADVERSARIAL_UPPER_BOUND.evaluators.E2_NORMALIZED_MATCH.kendall_tau_mean",
-      "expected_value": 0.3333,
-      "tolerance": 0.002,
-      "manuscript_phrase": "0.3333"
+      "expected_value": 0.6667,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "0.6667"
+    },
+    {
+      "id": "C19_oracle_p_llama_qwen",
+      "description": "Oracle Holm-adjusted p, qwen3 vs llama3.1 (all 50,000 draws)",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "significance_all_draws.E3_SEMANTIC_ORACLE.llama3.1:8b_vs_qwen3:8b.mean_adj_p",
+      "expected_value": 0.0126,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "0.0126"
+    },
+    {
+      "id": "C19_oracle_p_mistral_qwen",
+      "description": "Oracle Holm-adjusted p, qwen3 vs mistral (all 50,000 draws)",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "significance_all_draws.E3_SEMANTIC_ORACLE.mistral:7b-instruct_vs_qwen3:8b.mean_adj_p",
+      "expected_value": 0.0175,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "0.0175"
+    },
+    {
+      "id": "C20_e1_miss_llama_qwen",
+      "description": "E1 misses the oracle-significant qwen3 vs llama3.1 difference",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "detection_vs_oracle.E1_CANONICAL_EXACT.llama3.1:8b_vs_qwen3:8b.miss_true_difference",
+      "expected_value": 1.0,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "100.00%"
+    },
+    {
+      "id": "C21_e2_miss_llama_qwen",
+      "description": "E2 misses the oracle-significant qwen3 vs llama3.1 difference",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "detection_vs_oracle.E2_NORMALIZED_MATCH.llama3.1:8b_vs_qwen3:8b.miss_true_difference",
+      "expected_value": 0.9999,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "99.99%"
+    },
+    {
+      "id": "C21_e2_miss_mistral_qwen",
+      "description": "E2 misses the oracle-significant qwen3 vs mistral difference",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "detection_vs_oracle.E2_NORMALIZED_MATCH.mistral:7b-instruct_vs_qwen3:8b.miss_true_difference",
+      "expected_value": 0.9999,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "99.99%"
+    },
+    {
+      "id": "C22_nonseparated_share",
+      "description": "Share of E2 reversal mass in oracle-non-separated pairs",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "near_tie_decomposition.E2_NORMALIZED_MATCH.reversal_mass_share_in_oracle_nonseparated_pairs",
+      "expected_value": 0.856,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "85.6%"
+    },
+    {
+      "id": "C22_e1_nonseparated_share",
+      "description": "Share of E1 reversal mass in oracle-non-separated pairs",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "near_tie_decomposition.E1_CANONICAL_EXACT.reversal_mass_share_in_oracle_nonseparated_pairs",
+      "expected_value": 0.786,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "78.6%"
+    },
+    {
+      "id": "C23_mean_rev_separated",
+      "description": "Mean E2 reversal in oracle-separated pairs",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "near_tie_decomposition.E2_NORMALIZED_MATCH.mean_reversal_separated_pairs",
+      "expected_value": 0.074,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "7.4%"
+    },
+    {
+      "id": "C23_mean_rev_nonseparated",
+      "description": "Mean E2 reversal in oracle-non-separated pairs",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "near_tie_decomposition.E2_NORMALIZED_MATCH.mean_reversal_nonseparated_pairs",
+      "expected_value": 0.221,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "22.1%"
+    },
+    {
+      "id": "C24_banker_e2_reversal",
+      "description": "E2 reversal, Banker family",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "by_family.banker.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
+      "expected_value": 0.21,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "21.0%"
+    },
+    {
+      "id": "C25_sync_e2_reversal",
+      "description": "E2 reversal, synchronization family",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "by_family.sync.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
+      "expected_value": 0.1,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "10.0%"
+    },
+    {
+      "id": "C26_e2_expected_gap_llama_qwen",
+      "description": "E2 expected gap (uniform ref), qwen3 vs llama3.1",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "evaluator_effect_on_gap.E2_NORMALIZED_MATCH.llama3.1:8b_vs_qwen3:8b.expected_matching_gap_uniform_reference",
+      "expected_value": -0.037,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "-0.037"
+    },
+    {
+      "id": "C26_oracle_gap_llama_qwen",
+      "description": "Oracle gap, qwen3 vs llama3.1",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "evaluator_effect_on_gap.E2_NORMALIZED_MATCH.llama3.1:8b_vs_qwen3:8b.oracle_gap",
+      "expected_value": -0.243,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "-0.243"
+    },
+    {
+      "id": "C27_crosscheck_e2_reversal",
+      "description": "Vectorized-sampler E2 reversal cross-check",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "legacy_crosscheck.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
+      "expected_value": 0.1718,
+      "tolerance": 5e-05,
+      "manuscript_phrase": "17.18%"
+    },
+    {
+      "id": "C28_n_draws_full_significance",
+      "description": "Significance analysis uses all 50,000 draws",
+      "artifact": "research/ssr_pilot/results/rcrc/extended_analysis.json",
+      "jsonpath": "provenance.n_draws",
+      "expected_value": 50000,
+      "tolerance": 0,
+      "manuscript_phrase": "all 50,000 draws"
+    },
+    {
+      "id": "C29_attenuation_r",
+      "description": "Attenuation law fit: Pearson r over (task, model) cells",
+      "artifact": "research/ssr_pilot/results/rcrc/kref_attenuation.json",
+      "jsonpath": "attenuation_law.pearson_r_observed_vs_predicted",
+      "expected_value": 1.0,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "r = 1.000"
+    },
+    {
+      "id": "C29_valid_generations",
+      "description": "Semantically valid generations (each matches exactly one reference)",
+      "artifact": "research/ssr_pilot/results/rcrc/kref_attenuation.json",
+      "jsonpath": "attenuation_law.valid_generations_total",
+      "expected_value": 179,
+      "tolerance": 0,
+      "manuscript_phrase": "all 179 semantically valid generations"
+    },
+    {
+      "id": "C30_k5_detect_llama",
+      "description": "k=5 match-any detection, qwen3 vs llama3.1",
+      "artifact": "research/ssr_pilot/results/rcrc/kref_attenuation.json",
+      "jsonpath": "k_reference.5.detect_oracle_separated_pairs.llama3.1:8b_vs_qwen3:8b",
+      "expected_value": 0.4785,
+      "tolerance": 0.001,
+      "manuscript_phrase": "47.9%"
+    },
+    {
+      "id": "C30_k5_detect_mistral",
+      "description": "k=5 match-any detection, qwen3 vs mistral",
+      "artifact": "research/ssr_pilot/results/rcrc/kref_attenuation.json",
+      "jsonpath": "k_reference.5.detect_oracle_separated_pairs.mistral:7b-instruct_vs_qwen3:8b",
+      "expected_value": 0.57,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "57.0%"
+    },
+    {
+      "id": "C31_k25_detect_llama",
+      "description": "k=25 match-any detection, qwen3 vs llama3.1",
+      "artifact": "research/ssr_pilot/results/rcrc/kref_attenuation.json",
+      "jsonpath": "k_reference.25.detect_oracle_separated_pairs.llama3.1:8b_vs_qwen3:8b",
+      "expected_value": 0.838,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "83.8%"
+    },
+    {
+      "id": "C31_k25_detect_mistral",
+      "description": "k=25 match-any detection, qwen3 vs mistral",
+      "artifact": "research/ssr_pilot/results/rcrc/kref_attenuation.json",
+      "jsonpath": "k_reference.25.detect_oracle_separated_pairs.mistral:7b-instruct_vs_qwen3:8b",
+      "expected_value": 0.881,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "88.1%"
+    },
+    {
+      "id": "C32_ht_k10_detect_llama",
+      "description": "HT-corrected k=10 detection, qwen3 vs llama3.1",
+      "artifact": "research/ssr_pilot/results/rcrc/kref_attenuation.json",
+      "jsonpath": "inverse_V_correction.10.detect_oracle_separated_pairs.llama3.1:8b_vs_qwen3:8b",
+      "expected_value": 0.4015,
+      "tolerance": 0.001,
+      "manuscript_phrase": "40.2%"
+    },
+    {
+      "id": "C32_ht_k10_detect_mistral",
+      "description": "HT-corrected k=10 detection, qwen3 vs mistral",
+      "artifact": "research/ssr_pilot/results/rcrc/kref_attenuation.json",
+      "jsonpath": "inverse_V_correction.10.detect_oracle_separated_pairs.mistral:7b-instruct_vs_qwen3:8b",
+      "expected_value": 0.31,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "31.0%"
+    },
+    {
+      "id": "C33_ht_sd_k1",
+      "description": "SD of HT-estimated qwen3-vs-llama3.1 gap at k=1",
+      "artifact": "research/ssr_pilot/results/rcrc/kref_attenuation.json",
+      "jsonpath": "inverse_V_correction.1.sd_of_estimated_gap_separated.llama3.1:8b_vs_qwen3:8b",
+      "expected_value": 0.37,
+      "tolerance": 0.005,
+      "manuscript_phrase": "0.37 at"
+    },
+    {
+      "id": "C34_h1",
+      "description": "Claude models with >=30% validity",
+      "artifact": "research/ssr_pilot/results/rcrc_claude/hypotheses.json",
+      "jsonpath": "hypotheses.H1_floor.models_with_validity_ge_30pct",
+      "expected_value": 4,
+      "tolerance": 0,
+      "manuscript_phrase": "4 of 4 Claude models"
+    },
+    {
+      "id": "C35_h2",
+      "description": "Pooled E2 detection rate, Claude arm",
+      "artifact": "research/ssr_pilot/results/rcrc_claude/hypotheses.json",
+      "jsonpath": "hypotheses.H2_detection_loss.pooled_E2_detection_rate_uniform_ref",
+      "expected_value": 0.029815,
+      "tolerance": 0.0001,
+      "manuscript_phrase": "3.0% of 50,000 draws"
+    },
+    {
+      "id": "C36_h3a",
+      "description": "CIF sonnet-5-5",
+      "artifact": "research/ssr_pilot/results/rcrc_claude/hypotheses.json",
+      "jsonpath": "hypotheses.H3_canonical_inflation.cif.claude-sonnet-5-5",
+      "expected_value": 3.295,
+      "tolerance": 0.005,
+      "manuscript_phrase": "CIF = 3.30"
+    },
+    {
+      "id": "C37_h3b",
+      "description": "CIF sonnet-4-5",
+      "artifact": "research/ssr_pilot/results/rcrc_claude/hypotheses.json",
+      "jsonpath": "hypotheses.H3_canonical_inflation.cif.claude-sonnet-4-5",
+      "expected_value": 2.262,
+      "tolerance": 0.005,
+      "manuscript_phrase": "CIF = 2.26"
+    },
+    {
+      "id": "C38_h4",
+      "description": "Max adjacent distortion factor",
+      "artifact": "research/ssr_pilot/results/rcrc_claude/hypotheses.json",
+      "jsonpath": "hypotheses.H4_ranking_distortion.max_distortion_factor",
+      "expected_value": 1.428,
+      "tolerance": 0.001,
+      "manuscript_phrase": "a factor of 1.43"
+    },
+    {
+      "id": "C39_rev",
+      "description": "Uniform-reference reversal, Claude arm",
+      "artifact": "research/ssr_pilot/results/rcrc_claude/extended_analysis.json",
+      "jsonpath": "legacy_crosscheck.E2_NORMALIZED_MATCH.pairwise_reversal_probability",
+      "expected_value": 0.2691,
+      "tolerance": 0.0005,
+      "manuscript_phrase": "26.9% of reference pairs"
     }
   ]
 }

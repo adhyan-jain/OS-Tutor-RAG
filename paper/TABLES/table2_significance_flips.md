@@ -1,8 +1,12 @@
-# Table 2: Statistical Significance Decision Stability Across Reference Choices (\(\alpha = 0.05\))
+# SUPERSEDED — do not cite
 
-| Model Pair | Evaluator | Significant (\(p < 0.05\)) Proporation | Non-Significant (\(p \ge 0.05\)) Proportion | Decision Constant Across References? | Mean \(p\)-value |
-| :--- | :--- | :---: | :---: | :---: | :---: |
-| `gemma2:9b` vs `qwen3:8b` | \(E_2\) Normalized | **50.0%** (Significant B Wins) | **50.0%** (Non-significant) | **NO** (Flips) | 0.1737 ± 0.286 |
-| `llama3.1:8b` vs `qwen3:8b` | \(E_2\) Normalized | **50.0%** (Significant B Wins) | **50.0%** (Non-significant) | **NO** (Flips) | 0.1684 ± 0.285 |
-| `mistral:7b-instruct` vs `qwen3:8b` | \(E_2\) Normalized | **50.0%** (Significant B Wins) | **50.0%** (Non-significant) | **NO** (Flips) | 0.1737 ± 0.286 |
-| `gemma2:9b` vs `qwen3:8b` | \(E_3\) Semantic Oracle | **100.0%** (Significant B Wins) | **0.0%** | **YES** (100% Stable) | 0.0001 ± 0.000 |
+This table previously reported "50% significance flips" from cell-level McNemar tests. Those tests treated nested seeds and variants as independent observations (pseudoreplication) and were retracted (manuscript §4.2, Deviation 1).
+
+A later 200-draw subsample analysis pooled the evaluators and was also superseded (Deviation 6 -> 7).
+
+Use instead, all generated from `research/ssr_pilot/results/rcrc/extended_analysis.json` by `python paper/build_tables.py`:
+
+- `table3_significance_detection.md` — world-level significance per evaluator over all 50,000 draws
+- `table4_evaluator_effect.md` — evaluator effect on each pairwise gap (world-level bootstrap)
+- `table5_near_tie.md` — reversals by oracle separation
+- `table6_by_family.md` — reversal by mechanism family
