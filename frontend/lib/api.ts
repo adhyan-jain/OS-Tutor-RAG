@@ -1,4 +1,4 @@
-import type { DetailLevel } from "./types";
+import type { DetailLevel, TutorOverview, TutorProgress } from "./types";
 
 export const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
 
@@ -19,11 +19,27 @@ export async function fetchModels(apiToken?: string): Promise<string[]> {
   return res.json();
 }
 
+/** Ask the backend to load a model into memory so the first answer is not slow.
+ * Best effort: a failure changes nothing for the student. */
+export async function warmModel(model: string, apiToken?: string): Promise<void> {
+  try {
+    await fetch(`${API_BASE}/models/warm`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeaders(apiToken) },
+      body: JSON.stringify({ model_name: model }),
+    });
+  } catch {
+    // ignore
+  }
+}
+
 export interface ChatRequestBody {
   session_id: string;
   question: string;
   model_name: string;
   detail_level: DetailLevel;
+  /** Guided mode: the tutor asks one short question after an answer and grades the reply. */
+  socratic: boolean;
 }
 
 /** POSTs to /chat and returns the raw streaming Response for the caller to
@@ -45,4 +61,30 @@ export async function postChat(
     throw new Error(`POST /chat failed: ${res.status} ${res.statusText}`);
   }
   return res;
+}
+
+export async function fetchOverview(apiToken?: string): Promise<TutorOverview> {
+  const res = await fetch(`${API_BASE}/tutor/overview`, { headers: { ...authHeaders(apiToken) } });
+  if (!res.ok) throw new Error(`GET /tutor/overview failed: ${res.status}`);
+  return res.json();
+}
+
+export async function fetchProgress(sessionId: string, apiToken?: string): Promise<TutorProgress> {
+  const res = await fetch(`${API_BASE}/tutor/progress/${encodeURIComponent(sessionId)}`, {
+    headers: { ...authHeaders(apiToken) },
+  });
+  if (!res.ok) throw new Error(`GET /tutor/progress failed: ${res.status}`);
+  return res.json();
+}
+
+/** Best-effort: forget a thread's server-side history and tutoring state. */
+export async function resetSession(sessionId: string, apiToken?: string): Promise<void> {
+  try {
+    await fetch(`${API_BASE}/tutor/session/${encodeURIComponent(sessionId)}`, {
+      method: "DELETE",
+      headers: { ...authHeaders(apiToken) },
+    });
+  } catch {
+    // non-fatal: the local copy is already gone
+  }
 }

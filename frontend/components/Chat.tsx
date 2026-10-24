@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { fetchModels, postChat } from "@/lib/api";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { UIEvent } from "react";
+import { fetchModels, fetchOverview, fetchProgress, postChat, resetSession, warmModel } from "@/lib/api";
 import { streamSSE } from "@/lib/sse";
 import {
   deriveTitle,
@@ -11,14 +12,18 @@ import {
   saveActiveId,
   saveSessions,
 } from "@/lib/sessionStore";
-import type { ChatMessage, ChatSession, DetailLevel, Source } from "@/lib/types";
+import type { ChatMessage, ChatSession, DetailLevel, Source, TutorOverview, TutorProgress, TutorUI } from "@/lib/types";
 import ModelSelect from "./ModelSelect";
 import DetailToggle from "./DetailToggle";
 import MessageBubble from "./MessageBubble";
 import Composer from "./Composer";
 import Sidebar from "./Sidebar";
+import FollowUps from "./FollowUps";
+import StarterPanel from "./StarterPanel";
+import ProgressPill from "./ProgressPill";
 
 const LAST_MODEL_KEY = "os-tutor:last-model";
+const SOCRATIC_KEY = "os-tutor:socratic";
 
 function newId(): string {
   return crypto.randomUUID();
@@ -43,6 +48,11 @@ export default function Chat({
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
 
   const [detailLevel, setDetailLevel] = useState<DetailLevel>("undergrad");
+  // Guided mode: after an answer the tutor asks one short question and grades
+  // the reply. Off = plain answers.
+  const [socratic, setSocratic] = useState(true);
+  const [overview, setOverview] = useState<TutorOverview | null>(null);
+  const [progress, setProgress] = useState<TutorProgress | null>(null);
   const [input, setInput] = useState("");
   // Sessions with a request in flight -- tracked per-session (not one global
   // flag) so switching to another chat while one streams doesn't block it.
@@ -50,6 +60,13 @@ export default function Chat({
   const abortControllers = useRef<Map<string, AbortController>>(new Map());
 
   const scrollRef = useRef<HTMLDivElement>(null);
+  // Follow the stream only while the student is reading the bottom; if they scroll
+  // up to re-read, new text must not yank the view away.
+  const stickToBottom = useRef(true);
+  // Below `sm`: chats live in a drawer, and the header/settings fold into toggles.
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   // Restore persisted sessions (migrating the old single-thread format if
   // needed) on mount. Must happen in an effect, not a lazy useState
@@ -57,7 +74,7 @@ export default function Chat({
   useEffect(() => {
     const restored = loadSessions();
     const restoredIds = Object.keys(restored);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    /* eslint-disable react-hooks/set-state-in-effect -- one-time hydration from localStorage */
     if (restoredIds.length === 0) {
       const fresh = makeSession();
       setSessions({ [fresh.id]: fresh });
@@ -68,6 +85,7 @@ export default function Chat({
       setActiveId(storedActive && restored[storedActive] ? storedActive : restoredIds[0]);
     }
     setHydrated(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   useEffect(() => {
@@ -102,20 +120,60 @@ export default function Chat({
   }, []);
 
   useEffect(() => {
+    try {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (localStorage.getItem(SOCRATIC_KEY) === "off") setSocratic(false);
+    } catch {
+      // ignore
+    }
+    fetchOverview(apiToken)
+      .then(setOverview)
+      .catch(() => setOverview(null));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(SOCRATIC_KEY, socratic ? "on" : "off");
+    } catch {
+      // ignore
+    }
+  }, [socratic]);
+
+  useEffect(() => {
+    if (!hydrated || !activeId) return;
+    fetchProgress(activeId, apiToken)
+      .then(setProgress)
+      .catch(() => setProgress(null));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeId, hydrated]);
+
+  useEffect(() => {
     if (!selectedModel) return;
     try {
       localStorage.setItem(LAST_MODEL_KEY, selectedModel);
     } catch {
       // ignore
     }
+    // Load the model now so the first answer is not a cold start.
+    void warmModel(selectedModel, apiToken);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedModel]);
 
-  const messages = (activeId && sessions[activeId]?.messages) || [];
+  const messages = useMemo(() => (activeId && sessions[activeId]?.messages) || [], [activeId, sessions]);
+  const anyStreaming = streamingIds.size > 0;
 
-  // Keep the view scrolled to the latest message as content streams in.
+  // Keep the view on the latest message as content streams in, unless the student
+  // has scrolled up. "auto" while streaming (smooth scrolling lags behind tokens).
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [messages]);
+    if (!stickToBottom.current || messages.length === 0) return;
+    scrollRef.current?.scrollIntoView({ behavior: anyStreaming ? "auto" : "smooth", block: "end" });
+  }, [messages, anyStreaming]);
+
+  function handleScroll(e: UIEvent<HTMLDivElement>) {
+    const el = e.currentTarget;
+    stickToBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 120;
+  }
 
   function updateSessionMessages(
     sessionId: string,
@@ -155,7 +213,7 @@ export default function Chat({
     }
 
     // Clear any prior error/content so a retry/regenerate starts fresh.
-    updateAssistant({ content: "", error: undefined, sources: undefined, streaming: true });
+    updateAssistant({ content: "", error: undefined, sources: undefined, ui: undefined, streaming: true });
 
     try {
       const response = await postChat(
@@ -164,6 +222,7 @@ export default function Chat({
           question,
           model_name: selectedModel!,
           detail_level: detailLevel,
+          socratic,
         },
         apiToken,
         controller.signal,
@@ -175,6 +234,8 @@ export default function Chat({
           const { token } = JSON.parse(evt.data) as { token: string };
           content += token;
           updateAssistant({ content });
+        } else if (evt.event === "ui") {
+          updateAssistant({ ui: JSON.parse(evt.data) as TutorUI });
         } else if (evt.event === "sources") {
           const sources = JSON.parse(evt.data) as Source[];
           updateAssistant({ sources, streaming: false });
@@ -186,6 +247,9 @@ export default function Chat({
       });
 
       updateAssistant({ streaming: false });
+      fetchProgress(sessionId, apiToken)
+        .then(setProgress)
+        .catch(() => undefined);
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") {
         // Deliberate stop -- keep whatever streamed so far, no error banner.
@@ -203,7 +267,13 @@ export default function Chat({
   }
 
   function handleSend() {
-    const question = input.trim();
+    sendMessage(input);
+  }
+
+  // Shared by the composer and by every suggested chip: a chip is a complete
+  // message, so tapping it is exactly the same as typing it.
+  function sendMessage(text: string) {
+    const question = text.trim();
     if (!question || !selectedModel || !activeId || streamingIds.has(activeId)) return;
 
     const userMessage: ChatMessage = { id: newId(), role: "user", content: question };
@@ -233,6 +303,7 @@ export default function Chat({
       };
     });
     setInput("");
+    stickToBottom.current = true; // sending always brings the student to the reply
     void runQuestion(activeId, question, assistantId);
   }
 
@@ -283,6 +354,7 @@ export default function Chat({
       return next;
     });
     abortControllers.current.get(id)?.abort();
+    void resetSession(id, apiToken);
   }
 
   const isActiveStreaming = !!activeId && streamingIds.has(activeId);
@@ -299,18 +371,45 @@ export default function Chat({
           onNew={handleNewChat}
           onDelete={handleDeleteSession}
           onRename={handleRenameSession}
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
         />
       )}
 
-      <div className="flex flex-col h-dvh mx-auto w-full max-w-3xl">
-        <header className="flex items-center justify-between gap-4 px-4 py-3 border-b border-[var(--color-border)]">
-          <div>
-            <h1 className="text-lg font-semibold tracking-tight">OS Tutor</h1>
-            <p className="text-xs text-[var(--color-muted-foreground)]">
-              Grounded answers from the course material
-            </p>
+      <div className="flex flex-col h-dvh min-w-0 flex-1">
+        <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-3 sm:px-6 lg:px-10 py-3 border-b border-[var(--color-border)] pt-[max(0.75rem,env(safe-area-inset-top))]">
+          <div className="flex min-w-0 items-center gap-2">
+            <button
+              type="button"
+              aria-label="Open your chats"
+              onClick={() => setDrawerOpen(true)}
+              className="sm:hidden -ml-1 flex min-h-11 min-w-11 items-center justify-center rounded-md text-lg text-[var(--color-muted-foreground)] cursor-pointer"
+            >
+              ☰
+            </button>
+            <div className="min-w-0">
+              <h1 className="text-lg font-semibold tracking-tight">OS Tutor</h1>
+              <p className="hidden sm:block text-xs text-[var(--color-muted-foreground)]">
+                Grounded answers from the course material
+              </p>
+            </div>
           </div>
-          <div className="flex items-center gap-3">
+          <button
+            type="button"
+            aria-label="Model and more"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+            className="sm:hidden flex min-h-11 min-w-11 items-center justify-center rounded-md text-lg text-[var(--color-muted-foreground)] cursor-pointer"
+          >
+            ⋯
+          </button>
+          <div className={`${menuOpen ? "flex" : "hidden"} sm:flex basis-full sm:basis-auto flex-col sm:flex-row items-stretch sm:items-center gap-3`}>
+            <a
+              href="/research"
+              className="text-sm text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors"
+            >
+              Research
+            </a>
             <ModelSelect
               models={models}
               loading={modelsLoading}
@@ -322,7 +421,7 @@ export default function Chat({
               <button
                 type="button"
                 onClick={onLogout}
-                className="text-sm text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors cursor-pointer"
+                className="text-left text-sm text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors cursor-pointer"
               >
                 Sign out
               </button>
@@ -330,42 +429,56 @@ export default function Chat({
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
-          {messages.length === 0 && (
-            <div className="max-w-xl mx-auto mt-10 text-center space-y-4">
-              <h2 className="text-base font-semibold tracking-tight">
-                A grounded tutor, not a search engine
-              </h2>
-              <p className="text-sm text-[var(--color-muted-foreground)] leading-relaxed">
-                Answers are drawn only from the actual course material — lecture
-                slides and reading sections — and every reply cites which ones
-                it used. It's a flexible conversation, not a rigid script: ask
-                for an overview and you'll get one directly, but for a genuinely
-                deep or multi-step idea it'll teach incrementally with a
-                comprehension check, the way a good tutor would.
-              </p>
-              <p className="text-sm text-[var(--color-muted-foreground)]">
-                Ask a question about the operating systems course to get started.
-              </p>
+        <div onScroll={handleScroll} className="flex-1 overflow-y-auto overscroll-contain px-3 sm:px-6 lg:px-10 py-4 sm:py-6 space-y-4">
+          {messages.length === 0 && <StarterPanel overview={overview} onPick={sendMessage} />}
+          {messages.map((m, i) => (
+            <div key={m.id}>
+              <MessageBubble
+                message={m}
+                onRetry={m.role === "assistant" && m.error ? () => rerunFrom(m.id) : undefined}
+                onRegenerate={
+                  m.role === "assistant" && !m.error && !m.streaming
+                    ? () => rerunFrom(m.id)
+                    : undefined
+                }
+              />
+              {m.role === "assistant" && m.ui && !m.error && i === messages.length - 1 && (
+                <FollowUps ui={m.ui} onPick={sendMessage} disabled={isActiveStreaming} />
+              )}
             </div>
-          )}
-          {messages.map((m) => (
-            <MessageBubble
-              key={m.id}
-              message={m}
-              onRetry={m.role === "assistant" && m.error ? () => rerunFrom(m.id) : undefined}
-              onRegenerate={
-                m.role === "assistant" && !m.error && !m.streaming
-                  ? () => rerunFrom(m.id)
-                  : undefined
-              }
-            />
           ))}
           <div ref={scrollRef} />
         </div>
 
-        <div className="px-4 pb-4 pt-2 border-t border-[var(--color-border)] space-y-3">
-          <DetailToggle value={detailLevel} onChange={setDetailLevel} />
+        <div className="px-3 sm:px-6 lg:px-10 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2 border-t border-[var(--color-border)] space-y-2 sm:space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+            <div className="flex items-center gap-2">
+              <ProgressPill progress={progress} />
+              <button
+                type="button"
+                aria-expanded={settingsOpen}
+                onClick={() => setSettingsOpen((v) => !v)}
+                className="sm:hidden min-h-11 rounded-md px-2 text-sm text-[var(--color-muted-foreground)] cursor-pointer"
+              >
+                {settingsOpen ? "Hide settings" : "Settings"}
+              </button>
+            </div>
+            <div className={`${settingsOpen ? "flex" : "hidden"} sm:flex basis-full sm:basis-auto flex-wrap items-center justify-between gap-3`}>
+              <DetailToggle value={detailLevel} onChange={setDetailLevel} />
+              <label
+                className="inline-flex min-h-11 sm:min-h-0 items-center gap-2 text-sm text-[var(--color-muted-foreground)] cursor-pointer select-none"
+                title="When on, the tutor asks one short question after an answer and gives hints instead of just telling you."
+              >
+                <input
+                  type="checkbox"
+                  checked={socratic}
+                  onChange={(e) => setSocratic(e.target.checked)}
+                  className="accent-[var(--color-accent)]"
+                />
+                Guided questions
+              </label>
+            </div>
+          </div>
           <Composer
             value={input}
             onChange={setInput}
@@ -374,7 +487,9 @@ export default function Chat({
             isStreaming={isActiveStreaming}
             onStop={handleStop}
             placeholder={
-              !selectedModel ? "Waiting for a model to load…" : "Ask about the course…"
+              !selectedModel
+                ? "Waiting for a model to load…"
+                : "Ask about operating systems, or answer the tutor…"
             }
           />
         </div>

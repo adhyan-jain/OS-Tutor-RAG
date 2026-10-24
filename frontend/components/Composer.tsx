@@ -42,13 +42,13 @@ export default function Composer({
         onKeyDown={handleKeyDown}
         placeholder={placeholder ?? "Ask about the course…"}
         rows={1}
-        className="flex-1 resize-none bg-transparent px-2 py-2 outline-none text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] max-h-40 [field-sizing:content]"
+        className="flex-1 min-w-0 resize-none bg-transparent px-2 py-2 text-base outline-none text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] max-h-40 [field-sizing:content]"
       />
       {isStreaming ? (
         <button
           type="button"
           onClick={onStop}
-          className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-sm font-medium cursor-pointer hover:bg-[var(--color-danger-soft)] hover:text-[var(--color-danger)] transition-colors"
+          className="min-h-11 sm:min-h-0 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-sm font-medium cursor-pointer hover:bg-[var(--color-danger-soft)] hover:text-[var(--color-danger)] transition-colors"
         >
           Stop
         </button>
@@ -57,7 +57,7 @@ export default function Composer({
           type="button"
           onClick={onSend}
           disabled={disabled || !value.trim()}
-          className="rounded-lg bg-[var(--color-accent)] text-[var(--color-accent-foreground)] px-4 py-2 text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer hover:opacity-90 transition-opacity"
+          className="min-h-11 sm:min-h-0 rounded-lg bg-[var(--color-accent)] text-[var(--color-accent-foreground)] px-4 py-2 text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer hover:opacity-90 transition-opacity"
         >
           Send
         </button>

@@ -81,6 +81,31 @@ body {
   border-radius: 8px;
 }
 
+/* Suggested-follow-up chips fade in once the answer has landed, so they do not pop. */
+@keyframes chip-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.chip-in {
+  animation: chip-in 0.25s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip-in {
+    animation: none;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Markdown rendering for assistant answers (MessageBubble.tsx) -- deliberately
    hand-styled against the app's own tokens rather than pulling in a generic
    Tailwind typography plugin, so tables/code match the rest of the UI. */

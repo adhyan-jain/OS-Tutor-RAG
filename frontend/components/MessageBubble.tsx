@@ -77,7 +77,7 @@ export default function MessageBubble({
   return (
     <div className={`flex flex-col ${isUser ? "items-end" : "items-start"}`}>
       <div
-        className={`max-w-[80ch] rounded-2xl px-4 py-3 leading-relaxed break-words shadow-sm ${
+        className={`max-w-[92%] sm:max-w-[80ch] rounded-2xl px-3.5 sm:px-4 py-3 leading-relaxed break-words shadow-sm ${
           isUser
             ? "bg-[var(--color-user-bubble)] text-[var(--color-user-bubble-foreground)]"
             : "bg-[var(--color-assistant-bubble)] text-[var(--color-assistant-bubble-foreground)] border border-[var(--color-border)]"

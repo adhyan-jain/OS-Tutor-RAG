@@ -10,6 +10,9 @@ interface Props {
   onNew: () => void;
   onDelete: (id: string) => void;
   onRename: (id: string, title: string) => void;
+  /** Below the `sm` breakpoint the list is a slide-in drawer; this opens it. */
+  open?: boolean;
+  onClose?: () => void;
 }
 
 function SessionRow({
@@ -78,7 +81,7 @@ function SessionRow({
         </span>
       )}
       {!editing && (
-        <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="flex items-center sm:opacity-0 sm:group-hover:opacity-100 sm:focus-within:opacity-100 transition-opacity">
           <button
             type="button"
             aria-label="Rename chat"
@@ -107,14 +110,29 @@ function SessionRow({
   );
 }
 
-export default function Sidebar({ sessions, activeId, onSelect, onNew, onDelete, onRename }: Props) {
-  return (
-    <div className="hidden sm:flex w-64 shrink-0 flex-col border-r border-[var(--color-border)] bg-[var(--color-surface-2)]">
+export default function Sidebar({ sessions, activeId, onSelect, onNew, onDelete, onRename, open = false, onClose }: Props) {
+  // Esc closes the drawer (it only exists below `sm`).
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose?.();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  // The same list serves the fixed desktop column and the mobile drawer; in the
+  // drawer, picking a chat or starting a new one also closes it.
+  const list = (closeAfter: boolean) => (
+    <>
       <div className="p-3">
         <button
           type="button"
-          onClick={onNew}
-          className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm font-medium hover:bg-[var(--color-accent-soft)] transition-colors cursor-pointer"
+          onClick={() => {
+            onNew();
+            if (closeAfter) onClose?.();
+          }}
+          className="w-full min-h-11 sm:min-h-0 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm font-medium hover:bg-[var(--color-accent-soft)] transition-colors cursor-pointer"
         >
           + New chat
         </button>
@@ -125,12 +143,42 @@ export default function Sidebar({ sessions, activeId, onSelect, onNew, onDelete,
             key={s.id}
             session={s}
             active={s.id === activeId}
-            onSelect={() => onSelect(s.id)}
+            onSelect={() => {
+              onSelect(s.id);
+              if (closeAfter) onClose?.();
+            }}
             onDelete={() => onDelete(s.id)}
             onRename={(title) => onRename(s.id, title)}
           />
         ))}
       </div>
-    </div>
+    </>
+  );
+
+  return (
+    <>
+      <div className="hidden sm:flex w-64 shrink-0 flex-col border-r border-[var(--color-border)] bg-[var(--color-surface-2)]">
+        {list(false)}
+      </div>
+      {open && (
+        <div className="sm:hidden fixed inset-0 z-40 flex" role="dialog" aria-modal="true" aria-label="Your chats">
+          <div className="flex w-72 max-w-[85vw] flex-col border-r border-[var(--color-border)] bg-[var(--color-surface-2)] shadow-xl pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+            <div className="flex items-center justify-between px-3 pt-3">
+              <span className="text-sm font-semibold">Your chats</span>
+              <button
+                type="button"
+                aria-label="Close chats"
+                onClick={onClose}
+                className="flex min-h-11 min-w-11 items-center justify-center rounded-md text-[var(--color-muted-foreground)] cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+            {list(true)}
+          </div>
+          <button type="button" aria-label="Close chats" onClick={onClose} className="flex-1 bg-black/40 cursor-pointer" />
+        </div>
+      )}
+    </>
   );
 }

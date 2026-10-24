@@ -15,6 +15,16 @@ export interface Source {
 
 export type Role = "user" | "assistant";
 
+/** What the tutoring layer attaches to an assistant turn (the `ui` SSE event).
+ * `chips` are complete messages: tapping one sends exactly that text. */
+export interface TutorUI {
+  kind: string; // answer | question | feedback | path | orientation | triage | quiz_summary
+  chips: string[];
+  concept?: { id: string; name: string; text: string; state: string; state_label: string };
+  /** Present while a Socratic question is waiting for the student's answer. */
+  question?: { id: string; type: string; level: string; concept: string; source: string };
+}
+
 export interface ChatMessage {
   id: string;
   role: Role;
@@ -22,7 +32,20 @@ export interface ChatMessage {
   /** true while the assistant message is still streaming tokens in */
   streaming?: boolean;
   sources?: Source[];
+  ui?: TutorUI;
   error?: string;
+}
+
+export interface TutorOverview {
+  starters: string[];
+  path: { id: string; name: string; topic: string; summary: string }[];
+}
+
+export interface TutorProgress {
+  concepts: { id: string; name: string; state: string; label: string; attempts: number }[];
+  understood: number;
+  total: number;
+  quiz_active: boolean;
 }
 
 /** One conversation thread. `id` is the session_id sent to the backend
