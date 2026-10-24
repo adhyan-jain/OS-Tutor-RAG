@@ -59,3 +59,4 @@ logs/
 
 # graphify tool output (local knowledge-graph artifacts, not project code)
 graphify-out/
+.playwright-mcp/
